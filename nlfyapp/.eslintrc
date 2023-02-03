@@ -1,12 +1,23 @@
 {
   "extends": "@react-native-community",
   "rules": {
-    "quotes": [2, "double", { "avoidEscape": true }]
+    "quotes": [
+      2,
+      "double",
+      {
+        "avoidEscape": true
+      }
+    ]
   },
   "parserOptions": {
-    "requireConfigFile": false,
+    "parser": "@babel/eslint-parser",
     "babelOptions": {
-      "presets": ["@babel/preset-react"]
-    }
+      "parserOpts": {
+        "plugins": [
+          "jsx"
+        ]
+      }
+    },
+    "requireConfigFile": false
   }
 }
