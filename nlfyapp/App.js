@@ -1,5 +1,12 @@
 import React from "react";
-import { Text, SafeAreaView, StyleSheet, View, Image } from "react-native";
+import {
+  Text,
+  SafeAreaView,
+  StyleSheet,
+  View,
+  Image,
+  Pressable,
+} from "react-native";
 import Swiper from "react-native-swiper";
 
 const styles = StyleSheet.create({
@@ -15,6 +22,10 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     position: "absolute",
     top: 0,
+  },
+  image2: {
+    height: 250,
+    width: 250,
   },
   slide2: {
     flex: 1,
@@ -45,6 +56,36 @@ const styles = StyleSheet.create({
     top: 190,
     paddingTop: 16,
   },
+  textscreen2: {
+    color: "#000000",
+    fontSize: 16,
+    fontWeight: "medium",
+  },
+  textscreen2orange: {
+    color: "#EF6C00",
+    fontSize: 14,
+    fontWeight: "medium",
+    top: 20,
+    paddingTop: 16,
+  },
+  button: {
+    alignItems: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    borderRadius: 50,
+    elevation: 3,
+    backgroundColor: "#EF6C00",
+    top: 50,
+    width: 320,
+    height: 56,
+  },
+  textbutton: {
+    fontSize: 20,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
 });
 
 const App = () => {
@@ -63,7 +104,21 @@ const App = () => {
         </Text>
       </View>
       <View style={styles.slide2}>
-        <Text style={styles.text}>Beautiful</Text>
+        <Image
+          style={styles.image2}
+          source={require("./assets/onboarding2.jpg")}
+        />
+        <Text style={styles.textscreen2}>
+          Easily join this spiritual family which is not just a Sunday church
+          but cares about you..
+        </Text>
+
+        <Text style={styles.textscreen2orange}>
+          Sign Up to have a customized experience or swipe
+        </Text>
+        <Pressable style={styles.button}>
+          <Text style={styles.textbutton}>Sign Up</Text>
+        </Pressable>
       </View>
       <View style={styles.slide3}>
         <Text style={styles.text}>And simple</Text>

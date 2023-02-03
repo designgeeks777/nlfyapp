@@ -4,6 +4,9 @@
     "quotes": [2, "double", { "avoidEscape": true }]
   },
   "parserOptions": {
-    "requireConfigFile": false
+    "requireConfigFile": false,
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    }
   }
 }
