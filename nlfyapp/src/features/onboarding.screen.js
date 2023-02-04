@@ -1,4 +1,5 @@
 /* eslint-disable prettier/prettier */
+
 import React from "react";
 import { Text, Image, View, StyleSheet,StatusBar, SafeAreaView, Pressable } from "react-native";
 import Swiper from "react-native-swiper";
@@ -9,8 +10,6 @@ const SafeArea = styled(SafeAreaView)`
   flex: 1;
   margin-top: ${StatusBar.currentHeight}px;
 `;
-
-// const wrapper = styled(View)``;
 
 const Slide1 = styled(View)`
   flex : 1;
