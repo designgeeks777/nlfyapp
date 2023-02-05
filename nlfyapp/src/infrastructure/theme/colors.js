@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 export const colors = {
   text: {
     primary: "#000000",

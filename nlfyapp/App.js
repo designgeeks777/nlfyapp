@@ -1,15 +1,4 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable no-unused-vars */
 import React from "react";
-import {
-  Text,
-  SafeAreaView,
-  StyleSheet,
-  View,
-  Image,
-  Pressable,
-} from "react-native";
-import Swiper from "react-native-swiper";
 import { Onboarding } from "./src/features/onboarding.screen";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";

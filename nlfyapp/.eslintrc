@@ -7,15 +7,19 @@
       {
         "avoidEscape": true
       }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
     ]
   },
   "parserOptions": {
     "parser": "@babel/eslint-parser",
     "babelOptions": {
       "parserOpts": {
-        "plugins": [
-          "jsx"
-        ]
+        "plugins": ["jsx"]
       }
     },
     "requireConfigFile": false

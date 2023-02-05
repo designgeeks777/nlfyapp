@@ -1,10 +1,15 @@
-/* eslint-disable prettier/prettier */
-
 import React from "react";
-import { Text, Image, View, StyleSheet,StatusBar, SafeAreaView, Pressable } from "react-native";
+import {
+  Text,
+  Image,
+  View,
+  StyleSheet,
+  StatusBar,
+  SafeAreaView,
+  Pressable,
+} from "react-native";
 import Swiper from "react-native-swiper";
 import styled from "styled-components/native";
-
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -12,21 +17,21 @@ const SafeArea = styled(SafeAreaView)`
 `;
 
 const Slide1 = styled(View)`
-  flex : 1;
-  justify-content : center;
-  align-items : center
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Slide2 = styled(View)`
-  flex : 1;
-  justify-content : center;
-  align-items : center
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Slide3 = styled(View)`
-  flex : 1;
-  justify-content : center;
-  align-items : center
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
 
 const Slide1Image = styled(Image)`
@@ -34,7 +39,7 @@ const Slide1Image = styled(Image)`
   width: 500px;
   align-self: center;
   position: absolute;
-  top: 0 
+  top: 0;
 `;
 
 const Slide2Image = styled(Image)`
@@ -44,36 +49,40 @@ const Slide2Image = styled(Image)`
 
 const TextSlide1 = styled(Text)`
   align-items: center;
-  top: 180px;
+  top: 190px;
   color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props)=> props.theme.fontSizes.header};
-  font-weight: ${(props)=> props.theme.fontWeights.medium};
-  font-family: ${(props)=> props.theme.fonts.body}; 
+  font-size: ${(props) => props.theme.fontSizes.header};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
 `;
 
 const TextSlide2 = styled(Text)`
   top: 190px;
   padding-top: 16px;
   color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props)=> props.theme.fontSizes.body};
-  font-weight: ${(props)=> props.theme.fontWeights.medium};
-  font-family: ${(props)=> props.theme.fonts.body}; 
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+  margin-left: ${(props) => props.theme.space[3]};
+  margin-right: ${(props) => props.theme.space[3]};
 `;
 
 const TextScreen2 = styled(Text)`
   color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props)=> props.theme.fontSizes.body};
-  font-weight: ${(props)=> props.theme.fontWeights.medium};
-  font-family: ${(props)=> props.theme.fonts.body}; 
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+  margin-left: ${(props) => props.theme.space[3]};
+  margin-right: ${(props) => props.theme.space[3]};
 `;
 
 const TextScreen2Orange = styled(Text)`
   top: 20px;
   padding-top: 16px;
   color: ${(props) => props.theme.colors.text.secondary};
-  font-size: ${(props)=> props.theme.fontSizes.caption};
-  font-weight: ${(props)=> props.theme.fontWeights.medium};
-  font-family: ${(props)=> props.theme.fonts.body}; 
+  font-size: ${(props) => props.theme.fontSizes.caption};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
 `;
 
 const Button = styled(Pressable)`
@@ -88,58 +97,57 @@ const Button = styled(Pressable)`
 `;
 
 const ButtonText = styled(Text)`
-  text-align : center;
-  font-size: ${(props)=> props.theme.fontSizes.button};
-  line-height: ${(props)=> props.theme.lineHeights.button};
-  font-weight: ${(props)=> props.theme.fontWeights.bold};
-  letter-spacing: ${(props) => props.theme.space[1]}; 
-  color : ${(props) => props.theme.colors.text.inverse};
-  font-family: ${(props)=> props.theme.fonts.body}; 
+  text-align: center;
+  font-size: ${(props) => props.theme.fontSizes.button};
+  line-height: ${(props) => props.theme.lineHeights.button};
+  font-weight: ${(props) => props.theme.fontWeights.bold};
+  letter-spacing: ${(props) => props.theme.space[1]};
+  color: ${(props) => props.theme.colors.text.inverse};
+  font-family: ${(props) => props.theme.fonts.body};
 `;
-
 
 const TextScreen3 = styled(Text)`
   color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props)=> props.theme.fontSizes.header};
-  font-weight:${(props)=> props.theme.fontWeights.medium};
-  font-family: ${(props)=> props.theme.fonts.body};
+  font-size: ${(props) => props.theme.fontSizes.header};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
 `;
 
 export const Onboarding = () => {
   return (
     <SafeArea>
-    <Swiper style={styles.wrapper} showsButtons={false} activeDotColor="red">
-      <Slide1>
-        <Slide1Image
-          source = {require("nlfyapp/assets/onboarding1.jpg")}
-        />
-        <TextSlide1>You Matter to God</TextSlide1>
-        <TextSlide1>You Matter to Us</TextSlide1>
-        <TextSlide2>
-          Join this beautiful family to experience spiritual richness, healing,
-          fellowship, community and much more
-        </TextSlide2>
-      </Slide1>
-      <Slide2>
-        <Slide2Image
-          source={require("nlfyapp/assets/onboarding2.jpg")}
-        />
-        <TextScreen2>
-          Easily join this spiritual family which is not just a Sunday church
-          but cares about you..
-        </TextScreen2>
+      <Swiper style={styles.wrapper} showsButtons={false} activeDotColor="red">
+        <Slide1>
+          <Slide1Image source={require("nlfyapp/assets/onboarding1.jpg")} />
+          <TextSlide1>You Matter to God</TextSlide1>
+          <TextSlide1>You Matter to Us</TextSlide1>
+          <TextSlide2>
+            Join this beautiful family to experience spiritual richness,
+            healing, fellowship, community and much more
+          </TextSlide2>
+        </Slide1>
+        <Slide2>
+          <Slide2Image source={require("nlfyapp/assets/onboarding2.jpg")} />
+          <TextScreen2>
+            Easily join this spiritual family which is not just a Sunday church
+            but cares about you..
+          </TextScreen2>
 
-        <TextScreen2Orange>
-          Sign Up to have a customized experience or swipe
-        </TextScreen2Orange>
-        <Button elevation={3}>
-          <ButtonText>Sign Up</ButtonText>
-        </Button>
-      </Slide2>
-      <Slide3>
-        <TextScreen3>And simple</TextScreen3>
-      </Slide3>
-    </Swiper>
+          <TextScreen2Orange>
+            Sign Up to have a customized experience or swipe
+          </TextScreen2Orange>
+          <Button elevation={3}>
+            <ButtonText>Sign Up</ButtonText>
+          </Button>
+        </Slide2>
+        <Slide3>
+          <Slide2Image source={require("nlfyapp/assets/onboarding3.jpg")} />
+          <TextScreen2>
+            Have fellowship, listen sermons,be part of life groups,give easily
+            as God leads you
+          </TextScreen2>
+        </Slide3>
+      </Swiper>
     </SafeArea>
   );
 };
@@ -147,5 +155,3 @@ export const Onboarding = () => {
 const styles = StyleSheet.create({
   wrapper: {},
 });
-
-
