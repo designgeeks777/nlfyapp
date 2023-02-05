@@ -6,10 +6,10 @@ import {
   StyleSheet,
   StatusBar,
   SafeAreaView,
-  Pressable,
 } from "react-native";
 import Swiper from "react-native-swiper";
 import styled from "styled-components/native";
+import { Button } from "../components/button";
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -85,34 +85,6 @@ const TextScreen2Orange = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-const Button = styled(Pressable)`
-  align-items: center;
-  padding-vertical: 16px;
-  padding-horizontal: 32px;
-  border-radius: 50px;
-  top: 50px;
-  width: 320px;
-  height: 56px;
-  background-color: ${(props) => props.theme.colors.bgbutton.primary};
-`;
-
-const ButtonText = styled(Text)`
-  text-align: center;
-  font-size: ${(props) => props.theme.fontSizes.button};
-  line-height: ${(props) => props.theme.lineHeights.button};
-  font-weight: ${(props) => props.theme.fontWeights.bold};
-  letter-spacing: ${(props) => props.theme.space[1]};
-  color: ${(props) => props.theme.colors.text.inverse};
-  font-family: ${(props) => props.theme.fonts.body};
-`;
-
-const TextScreen3 = styled(Text)`
-  color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props) => props.theme.fontSizes.header};
-  font-weight: ${(props) => props.theme.fontWeights.medium};
-  font-family: ${(props) => props.theme.fonts.body};
-`;
-
 export const Onboarding = () => {
   return (
     <SafeArea>
@@ -136,9 +108,7 @@ export const Onboarding = () => {
           <TextScreen2Orange>
             Sign Up to have a customized experience or swipe
           </TextScreen2Orange>
-          <Button elevation={3}>
-            <ButtonText>Sign Up</ButtonText>
-          </Button>
+          <Button label="Sign Up" />
         </Slide2>
         <Slide3>
           <Slide2Image source={require("nlfyapp/assets/onboarding3.jpg")} />
