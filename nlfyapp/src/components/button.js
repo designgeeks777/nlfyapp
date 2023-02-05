@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, Pressable } from "react-native";
 import styled from "styled-components";
+import { LinearGradient } from "expo-linear-gradient";
 
 const PressableButton = styled(Pressable)`
   align-items: center;
@@ -21,12 +22,28 @@ const ButtonText = styled(Text)`
   letter-spacing: ${(props) => props.theme.space[1]};
   color: ${(props) => props.theme.colors.text.inverse};
   font-family: ${(props) => props.theme.fonts.body};
+  top: 16px;
+`;
+
+const StyledLinearGradient = styled(LinearGradient)`
+  padding-horizontal: 32px;
+  border-radius: 50px;
+  width: 320px;
+  height: 56px;
+  align-items: center;
 `;
 
 export const Button = ({ label, handleClick }) => {
   return (
-    <PressableButton elevation={3}>
-      <ButtonText>{label}</ButtonText>
+    <PressableButton>
+      <StyledLinearGradient
+        start={{ x: 0.0, y: 0.25 }}
+        end={{ x: 0.5, y: 1.0 }}
+        locations={[0, 0.5, 0.9]}
+        colors={["#E94A27", "#F26924", "#E94A27"]}
+      >
+        <ButtonText>{label}</ButtonText>
+      </StyledLinearGradient>
     </PressableButton>
   );
 };
