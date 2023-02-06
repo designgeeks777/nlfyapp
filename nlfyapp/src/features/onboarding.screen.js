@@ -116,6 +116,7 @@ export const Onboarding = () => {
             Have fellowship, listen sermons,be part of life groups,give easily
             as God leads you
           </TextScreen2>
+          <Button label="Get Started" />
         </Slide3>
       </Swiper>
     </SafeArea>
