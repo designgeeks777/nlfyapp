@@ -5,7 +5,7 @@ import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 
-const App = () => {
+export const App = () => {
   const [latoLoaded] = useFonts({
     Lato_400Regular,
   });
