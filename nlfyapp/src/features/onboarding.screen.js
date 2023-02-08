@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Text,
   Image,
@@ -10,6 +10,7 @@ import {
 import Swiper from "react-native-swiper";
 import styled from "styled-components/native";
 import { Button } from "../components/button";
+import { Home } from "./home.screen";
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -29,6 +30,12 @@ const Slide2 = styled(View)`
 `;
 
 const Slide3 = styled(View)`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+`;
+
+const Slide4 = styled(View)`
   flex: 1;
   justify-content: center;
   align-items: center;
@@ -86,9 +93,29 @@ const TextScreen2Orange = styled(Text)`
 `;
 
 export const Onboarding = () => {
+  const [showPagination, setShowPagination] = useState(true);
+  const [scrollEnabled, setScrollEnabled] = useState(true);
+  const setPaginationState = (index) => {
+    if (index === 3) {
+      setShowPagination(false);
+      setScrollEnabled(false);
+    } else {
+      setShowPagination(true);
+      setScrollEnabled(true);
+    }
+  };
+
   return (
     <SafeArea>
-      <Swiper style={styles.wrapper} showsButtons={false} activeDotColor="red">
+      <Swiper
+        style={styles.wrapper}
+        showsButtons={false}
+        activeDotColor="red"
+        loop={false}
+        onIndexChanged={(index) => setPaginationState(index)}
+        showsPagination={showPagination}
+        scrollEnabled={scrollEnabled}
+      >
         <Slide1>
           <Slide1Image source={require("nlfyapp/assets/onboarding1.jpg")} />
           <TextSlide1>You Matter to God</TextSlide1>
@@ -118,6 +145,9 @@ export const Onboarding = () => {
           </TextScreen2>
           <Button label="Get Started" />
         </Slide3>
+        <Slide4>
+          <Home />
+        </Slide4>
       </Swiper>
     </SafeArea>
   );
