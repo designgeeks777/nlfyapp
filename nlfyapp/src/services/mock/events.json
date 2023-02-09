@@ -1,0 +1,79 @@
+{
+    "data": [
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "21-03-2023",
+            "eventName": "Church Picnic",
+            "place": "Bangalore",
+            "time": "9:00 AM to 07:00 PM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        }
+    ]
+}

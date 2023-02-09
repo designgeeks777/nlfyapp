@@ -1,0 +1,89 @@
+{
+    "data": [
+        {
+            "place": "amruthahalli",
+            "meetingDay": "Every Thursday",
+            "leaders": [
+                "Anzi",
+                "Vegin"
+            ],
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "place": "Hebbal",
+            "meetingDay": "Every Thursday",
+            "leaders": [
+                "Robin",
+                "Ria"
+            ],
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "place": "Hebbal",
+            "meetingDay": "Every Thursday",
+            "leaders": [
+                "Albin",
+                "Priscilla"
+            ],
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "place": "vidyaranpura",
+            "meetingDay": "Every Tuesday",
+            "leaders": [
+                "Aandeep",
+                "Anna"
+            ],
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "place": "amruthahalli",
+            "meetingDay": "Every Thursday",
+            "leaders": [
+                "Anzi",
+                "Vegin"
+            ],
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        }
+    ]
+}
