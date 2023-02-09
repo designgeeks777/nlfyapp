@@ -135,7 +135,7 @@ export const Onboarding = () => {
           <TextScreen1Orange>Swipe</TextScreen1Orange>
         </Slide1>
         <Slide2>
-          <Slide2Image source={require("nlfyapp/assets/onboarding2.jpg")} />
+          <Slide2Image source={require("nlfyapp/assets/onboarding2.png")} />
           <TextScreen2>
             Easily join this spiritual family which is not just a Sunday church
             but cares about you..
@@ -147,7 +147,7 @@ export const Onboarding = () => {
           <Button label="Sign Up" />
         </Slide2>
         <Slide3>
-          <Slide2Image source={require("nlfyapp/assets/onboarding3.jpg")} />
+          <Slide2Image source={require("nlfyapp/assets/onboarding3.png")} />
           <TextScreen2>
             Have fellowship, listen sermons,be part of life groups,give easily
             as God leads you
