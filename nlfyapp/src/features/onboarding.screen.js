@@ -57,7 +57,7 @@ const Slide2Image = styled(Image)`
 
 const TextSlide1 = styled(Text)`
   align-items: center;
-  top: 190px;
+  top: 200px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.medium};
@@ -65,7 +65,7 @@ const TextSlide1 = styled(Text)`
 `;
 
 const TextSlide2 = styled(Text)`
-  top: 190px;
+  top: 200px;
   padding-top: 16px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.body};
@@ -86,7 +86,7 @@ const TextScreen2 = styled(Text)`
 `;
 
 const TextScreen2Orange = styled(Text)`
-  top: 20px;
+  top: 40px;
   padding-top: 16px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
