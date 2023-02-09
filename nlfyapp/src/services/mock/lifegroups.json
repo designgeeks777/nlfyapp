@@ -1,0 +1,224 @@
+1) CREATE :
+POST/lifegroup
+Request Body: {
+
+“place” : “amruthahalli”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”
+    }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+    }
+}
+#Response
+201 Created
+200 OK
+503 Server Error
+2) READ
+GET call with List All:
+GET/lifegroup
+Response Body: [
+    {
+“place” : “amruthahalli”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”,
+        }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+        }
+    },
+    {
+“place” : “amruthahalli”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”,
+        }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+        }
+    },
+    {
+“place” : “amruthahalli”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”,
+        }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+        }
+    },
+    {
+“place” : “Hebbal”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”,
+        }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+        }
+    },
+    {
+“place” : “yelahanka”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”
+        }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+        }
+    },
+]
+#Response
+200 OK
+404 Not found
+GET Call with id:
+GET/lifegroup/place
+Response Body: {
+“place” : “yelahanka”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”
+    }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+    }
+}
+#Response
+200 OK
+404 Not Found
+3) UPDATE
+PUT/lifegroup
+The following field will get Added to an existing table
+Body: {
+“place” : “yelahanka”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”
+    }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+    }
+},
+#Response
+200 OK
+503 Server Error
+404 Not Found
+4)DELETE
+Delete call by ID:
+DELETE/lifegroup/place
+The following field will get Deleted
+{
+“place” : “yelahanka”,
+“meetingDay” :” ”,
+“leaders” : {
+           “Anzi”,
+
+                  “Vegin”
+    }
+
+“members” : {
+
+        “xyz”.
+
+   “xyz”.
+
+“xyz”.
+“xyz”,
+“xyz”,
+“xyz”,
+    }
+},
+#Response
+200 OK
+503 Server Error
+404 Not Found
