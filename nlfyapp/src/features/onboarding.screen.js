@@ -52,6 +52,7 @@ const Slide1Image = styled(Image)`
 const Slide2Image = styled(Image)`
   height: 250px;
   width: 250px;
+  border-radius: 10px;
 `;
 
 const TextSlide1 = styled(Text)`
@@ -81,10 +82,20 @@ const TextScreen2 = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   margin-left: ${(props) => props.theme.space[3]};
   margin-right: ${(props) => props.theme.space[3]};
+  top: 20px;
 `;
 
 const TextScreen2Orange = styled(Text)`
   top: 20px;
+  padding-top: 16px;
+  color: ${(props) => props.theme.colors.text.secondary};
+  font-size: ${(props) => props.theme.fontSizes.caption};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+`;
+
+const TextScreen1Orange = styled(Text)`
+  top: 220px;
   padding-top: 16px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
@@ -99,9 +110,6 @@ export const Onboarding = () => {
     if (index === 3) {
       setShowPagination(false);
       setScrollEnabled(false);
-    } else {
-      setShowPagination(true);
-      setScrollEnabled(true);
     }
   };
 
@@ -124,6 +132,7 @@ export const Onboarding = () => {
             Join this beautiful family to experience spiritual richness,
             healing, fellowship, community and much more
           </TextSlide2>
+          <TextScreen1Orange>Swipe</TextScreen1Orange>
         </Slide1>
         <Slide2>
           <Slide2Image source={require("nlfyapp/assets/onboarding2.jpg")} />
@@ -143,7 +152,7 @@ export const Onboarding = () => {
             Have fellowship, listen sermons,be part of life groups,give easily
             as God leads you
           </TextScreen2>
-          <Button label="Get Started" />
+          <TextScreen2Orange>Swipe to get started</TextScreen2Orange>
         </Slide3>
         <Slide4>
           <Home />
