@@ -1,214 +1,89 @@
-1) CREATE :
-
-POST/prayerrequest
-
-Request Body: {
-    "raisedBy": "Joel",
-    "request": " ",
-    "dateOfPosting": " ",
-    "responses": [
+{
+    "data": [
         {
-            "responseBy": "XYZ",
-            "dateOfResponse": " "
+            "raisedBy": "Joel",
+            "request": "",
+            "dateOfPosting": "",
+            "responses": {
+                "response": {
+                    "responseBy": "XYZ",
+                    "dateOfResponse": ""
+                }
+            },
+            "likes": {
+                "like": {
+                    "likedBy": "",
+                    "dateOfLike": "10-12-2022"
+                }
+            }
         },
         {
-            "responseBy": "ABC",
-            "dateOfResponse": " "
+            "raisedBy": "Jonah",
+            "request": "",
+            "dateOfPosting": "",
+            "responses": {
+                "response": {
+                    "responseBy": "abc",
+                    "dateOfResponse": ""
+                }
+            },
+            "likes": {
+                "like": {
+                    "likedBy": "",
+                    "dateOfLike": "11-12-2022"
+                }
+            }
         },
+        {
+            "raisedBy": "Ria",
+            "request": "",
+            "dateOfPosting": "",
+            "responses": {
+                "response": {
+                    "responseBy": "def",
+                    "dateOfResponse": ""
+                }
+            },
+            "likes": {
+                "like": {
+                    "likedBy": "",
+                    "dateOfLike": "12-12-2022"
+                }
+            }
+        },
+        {
+            "raisedBy": "Robin",
+            "request": "",
+            "dateOfPosting": "",
+            "responses": {
+                "response": {
+                    "responseBy": "paul",
+                    "dateOfResponse": ""
+                }
+            },
+            "likes": {
+                "like": {
+                    "likedBy": "",
+                    "dateOfLike": "13-12-2022"
+                }
+            }
+        },
+        {
+            "raisedBy": "Emman",
+            "request": "",
+            "dateOfPosting": "",
+            "responses": {
+                "response": {
+                    "responseBy": "pqr",
+                    "dateOfResponse": ""
+                }
+            },
+            "likes": {
+                "like": {
+                    "likedBy": "",
+                    "dateOfLike": "15-12-2022"
+                }
+            }
+        }
     ]
-				"likes": [
-        {
-            "likedBy": " ",
-            "dateOfLike": "10-12-2022"
-        },
-        {
-            "likedBy": " ",
-            "dateOfLike": "10-12-2022"
-        },
-        {
-            "likedBy": " ",
-            "dateOfLike": "10-12-2022"
-        },
-    ]
 }
-
-
-#Response
-
- 201 Created
-
- 200 OK 
-
- 503 Server Error
-
-
-
-
-2) READ
-
-GET call with List All:
-
-GET/prayerrequest
-
-Response Body: [
-    {
-        "raisedBy": "Joel",
-        "request": " ",
-        "dateOfPosting": " ",
-        "responses": {
-            "response": {
-                "responseBy": "XYZ",
-                "dateOfResponse": " "
-            },
-        },
-        "likes": {
-            "like": {
-                "likedBy": " ",
-                "dateOfLike": "10-12-2022"
-            },
-        },
-    },
-    {
-        "raisedBy": "sam",
-        "request": " ",
-        "dateOfPosting": " ",
-        "responses": {
-            "response": {
-                "responseBy": "XYZ",
-                "dateOfResponse": " "
-            },
-        },
-        "likes": {
-            "like": {
-                "likedBy": " ",
-                "dateOfLike": "10-12-2022"
-            },
-        },
-    },
-    {
-        "raisedBy": "Maxi",
-        "request": " ",
-        "dateOfPosting": " ",
-        "responses": {
-            "response": {
-                "responseBy": "XYZ",
-                "dateOfResponse": " "
-            },
-        },
-        "likes": {
-            "like": {
-                "likedBy": " ",
-                "dateOfLike": "10-12-2022"
-            },
-        },
-    },
-]
-
-#Response
-
- 200 OK
-
- 404 Not found 
-
-
-
-
-GET Call with id:
-
-GET/prayerrequest/postedBy
-
-Response Body: {
-    "raisedBy": "Maxi",
-    "request": " ",
-    "dateOfPosting": " ",
-    "responses": {
-        "response": {
-            "responseBy": "XYZ",
-            "dateOfResponse": " "
-        },
-    },
-    "likes": {
-        "like": {
-            "likedBy": " ",
-            "dateOfLike": "10-12-2022"
-        },
-    },
-}
-				
-
-#Response
-
- 200 OK 
-
- 404 Not Found
-
-
-
-
-3) UPDATE
-
-PUT/prayerrequest
-
-The following field will get Added to an existing table** 
-
-	Body: {
-    "raisedBy": "Mercy",
-    "request": " ",
-    "dateOfPosting": " ",
-    "responses": {
-        "response": {
-            "responseBy": "XYZ",
-            "dateOfResponse": " "
-        },
-    },
-    "likes": {
-        "like": {
-            "likedBy": " ",
-            "dateOfLike": "10-12-2022"
-        },
-    },
-}
-#Response
-
- 200 OK 
-
- 503 Server Error
-
- 404 Not Found
-
-
-
-4)DELETE
-
-Delete call by ID:
-
-DELETE/prayerrequest/postedBy
-
-The following field will get Deleted
-
-		{
-    "raisedBy": "Mercy",
-    "request": " ",
-    "dateOfPosting": " ",
-    "responses": {
-        "response": {
-            "responseBy": "XYaZ",
-            "dateOfResponse": " "
-        },
-    },
-    "likes": {
-        "like": {
-            "likedBy": " ",
-            "dateOfLike": "10-12-2022"
-        },
-    },
-}
-
-#Response
-
- 200 OK 
-
- 503 Server Error
-
- 404 Not Found
-

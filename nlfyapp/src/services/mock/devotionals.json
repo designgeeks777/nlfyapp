@@ -1,115 +1,49 @@
-1) CREATE :
-POST/devotional
-Request Body: {
-
-“date” : 12-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-               the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only  
-
-                 fivecenturies ”,
-}
-#Response
-201 Created
-200 OK
-503 Server Error
-2) READ
-GET call with List All:
-GET/devotional
-Response Body: [
-    {
-“date” : 12-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-                the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only 
-
-                  five centuries ”,
-    },
-    {
-“date” : 13-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-                the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only 
-
-                  five centuries ”,
-    },
-    {
-“date” : 14-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-                the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only 
-
-                  five centuries ”,
-    },
-    {
-“date” : 15-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-                the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only 
-
-                  five centuries ”,
-    },
-]
-#Response
-200 OK
-404 Not found
-GET Call with id:
-GET/devotional/15-12-2021
-Response Body: {
-“date” : 15-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-                the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only 
-
-                  five centuries ”,
-}
-#Response
-200 OK
-404 Not Found
-3) UPDATE
-PUT/devotional
-The following field will get Added to an existing table
-Body: {
-“date” : 17-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-                the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only 
-
-                  five centuries ”,
-}
-#Response
-200 OK
-503 Server Error
-404 Not Found
-4)DELETE
-Delete call by ID:
-DELETE/devotional/14-12-2021
-The following field will get Deleted
 {
-“date” : 14-12-2021,
-“heading” : “Walk by faith by Rick warren”,
-“content” : “Lorem Ipsum has been the industry's standard dummy text ever since
-                the 1500s, when an unknown printer took a galley of type and 
-
-                 scrambled it to make a type specimen book. It has survived not only 
-
-                  five centuries ”,
+    "data": [
+        {
+            "id": 1,
+            "type": "Daily Devotional",
+            "attributes": {
+                "date": "12-12-2021",
+                "heading": "Walk by faith by Rick warren",
+                "content": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only  five centuries."
+            }
+        },
+        {
+            "id": 2,
+            "type": "Daily Devotional",
+            "attributes": {
+                "date": "13-12-2021",
+                "heading": "Walk by faith by Rick warren",
+                "content": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only  five centuries."
+            }
+        },
+        {
+            "id": 3,
+            "type": "Daily Devotional",
+            "attributes": {
+                "date": "14-12-2021",
+                "heading": "Walk by faith by Rick warren",
+                "content": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only  five centuries."
+            }
+        },
+        {
+            "id": 4,
+            "type": "Daily Devotional",
+            "attributes": {
+                "date": "15-12-2021",
+                "heading": "Walk by faith by Rick warren",
+                "content": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only  five centuries."
+            }
+        },
+        {
+            "id": 5,
+            "type": "Daily Devotional",
+            "attributes": {
+                "date": "16-12-2021",
+                "heading": "Walk by faith by Rick warren",
+                "content": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only  five centuries."
+            }
+        }
+    ]
 }
-#Response
-200 OK
-503 Server Error
-404 Not Found

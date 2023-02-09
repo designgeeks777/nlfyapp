@@ -1,188 +1,79 @@
-1) CREATE:
-POST / events
-Request Body: {
-
-“day” : “Every wednesday”,
-“eventName” : “Bible study”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 11: 00 AM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”
-    }
-}
-#Response
-201 Created
-200 OK
-503 Server Error
-2) READ
-GET call with List All:
-GET / events
-Response Body: [
-    {
-“day” : 10-10 - 2010,
-“eventName” : “Church picnic”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 7: 00 PM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”,
-        }
-    },
-    {
-“day” : “Every Wednesday”,
-“eventName” : “Bible Study”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 11: 00 AM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz1”.
-“xyz”,
-“xyz”,
-“xyz”,
-        }
-    },
-    {
-“day” : 10-10 - 2010,
-“eventName” : “Church picnic”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 7: 00 PM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”,
-        }
-    },
-    {
-“day” : 10-10 - 2010,
-“eventName” : “Church picnic”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 7: 00 PM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”,
-        }
-    },
-    {
-“day” : 10-10 - 2010,
-“eventName” : “Church picnic”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 7: 00 PM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”,
-        }
-    }
-]
-#Response
-200 OK
-404 Not found
-GET Call with id:
-GET / events / eventName
-Response Body: {
-
-“day” : “wednesday”,
-“eventName” : “Church picnic”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 7: 00 PM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”,
-    }
-}
-#Response
-200 OK
-404 Not Found
-3) UPDATE
-PUT / events / eventName
-The following field will get Added to an existing table
-Body: {
-“day” : 11 - 11 - 2020,
-“eventName” : “Bible Study”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 7: 00 PM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”,
-    }
-}
-#Response
-200 OK
-503 Server Error
-404 Not Found
-4) DELETE
-Delete call by ID:
-DELETE / events / eventName
 {
-“day” : 10 - 10 - 2010,
-“eventName” : “Church Picnic”,
-“place” : “bangalore”,
-“time” : “ 9: 00 AM to 7: 00 PM“,
-“members” : {
-
-        “xyz”.
-
-   “xyz”.
-
-“xyz”.
-“xyz”,
-“xyz”,
-“xyz”,
-    }
+    "data": [
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "21-03-2023",
+            "eventName": "Church Picnic",
+            "place": "Bangalore",
+            "time": "9:00 AM to 07:00 PM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        },
+        {
+            "day": "Every Wednesday",
+            "eventName": "Bible Study",
+            "place": "Bangalore",
+            "time": "9:00 AM to 11:00 AM",
+            "members": [
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz",
+                "xyz"
+            ]
+        }
+    ]
 }
-#Response
-200 OK
-503 Server Error
-404 Not Found

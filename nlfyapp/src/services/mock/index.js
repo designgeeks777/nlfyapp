@@ -6,4 +6,4 @@ import prayerRequest from "./prayerRequest.json";
 
 export const mocks = {};
 
-export const mockImages = [];
+export const mockImages = ["", ""];
