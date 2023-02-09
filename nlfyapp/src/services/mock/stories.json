@@ -3,17 +3,17 @@
 POST/stories
 
 Request Body: {
-    "postedBy": "Joel",
-    "id": 111,
-    "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
+  "postedBy": "Joel",
+  "id": 111,
+  "testimony": "Loremd Ipsum has been the industry's standard dummy text ever since 
 				the 1500s, when an unknown printer took a galley of type and 
 				scrambled it to make a type specimen book. It has survived not only  
 				five centuries ”
 				
 				"like": {
-        "likedBy": " ",
-        "dateOfLiking": "10-12-2022"
-    }
+    "likedBy": " ",
+    "dateOfLiking": "10-12-2022"
+  }
 				"dateOfPosting": "09-12-2021 "
 }
 
@@ -36,45 +36,45 @@ GET call with List All:
 GET/stories 
 
 Response Body: [
-    {
-        "postedBy": "Joel",
-        "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
+  {
+    "postedBy": "Joel",
+    "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
 				the 1500s, when an unknown printer took a galley of type and 
 				scrambled it to make a type specimen book. It has survived not only  
 				five centuries ”
 				
 				"like": {
-            "likedBy": " ",
-            "dateOfLiking": "10-12-2022"
-        }
+      "likedBy": " ",
+      "dateOfLiking": "10-12-2022"
+    }
 				"dateOfPosting": "09-12-2021 "
-    },
-    {
-        "postedBy": "paul",
-        "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
+  },
+  {
+    "postedBy": "paul",
+    "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
 				the 1500s, when an unknown printer took a galley of type and 
 				scrambled it to make a type specimen book. It has survived not only  
 				five centuries ”
 				
 				"like": {
-            "likedBy": " ",
-            "dateOfLiking": "10-12-2022"
-        }
+      "likedBy": " ",
+      "dateOfLiking": "10-12-2022"
+    }
 				"dateOfPosting": "09-12-2021 "
-    },
-    {
-        "postedBy": "jonah",
-        "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
+  },
+  {
+    "postedBy": "jonah",
+    "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
 				the 1500s, when an unknown printer took a galley of type and 
 				scrambled it to make a type specimen book. It has survived not only  
 				five centuries ”
 				
 				"like": {
-            "likedBy": " ",
-            "dateOfLiking": "10-12-2022"
-        }
+      "likedBy": " ",
+      "dateOfLiking": "10-12-2022"
+    }
 				"dateOfPosting": "09-12-2021 "
-    },
+  },
 ]
 
 #Response
@@ -91,17 +91,17 @@ GET Call with id:
 GET/stories/id
 
 Response Body: {
-    "postedBy": "jonah",
-    "id": 111,
-    "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
+  "postedBy": "jonah",
+  "id": 111,
+  "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
 				the 1500s, when an unknown printer took a galley of type and 
 				scrambled it to make a type specimen book. It has survived not only  
 				five centuries ”
 				
 				"like": {
-        "likedBy": " ",
-        "dateOfLiking": "10-12-2022"
-    }
+    "likedBy": " ",
+    "dateOfLiking": "10-12-2022"
+  }
 				"dateOfPosting": "09-12-2021"
 }
 
@@ -121,17 +121,17 @@ PUT/stories
 The following field will get Added to an existing table** 
 
 	Body: {
-    "postedBy": "david",
-    "id": 111,
-    "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
+  "postedBy": "david",
+  "id": 111,
+  "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
 				the 1500s, when an unknown printer took a galley of type and 
 				scrambled it to make a type specimen book. It has survived not only  
 				five centuries ”
 				
 				"like": {
-        "likedBy": " ",
-        "dateOfLiking": "10-12-2022"
-    }
+    "likedBy": " ",
+    "dateOfLiking": "10-12-2022"
+  }
 				"dateOfPosting": "09-12-2021 "
 }
 
@@ -155,17 +155,17 @@ DELETE/stories/id
 The following field will get Deleted
 
 		{
-    "postedBy": "david",
-    "id": 111,
-    "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
+  "postedBy": "david",
+  "id": 111,
+  "testimony": "Lorem Ipsum has been the industry's standard dummy text ever since 
 				the 1500s, when an unknown printer took a galley of type and 
 				scrambled it to make a type specimen book. It has survived not only  
 				five centuries ”
 				
 				"like": {
-        "likedBy": " ",
-        "dateOfLiking": "10-12-2022"
-    }
+    "likedBy": " ",
+    "dateOfLiking": "10-12-2022"
+  }
 				"dateOfPosting": "09-12-2021 "
 }
 

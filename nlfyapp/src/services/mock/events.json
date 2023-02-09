@@ -1,14 +1,12 @@
 1) CREATE:
 POST / events
-Request Body:
-{
+Request Body: {
 
 “day” : “Every wednesday”,
 “eventName” : “Bible study”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 11: 00 AM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -19,7 +17,6 @@ Request Body:
 “xyz”,
 “xyz”
     }
-
 }
 #Response
 201 Created
@@ -28,15 +25,13 @@ Request Body:
 2) READ
 GET call with List All:
 GET / events
-Response Body:
-[
+Response Body: [
     {
 “day” : 10-10 - 2010,
 “eventName” : “Church picnic”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 7: 00 PM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -46,35 +41,31 @@ Response Body:
 “xyz”,
 “xyz”,
 “xyz”,
-          }
-
-},
+        }
+    },
     {
 “day” : “Every Wednesday”,
 “eventName” : “Bible Study”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 11: 00 AM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
    “xyz”.
 
-“xyz”.
+“xyz1”.
 “xyz”,
 “xyz”,
 “xyz”,
-          }
-
-},
+        }
+    },
     {
 “day” : 10-10 - 2010,
 “eventName” : “Church picnic”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 7: 00 PM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -84,16 +75,14 @@ Response Body:
 “xyz”,
 “xyz”,
 “xyz”,
-          }
-
-},
+        }
+    },
     {
 “day” : 10-10 - 2010,
 “eventName” : “Church picnic”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 7: 00 PM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -103,16 +92,14 @@ Response Body:
 “xyz”,
 “xyz”,
 “xyz”,
-          }
-
-},
+        }
+    },
     {
 “day” : 10-10 - 2010,
 “eventName” : “Church picnic”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 7: 00 PM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -122,24 +109,21 @@ Response Body:
 “xyz”,
 “xyz”,
 “xyz”,
-          }
-
-}
+        }
+    }
 ]
 #Response
 200 OK
 404 Not found
 GET Call with id:
 GET / events / eventName
-Response Body:
-{
+Response Body: {
 
 “day” : “wednesday”,
 “eventName” : “Church picnic”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 7: 00 PM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -150,7 +134,6 @@ Response Body:
 “xyz”,
 “xyz”,
     }
-
 }
 #Response
 200 OK
@@ -158,14 +141,12 @@ Response Body:
 3) UPDATE
 PUT / events / eventName
 The following field will get Added to an existing table
-Body:
-{
+Body: {
 “day” : 11 - 11 - 2020,
 “eventName” : “Bible Study”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 7: 00 PM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -176,7 +157,6 @@ Body:
 “xyz”,
 “xyz”,
     }
-
 }
 #Response
 200 OK
@@ -190,8 +170,7 @@ DELETE / events / eventName
 “eventName” : “Church Picnic”,
 “place” : “bangalore”,
 “time” : “ 9: 00 AM to 7: 00 PM“,
-“members” :
-    {
+“members” : {
 
         “xyz”.
 
@@ -202,7 +181,6 @@ DELETE / events / eventName
 “xyz”,
 “xyz”,
     }
-
 }
 #Response
 200 OK
