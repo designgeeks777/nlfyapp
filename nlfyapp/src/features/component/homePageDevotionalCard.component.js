@@ -1,10 +1,11 @@
+/* eslint-disable prettier/prettier */
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 
 const DevotionalCard = styled(Card)`
-  top: 40px;
+  top: 80px;
   position: absolute;
   width: 360px;
   height: 180px;
@@ -30,18 +31,20 @@ const CardContent = styled(Text)`
 
 const CardReadmore = styled(Text)`
   position: absolute;
-  padding-left: 240px;
+  right: 10px;
   top: 150px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
+  text-align: right;
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
   border-radius: 10px;
   width: 360px;
   height: 180px;
+  
 `;
 
 export const HomePageDevotionalCard = ({ devotional = {} }) => {
@@ -52,8 +55,11 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
     <DevotionalCard>
       <StyledLinearGradient
         start={{ x: 180, y: 0.25 }}
-        end={{ x: 180, y: 1.0 }}
-        colors={["#E94A27", "#F26924"]}
+        end={{ x: 180, y: 0.5 }}
+        colors={
+          (["#F22424", "rgba(242, 105, 36, 0.20)"],
+            ["#F26924", "rgba(242, 105, 36, 0.80)"])
+        }
       >
         <Card.Content>
           <CardTitle variant="titleLarge">{cardContentTitle}</CardTitle>
