@@ -4,11 +4,13 @@ import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
+import { View } from "react-native";
 import {
   gettingData,
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
+import styled from "styled-components";
 
 const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
@@ -34,10 +36,22 @@ const App = () => {
     return null;
   }
 
+  const HomeView = styled(View)`
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+  `;
+
   return (
     <>
       <ThemeProvider theme={theme}>
-        {hasLaunched ? <Home /> : <Onboarding />}
+        {hasLaunched ? (
+          <HomeView>
+            <Home />
+          </HomeView>
+        ) : (
+          <Onboarding />
+        )}
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>
