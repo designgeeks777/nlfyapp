@@ -2,8 +2,9 @@
 import React from "react";
 import { Text } from "react-native";
 import styled from "styled-components";
-import { HomePageDevotionalCard } from "./homePageDevotionalCard.component";
-import { HomePageHeading } from "./homePageHeading.component";
+import { HomePageDevotionalCard } from "./devotionalCard.component";
+import { HomePageHeading } from "./devotionalHeader.component";
+
 const MessageText = styled(Text)`
   position: absolute;
   top: 50px;
