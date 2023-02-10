@@ -1,10 +1,6 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { HomePageDevotionalCard } from "../components/homePageDevotionalCard.component";
 
 export const Home = () => {
-  return (
-    <View>
-      <Text>Home Screen</Text>
-    </View>
-  );
+  return <HomePageDevotionalCard />;
 };
