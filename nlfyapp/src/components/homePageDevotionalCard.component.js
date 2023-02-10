@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
-import { View } from "react-native";
 
 const DevotionalCard = styled(Card)`
   top: 40px;
