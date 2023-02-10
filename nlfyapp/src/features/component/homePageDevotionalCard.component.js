@@ -57,8 +57,8 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
         start={{ x: 180, y: 0.25 }}
         end={{ x: 180, y: 0.5 }}
         colors={
-          (["#F22424", "rgba(242, 105, 36, 1.0)"],
-            ["#F26924", "rgba(242, 105, 36, 0.90)"])
+          (["#F22424", "rgba(242, 105, 36, 0.20)"],
+            ["#F26924", "rgba(242, 105, 36, 0.80)"])
         }
       >
         <Card.Content>
