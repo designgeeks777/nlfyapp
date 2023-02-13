@@ -12,16 +12,23 @@ import {
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
+import { PrayerRequest } from "./src/features/prayerRequest.screen";
 import styled from "styled-components";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const HomeView = styled(View)`
   flex: 1;
   top: 10px;
   align-items: center;
 `;
+const TAB_ICON = {
+  Home: "md-home",
+  PrayerRequest: "pray",
+};
 
 function HomeWrapper() {
   return (
@@ -31,7 +38,19 @@ function HomeWrapper() {
   );
 }
 
-const App = () => {
+const createScreenOptions = ({ route }) => {
+  const iconName = TAB_ICON[route.name];
+  return {
+    tabBarIcon: ({ size, color }) =>
+      route.name === "Home" ? (
+        <Ionicons name={iconName} size={size} color={color} />
+      ) : (
+        <FontAwesome5 name={iconName} size={size} color={color} />
+      ),
+  };
+};
+
+export const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
   const [latoLoaded] = useFonts({ Lato_400Regular });
   const HAS_LAUNCHED = "HAS_LAUNCHED";
@@ -62,10 +81,21 @@ const App = () => {
       <ThemeProvider theme={theme}>
         {hasLaunched ? (
           <NavigationContainer>
-            <Tab.Navigator>
+            <Tab.Navigator
+              screenOptions={createScreenOptions}
+              tabBarOptions={{
+                activeTintColor: "tomato",
+                inactiveTintColor: "gray",
+              }}
+            >
               <Tab.Screen
                 name="Home"
                 component={HomeWrapper}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Prayer Request"
+                component={PrayerRequest}
                 options={{ headerShown: false }}
               />
             </Tab.Navigator>
