@@ -27,7 +27,7 @@ const HomeView = styled(View)`
 `;
 const TAB_ICON = {
   Home: "md-home",
-  PrayerRequest: "pray",
+  "Prayer Request": "pray",
 };
 
 function HomeWrapper() {
@@ -40,17 +40,22 @@ function HomeWrapper() {
 
 const createScreenOptions = ({ route }) => {
   const iconName = TAB_ICON[route.name];
-  return {
-    tabBarIcon: ({ size, color }) =>
-      route.name === "Home" ? (
+  if (iconName === "md-home") {
+    return {
+      tabBarIcon: ({ size, color }) => (
         <Ionicons name={iconName} size={size} color={color} />
-      ) : (
+      ),
+    };
+  } else {
+    return {
+      tabBarIcon: ({ size, color }) => (
         <FontAwesome5 name={iconName} size={size} color={color} />
       ),
-  };
+    };
+  }
 };
 
-export const App = () => {
+const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
   const [latoLoaded] = useFonts({ Lato_400Regular });
   const HAS_LAUNCHED = "HAS_LAUNCHED";
