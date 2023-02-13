@@ -5,12 +5,31 @@ import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 import { View } from "react-native";
+//import { HomeWrapper } from "./src/features/homeWrapper";
+
 import {
   gettingData,
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
 import styled from "styled-components";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+
+const HomeView = styled(View)`
+  flex: 1;
+  top: 10px;
+  align-items: center;
+`;
+
+function HomeWrapper() {
+  return (
+    <HomeView>
+      <Home />
+    </HomeView>
+  );
+}
 
 const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
@@ -36,20 +55,21 @@ const App = () => {
     return null;
   }
 
-  const HomeView = styled(View)`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
-  `;
+  const Tab = createBottomTabNavigator();
 
   return (
     <>
       <ThemeProvider theme={theme}>
         {hasLaunched ? (
-          <HomeView>
-            <Home />
-          </HomeView>
+          <NavigationContainer>
+            <Tab.Navigator>
+              <Tab.Screen
+                name="Home"
+                component={HomeWrapper}
+                options={{ headerShown: false }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
         ) : (
           <Onboarding />
         )}
