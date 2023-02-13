@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { Devotional } from "./component/homeScreenComponent/devotional.component";
 import { Sermon } from "./component/homeScreenComponent/sermon.component";
 import { Event } from "./component/homeScreenComponent/event.component";
+import { Welcome } from "./component/homeScreenComponent/welcome.component";
 const WrapperView = styled(View)`
   top: 60px;
   position: absolute;
@@ -15,6 +16,7 @@ const WrapperView = styled(View)`
 export const Home = () => {
   return (
     <WrapperView>
+      <Welcome />
       <Devotional />
       <Sermon />
       <Event />
