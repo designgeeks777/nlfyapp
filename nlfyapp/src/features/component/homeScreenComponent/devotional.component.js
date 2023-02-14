@@ -2,8 +2,8 @@
 import React from "react";
 import { Text } from "react-native";
 import styled from "styled-components";
-import { HomePageDevotionalCard } from "./homePageDevotionalCard.component";
-import { HomePageHeading } from "./homePageHeading.component";
+import { HomePageDevotionalCard } from "./devotionalCard.component";
+
 const MessageText = styled(Text)`
   position: absolute;
   top: 50px;
@@ -18,8 +18,6 @@ export const Devotional = () => {
         <>
             <MessageText>Today's Message for you</MessageText>
             <HomePageDevotionalCard />
-            <HomePageHeading />
         </>
     );
 };
-
