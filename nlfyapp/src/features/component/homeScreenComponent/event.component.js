@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import { EventCardList } from "./eventCardList.component";
 import { HomeScreenHeading } from "../homeScreenHeader.component";
