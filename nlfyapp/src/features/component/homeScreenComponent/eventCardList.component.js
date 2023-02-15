@@ -1,12 +1,10 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
 
 const EventCard = styled(Card)`
-  top: 575px;
-  position: absolute;
-  width: 132px;
+  top: 70px;
+  width: 138px;
   height: 115px;
   border-radius: 15px;
   border-width: 1px;

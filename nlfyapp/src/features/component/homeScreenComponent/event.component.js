@@ -7,8 +7,8 @@ export const Event = () => {
       <HomeScreenHeading
         lefttext="What are we upto"
         righttext="See All Events"
-        lefttop="450px"
-        righttop="430px"
+        lefttop="70px"
+        righttop="50px"
       />
       <EventCardList />
     </>

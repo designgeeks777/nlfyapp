@@ -5,8 +5,7 @@ import styled from "styled-components";
 import { HomePageDevotionalCard } from "./devotionalCard.component";
 
 const MessageText = styled(Text)`
-  position: absolute;
-  top: 50px;
+  top: 10px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -14,10 +13,10 @@ const MessageText = styled(Text)`
 `;
 
 export const Devotional = () => {
-    return (
-        <>
-            <MessageText>Today's Message for you</MessageText>
-            <HomePageDevotionalCard />
-        </>
-    );
+  return (
+    <>
+      <MessageText>Today's Message for you</MessageText>
+      <HomePageDevotionalCard />
+    </>
+  );
 };
