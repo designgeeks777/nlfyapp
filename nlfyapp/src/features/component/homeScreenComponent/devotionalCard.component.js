@@ -5,8 +5,7 @@ import { Card, Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 
 const DevotionalCard = styled(Card)`
-  top: 80px;
-  position: absolute;
+  top: 20px;
   width: 360px;
   height: 180px;
   border-radius: 10px;
@@ -30,7 +29,6 @@ const CardContent = styled(Text)`
 `;
 
 const CardReadmore = styled(Text)`
-  position: absolute;
   right: 10px;
   top: 150px;
   color: ${(props) => props.theme.colors.text.inverse};
@@ -44,7 +42,6 @@ const StyledLinearGradient = styled(LinearGradient)`
   border-radius: 10px;
   width: 360px;
   height: 180px;
-  
 `;
 
 export const HomePageDevotionalCard = ({ devotional = {} }) => {
@@ -58,7 +55,7 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
         end={{ x: 180, y: 0.5 }}
         colors={
           (["#F22424", "rgba(242, 105, 36, 0.20)"],
-            ["#F26924", "rgba(242, 105, 36, 0.80)"])
+          ["#F26924", "rgba(242, 105, 36, 0.80)"])
         }
       >
         <Card.Content>

@@ -8,8 +8,8 @@ export const Sermon = () => {
       <HomeScreenHeading
         lefttext="Latest Sermon"
         righttext="See All"
-        lefttop="236px"
-        righttop="214px"
+        lefttop="50px"
+        righttop="30px"
       />
       <SermonVideo />
     </>
