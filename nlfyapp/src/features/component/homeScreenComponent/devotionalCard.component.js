@@ -1,12 +1,10 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
 import { LinearGradient } from "expo-linear-gradient";
 
 const DevotionalCard = styled(Card)`
-  top: 80px;
-  position: absolute;
+  top: 20px;
   width: 360px;
   height: 180px;
   border-radius: 10px;
@@ -30,7 +28,6 @@ const CardContent = styled(Text)`
 `;
 
 const CardReadmore = styled(Text)`
-  position: absolute;
   right: 10px;
   top: 150px;
   color: ${(props) => props.theme.colors.text.inverse};

@@ -2,11 +2,10 @@
 import React from "react";
 import { Text } from "react-native";
 import styled from "styled-components";
-import { HomePageDevotionalCard } from "./homePageDevotionalCard.component";
-import { HomePageHeading } from "./homePageHeading.component";
+import { HomePageDevotionalCard } from "./devotionalCard.component";
+
 const MessageText = styled(Text)`
-  position: absolute;
-  top: 50px;
+  top: 10px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -14,12 +13,10 @@ const MessageText = styled(Text)`
 `;
 
 export const Devotional = () => {
-    return (
-        <>
-            <MessageText>Today's Message for you</MessageText>
-            <HomePageDevotionalCard />
-            <HomePageHeading />
-        </>
-    );
+  return (
+    <>
+      <MessageText>Today's Message for you</MessageText>
+      <HomePageDevotionalCard />
+    </>
+  );
 };
-

@@ -4,6 +4,7 @@ export const colors = {
     secondary: "#EF6C00",
     inverse: "#FFFFFF",
     title: "#F26924",
+    seeall: "#008BE2",
   },
   bg: {
     primary: "#FFFFFF",
