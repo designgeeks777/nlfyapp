@@ -5,12 +5,76 @@ import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 import { View } from "react-native";
+import { Give } from "./src/features/give.screen";
+import { LifeGroups } from "./src/features/lifeGroups.screen";
+
 import {
   gettingData,
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
+import { PrayerRequest } from "./src/features/prayerRequest.screen";
 import styled from "styled-components";
+
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Sermons } from "./src/features/sermons.screen";
+import { Events } from "./src/features/events.screen";
+
+const HomeView = styled(View)`
+  flex: 1;
+  top: 10px;
+  align-items: center;
+`;
+const TAB_ICON = {
+  Home: "md-home",
+  "Prayer Request": "pray",
+  Give: "donate",
+  Sermons: "bible",
+  "Life Groups": "people-arrows",
+};
+
+function HomeWrapper() {
+  return (
+    <HomeView>
+      <Home />
+    </HomeView>
+  );
+}
+
+const createScreenOptions = ({ route }) => {
+  const iconName = TAB_ICON[route.name];
+  if (iconName === "md-home") {
+    return {
+      tabBarIcon: ({ size, color }) => (
+        <Ionicons name={iconName} size={size} color={color} />
+      ),
+      tabBarActiveTintColor: "tomato",
+      tabBarInactiveTintColor: "gray",
+      tabBarStyle: {
+        display: "flex",
+      },
+    };
+  } else if (
+    iconName === "pray" ||
+    iconName === "people-arrows" ||
+    iconName === "donate" ||
+    iconName === "bible"
+  ) {
+    return {
+      tabBarIcon: ({ size, color }) => (
+        <FontAwesome5 name={iconName} size={size} color={color} />
+      ),
+      tabBarActiveTintColor: "tomato",
+      tabBarInactiveTintColor: "gray",
+      tabBarStyle: {
+        display: "flex",
+      },
+    };
+  }
+};
 
 const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
@@ -36,20 +100,50 @@ const App = () => {
     return null;
   }
 
-  const HomeView = styled(View)`
-    flex: 1;
-    justify-content: center;
-    align-items: center;
-    padding-top: 20px;
-  `;
+  const Tab = createBottomTabNavigator();
 
   return (
     <>
       <ThemeProvider theme={theme}>
         {hasLaunched ? (
-          <HomeView>
-            <Home />
-          </HomeView>
+          <NavigationContainer>
+            <Tab.Navigator screenOptions={createScreenOptions}>
+              <Tab.Screen
+                name="Home"
+                component={HomeWrapper}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Prayer Request"
+                component={PrayerRequest}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Give"
+                component={Give}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Sermons"
+                component={Sermons}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Life Groups"
+                component={LifeGroups}
+                options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Events"
+                component={Events}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false,
+                  headerShown: false,
+                }}
+              />
+            </Tab.Navigator>
+          </NavigationContainer>
         ) : (
           <Onboarding />
         )}

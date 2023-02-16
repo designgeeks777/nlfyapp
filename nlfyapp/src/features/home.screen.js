@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, View, Text, SafeAreaView } from "react-native";
+import { ScrollView, View } from "react-native";
 import styled from "styled-components";
 import { Devotional } from "./component/homeScreenComponent/devotional.component";
 import { Sermon } from "./component/homeScreenComponent/sermon.component";

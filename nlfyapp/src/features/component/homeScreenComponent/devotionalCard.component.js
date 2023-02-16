@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
@@ -51,10 +50,10 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
   return (
     <DevotionalCard>
       <StyledLinearGradient
-        start={{ x: 180, y: 0.25 }}
-        end={{ x: 180, y: 0.5 }}
+        start={{ x: 180, y: 0.4 }}
+        end={{ x: 180, y: 0.6 }}
         colors={
-          (["#F22424", "rgba(242, 105, 36, 0.20)"],
+          (["#F22424", "rgba(242, 36, 36, 1)"],
           ["#F26924", "rgba(242, 105, 36, 0.80)"])
         }
       >

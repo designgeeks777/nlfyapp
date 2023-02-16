@@ -1,12 +1,14 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
+import { useNavigation } from "@react-navigation/native";
 
 export const HomeScreenHeading = ({
   lefttext,
   righttext,
   lefttop,
   righttop,
+  navigateTo,
 }) => {
   const LeftSideText = styled(Text)`
     top: ${lefttop};
@@ -25,10 +27,18 @@ export const HomeScreenHeading = ({
     font-family: ${(props) => props.theme.fonts.body};
     align-self: flex-end;
   `;
+
+  const navigation = useNavigation();
+
+  const handlePress = () => {
+    navigation.navigate(navigateTo);
+  };
   return (
     <>
       <LeftSideText>{lefttext}</LeftSideText>
-      <RightSideText>{righttext} </RightSideText>
+      <TouchableOpacity onPress={handlePress}>
+        <RightSideText>{righttext} </RightSideText>
+      </TouchableOpacity>
     </>
   );
 };
