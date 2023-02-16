@@ -21,6 +21,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./src/features/sermons.screen";
+import { Events } from "./src/features/events.screen";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -131,6 +132,15 @@ const App = () => {
                 name="Life Groups"
                 component={LifeGroups}
                 options={{ headerShown: false }}
+              />
+              <Tab.Screen
+                name="Events"
+                component={Events}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false,
+                  headerShown: false,
+                }}
               />
             </Tab.Navigator>
           </NavigationContainer>
