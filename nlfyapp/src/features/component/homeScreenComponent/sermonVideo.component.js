@@ -1,11 +1,13 @@
 import React from "react";
-import { Image, View, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Image, View, StyleSheet, Dimensions } from "react-native";
+
+const { width } = Dimensions.get("window");
+const containerWidth = width * 0.9;
 
 const styles = StyleSheet.create({
   videoContainer: {
     top: 40,
-    width: 360,
+    width: containerWidth,
     height: 200,
     borderRadius: 30,
   },

@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
+import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
+const { width } = Dimensions.get("window");
+const cardWidth = width * 0.9;
+const cardContentWidth = width * 0.8;
 const DevotionalCard = styled(Card)`
   top: 20px;
-  width: 360px;
+  width: ${cardWidth}px;
   height: 180px;
   border-radius: 10px;
 `;
@@ -24,7 +28,7 @@ const CardContent = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
-  width: 340px;
+  width: ${cardContentWidth}px;
 `;
 
 const CardReadmore = styled(Text)`
@@ -39,7 +43,7 @@ const CardReadmore = styled(Text)`
 
 const StyledLinearGradient = styled(LinearGradient)`
   border-radius: 10px;
-  width: 360px;
+  width: ${cardWidth}px;
   height: 180px;
 `;
 
