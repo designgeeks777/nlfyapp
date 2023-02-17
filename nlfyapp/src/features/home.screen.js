@@ -4,7 +4,10 @@ import styled from "styled-components";
 import { Devotional } from "./component/homeScreenComponent/devotional.component";
 import { Sermon } from "./component/homeScreenComponent/sermon.component";
 import { Event } from "./component/homeScreenComponent/event.component";
+import { Give } from "./component/homeScreenComponent/give.component";
+import { Story } from "./component/homeScreenComponent/story.component";
 import { Welcome } from "./component/homeScreenComponent/welcome.component";
+
 const WrapperView = styled(View)`
   top: 40px;
   width: 360px;
@@ -20,6 +23,8 @@ export const Home = () => {
         <Devotional />
         <Sermon />
         <Event />
+        <Give />
+        <Story />
       </WrapperView>
     </ScrollView>
   );
