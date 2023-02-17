@@ -8,7 +8,6 @@ import { Give } from "./component/homeScreenComponent/give.component";
 import { Story } from "./component/homeScreenComponent/story.component";
 import { Welcome } from "./component/homeScreenComponent/welcome.component";
 
-
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
 

@@ -21,6 +21,7 @@ import { Events } from "./events.screen";
 import { PrayerRequest } from "./prayerRequest.screen";
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
+import { Stories } from "./stories.screen";
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -245,6 +246,15 @@ export const Onboarding = () => {
             <Tab.Screen
               name="Events"
               component={Events}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name="Stories"
+              component={Stories}
               options={{
                 tabBarButton: () => null,
                 tabBarVisible: false,

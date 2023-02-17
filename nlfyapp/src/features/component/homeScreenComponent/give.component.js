@@ -5,7 +5,8 @@ import { HomeScreenHeading } from "../homeScreenHeading.component";
 import styled from "styled-components";
 
 const ButtonView = styled(View)`
-  padding: 30px 0px 40px 20px;
+  padding-top: 20px;
+  padding-bottom: 30px;
 `;
 
 export const Give = () => {
