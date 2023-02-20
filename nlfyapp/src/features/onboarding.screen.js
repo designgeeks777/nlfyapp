@@ -12,6 +12,17 @@ import styled from "styled-components/native";
 import { Button } from "../components/button";
 import { Home } from "./home.screen";
 
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Sermons } from "./sermons.screen";
+import { Events } from "./events.screen";
+import { PrayerRequest } from "./prayerRequest.screen";
+import { Give } from "./give.screen";
+import { LifeGroups } from "./lifeGroups.screen";
+import { Stories } from "./stories.screen";
+
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
   margin-top: ${StatusBar.currentHeight}px;
@@ -37,6 +48,7 @@ const Slide3 = styled(View)`
 
 const Slide4 = styled(View)`
   flex: 1;
+  top: -20px;
   justify-content: center;
   align-items: center;
 `;
@@ -103,6 +115,55 @@ const TextScreen1Orange = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
+const createScreenOptions = ({ route }) => {
+  const iconName = TAB_ICON[route.name];
+  if (iconName === "md-home") {
+    return {
+      tabBarIcon: ({ size, color }) => (
+        <Ionicons name={iconName} size={size} color={color} />
+      ),
+      tabBarActiveTintColor: "tomato",
+      tabBarInactiveTintColor: "gray",
+      tabBarStyle: {
+        display: "flex",
+      },
+    };
+  } else if (
+    iconName === "pray" ||
+    iconName === "people-arrows" ||
+    iconName === "donate" ||
+    iconName === "bible"
+  ) {
+    return {
+      tabBarIcon: ({ size, color }) => (
+        <FontAwesome5 name={iconName} size={size} color={color} />
+      ),
+      tabBarActiveTintColor: "tomato",
+      tabBarInactiveTintColor: "gray",
+      tabBarStyle: {
+        display: "flex",
+      },
+    };
+  }
+};
+
+const TAB_ICON = {
+  Home: "md-home",
+  "Prayer Request": "pray",
+  Give: "donate",
+  Sermons: "bible",
+  "Life Groups": "people-arrows",
+};
+
+const Tab = createBottomTabNavigator();
+export function HomeWrapper() {
+  return (
+    <Slide4>
+      <Home />
+    </Slide4>
+  );
+}
+
 export const Onboarding = () => {
   const [showPagination, setShowPagination] = useState(true);
   const [scrollEnabled, setScrollEnabled] = useState(true);
@@ -154,9 +215,54 @@ export const Onboarding = () => {
           </TextScreen2>
           <TextScreen2Orange>Swipe to get started</TextScreen2Orange>
         </Slide3>
-        <Slide4>
-          <Home />
-        </Slide4>
+
+        <NavigationContainer>
+          <Tab.Navigator screenOptions={createScreenOptions}>
+            <Tab.Screen
+              name="Home"
+              component={HomeWrapper}
+              options={{ headerShown: false }}
+            />
+            <Tab.Screen
+              name="Prayer Request"
+              component={PrayerRequest}
+              options={{ headerShown: false }}
+            />
+            <Tab.Screen
+              name="Give"
+              component={Give}
+              options={{ headerShown: false }}
+            />
+            <Tab.Screen
+              name="Sermons"
+              component={Sermons}
+              options={{ headerShown: false }}
+            />
+            <Tab.Screen
+              name="Life Groups"
+              component={LifeGroups}
+              options={{ headerShown: false }}
+            />
+            <Tab.Screen
+              name="Events"
+              component={Events}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name="Stories"
+              component={Stories}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
+            />
+          </Tab.Navigator>
+        </NavigationContainer>
       </Swiper>
     </SafeArea>
   );

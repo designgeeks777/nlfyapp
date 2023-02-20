@@ -1,10 +1,13 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
+import { Dimensions } from "react-native";
 
+const { width } = Dimensions.get("window");
+const cardWidth = width * 0.4;
 const EventCard = styled(Card)`
   top: 70px;
-  width: 138px;
+  width: ${cardWidth}px;
   height: 115px;
   border-radius: 15px;
   border-width: 1px;

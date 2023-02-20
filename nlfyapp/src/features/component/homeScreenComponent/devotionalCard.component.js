@@ -1,11 +1,15 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
+import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
+const { width } = Dimensions.get("window");
+const cardWidth = width * 0.9;
+const cardContentWidth = width * 0.8;
 const DevotionalCard = styled(Card)`
   top: 20px;
-  width: 360px;
+  width: ${cardWidth}px;
   height: 180px;
   border-radius: 10px;
 `;
@@ -23,7 +27,7 @@ const CardContent = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
-  width: 100%;
+  width: ${cardContentWidth}px;
   top: 5px;
 `;
 
@@ -39,7 +43,7 @@ const CardReadmore = styled(Text)`
 
 const StyledLinearGradient = styled(LinearGradient)`
   border-radius: 10px;
-  width: 360px;
+  width: ${cardWidth}px;
   height: 180px;
   padding: 5px;
 `;
@@ -51,10 +55,10 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
   return (
     <DevotionalCard>
       <StyledLinearGradient
-        start={{ x: 180, y: 0.25 }}
-        end={{ x: 180, y: 0.5 }}
+        start={{ x: 180, y: 0.4 }}
+        end={{ x: 180, y: 0.6 }}
         colors={
-          (["#F22424", "rgba(242, 105, 36, 0.20)"],
+          (["#F22424", "rgba(242, 36, 36, 1)"],
           ["#F26924", "rgba(242, 105, 36, 0.80)"])
         }
       >
