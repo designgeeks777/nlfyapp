@@ -20,7 +20,6 @@ const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
 
 const WrapperView = styled(View)`
-  top: 40px;
   width: ${wrapperWidth}px;
   border-radius: 10px;
   padding-bottom: 400px;
