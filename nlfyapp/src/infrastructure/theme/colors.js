@@ -8,8 +8,10 @@ export const colors = {
   },
   bg: {
     primary: "#FFFFFF",
+    secondary: "#EF6C00",
   },
   bgbutton: {
     primary: "linear-gradient(180deg, #E94A27 41.07%, #F26924 100%);",
+    secondary: "#FFFFFF",
   },
 };
