@@ -23,28 +23,29 @@ const CardTitle = styled(Text)`
 `;
 
 const CardContent = styled(Text)`
-  padding-top: 8px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
   width: ${cardContentWidth}px;
+  top: 5px;
 `;
 
 const CardReadmore = styled(Text)`
-  right: 10px;
-  top: 150px;
+  align-self: flex-end;
+  text-align: right;
+  top: 10px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
-  text-align: right;
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
   border-radius: 10px;
   width: ${cardWidth}px;
   height: 180px;
+  padding: 5px;
 `;
 
 export const HomePageDevotionalCard = ({ devotional = {} }) => {

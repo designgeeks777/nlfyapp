@@ -1,5 +1,6 @@
 import React from "react";
 import { Image, View, StyleSheet, Dimensions } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const { width } = Dimensions.get("window");
 const containerWidth = width * 0.9;
@@ -10,11 +11,17 @@ const styles = StyleSheet.create({
     width: containerWidth,
     height: 200,
     borderRadius: 30,
+    justifyContent: "center",
+    alignItems: "center",
   },
   video: {
     width: "100%",
     height: "100%",
     borderRadius: 30,
+  },
+  playButton: {
+    alignSelf: "center",
+    position: "absolute",
   },
 });
 
@@ -25,6 +32,9 @@ export const SermonVideo = () => {
         style={styles.video}
         source={require("nlfyapp/assets/blackscreen.jpg")}
       />
+      <View style={styles.playButton}>
+        <Ionicons name="play-circle-sharp" size={65} color="#F26924" />
+      </View>
     </View>
   );
 };
