@@ -19,12 +19,15 @@ export const HomeScreenHeading = ({
     font-family: ${(props) => props.theme.fonts.body};
   `;
   const RightSideText = styled(Text)`
-    top: ${righttop};
-    margin-right: 8px;
     color: ${(props) => props.theme.colors.text.seeall};
     font-size: ${(props) => props.theme.fontSizes.caption};
     font-weight: ${(props) => props.theme.fontWeights.bold};
     font-family: ${(props) => props.theme.fonts.body};
+  `;
+
+  const Touchable = styled(TouchableOpacity)`
+    top: ${righttop};
+    margin-right: 8px;
     align-self: flex-end;
   `;
 
@@ -36,9 +39,9 @@ export const HomeScreenHeading = ({
   return (
     <>
       <LeftSideText>{lefttext}</LeftSideText>
-      <TouchableOpacity onPress={handlePress}>
-        <RightSideText>{righttext} </RightSideText>
-      </TouchableOpacity>
+      <Touchable onPress={handlePress}>
+        <RightSideText>{righttext}</RightSideText>
+      </Touchable>
     </>
   );
 };
