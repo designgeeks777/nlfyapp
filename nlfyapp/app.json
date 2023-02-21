@@ -27,7 +27,17 @@
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "config": {
+        "firebase" : {
+          "apiKey": "AIzaSyAnNcUjJQuoQMbDuPhJvVqCdq1T3_N1Qgo",
+          "authDomain": "nlfyapp.firebaseapp.com",
+          "projectId": "nlfyapp",
+          "storageBucket": "nlfyapp.appspot.com",
+          "messagingSenderId": "1004531504422",
+          "appId": "1:1004531504422:web:f5f92fc322cb523b6a1de7"
+        }
+      }
     }
   }
 }

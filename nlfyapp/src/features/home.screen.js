@@ -8,6 +8,7 @@ import { Give } from "./component/homeScreenComponent/give.component";
 import { Story } from "./component/homeScreenComponent/story.component";
 import { Welcome } from "./component/homeScreenComponent/welcome.component";
 import { LifeGroup } from "./component/homeScreenComponent/lifeGroup.component";
+import { SignUp } from "./component/homeScreenComponent/signup.component";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
@@ -30,6 +31,7 @@ export const Home = () => {
         <Give />
         <Story />
         <LifeGroup />
+        <SignUp />
       </WrapperView>
     </ScrollView>
   );

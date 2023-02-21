@@ -23,6 +23,20 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./src/features/sermons.screen";
 import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
+import { SignUpDummy } from "./src/features/signup.screen";
+import * as firebase from "firebase/compat";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAnNcUjJQuoQMbDuPhJvVqCdq1T3_N1Qgo",
+  authDomain: "nlfyapp.firebaseapp.com",
+  projectId: "nlfyapp",
+  storageBucket: "nlfyapp.appspot.com",
+  messagingSenderId: "1004531504422",
+  appId: "1:1004531504422:web:f5f92fc322cb523b6a1de7",
+};
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 
 const HomeView = styled(View)`
   flex: 1;
@@ -78,6 +92,22 @@ const createScreenOptions = ({ route }) => {
 };
 
 const App = () => {
+  // const [isAuthenticated, setIsAuthenticated] = useState(false);
+  // useEffect(() => {
+  //   // firebase.auth().signInWithPhoneNumber
+  //   setTimeout(() => {
+  //     firebase
+  //       .auth()
+  //       .signInWithEmailAndPassword("email@yoyo.io", "password")
+  //       .then((user) => {
+  //         // console.log(user);
+  //         setIsAuthenticated(true);
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }, 2000);
+  // }, []);
   const [hasLaunched, setHasLaunched] = useState(false);
   const [latoLoaded] = useFonts({ Lato_400Regular });
   const HAS_LAUNCHED = "HAS_LAUNCHED";
@@ -146,6 +176,15 @@ const App = () => {
               <Tab.Screen
                 name="Stories"
                 component={Stories}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false,
+                  headerShown: false,
+                }}
+              />
+              <Tab.Screen
+                name="SignUp"
+                component={SignUpDummy}
                 options={{
                   tabBarButton: () => null,
                   tabBarVisible: false,
