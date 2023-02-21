@@ -23,6 +23,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./src/features/sermons.screen";
 import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
+import { MyStack } from "./StackNavigation";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -101,64 +102,14 @@ const App = () => {
     return null;
   }
 
-  const Tab = createBottomTabNavigator();
-
   return (
     <>
-      <ThemeProvider theme={theme}>
-        {hasLaunched ? (
-          <NavigationContainer>
-            <Tab.Navigator screenOptions={createScreenOptions}>
-              <Tab.Screen
-                name="Home"
-                component={HomeWrapper}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Prayer Request"
-                component={PrayerRequest}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Give"
-                component={Give}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Sermons"
-                component={Sermons}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Life Groups"
-                component={LifeGroups}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Events"
-                component={Events}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false,
-                  headerShown: false,
-                }}
-              />
-              <Tab.Screen
-                name="Stories"
-                component={Stories}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false,
-                  headerShown: false,
-                }}
-              />
-            </Tab.Navigator>
-          </NavigationContainer>
-        ) : (
-          <Onboarding />
-        )}
-      </ThemeProvider>
-      <ExpoStatusBar style="auto" />
+      <NavigationContainer>
+        <ThemeProvider theme={theme}>
+          <MyStack />
+        </ThemeProvider>
+        <ExpoStatusBar style="auto" />
+      </NavigationContainer>
     </>
   );
 };

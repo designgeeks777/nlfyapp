@@ -23,6 +23,9 @@ import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
 
+import { createStackNavigator } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
   margin-top: ${StatusBar.currentHeight}px;
@@ -173,7 +176,11 @@ export const Onboarding = () => {
       setScrollEnabled(false);
     }
   };
-
+  const navigation = useNavigation();
+  const navigateToSignUp = () => {
+    console.log("NavigateToSignUp");
+    navigation.navigate("SignUp");
+  };
   return (
     <SafeArea>
       <Swiper
@@ -205,7 +212,7 @@ export const Onboarding = () => {
           <TextScreen2Orange>
             Sign Up to have a customized experience or swipe
           </TextScreen2Orange>
-          <Button label="Sign Up" />
+          <Button label="Sign Up" handleClick={navigateToSignUp} />
         </Slide2>
         <Slide3>
           <Slide2Image source={require("nlfyapp/assets/onboarding3.png")} />
@@ -216,7 +223,7 @@ export const Onboarding = () => {
           <TextScreen2Orange>Swipe to get started</TextScreen2Orange>
         </Slide3>
 
-        <NavigationContainer>
+        <NavigationContainer independent={true}>
           <Tab.Navigator screenOptions={createScreenOptions}>
             <Tab.Screen
               name="Home"
