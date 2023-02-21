@@ -16,7 +16,7 @@ export const LifeGroup = () => {
         lefttext="Life Groups"
         righttext="See All Life Groups"
         lefttop="90px"
-        righttop="68px"
+        righttop="70px"
         navigateTo="Life Groups"
       />
       <LifeGroupCardList />

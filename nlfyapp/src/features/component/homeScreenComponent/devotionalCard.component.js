@@ -7,6 +7,7 @@ import { LinearGradient } from "expo-linear-gradient";
 const { width } = Dimensions.get("window");
 const cardWidth = width * 0.9;
 const cardContentWidth = width * 0.8;
+
 const DevotionalCard = styled(Card)`
   top: 20px;
   width: ${cardWidth}px;
