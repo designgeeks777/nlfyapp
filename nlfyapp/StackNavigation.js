@@ -23,7 +23,7 @@ export const MyStack = () => {
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="SignUpSecondScreen"
+        name="Stepper"
         component={Stepper}
         options={{ headerShown: false }}
       />

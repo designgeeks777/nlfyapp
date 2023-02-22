@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
 
 const StoryCard = styled(Card)`
-  top: 70px;
+  top: 30px;
   width: 225px;
   height: 100px;
   border-radius: 15px;

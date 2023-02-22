@@ -5,7 +5,7 @@ import { View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 
 const LifeGroupCardWrapperView = styled(View)`
-  top: 50px;
+  top: 10px;
   flex: 1;
   flex-direction: row;
   align-items: center;

@@ -6,7 +6,7 @@ import { HomeScreenHeading } from "../homeScreenHeading.component";
 import { LifeGroupCardList } from "./lifeGroupCardList.component";
 
 const ButtonView = styled(View)`
-  padding-top: 80px;
+  padding-top: 30px;
 `;
 
 export const LifeGroup = () => {
@@ -15,8 +15,8 @@ export const LifeGroup = () => {
       <HomeScreenHeading
         lefttext="Life Groups"
         righttext="See All Life Groups"
-        lefttop="90px"
-        righttop="70px"
+        lefttop="50px"
+        righttop="30px"
         navigateTo="Life Groups"
       />
       <LifeGroupCardList />

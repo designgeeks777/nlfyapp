@@ -8,8 +8,8 @@ export const Story = () => {
       <HomeScreenHeading
         lefttext="Our Stories"
         righttext="See All Stories"
-        lefttop="70px"
-        righttop="50px"
+        lefttop="30px"
+        righttop="10px"
         navigateTo="Stories"
       />
       <StoryCardList />
