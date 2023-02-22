@@ -29,6 +29,16 @@ const GoogleButtonPadding = styled(View)`
 const PrimaryButtonPadding = styled(View)`
   top: 110px;
 `;
+
+const BoldText = styled(Text)`
+  align-items: center;
+  top: 400px;
+  padding-left: 40px;
+  color: ${(props) => props.theme.colors.text.primary};
+  font-size: ${(props) => props.theme.fontSizes.header};
+  font-weight: ${(props) => props.theme.fontWeights.bold};
+  font-family: ${(props) => props.theme.fonts.body};
+`;
 const Layer = styled(View)`
   background-color: rgba(242, 105, 36, 0.4);
   position: absolute;
@@ -48,7 +58,9 @@ export const SignUp = () => {
     <SafeAreaView>
       <WrapperView>
         <YouAreThereImage source={require("nlfyapp/assets/AlmostThere.jpg")}>
-          <Layer />
+          <Layer>
+            <BoldText>Great,You are almost there</BoldText>
+          </Layer>
         </YouAreThereImage>
 
         <SecondaryButton label="Continue with Facebook" />
