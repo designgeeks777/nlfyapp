@@ -5,8 +5,7 @@ import { HomeScreenHeading } from "../homeScreenHeading.component";
 import styled from "styled-components";
 
 const ButtonView = styled(View)`
-  padding-top: 80px;
-  padding-bottom: 25px;
+  padding-bottom: 10px;
 `;
 
 export const Give = () => {
@@ -14,8 +13,8 @@ export const Give = () => {
     <>
       <HomeScreenHeading
         lefttext="Is God burdening you to Give?"
-        lefttop="140px"
-        righttop="50px"
+        lefttop="10px"
+        righttop="0px"
         navigateTo="Give"
       />
       <ButtonView>
