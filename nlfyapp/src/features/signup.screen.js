@@ -10,6 +10,7 @@ const { width } = Dimensions.get("window");
 const imageWidth = width * 1;
 const { height } = Dimensions.get("window");
 const imageheight = height * 0.6;
+const textheight = height * 0.5;
 
 const WrapperView = styled(View)`
   flex: 1;
@@ -32,7 +33,7 @@ const PrimaryButtonPadding = styled(View)`
 
 const BoldText = styled(Text)`
   align-items: center;
-  top: 400px;
+  top: ${textheight}px;
   padding-left: 40px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.header};
