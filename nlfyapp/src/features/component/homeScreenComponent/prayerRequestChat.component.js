@@ -1,15 +1,19 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import styled from "styled-components/native";
 import { Card } from "react-native-paper";
 import { Text, View, Image } from "react-native";
+import { Dimensions } from "react-native";
+
+const { width } = Dimensions.get("window");
+const cardWidth = width * 0.7;
 
 const Container = styled(View)``;
 
 const PrayerCard = styled(Card)`
   top: ${(props) => props.top}px;
   align-self: ${(props) => (props.isRight ? "flex-end" : "flex-start")};
-  width: 280px;
+  width: ${cardWidth}px;
+
   height: 80px;
   background-color: [ "#F26924", "rgba(242, 105, 36, 0.10)"];
   border-radius: 20px;
