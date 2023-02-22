@@ -11,7 +11,6 @@ const PressableButton = styled(Pressable)`
   padding-vertical: 16px;
   padding-horizontal: 32px;
   border-radius: 50px;
-  top: 0px;
   width: ${buttonWidth}px;
   height: 56px;
   background-color: ${(props) => props.theme.colors.bgbutton.primary};
