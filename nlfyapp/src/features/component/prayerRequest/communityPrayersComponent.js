@@ -64,105 +64,133 @@ const ButtonView = styled(View)`
   align-items: center;
 `;
 
+const SafeAreaViewWrapper = styled(SafeAreaView)`
+  flex: 1;
+  margin-top: ${StatusBar.currentHeight || 0}px;
+`;
+
 export const CommunityPrayers = () => {
   const PrayerContentRequest =
     "Keep praying for my job, this is the final week of my presentation.";
   const PrayerContentResponse = "Thanks for your prayers, I have been healed..";
   return (
     <>
-      <ScrollView>
-        <Container>
-          <PrayerCard elevation={0} top={30} isRight={true}>
-            <PrayerCardContent>
-              <PrayerText variant="body">{PrayerContentRequest}</PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ top: -40 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
-            <NameText variant="caption">Robin</NameText>
-          </View>
+      <SafeAreaViewWrapper>
+        <ScrollView>
+          <Container>
+            <View style={{ top: -25 }}>
+              <PrayerCard elevation={0} top={30} isRight={true}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">{PrayerContentRequest}</PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ top: -40 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile1.jpg")}
+                />
+                <NameText variant="caption">Robin</NameText>
+              </View>
 
-          <PrayerCard elevation={0} top={5} isRight={false}>
-            <PrayerCardContent>
-              <PrayerText variant="body">{PrayerContentResponse}</PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ marginLeft: 320, bottom: 70 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile2.jpg")} />
-            <NameText variant="caption">Sandeep</NameText>
-          </View>
+              <PrayerCard elevation={0} top={5} isRight={false}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">
+                    {PrayerContentResponse}
+                  </PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ marginLeft: 320, bottom: 70 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile2.jpg")}
+                />
+                <NameText variant="caption">Sandeep</NameText>
+              </View>
 
-          <PrayerCard elevation={0} top={-20} isRight={true}>
-            <PrayerCardContent>
-              <PrayerText variant="body">
-                Please pray for my family's health.
-              </PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ bottom: 90 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
-            <NameText variant="caption">Paul</NameText>
-          </View>
+              <PrayerCard elevation={0} top={-20} isRight={true}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">
+                    Please pray for my family's health.
+                  </PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ bottom: 90 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile1.jpg")}
+                />
+                <NameText variant="caption">Paul</NameText>
+              </View>
 
-          <PrayerCard elevation={0} top={-45} isRight={false}>
-            <PrayerCardContent>
-              <PrayerText variant="body">
-                I need prayer for my family's health and safety.
-              </PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ marginLeft: 320, bottom: 115 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile2.jpg")} />
-            <NameText variant="caption">Jonah</NameText>
-          </View>
-          <PrayerCard elevation={0} top={-55} isRight={true}>
-            <PrayerCardContent>
-              <PrayerText variant="body">
-                Please pray for my family's health.
-              </PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ bottom: 125 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
-            <NameText variant="caption">Paul</NameText>
-          </View>
+              <PrayerCard elevation={0} top={-45} isRight={false}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">
+                    I need prayer for my family's health and safety.
+                  </PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ marginLeft: 320, bottom: 115 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile2.jpg")}
+                />
+                <NameText variant="caption">Jonah</NameText>
+              </View>
+              <PrayerCard elevation={0} top={-55} isRight={true}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">
+                    Please pray for my family's health.
+                  </PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ bottom: 125 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile1.jpg")}
+                />
+                <NameText variant="caption">Paul</NameText>
+              </View>
 
-          <PrayerCard elevation={0} top={-80} isRight={false}>
-            <PrayerCardContent>
-              <PrayerText variant="body">
-                I need prayer for my family's health and safety.
-              </PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ marginLeft: 320, bottom: 155 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile2.jpg")} />
-            <NameText variant="caption">Jonah</NameText>
-          </View>
-          <PrayerCard elevation={0} top={-90} isRight={true}>
-            <PrayerCardContent>
-              <PrayerText variant="body">
-                Please pray for my family's health.
-              </PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ bottom: 160 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
-            <NameText variant="caption">Paul</NameText>
-          </View>
+              <PrayerCard elevation={0} top={-80} isRight={false}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">
+                    I need prayer for my family's health and safety.
+                  </PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ marginLeft: 320, bottom: 155 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile2.jpg")}
+                />
+                <NameText variant="caption">Jonah</NameText>
+              </View>
+              <PrayerCard elevation={0} top={-90} isRight={true}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">
+                    Please pray for my family's health.
+                  </PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ bottom: 160 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile1.jpg")}
+                />
+                <NameText variant="caption">Paul</NameText>
+              </View>
 
-          <PrayerCard elevation={0} top={-115} isRight={false}>
-            <PrayerCardContent>
-              <PrayerText variant="body">
-                I need prayer for my family's health and safety.
-              </PrayerText>
-            </PrayerCardContent>
-          </PrayerCard>
-          <View style={{ marginLeft: 320, bottom: 195 }}>
-            <ProfilePicture source={require("nlfyapp/assets/profile2.jpg")} />
-            <NameText variant="caption">Jonah</NameText>
-          </View>
-        </Container>
-      </ScrollView>
+              <PrayerCard elevation={0} top={-115} isRight={false}>
+                <PrayerCardContent>
+                  <PrayerText variant="body">
+                    I need prayer for my family's health and safety.
+                  </PrayerText>
+                </PrayerCardContent>
+              </PrayerCard>
+              <View style={{ marginLeft: 320, bottom: 195 }}>
+                <ProfilePicture
+                  source={require("nlfyapp/assets/profile2.jpg")}
+                />
+                <NameText variant="caption">Jonah</NameText>
+              </View>
+            </View>
+          </Container>
+        </ScrollView>
+      </SafeAreaViewWrapper>
+
       <ButtonView>
         <Button label="Raise Prayer Request" />
       </ButtonView>
