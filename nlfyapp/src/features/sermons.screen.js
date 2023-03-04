@@ -39,6 +39,10 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
   margin-top: ${StatusBar.currentHeight}px;
   justify-content: flex-start;
+
+const SafeAreaViewWrapper = styled(SafeAreaView)`
+  flex: 1;
+  margin-top: ${StatusBar.currentHeight}px;
 `;
 
 const TitleText = styled(Text)`
@@ -117,6 +121,7 @@ export const Sermons = () => {
         <WrapperView>
           <BackButton text="Sermons" />
         </WrapperView>
+
         <ViewSearchbar>
           <SearchBar
             placeholder="Search"
