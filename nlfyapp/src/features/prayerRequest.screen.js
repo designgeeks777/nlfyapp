@@ -1,13 +1,171 @@
-import React from "react";
-import { View, Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+/* eslint-disable react/no-unstable-nested-components */
+// /* eslint-disable react-native/no-inline-styles */
+// import React from "react";
+// import { View, Text, Dimensions, StatusBar, SafeAreaView } from "react-native";
 
-export const PrayerRequest = () => {
+// import styled from "styled-components";
+// import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+// import { BackButton } from "../components/backButton";
+// import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+// import { NavigationContainer } from "@react-navigation/native";
+
+// const { width } = Dimensions.get("window");
+// const wrapperWidth = width * 0.9;
+
+// const WrapperView = styled(View)`
+//   width: ${wrapperWidth}px;
+//   border-radius: 10px;
+//   margin-left: 10px;
+//   padding-top: 51px;
+// `;
+
+// const SafeAreaViewWrapper = styled(SafeAreaView)`
+//   flex: 1;
+//   padding-top: ${StatusBar.currentHeight}px;
+// `;
+
+// const ChurchPrayersScreen = () => {
+//   return (
+//     <View>
+//       <Text>Church Prayers</Text>
+//     </View>
+//   );
+// };
+
+// const CommunityPrayersScreen = () => {
+//   return (
+//     <View>
+//       <Text>Community Prayers Screen appear here</Text>
+//     </View>
+//   );
+// };
+
+// const MyPrayersScreen = () => {
+//   return (
+//     <View>
+//       <Text>My Prayers</Text>
+//     </View>
+//   );
+// };
+// const Tab = createMaterialTopTabNavigator();
+
+// const PrayerRequestTabs = () => {
+//   return (
+//     <Tab.Navigator
+//       initialRouteName="Community Prayers"
+//       screenOptions={{
+//         tabBarActiveTintColor: "red",
+//         tabBarInactiveTintColor: "gray",
+//         tabBarLabelStyle: { fontSize: 12 },
+//         tabBarItemStyle: { width: 140 },
+//         tabBarStyle: { backgroundColor: "white" },
+//         tabPressToFocus: true,
+//       }}
+//     >
+//       <Tab.Screen
+//         name="Church Prayers"
+//         component={ChurchPrayersScreen}
+//         options={{ tabBarLabel: "Church Prayers" }}
+//       />
+//       <Tab.Screen
+//         name="Community Prayers"
+//         component={CommunityPrayersScreen}
+//         options={{ tabBarLabel: "Community Prayers" }}
+//       />
+//       <Tab.Screen
+//         name="My Prayers"
+//         component={MyPrayersScreen}
+//         options={{ tabBarLabel: "My Prayers" }}
+//       />
+//     </Tab.Navigator>
+//   );
+// };
+
+// export const PrayerRequest = () => {
+//   return (
+//     <>
+//       <WrapperView>
+//         <BackButton text="Prayer Requests" />
+//       </WrapperView>
+//       <SafeAreaViewWrapper>
+//         <View style={{ flex: 1 }}>
+//           <NavigationContainer independent={true}>
+//             <PrayerRequestTabs />
+//           </NavigationContainer>
+//         </View>
+//       </SafeAreaViewWrapper>
+//       <ExpoStatusBar style="auto" />
+//     </>
+//   );
+// };
+/* eslint-disable react-native/no-inline-styles */
+import React from "react";
+import { View, Text, Dimensions, StatusBar, SafeAreaView } from "react-native";
+import styled from "styled-components";
+import { StatusBar as ExpoStatusBar } from "expo-status-bar";
+import { BackButton } from "../components/backButton";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { CommunityPrayers } from "./component/prayerRequest/communityPrayersComponent";
+import { ChurchPrayers } from "./component/prayerRequest/churchPrayersComponent";
+import { NavigationContainer } from "@react-navigation/native";
+
+const { width } = Dimensions.get("window");
+const wrapperWidth = width * 0.9;
+
+const WrapperView = styled(View)`
+  width: ${wrapperWidth}px;
+  border-radius: 10px;
+  margin-left: 10px;
+  padding-top: 51px;
+`;
+
+const SafeAreaViewWrapper = styled(SafeAreaView)`
+  flex: 1;
+  padding-top: ${StatusBar.currentHeight}px;
+  margin-top: -15px;
+`;
+
+const MyPrayersScreen = () => {
   return (
-    <SafeAreaView>
-      <View>
-        <Text>Prayer Request</Text>
-      </View>
-    </SafeAreaView>
+    <View>
+      <Text>My Prayers</Text>
+    </View>
+  );
+};
+
+const Tab = createMaterialTopTabNavigator();
+
+export const PrayerRequest = ({ route }) => {
+  return (
+    <>
+      <WrapperView>
+        <BackButton text="Prayer Requests" />
+      </WrapperView>
+      <SafeAreaViewWrapper>
+        <View style={{ flex: 1 }}>
+          <NavigationContainer independent={true}>
+            <Tab.Navigator
+              initialRouteName="Community Prayers"
+              screenOptions={{
+                tabBarActiveTintColor: "red",
+                tabBarInactiveTintColor: "gray",
+                tabBarLabelStyle: { fontSize: 12 },
+                tabBarItemStyle: { width: 140 },
+                tabBarStyle: { backgroundColor: "white" },
+                tabPressToFocus: true,
+              }}
+            >
+              <Tab.Screen name="Church Prayers" component={ChurchPrayers} />
+              <Tab.Screen
+                name="Community Prayers"
+                component={CommunityPrayers}
+              />
+              <Tab.Screen name="My Prayers" component={MyPrayersScreen} />
+            </Tab.Navigator>
+          </NavigationContainer>
+        </View>
+      </SafeAreaViewWrapper>
+      <ExpoStatusBar style="auto" />
+    </>
   );
 };

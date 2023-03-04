@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import styled from "styled-components/native";
 import { Card } from "react-native-paper";
