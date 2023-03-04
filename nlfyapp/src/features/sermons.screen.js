@@ -12,7 +12,7 @@ import { Button } from "../components/button";
 import YoutubePlayer from "react-native-youtube-iframe";
 import styled from "styled-components/native";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
-
+import { BackButton } from "../components/backButton";
 import { Searchbar } from "react-native-paper";
 
 import axios from "axios";
@@ -25,9 +25,20 @@ const maxResults = 10; // the maximum number of results to retrieve
 
 const videosUrl = `https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=${channelId}&maxResults=${maxResults}&key=${apiKey}`;
 
+const { width } = Dimensions.get("window");
+const wrapperWidth = width * 0.9;
+
+const WrapperView = styled(View)`
+  width: ${wrapperWidth}px;
+  border-radius: 10px;
+  top: 20px;
+  margin-left: 10px;
+`;
+
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
   margin-top: ${StatusBar.currentHeight}px;
+  justify-content: flex-start;
 `;
 
 const TitleText = styled(Text)`
@@ -62,6 +73,7 @@ const SearchBar = styled(Searchbar)`
   margin-vertical: 10px;
   elevation: 0;
   border-radius: 10px;
+  top: 10px;
 
   ${({ isFocused }) =>
     isFocused &&
@@ -102,6 +114,10 @@ export const Sermons = () => {
   return (
     <>
       <SafeAreaViewWrapper>
+        <WrapperView>
+          <BackButton text="Sermons" />
+        </WrapperView>
+
         <ViewSearchbar>
           <SearchBar
             placeholder="Search"
@@ -117,6 +133,7 @@ export const Sermons = () => {
           data={filteredVideos}
           keyExtractor={(item) => item.id.videoId}
           renderItem={renderVideoItem}
+          style={{ marginTop: 10 }}
         />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
