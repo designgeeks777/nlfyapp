@@ -23,6 +23,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./src/features/sermons.screen";
 import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
+import { Devotionals } from "./src/features/devotionals.screen";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -146,6 +147,15 @@ const App = () => {
               <Tab.Screen
                 name="Stories"
                 component={Stories}
+                options={{
+                  tabBarButton: () => null,
+                  tabBarVisible: false,
+                  headerShown: false,
+                }}
+              />
+              <Tab.Screen
+                name="Devotionals"
+                component={Devotionals}
                 options={{
                   tabBarButton: () => null,
                   tabBarVisible: false,
