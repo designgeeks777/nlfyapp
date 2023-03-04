@@ -1,7 +1,9 @@
-import React from "react";
-import { View, Text } from "react-native";
+import React, { useContext } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
 import styled from "styled-components";
 import { Ionicons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const WelcomeText = styled(Text)`
   position: absolute;
@@ -14,7 +16,9 @@ const WelcomeText = styled(Text)`
 const Profile = styled(View)`
   align-self: flex-end;
 `;
-export const Welcome = () => {
+export const Welcome = (props) => {
+  console.log("IN WELCOME", props);
+  const { onLogout, user } = useContext(AuthenticationContext);
   return (
     <>
       <Profile>
@@ -25,6 +29,10 @@ export const Welcome = () => {
         />
       </Profile>
       <WelcomeText>Welcome</WelcomeText>
+      {/* <Text>{user}</Text> */}
+      <TouchableOpacity onPress={onLogout}>
+        <Text>Sign Out</Text>
+      </TouchableOpacity>
     </>
   );
 };

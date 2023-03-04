@@ -25,58 +25,78 @@ import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
 import { MyStack } from "./StackNavigation";
 
-const HomeView = styled(View)`
-  flex: 1;
-  top: 10px;
-  align-items: center;
-`;
-const TAB_ICON = {
-  Home: "md-home",
-  "Prayer Request": "pray",
-  Give: "donate",
-  Sermons: "bible",
-  "Life Groups": "people-arrows",
+// import * as firebase from "firebase/compat";
+import fb from "firebase/compat/app";
+import Constants from "expo-constants";
+import { FIREBASECONFIG } from "./APIKeys";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
+import { Navigation } from "./src/infrastructure/navigation";
+
+const firebaseConfig = {
+  apiKey: FIREBASECONFIG.apiKey,
+  authDomain: FIREBASECONFIG.authDomain,
+  projectId: FIREBASECONFIG.projectId,
+  storageBucket: FIREBASECONFIG.storageBucket,
+  messagingSenderId: FIREBASECONFIG.messagingSenderId,
+  appId: FIREBASECONFIG.appId,
 };
 
-function HomeWrapper() {
-  return (
-    <HomeView>
-      <Home />
-    </HomeView>
-  );
+if (!fb.apps.length) {
+  fb.initializeApp(firebaseConfig);
 }
 
-const createScreenOptions = ({ route }) => {
-  const iconName = TAB_ICON[route.name];
-  if (iconName === "md-home") {
-    return {
-      tabBarIcon: ({ size, color }) => (
-        <Ionicons name={iconName} size={size} color={color} />
-      ),
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "gray",
-      tabBarStyle: {
-        display: "flex",
-      },
-    };
-  } else if (
-    iconName === "pray" ||
-    iconName === "people-arrows" ||
-    iconName === "donate" ||
-    iconName === "bible"
-  ) {
-    return {
-      tabBarIcon: ({ size, color }) => (
-        <FontAwesome5 name={iconName} size={size} color={color} />
-      ),
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "gray",
-      tabBarStyle: {
-        display: "flex",
-      },
-    };
-  }
-};
+// const HomeView = styled(View)`
+//   flex: 1;
+//   top: 10px;
+//   align-items: center;
+// `;
+// const TAB_ICON = {
+//   Home: "md-home",
+//   "Prayer Request": "pray",
+//   Give: "donate",
+//   Sermons: "bible",
+//   "Life Groups": "people-arrows",
+// };
+
+// function HomeWrapper() {
+//   return (
+//     <HomeView>
+//       <Home />
+//     </HomeView>
+//   );
+// }
+
+// const createScreenOptions = ({ route }) => {
+//   const iconName = TAB_ICON[route.name];
+//   if (iconName === "md-home") {
+//     return {
+//       tabBarIcon: ({ size, color }) => (
+//         <Ionicons name={iconName} size={size} color={color} />
+//       ),
+//       tabBarActiveTintColor: "tomato",
+//       tabBarInactiveTintColor: "gray",
+//       tabBarStyle: {
+//         display: "flex",
+//       },
+//     };
+//   } else if (
+//     iconName === "pray" ||
+//     iconName === "people-arrows" ||
+//     iconName === "donate" ||
+//     iconName === "bible"
+//   ) {
+//     return {
+//       tabBarIcon: ({ size, color }) => (
+//         <FontAwesome5 name={iconName} size={size} color={color} />
+//       ),
+//       tabBarActiveTintColor: "tomato",
+//       tabBarInactiveTintColor: "gray",
+//       tabBarStyle: {
+//         display: "flex",
+//       },
+//     };
+//   }
+// };
 
 const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
@@ -104,12 +124,18 @@ const App = () => {
 
   return (
     <>
-      <NavigationContainer>
+      {/* <NavigationContainer>
         <ThemeProvider theme={theme}>
           <MyStack />
         </ThemeProvider>
         <ExpoStatusBar style="auto" />
-      </NavigationContainer>
+      </NavigationContainer> */}
+      <ThemeProvider theme={theme}>
+        <AuthenticationContextProvider>
+          <Navigation />
+        </AuthenticationContextProvider>
+      </ThemeProvider>
+      <ExpoStatusBar style="auto" />
     </>
   );
 };
