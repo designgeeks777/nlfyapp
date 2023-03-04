@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import { View, Text, Dimensions, StatusBar, SafeAreaView } from "react-native";
 import styled from "styled-components";

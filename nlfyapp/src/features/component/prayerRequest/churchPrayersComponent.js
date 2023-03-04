@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import styled from "styled-components/native";
 import { LinearGradient } from "expo-linear-gradient";

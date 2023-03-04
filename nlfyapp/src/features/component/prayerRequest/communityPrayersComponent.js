@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from "react";
 import styled from "styled-components/native";
 import { Card } from "react-native-paper";
@@ -12,7 +11,6 @@ import {
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Button } from "../../../components/button";
-// import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 
 const { width } = Dimensions.get("window");
 const cardWidth = width * 0.75;
