@@ -1,5 +1,12 @@
-import React, { useState } from "react";
-import { View, Button, TextInput, Text, Dimensions } from "react-native";
+import React, { useState, useRef } from "react";
+import {
+  View,
+  Button,
+  TextInput,
+  Text,
+  Dimensions,
+  StyleSheet,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ProgressSteps, ProgressStep } from "react-native-progress-steps";
 import styled from "styled-components";
@@ -33,6 +40,14 @@ const Input = styled(TextInput)`
 `;
 
 const Label = styled(Text)`
+  color: #666666;
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.bold};
+  font-family: ${(props) => props.theme.fonts.body};
+  top: 10px;
+`;
+
+const TextSecondScreen = styled(Text)`
   color: #666666;
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -82,6 +97,12 @@ export const Stepper = () => {
   const [borderWidth, setBorderWidth] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState("");
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [isOtpValid, setIsOtpValid] = useState(false);
+
+  const otpRef1 = useRef(null);
+  const otpRef2 = useRef(null);
+  const otpRef3 = useRef(null);
 
   const [supportText, setSupportText] = useState(
     "Please enter a valid mobile number"
@@ -115,6 +136,22 @@ export const Stepper = () => {
     return isValid;
   };
 
+  const handleOtpChange = (index, value) => {
+    const newOtp = otp.substring(0, index) + value + otp.substring(index + 1);
+    setOtp(newOtp);
+    if (newOtp.length === 3) {
+      setIsOtpValid(true);
+    } else {
+      setIsOtpValid(false);
+    }
+    if (index === 0) {
+      otpRef2.current.focus();
+    } else if (index === 1) {
+      otpRef3.current.focus();
+    }
+    console.log(otp);
+  };
+
   return (
     <Container>
       <View>
@@ -127,6 +164,8 @@ export const Stepper = () => {
             nextBtnStyle={nextBtnStyle}
             nextBtnTextStyle={nextBtnTextStyle}
             onNext={handleNext}
+            previousBtnDisabled={true}
+            previousBtnText={null}
           >
             <View style={{ alignItems: "center" }}>
               <View>
@@ -153,9 +192,51 @@ export const Stepper = () => {
             nextBtnStyle={nextBtnStyle}
             nextBtnTextStyle={nextBtnTextStyle}
             onNext={handleNext}
+            previousBtnDisabled={true}
+            previousBtnText={null}
           >
             <View style={{ alignItems: "center" }}>
-              <Text>This is the content within step 2!</Text>
+              <TextSecondScreen>
+                Enter 6 digit OTP sent to the number
+              </TextSecondScreen>
+              <View style={{ flexDirection: "row", marginTop: 20 }}>
+                <TextInput
+                  style={[
+                    styles.input,
+                    isOtpValid ? styles.inputBoxValid : styles.inputBoxInvalid,
+                  ]}
+                  maxLength={1}
+                  keyboardType="numeric"
+                  onChangeText={(value) => handleOtpChange(0, value)}
+                  value={otp.charAt(0)}
+                  ref={otpRef1}
+                  onSubmitEditing={() => otpRef2.current.focus()}
+                  autoFocus
+                />
+                <TextInput
+                  style={[
+                    styles.input,
+                    isOtpValid ? styles.inputBoxValid : styles.inputBoxInvalid,
+                  ]}
+                  maxLength={1}
+                  keyboardType="numeric"
+                  onChangeText={(value) => handleOtpChange(1, value)}
+                  value={otp.charAt(1)}
+                  ref={otpRef2}
+                  onSubmitEditing={() => otpRef3.current.focus()}
+                />
+                <TextInput
+                  style={[
+                    styles.input,
+                    isOtpValid ? styles.inputBoxValid : styles.inputBoxInvalid,
+                  ]}
+                  maxLength={1}
+                  keyboardType="numeric"
+                  onChangeText={(value) => handleOtpChange(2, value)}
+                  value={otp.charAt(2)}
+                  ref={otpRef3}
+                />
+              </View>
             </View>
           </ProgressStep>
           <ProgressStep
@@ -163,6 +244,8 @@ export const Stepper = () => {
             nextBtnStyle={nextBtnStyle}
             nextBtnTextStyle={nextBtnTextStyle}
             onNext={handleNext}
+            previousBtnDisabled={true}
+            previousBtnText={null}
           >
             <View style={{ alignItems: "center" }}>
               <Text>This is the content within step 3!</Text>
@@ -173,3 +256,22 @@ export const Stepper = () => {
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  input: {
+    borderWidth: 1,
+    borderRadius: 10,
+    marginTop: 10,
+    marginRight: 4,
+    width: 40,
+    height: 40,
+    textAlign: "center",
+    borderColor: "#CCCCCC",
+  },
+  inputBoxValid: {
+    borderColor: "#27AE60",
+  },
+  inputBoxInvalid: {
+    borderColor: "#CCCCCC",
+  },
+});
