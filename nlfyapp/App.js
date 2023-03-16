@@ -5,8 +5,11 @@ import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 import { View } from "react-native";
+import { AuthProvider } from "./AuthContext";
 import { Give } from "./src/features/give.screen";
 import { LifeGroups } from "./src/features/lifeGroups.screen";
+import { AppRegistry } from "react-native";
+import { name as appName } from "./app.json";
 
 import {
   gettingData,
@@ -103,15 +106,17 @@ const App = () => {
   }
 
   return (
-    <>
+    <AuthProvider>
       <NavigationContainer>
         <ThemeProvider theme={theme}>
           <MyStack />
         </ThemeProvider>
         <ExpoStatusBar style="auto" />
       </NavigationContainer>
-    </>
+    </AuthProvider>
   );
 };
+
+AppRegistry.registerComponent(appName, () => App);
 
 export default App;

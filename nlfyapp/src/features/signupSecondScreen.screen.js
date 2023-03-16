@@ -1,15 +1,11 @@
-import React, { useState, useRef } from "react";
-import {
-  View,
-  Button,
-  TextInput,
-  Text,
-  Dimensions,
-  StyleSheet,
-} from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState, useRef, useContext } from "react";
+import { View, TextInput, Text, Dimensions, StyleSheet } from "react-native";
+
 import { ProgressSteps, ProgressStep } from "react-native-progress-steps";
 import styled from "styled-components";
+import { AuthContext } from "../../AuthContext";
+
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 const nextWidth = width * 0.9;
@@ -99,6 +95,7 @@ export const Stepper = () => {
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
   const [otp, setOtp] = useState("");
   const [isOtpValid, setIsOtpValid] = useState(false);
+  const { handleAuthentication } = useContext(AuthContext);
 
   const otpRef1 = useRef(null);
   const otpRef2 = useRef(null);
@@ -110,6 +107,16 @@ export const Stepper = () => {
 
   const handleNext = () => {
     setStepCount(stepCount + 1);
+  };
+
+  const handleNextFinal = () => {
+    setStepCount(stepCount + 1);
+    handleAuthentication();
+    console.log("Handle Next Final called");
+  };
+  const navigation = useNavigation();
+  const handleSubmit = () => {
+    navigation.navigate("Home");
   };
 
   const handleFocus = () => {
@@ -191,7 +198,7 @@ export const Stepper = () => {
             label="Second Step"
             nextBtnStyle={nextBtnStyle}
             nextBtnTextStyle={nextBtnTextStyle}
-            onNext={handleNext}
+            onNext={handleNextFinal}
             previousBtnDisabled={true}
             previousBtnText={null}
           >
@@ -239,13 +246,14 @@ export const Stepper = () => {
               </View>
             </View>
           </ProgressStep>
+
           <ProgressStep
             label="Third Step"
             nextBtnStyle={nextBtnStyle}
             nextBtnTextStyle={nextBtnTextStyle}
-            onNext={handleNext}
             previousBtnDisabled={true}
             previousBtnText={null}
+            onSubmit={handleSubmit}
           >
             <View style={{ alignItems: "center" }}>
               <Text>This is the content within step 3!</Text>
