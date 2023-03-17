@@ -154,6 +154,7 @@ export const Stepper = () => {
   const [isOtpValid, setIsOtpValid] = useState(false);
   const { handleAuthentication } = useContext(AuthContext);
   const [gender, setGender] = useState("");
+  const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
 
   const handleGenderSelect = (selectedGender) => {
     setGender(selectedGender);
@@ -202,6 +203,9 @@ export const Stepper = () => {
 
   const validatePhoneNumber = (phoneNumber) => {
     const isValid = /^\d{9}$/.test(phoneNumber);
+    if (phoneNumber.length !== 0) {
+      setNextBtnDisabled(false);
+    }
     return isValid;
   };
 
@@ -235,6 +239,7 @@ export const Stepper = () => {
             onNext={handleNext}
             previousBtnDisabled={true}
             previousBtnText={null}
+            nextBtnDisabled={nextBtnDisabled}
           >
             <View style={{ alignItems: "center" }}>
               <View>
