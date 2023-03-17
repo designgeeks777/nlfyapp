@@ -1,5 +1,12 @@
 import React, { useState, useRef, useContext } from "react";
-import { View, TextInput, Text, Dimensions, StyleSheet } from "react-native";
+import {
+  View,
+  TextInput,
+  Text,
+  Dimensions,
+  StyleSheet,
+  TouchableOpacity,
+} from "react-native";
 
 import { ProgressSteps, ProgressStep } from "react-native-progress-steps";
 import styled from "styled-components";
@@ -41,6 +48,7 @@ const Label = styled(Text)`
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
   top: 10px;
+  align-self: flex-start;
 `;
 
 const TextSecondScreen = styled(Text)`
@@ -50,6 +58,45 @@ const TextSecondScreen = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   top: 10px;
 `;
+
+const RadioButton = styled(TouchableOpacity)`
+  height: 24px;
+  width: 24px;
+  border-radius: 12px;
+  border-width: 2px;
+  border-color: ${(props) => (props.isSelected ? "#F26924" : "gray")};
+  align-items: center;
+  justify-content: center;
+  margin-right: ${(props) => props.theme.space[2]};
+`;
+
+const SelectedRadioButton = styled(View)`
+  height: 16px;
+  width: 16px;
+  border-radius: 8px;
+  background-color: #f26924;
+`;
+
+const RadioButtonText = styled(Text)`
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-family: ${(props) => props.theme.fonts.body};
+  color: ${(props) => props.theme.colors.text.primary};
+`;
+
+const RadioContainer = styled(View)`
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 10px;
+  align-self: flex-start;
+  top: 16px;
+  padding-bottom: 10px;
+`;
+
+const FemaleRadioButtonSpacer = styled(View)`
+  padding-left: 10px;
+`;
+
+const selectedColor = "orange";
 
 const Container = styled(View)`
   flex: 1;
@@ -61,6 +108,16 @@ const Container = styled(View)`
 const SupportText = styled(Text)`
   color: ${(props) =>
     props.isValid ? "#27AE60" : props.theme.colors.text.secondary};
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.regular};
+  font-family: ${(props) => props.theme.fonts.body};
+  top: 10px;
+  z-index: 2;
+  padding-bottom: 20px;
+`;
+
+const SupportTextThirdScreen = styled(Text)`
+  color: #999999;
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
@@ -96,6 +153,11 @@ export const Stepper = () => {
   const [otp, setOtp] = useState("");
   const [isOtpValid, setIsOtpValid] = useState(false);
   const { handleAuthentication } = useContext(AuthContext);
+  const [gender, setGender] = useState("");
+
+  const handleGenderSelect = (selectedGender) => {
+    setGender(selectedGender);
+  };
 
   const otpRef1 = useRef(null);
   const otpRef2 = useRef(null);
@@ -256,7 +318,39 @@ export const Stepper = () => {
             onSubmit={handleSubmit}
           >
             <View style={{ alignItems: "center" }}>
-              <Text>This is the content within step 3!</Text>
+              <View>
+                <Label>Enter name *</Label>
+                <Input
+                  placeholder="David"
+                  borderColor={borderColor}
+                  borderWidth={borderWidth}
+                />
+
+                <SupportTextThirdScreen>
+                  Let us know what you would like us to call you
+                </SupportTextThirdScreen>
+              </View>
+
+              <Label>Select Gender</Label>
+              <RadioContainer>
+                <RadioButton
+                  onPress={() => handleGenderSelect("male")}
+                  isSelected={gender === "male"}
+                >
+                  {gender === "male" && <SelectedRadioButton />}
+                </RadioButton>
+                <RadioButtonText>Male</RadioButtonText>
+
+                <FemaleRadioButtonSpacer>
+                  <RadioButton
+                    onPress={() => handleGenderSelect("female")}
+                    isSelected={gender === "female"}
+                  >
+                    {gender === "female" && <SelectedRadioButton />}
+                  </RadioButton>
+                </FemaleRadioButtonSpacer>
+                <RadioButtonText>Female</RadioButtonText>
+              </RadioContainer>
             </View>
           </ProgressStep>
         </ProgressSteps>
