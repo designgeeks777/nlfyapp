@@ -181,6 +181,10 @@ export const Onboarding = () => {
     console.log("NavigateToSignUp");
     navigation.navigate("SignUp");
   };
+  const navigateToLogin = () => {
+    console.log("NavigateToLogin");
+    navigation.navigate("Login");
+  };
   return (
     <SafeArea>
       <Swiper
@@ -213,6 +217,12 @@ export const Onboarding = () => {
             Sign Up to have a customized experience or swipe
           </TextScreen2Orange>
           <Button label="Sign Up" handleClick={navigateToSignUp} />
+          <TextScreen2>
+            Already a member?
+            <TextScreen1Orange onPress={navigateToLogin}>
+              Log in
+            </TextScreen1Orange>
+          </TextScreen2>
         </Slide2>
         <Slide3>
           <Slide2Image source={require("nlfyapp/assets/onboarding3.png")} />

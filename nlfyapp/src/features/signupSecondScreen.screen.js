@@ -285,13 +285,13 @@ export const Stepper = (props) => {
           </ProgressStep>
         </ProgressSteps>
       </View>
-      {state.showLastButton && (
-        <Button
-          isSignUpLastButton={state.showLastButton}
-          label="Let's Go"
-          handleClick={onSubmitUser}
-        />
-      )}
+      {/* {state.showLastButton && ( */}
+      <Button
+        isSignUpLastButton={state.showLastButton}
+        label="Let's Go"
+        handleClick={onSubmitUser}
+      />
+      {/* )} */}
     </SafeAreaView>
   );
 };

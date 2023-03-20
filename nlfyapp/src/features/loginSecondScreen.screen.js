@@ -1,5 +1,13 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  Alert,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import * as firebase from "firebase/compat";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { CustomTextInput } from "../components/textinput";
@@ -149,21 +157,26 @@ export const LoginSecondScreen = (props) => {
       />
       {!confirm ? (
         <>
-          <Heading>We are glad to have you back.</Heading>
-          <CustomTextInput
-            label="Mobile Number"
-            maxLength={15}
-            placeholder="(+91)999989080"
-            autoFocus
-            autoCompleteType="tel"
-            keyboardType="phone-pad"
-            textContentType="telephoneNumber"
-            msgToDisplay="Enter your registered mobile number"
-            value={mobile}
-            onChange={handleChange}
-            isValid={isValid}
-            isUserNameTextInput={false}
-          />
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
+            style={{ flex: 1 }}
+          >
+            <Heading>We are glad to have you back.</Heading>
+            <CustomTextInput
+              label="Mobile Number"
+              maxLength={15}
+              placeholder="(+91)999989080"
+              autoFocus
+              autoCompleteType="tel"
+              keyboardType="phone-pad"
+              textContentType="telephoneNumber"
+              msgToDisplay="Enter your registered mobile number"
+              value={mobile}
+              onChange={(newValue) => handleChange(newValue)}
+              isValid={isValid}
+              isUserNameTextInput={false}
+            />
+          </KeyboardAvoidingView>
           {/* <MessageText>Enter your registered mobile number.</MessageText> */}
           <LoginButtonView>
             <Button label="Continue" handleClick={signInWithMobileNumber} />
