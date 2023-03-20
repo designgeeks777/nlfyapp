@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
 import {
   View,
   TextInput,
@@ -147,9 +147,14 @@ const nextBtnTextStyle = {
 export const Stepper = () => {
   const [stepCount, setStepCount] = useState(0);
   const [borderColor, setBorderColor] = useState("#D3D3D3");
+  const [nameBorderColor, setNameBorderColor] = useState("#D3D3D3");
   const [borderWidth, setBorderWidth] = useState(1);
   const [phoneNumber, setPhoneNumber] = useState("");
+  const [username, setUsername] = useState("");
+
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
+  const [isValidName, setIsValidName] = useState(false);
+  const [submitBtnDisabled, setSubmitBtnDisabled] = useState();
   const [otp, setOtp] = useState("");
   const [isOtpValid, setIsOtpValid] = useState(false);
   const { handleAuthentication } = useContext(AuthContext);
@@ -159,6 +164,10 @@ export const Stepper = () => {
   const handleGenderSelect = (selectedGender) => {
     setGender(selectedGender);
   };
+
+  useEffect(() => {
+    setSubmitBtnDisabled(!(isValidName && gender));
+  }, [isValidName, gender]);
 
   const otpRef1 = useRef(null);
   const otpRef2 = useRef(null);
@@ -188,6 +197,12 @@ export const Stepper = () => {
     setIsValidPhoneNumber(validatePhoneNumber(phoneNumber));
   };
 
+  const handleFocusName = () => {
+    setBorderColor("#000000");
+    setBorderWidth(2);
+    setIsValidName(validateName(username));
+  };
+
   const handleBlur = () => {
     if (phoneNumber.length === 9 && validatePhoneNumber(phoneNumber)) {
       setBorderColor("#27AE60");
@@ -201,11 +216,42 @@ export const Stepper = () => {
     setBorderWidth(1);
   };
 
+  const handleBlurName = () => {
+    if (username.length > 0 && validateName(username)) {
+      setNameBorderColor("#27AE60");
+      //setSupportText("Valid Phone number");
+      setIsValidName(true);
+    } else {
+      setNameBorderColor("red");
+      setIsValidName(false);
+      //setSupportText("Please enter a valid mobile number");
+    }
+    setBorderWidth(1);
+  };
+
+  const handleNameChange = (text) => {
+    setUsername(text);
+    if (validateName(text)) {
+      setNameBorderColor("#27AE60");
+      setIsValidName(true);
+    } else if (text.length === 0) {
+      setNameBorderColor("#D3D3D3");
+    } else {
+      setNameBorderColor("red");
+      setIsValidName(false);
+    }
+  };
+
   const validatePhoneNumber = (phoneNumber) => {
     const isValid = /^\d{9}$/.test(phoneNumber);
     if (phoneNumber.length !== 0) {
       setNextBtnDisabled(false);
     }
+    return isValid;
+  };
+
+  const validateName = (name) => {
+    const isValid = /^[A-Za-z]+$/.test(name);
     return isValid;
   };
 
@@ -320,6 +366,7 @@ export const Stepper = () => {
             nextBtnTextStyle={nextBtnTextStyle}
             previousBtnDisabled={true}
             previousBtnText={null}
+            nextBtnDisabled={submitBtnDisabled}
             onSubmit={handleSubmit}
           >
             <View style={{ alignItems: "center" }}>
@@ -327,8 +374,12 @@ export const Stepper = () => {
                 <Label>Enter name *</Label>
                 <Input
                   placeholder="David"
-                  borderColor={borderColor}
+                  borderColor={nameBorderColor}
                   borderWidth={borderWidth}
+                  onFocus={handleFocusName}
+                  onChangeText={handleNameChange}
+                  onChange={handleBlurName}
+                  value={username}
                 />
 
                 <SupportTextThirdScreen>
