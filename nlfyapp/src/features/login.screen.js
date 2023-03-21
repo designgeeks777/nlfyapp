@@ -49,12 +49,11 @@ const Layer = styled(View)`
   height: 100%;
 `;
 
-export const SignUp = () => {
+export const Login = () => {
   const navigation = useNavigation();
-  const navigateToSignUpSecondScreen = () => {
+  const navigateToLoginSecondScreen = () => {
     console.log("Navigation to Second Screen triggered");
-    navigation.navigate("Stepper");
-    // navigation.navigate("UploadPicSignUp");
+    navigation.navigate("LoginSecondScreen");
   };
   return (
     <SafeAreaView>
@@ -71,8 +70,8 @@ export const SignUp = () => {
         </GoogleButtonPadding>
         <PrimaryButtonPadding>
           <Button
-            label="Sign Up with Mobile"
-            handleClick={navigateToSignUpSecondScreen}
+            label="Log in with Mobile"
+            handleClick={navigateToLoginSecondScreen}
           />
         </PrimaryButtonPadding>
       </WrapperView>

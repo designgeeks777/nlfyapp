@@ -5,11 +5,8 @@ import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
 import { theme } from "./src/infrastructure/theme";
 import { View } from "react-native";
-import { AuthProvider } from "./AuthContext";
 import { Give } from "./src/features/give.screen";
 import { LifeGroups } from "./src/features/lifeGroups.screen";
-import { AppRegistry } from "react-native";
-import { name as appName } from "./app.json";
 
 import {
   gettingData,
@@ -28,58 +25,91 @@ import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
 import { MyStack } from "./StackNavigation";
 
-const HomeView = styled(View)`
-  flex: 1;
-  top: 10px;
-  align-items: center;
-`;
-const TAB_ICON = {
-  Home: "md-home",
-  "Prayer Request": "pray",
-  Give: "donate",
-  Sermons: "bible",
-  "Life Groups": "people-arrows",
+import * as firebase from "firebase/compat";
+// import fb from "firebase/compat/app";
+import Constants from "expo-constants";
+
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
+import { Navigation } from "./src/infrastructure/navigation";
+
+const firebaseConfig = {
+  // apiKey: FIREBASECONFIG.apiKey,
+  // authDomain: FIREBASECONFIG.authDomain,
+  // projectId: FIREBASECONFIG.projectId,
+  // storageBucket: FIREBASECONFIG.storageBucket,
+  // messagingSenderId: FIREBASECONFIG.messagingSenderId,
+  // appId: FIREBASECONFIG.appId,
+  // apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  // authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  // projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  // storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  // messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
+  // appId: process.env.REACT_APP_FIREBASE_APP_ID,
+  apiKey: Constants.manifest?.web?.config?.firebase?.apiKey,
+  authDomain: Constants.manifest?.web?.config?.firebase?.authDomain,
+  projectId: Constants.manifest?.web?.config?.firebase?.projectId,
+  storageBucket: Constants.manifest?.web?.config?.firebase?.storageBucket,
+  messagingSenderId:
+    Constants.manifest?.web?.config?.firebase?.messagingSenderId,
+  appId: Constants.manifest?.web?.config?.firebase?.appId,
 };
 
-function HomeWrapper() {
-  return (
-    <HomeView>
-      <Home />
-    </HomeView>
-  );
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
 }
 
-const createScreenOptions = ({ route }) => {
-  const iconName = TAB_ICON[route.name];
-  if (iconName === "md-home") {
-    return {
-      tabBarIcon: ({ size, color }) => (
-        <Ionicons name={iconName} size={size} color={color} />
-      ),
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "gray",
-      tabBarStyle: {
-        display: "flex",
-      },
-    };
-  } else if (
-    iconName === "pray" ||
-    iconName === "people-arrows" ||
-    iconName === "donate" ||
-    iconName === "bible"
-  ) {
-    return {
-      tabBarIcon: ({ size, color }) => (
-        <FontAwesome5 name={iconName} size={size} color={color} />
-      ),
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "gray",
-      tabBarStyle: {
-        display: "flex",
-      },
-    };
-  }
-};
+// const HomeView = styled(View)`
+//   flex: 1;
+//   top: 10px;
+//   align-items: center;
+// `;
+// const TAB_ICON = {
+//   Home: "md-home",
+//   "Prayer Request": "pray",
+//   Give: "donate",
+//   Sermons: "bible",
+//   "Life Groups": "people-arrows",
+// };
+
+// function HomeWrapper() {
+//   return (
+//     <HomeView>
+//       <Home />
+//     </HomeView>
+//   );
+// }
+
+// const createScreenOptions = ({ route }) => {
+//   const iconName = TAB_ICON[route.name];
+//   if (iconName === "md-home") {
+//     return {
+//       tabBarIcon: ({ size, color }) => (
+//         <Ionicons name={iconName} size={size} color={color} />
+//       ),
+//       tabBarActiveTintColor: "tomato",
+//       tabBarInactiveTintColor: "gray",
+//       tabBarStyle: {
+//         display: "flex",
+//       },
+//     };
+//   } else if (
+//     iconName === "pray" ||
+//     iconName === "people-arrows" ||
+//     iconName === "donate" ||
+//     iconName === "bible"
+//   ) {
+//     return {
+//       tabBarIcon: ({ size, color }) => (
+//         <FontAwesome5 name={iconName} size={size} color={color} />
+//       ),
+//       tabBarActiveTintColor: "tomato",
+//       tabBarInactiveTintColor: "gray",
+//       tabBarStyle: {
+//         display: "flex",
+//       },
+//     };
+//   }
+// };
 
 const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
@@ -106,17 +136,21 @@ const App = () => {
   }
 
   return (
-    <AuthProvider>
-      <NavigationContainer>
+    <>
+      {/* <NavigationContainer>
         <ThemeProvider theme={theme}>
           <MyStack />
         </ThemeProvider>
         <ExpoStatusBar style="auto" />
-      </NavigationContainer>
-    </AuthProvider>
+      </NavigationContainer> */}
+      <ThemeProvider theme={theme}>
+        <AuthenticationContextProvider>
+          <Navigation />
+        </AuthenticationContextProvider>
+      </ThemeProvider>
+      <ExpoStatusBar style="auto" />
+    </>
   );
 };
-
-AppRegistry.registerComponent(appName, () => App);
 
 export default App;

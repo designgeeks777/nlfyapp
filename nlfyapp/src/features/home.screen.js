@@ -17,6 +17,7 @@ import { Story } from "./component/homeScreenComponent/story.component";
 import { Welcome } from "./component/homeScreenComponent/welcome.component";
 import { LifeGroup } from "./component/homeScreenComponent/lifeGroup.component";
 import { PrayerRequest } from "./component/homeScreenComponent/prayerRequest.component";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
@@ -32,7 +33,8 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
   margin-top: ${StatusBar.currentHeight}px;
 `;
 
-export const Home = () => {
+export const Home = (props) => {
+  // console.log("HOME", props.route.param.userName);
   return (
     <>
       <SafeAreaViewWrapper>
