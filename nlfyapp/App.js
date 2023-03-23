@@ -23,6 +23,8 @@ import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
 import { PrayerRequest } from "./src/features/prayerRequest.screen";
 
+import { PrayerRequestNavigation } from "./PrayerRequestNavigation";
+
 const HomeView = styled(View)`
   flex: 1;
   top: 10px;
@@ -115,7 +117,7 @@ const App = () => {
               />
               <Tab.Screen
                 name="Prayer Request"
-                component={PrayerRequest}
+                component={PrayerRequestNavigation}
                 options={{ headerShown: false }}
               />
               <Tab.Screen

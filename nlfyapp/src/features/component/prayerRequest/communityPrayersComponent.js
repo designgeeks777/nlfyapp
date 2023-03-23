@@ -16,7 +16,7 @@ const { width } = Dimensions.get("window");
 const cardWidth = width * 0.75;
 
 const Container = styled(View)`
-  margin-horizontal: 20px;
+  margin-horizontal: 16px;
 `;
 
 const PrayerCard = styled(Card)`
@@ -60,10 +60,6 @@ const NameText = styled(Text)`
 const ButtonView = styled(View)`
   padding-bottom: 30px;
   align-items: center;
-`;
-
-const SafeAreaViewWrapper = styled(SafeAreaView)`
-  flex: 1;
 `;
 
 export const CommunityPrayers = () => {

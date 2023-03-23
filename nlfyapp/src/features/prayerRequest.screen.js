@@ -16,6 +16,9 @@ import { ChurchPrayers } from "./component/prayerRequest/churchPrayersComponent"
 import { NavigationContainer } from "@react-navigation/native";
 import { TabButton } from "../components/tabButton";
 import { TabButtonUnselected } from "../components/TabButtonUnselected";
+import { MyPrayersScreen } from "./component/prayerRequest/myPrayersComponent";
+
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
@@ -27,10 +30,6 @@ const WrapperView = styled(View)`
   padding-top: 51px;
 `;
 
-const CommunityPrayerWrapper = styled(View)`
-  top: 60px;
-`;
-
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
   padding-top: ${StatusBar.currentHeight}px;
@@ -38,21 +37,18 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
   z-index: 2;
 `;
 
-const MyPrayersScreen = () => {
-  return (
-    <View>
-      <Text>My Prayers</Text>
-    </View>
-  );
-};
-
-const Tab = createMaterialTopTabNavigator();
-
 const ButtonsWrapper = styled(View)`
   flex-direction: row;
 `;
 
 export const PrayerRequest = ({ route }) => {
+  const navigation = useNavigation();
+  const navigateToChurchPrayers = () => {
+    navigation.navigate("ChurchPrayers");
+  };
+  const navigateToMyPrayers = () => {
+    navigation.navigate("MyPrayers");
+  };
   return (
     <>
       <WrapperView>
@@ -61,9 +57,15 @@ export const PrayerRequest = ({ route }) => {
       <SafeAreaViewWrapper>
         <View style={{ flexDirection: "column", flex: 1 }}>
           <ButtonsWrapper>
-            <TabButtonUnselected label="Church" />
+            <TabButtonUnselected
+              label="Church"
+              handleClick={navigateToChurchPrayers}
+            />
             <TabButton label="Community" />
-            <TabButtonUnselected label="My Prayers" />
+            <TabButtonUnselected
+              label="My Prayers"
+              handleClick={navigateToMyPrayers}
+            />
           </ButtonsWrapper>
 
           <View style={{ flex: 1 }}>

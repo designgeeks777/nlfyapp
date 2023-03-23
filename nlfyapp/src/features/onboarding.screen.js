@@ -25,6 +25,8 @@ import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
 
+import { PrayerRequestNavigation } from "../../PrayerRequestNavigation";
+
 const { width, height } = Dimensions.get("window");
 const slide1ImageWidth = width * 1;
 const slide1ImageHeight = height * 0.5;
@@ -258,7 +260,7 @@ export const Onboarding = () => {
             />
             <Tab.Screen
               name="Prayer Request"
-              component={PrayerRequest}
+              component={{ PrayerRequestNavigation }}
               options={{ headerShown: false }}
             />
             <Tab.Screen

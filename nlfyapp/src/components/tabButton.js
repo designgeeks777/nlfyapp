@@ -31,7 +31,7 @@ const ButtonText = styled(Text)`
 
 export const TabButton = ({ label, handleClick }) => {
   return (
-    <PressableButton>
+    <PressableButton onPress={handleClick}>
       <ButtonText>{label}</ButtonText>
     </PressableButton>
   );
