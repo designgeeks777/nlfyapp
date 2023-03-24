@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
 import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { useNavigation } from "@react-navigation/native";
 
 const { width } = Dimensions.get("window");
 const cardWidth = width * 0.9;
@@ -53,6 +54,10 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
   const cardContentText =
     "Your road led through the sea, your pathway through the mighty waters - a pathway no one knew was there - Psalms 77:19(NLT) Godactively works through your circumstances. But you cannot judge your situation apart from God’s";
   const cardContentTitle = "God's Plan for you is great - Rick Warren";
+  const navigation = useNavigation();
+  const goToDevotionalsScreen = () => {
+    navigation.navigate("Devotionals");
+  };
   return (
     <DevotionalCard>
       <StyledLinearGradient
@@ -64,7 +69,9 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
         }
       >
         <Card.Content>
-          <CardTitle variant="titleLarge">{cardContentTitle}</CardTitle>
+          <CardTitle variant="titleLarge" onPress={goToDevotionalsScreen}>
+            {cardContentTitle}
+          </CardTitle>
           <CardContent numberOfLines={5} variant="bodyMedium">
             {cardContentText}
           </CardContent>
