@@ -13,9 +13,7 @@ import {
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
-import { PrayerRequest } from "./src/features/prayerRequest.screen";
 import styled from "styled-components";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -23,7 +21,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./src/features/sermons.screen";
 import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
+
 import { Devotionals } from "./src/features/devotionals.screen";
+import { PrayerRequest } from "./src/features/prayerRequest.screen";
+
 
 const HomeView = styled(View)`
   flex: 1;
