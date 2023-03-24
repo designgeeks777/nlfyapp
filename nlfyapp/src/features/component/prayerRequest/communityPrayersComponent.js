@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import styled from "styled-components/native";
 import { Card } from "react-native-paper";
 import {
@@ -8,9 +8,15 @@ import {
   ScrollView,
   StatusBar,
   SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Modal,
+  TextInput,
 } from "react-native";
 import { Dimensions } from "react-native";
 import { Button } from "../../../components/button";
+import { PrayerForm } from "./prayerForm.component";
 
 const { width } = Dimensions.get("window");
 const cardWidth = width * 0.75;
@@ -66,6 +72,31 @@ export const CommunityPrayers = () => {
   const PrayerContentRequest =
     "Keep praying for my job, this is the final week of my presentation.";
   const PrayerContentResponse = "Thanks for your prayers, I have been healed..";
+
+  const [modalVisible, setModalVisible] = useState(false);
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+    Animated.timing(slideAnimation, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleCloseModal = () => {
+    Animated.timing(slideAnimation, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => setModalVisible(false));
+  };
+
+  const modalTranslateY = slideAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [600, 0],
+  });
   return (
     <>
       <ScrollView>
@@ -76,10 +107,15 @@ export const CommunityPrayers = () => {
                 <PrayerText variant="body">{PrayerContentRequest}</PrayerText>
               </PrayerCardContent>
             </PrayerCard>
+
             <View style={{ top: -40 }}>
               <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
               <NameText variant="caption">Robin</NameText>
             </View>
+
+            <TouchableOpacity onPress={handleOpenModal} style={styles.spacing}>
+              <Text style={styles.buttonText}>Write a Prayer</Text>
+            </TouchableOpacity>
 
             <PrayerCard elevation={0} top={5} isRight={false}>
               <PrayerCardContent>
@@ -164,9 +200,70 @@ export const CommunityPrayers = () => {
         </Container>
       </ScrollView>
 
+      <Modal visible={modalVisible} transparent={true}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={handleCloseModal}
+          style={styles.modalOverlay}
+        >
+          <Animated.View
+            style={[
+              styles.modalContainer,
+              {
+                transform: [{ translateY: modalTranslateY }],
+                height: 500, // set the height as per your requirement
+              },
+            ]}
+          >
+            <Text style={styles.modalTitle}>Write a Prayer</Text>
+            {/* add your form components for prayer request here */}
+            <PrayerForm />
+          </Animated.View>
+        </TouchableOpacity>
+      </Modal>
       <ButtonView>
         <Button label="Raise Prayer Request" />
       </ButtonView>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonView: {
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    backgroundColor: "#ffffff",
+  },
+  button: {
+    backgroundColor: "#333333",
+    borderRadius: 24,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+  },
+  buttonText: {
+    color: "#008BE2",
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContainer: {
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  spacing: {
+    marginTop: -40,
+    marginBottom: 40,
+  },
+});
