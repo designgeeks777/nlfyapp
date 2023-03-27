@@ -1,6 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import React from "react";
-import { Welcome } from "./src/features/component/homeScreenComponent/welcome.component";
 import { Home } from "./src/features/home.screen";
 import { Login } from "./src/features/login.screen";
 import { LoginSecondScreen } from "./src/features/loginSecondScreen.screen";
@@ -34,11 +33,11 @@ export const MyStack = () => {
         component={UploadPicSignUp}
         options={{ headerShown: false }}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="Home"
         component={Home}
         options={{ headerShown: false }}
-      /> */}
+      />
       <Stack.Screen
         name="Login"
         component={Login}

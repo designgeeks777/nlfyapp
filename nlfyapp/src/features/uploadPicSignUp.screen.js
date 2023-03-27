@@ -1,10 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
-import React from "react";
+import React, { useContext } from "react";
 import { Dimensions, Image, View } from "react-native";
 import { Text } from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components";
 import { Button } from "../components/button";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+import axios from "axios";
+import { BASEURL } from "../../APIKey";
 
 const { width, height } = Dimensions.get("window");
 const imageWidth = width * 0.5;
@@ -63,19 +66,39 @@ const SkipForNow = styled(Text)`
 `;
 
 export const UploadPicSignUp = (props) => {
+  const { user, setRegistered } = useContext(AuthenticationContext);
   const navigation = useNavigation();
-  const onSubmitUser = () => {
-    navigation.navigate("Home", {
-      userName: props.route.params.userName,
-    });
+  console.log("In UPLOAD PIC");
+  const userName = props.route.params.userName;
+  const gender = props.route.params.gender;
+  const reqBody = {
+    uid: user.uid,
+    name: userName,
+    gender: gender,
+    mobileNumber: user.phoneNumber,
+    profilePic: "",
+  };
+  const onRegisterUser = () => {
+    console.log("onRegisterUser reqBody", reqBody);
+    axios
+      .post(`${BASEURL}/users`, reqBody)
+      .then((response) => {
+        console.log("USERS", response.data);
+        if (response.data) {
+          console.log("INSIDE POST");
+          setRegistered(true);
+          navigation.navigate("Home");
+        }
+      })
+      .catch((error) => {
+        console.log("POST error", error);
+      });
   };
 
   const maleDefaultProfilePic = require("nlfyapp/assets/upload-pic-sign-up-male.png");
   const femaleDefaultProfilePic = require("nlfyapp/assets/profile2.jpg");
   let icon =
-    props.route.params.gender === "male"
-      ? maleDefaultProfilePic
-      : femaleDefaultProfilePic;
+    gender === "male" ? maleDefaultProfilePic : femaleDefaultProfilePic;
   return (
     <ContainerView>
       <Heading>One last step</Heading>
@@ -87,8 +110,8 @@ export const UploadPicSignUp = (props) => {
         <ProfilePic source={icon} />
       </ProfilePicContainer>
       <OptionsContainer>
-        <Button label="Upload Profile Pic" handleClick={onSubmitUser} />
-        <SkipForNow onPress={onSubmitUser}>Skip for now</SkipForNow>
+        <Button label="Upload Profile Pic" handleClick={onRegisterUser} />
+        <SkipForNow onPress={onRegisterUser}>Skip for now</SkipForNow>
       </OptionsContainer>
     </ContainerView>
   );

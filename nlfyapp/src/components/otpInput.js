@@ -27,19 +27,38 @@ const SplitOTPBoxesContainer = styled(Pressable)`
 `;
 
 const SplitBoxes = styled(View)`
-  border-color: ${(props) => props.theme.colors.bg.disabled};
+  border-color: ${(props) => props.theme.colors.border.primary};
   border-width: 1px;
   border-radius: 10px;
   padding: 12px;
   margin: 2px;
   min-width: 50px;
-  ${({ isValid }) =>
-    isValid &&
-    `
+  ${({ isValid, code }) =>
+    isValid
+      ? `
   border-color: #27AE60;
+`
+      : code === null || code === undefined || code === ""
+      ? `
+      border-color: #D9D9D9;
+      `
+      : `
+border-color: #DE1621;
 `};
 `;
 
+// ${({ isValid, value }) =>
+//   isValid
+//     ? `
+// border-color: #27AE60;
+// `
+//     : value === null || value === undefined || value === ""
+//     ? `
+//     border-color: #D9D9D9;
+//     `
+//     : `
+// border-color: #DE1621;
+// `}
 const SplitBoxText = styled(Text)`
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.button};
@@ -48,7 +67,12 @@ const SplitBoxText = styled(Text)`
 `;
 
 const SplitBoxesFocused = styled(SplitBoxes)`
-  border-color: ${(props) => props.theme.colors.bg.disabled};
+  border-color: ${(props) =>
+    props.isValid
+      ? // ? props.code === null || props.code === undefined || props.code === ""
+        props.theme.colors.border.success
+      : // : props.theme.colors.border.error
+        props.theme.colors.border.error};
   background-color: transparent;
 `;
 
@@ -60,13 +84,8 @@ const SplitBoxesFocused = styled(SplitBoxes)`
 //   font-weight: ${(props) => props.theme.fontWeights.regular};
 // `;
 
-export const OTPInput = ({
-  code,
-  setCode,
-  maximumLength,
-  setIsPinReady,
-  isValidOTPCode,
-}) => {
+export const OTPInput = ({ code, setCode, maximumLength, isValidOTPCode }) => {
+  // console.log("inOTPINPUT", isValidOTPCode);
   const boxArray = new Array(maximumLength).fill(0);
   const inputRef = useRef();
   const boxDigit = (_, index) => {
@@ -82,7 +101,7 @@ export const OTPInput = ({
     const StyledSplitBoxes =
       isInputBoxFocused && isValueFocused ? SplitBoxesFocused : SplitBoxes;
     return (
-      <StyledSplitBoxes key={index}>
+      <StyledSplitBoxes key={index} isValid={isValidOTPCode} value={code}>
         <SplitBoxText>{digit}</SplitBoxText>
       </StyledSplitBoxes>
     );
@@ -90,6 +109,7 @@ export const OTPInput = ({
 
   const [isInputBoxFocused, setIsInputBoxFocused] = useState(false);
   const [isValid, setIsValid] = useState(false);
+  const [isPinReady, setIsPinReady] = useState(false);
 
   const handleOnPress = () => {
     setIsInputBoxFocused(true);
@@ -102,12 +122,18 @@ export const OTPInput = ({
 
   useEffect(() => {
     // update pin ready status
-    setIsPinReady(code.length === maximumLength);
-    // clean up function
-    return () => {
+    if (code.length === maximumLength) {
+      setIsPinReady(true);
+    } else {
       setIsPinReady(false);
-    };
-  }, [code, maximumLength, setIsPinReady]);
+    }
+    console.log("isPinReady", isPinReady);
+    // clean up function
+    // return () => {
+    //   setIsPinReady(false);
+    //   console.log("isPinReady clean up", isPinReady);
+    // };
+  }, [code, maximumLength, isPinReady, setIsPinReady]);
 
   return (
     <OTPInputContainer>
