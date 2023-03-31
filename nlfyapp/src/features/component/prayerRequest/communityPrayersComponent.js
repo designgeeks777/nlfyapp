@@ -1,5 +1,7 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/native";
+import { Card } from "react-native-paper";
+import axios from "axios";
 import {
   Text,
   View,
@@ -90,6 +92,17 @@ export const CommunityPrayers = () => {
     inputRange: [0, 1],
     outputRange: [600, 0],
   });
+
+  useEffect(() => {
+    axios
+      .get("http://192.168.0.100:3000/api/prayerRequests")
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
   return (
     <>
       <ContainerView>
