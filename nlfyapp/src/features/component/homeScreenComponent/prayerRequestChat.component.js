@@ -13,7 +13,6 @@ const PrayerCard = styled(Card)`
   top: ${(props) => props.top}px;
   align-self: ${(props) => (props.isRight ? "flex-end" : "flex-start")};
   width: ${cardWidth}px;
-
   height: 80px;
   background-color: [ "#F26924", "rgba(242, 105, 36, 0.10)"];
   border-radius: 20px;
