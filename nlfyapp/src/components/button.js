@@ -15,8 +15,8 @@ const PressableButton = styled(Pressable)`
   width: ${buttonWidth}px;
   height: 56px;
   background-color: ${(props) => props.theme.colors.bgbutton.primary};
-  bottom: ${(props) => (props.isSignUpLastButton ? "90px" : "0px")};
-  left: ${(props) => (props.isSignUpLastButton ? "18px" : "0px")};
+  bottom: 0px;
+  left: 0px;
 `;
 
 const ButtonText = styled(Text)`
@@ -25,7 +25,10 @@ const ButtonText = styled(Text)`
   line-height: ${(props) => props.theme.lineHeights.button};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   letter-spacing: ${(props) => props.theme.space[1]};
-  color: ${(props) => props.theme.colors.text.inverse};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.colors.text.disabled
+      : props.theme.colors.text.inverse};
   font-family: ${(props) => props.theme.fonts.body};
   top: 18px;
 `;
@@ -38,19 +41,20 @@ const StyledLinearGradient = styled(LinearGradient)`
   align-items: center;
 `;
 
-export const Button = ({ label, handleClick, isSignUpLastButton }) => {
+export const Button = ({ label, handleClick, disabled }) => {
+  // console.log("BUTTON", disabled);
   return (
     <PressableButton
       activeOpacity={0.5}
       onPress={handleClick}
-      isSignUpLastButton={isSignUpLastButton}
+      disabled={disabled}
     >
       <StyledLinearGradient
         start={{ x: 180, y: 0.25 }}
         end={{ x: 180, y: 1.0 }}
         colors={["#E94A27", "#F26924"]}
       >
-        <ButtonText>{label}</ButtonText>
+        <ButtonText disabled={disabled}>{label}</ButtonText>
       </StyledLinearGradient>
     </PressableButton>
   );

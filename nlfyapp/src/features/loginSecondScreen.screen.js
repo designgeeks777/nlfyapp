@@ -16,16 +16,18 @@ import { OTPInput } from "../components/otpInput";
 import styled from "styled-components";
 import { Button } from "../components/button";
 import { useNavigation } from "@react-navigation/native";
+import { TextInput } from "react-native-paper";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+import { BASEURL } from "../../APIKey";
+import axios from "axios";
 
 const { width } = Dimensions.get("window");
 const containerWidth = width * 0.9;
 
 export const LoginSecondScreen = (props) => {
-  const navigation = useNavigation();
   const recaptchaVerifier = React.useRef(null);
   const attemptInvisibleVerification = useState(true);
   const [user, setUser] = useState(null);
-  const [mobile, setMobile] = useState(null);
   const [isValid, setisValid] = useState(false);
   const [confirm, setConfirm] = useState(null);
   const [code, setCode] = useState("");
@@ -33,78 +35,65 @@ export const LoginSecondScreen = (props) => {
   const [validOtpCode, setValidOtpCode] = useState(false);
   const [isPinReady, setIsPinReady] = useState(false);
 
-  //   const [phoneNumber, setphoneNumber] = useState("");
+  const [phoneNumber, setphoneNumber] = useState("");
+  const {
+    error,
+    isValidOTPCode,
+    onSignInWithPhoneNumber,
+    confirmCode,
+    confirmResult,
+    testSignin,
+    testConfirmCode,
+    setisValidOTPCode,
+  } = useContext(AuthenticationContext);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [userRegistered, setuserRegistered] = useState(false);
 
   const handleChange = (value) => {
-    setMobile(value);
+    setphoneNumber(value);
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
-    if (mobile.match(regexp)) {
+    if (phoneNumber.match(regexp)) {
       setisValid(true);
-      console.log("in verify step match", mobile);
+      setErrorMsg("");
+      console.log("in verify step match", phoneNumber);
     } else {
       setisValid(false);
+      setErrorMsg("Enter a valid phone number");
       console.log("mismatch");
     }
   };
 
-  const signInWithMobileNumber = () => {
-    console.log("came here", recaptchaVerifier.current);
-    // const confirmation = await firebase.auth().signInWithPhoneNumber(mobile);
-    // setConfirm(confirmation);
-    if (isValid) {
-      firebase
-        .auth()
-        .signInWithPhoneNumber(mobile, recaptchaVerifier.current)
-        .then((confirmationResult) => {
-          setConfirm(confirmationResult);
-          var credential = firebase.auth.PhoneAuthProvider.credential(
-            confirmationResult.verificationId,
-            code
-          );
-          console.log("credential", credential);
-          setIsPinReady(true);
-        })
-        .catch((e) => {
-          setIsPinReady(false);
-          setisValid(false);
-          console.log("ERROR SIGN IN", e);
-        });
+  const checkIfUserAlreadyRegistered = () => {
+    axios
+      // .get(`${BASEURL}/usersByMobileNumber/${phoneNumber}`)
+      .get(`${BASEURL}/usersByMobileNumber/+16505553444`)
+      .then((response) => {
+        if (response.data) {
+          console.log("USER EXISTS LOGIN");
+          setuserRegistered(true);
+          return userRegistered;
+        }
+      })
+      .catch((err) => {
+        console.log(err, "User Not Registered login");
+        setuserRegistered(false);
+        return userRegistered;
+      });
+  };
+
+  const onSignIn = async () => {
+    const isregistered = await checkIfUserAlreadyRegistered();
+    if (isregistered) {
+      console.log("isRegistered login");
+      setisValid(true);
+      setErrorMsg("");
+      // onSignInWithPhoneNumber(phoneNumber, recaptchaVerifier.current);
+      testSignin();
     } else {
+      console.log("is not Registered login");
+      setErrorMsg("Enter your registered mobile number");
       setisValid(false);
-      console.log("ERROR SIGN IN else block");
     }
-  };
-
-  const confirmCode = () => {
-    // try {
-    if (isPinReady) {
-      confirm
-        .confirm(code)
-        .then((u) => {
-          setIsPinReady(true);
-          setValidOtpCode(true);
-          setUser(u);
-          navigation.navigate("Home");
-        })
-        .catch((e) => {
-          console.log("ERROR Code", e);
-        });
-    } else {
-      setValidOtpCode(false);
-      console.log("Else block error Code");
-    }
-    // } catch (error) {
-    //   console.log("Invalid code.");
-    // }
-  };
-
-  const signOut = () => {
-    firebase.auth().signOut();
-    setUser(null);
-    setCode(null);
-    setMobile(null);
-    // navigation.navigate("Home");
-    // return () => useRef();
   };
 
   const Heading = styled(Text)`
@@ -148,46 +137,63 @@ export const LoginSecondScreen = (props) => {
     justify-content: flex-end;
     margin-bottom: 80px;
   `;
+  const styles = StyleSheet.create({
+    containerView: {
+      flex: 1,
+      padding: 10,
+      alignItems: "center",
+      //   backgroundColor: `${(props) => props.theme.colors.bg.primary}`,
+      backgroundColor: "#ffffff",
+    },
+  });
+
   return (
-    <WrapperView>
+    <SafeAreaView style={styles.containerView}>
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebase.app.options}
         attemptInvisibleVerification={attemptInvisibleVerification}
       />
-      {!confirm ? (
+      {!confirmResult && !userRegistered ? (
         <>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{ flex: 1 }}
-          >
-            <Heading>We are glad to have you back.</Heading>
-            <CustomTextInput
-              label="Mobile Number"
-              maxLength={15}
-              placeholder="(+91)999989080"
-              autoFocus
-              autoCompleteType="tel"
-              keyboardType="phone-pad"
-              textContentType="telephoneNumber"
-              msgToDisplay="Enter your registered mobile number"
-              value={mobile}
-              onChange={(newValue) => handleChange(newValue)}
-              isValid={isValid}
-              isUserNameTextInput={false}
-            />
-          </KeyboardAvoidingView>
+          <Heading>We are glad to have you back.</Heading>
+          <CustomTextInput
+            label="Mobile Number"
+            maxLength={15}
+            placeholder="(+91)999989080"
+            autoFocus
+            autoCompleteType="tel"
+            keyboardType="phone-pad"
+            textContentType="telephoneNumber"
+            // msgToDisplay="Enter your registered mobile number"
+            msgToDisplay={error || errorMsg}
+            value={phoneNumber}
+            onChange={handleChange}
+            isValid={isValid}
+            isUserNameTextInput={false}
+          />
           {/* <MessageText>Enter your registered mobile number.</MessageText> */}
           <LoginButtonView>
-            <Button label="Continue" handleClick={signInWithMobileNumber} />
+            <Button
+              label="Continue"
+              handleClick={onSignIn}
+              // disabled={!isValid}
+            />
           </LoginButtonView>
         </>
       ) : (
         <>
+          {/* <Heading>Please verfiy, its you {user.name}</Heading> */}
           <Heading>Please verfiy, its you David</Heading>
+          {/* {isPinReady && !validOtpCode ? ( */}
           <OTPMessageText>
-            Enter 4 digit verification code sent to the number
+            Enter 6 digit verification code sent to the number
           </OTPMessageText>
+          {/* ) : (
+            <OTPMessageText>
+              Please enter valid verification code.
+            </OTPMessageText>
+          )} */}
           <OTPInput
             code={code}
             setCode={(e) => setCode(e)}
@@ -195,15 +201,19 @@ export const LoginSecondScreen = (props) => {
             setIsPinReady={setIsPinReady}
             isValidOTPCode={validOtpCode}
           />
+          {/* <Text>
+            {isPinReady && !validOtpCode ? "Please enter valid verification code" : ""}
+          </Text> */}
           <LoginButtonView>
             <Button
               label="Confirm Code"
-              handleClick={confirmCode}
-              isLoginButton={true}
+              // handleClick={() => confirmCode(code)}
+              handleClick={testConfirmCode}
+              // disabled={!isPinReady}
             />
           </LoginButtonView>
         </>
       )}
-    </WrapperView>
+    </SafeAreaView>
   );
 };

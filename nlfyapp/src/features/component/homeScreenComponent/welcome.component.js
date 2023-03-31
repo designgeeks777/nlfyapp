@@ -17,8 +17,8 @@ const Profile = styled(View)`
   align-self: flex-end;
 `;
 export const Welcome = (props) => {
-  console.log("IN WELCOME", props);
   const { onLogout, user } = useContext(AuthenticationContext);
+  console.log("IN WELCOME", user.displayName);
   return (
     <>
       <Profile>
@@ -28,8 +28,7 @@ export const Welcome = (props) => {
           color="rgba(242, 105, 36, 0.6)"
         />
       </Profile>
-      <WelcomeText>Welcome</WelcomeText>
-      {/* <Text>{user}</Text> */}
+      <WelcomeText>Welcome {user?.displayName}</WelcomeText>
       <TouchableOpacity onPress={onLogout}>
         <Text>Sign Out</Text>
       </TouchableOpacity>

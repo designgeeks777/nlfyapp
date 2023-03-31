@@ -45,6 +45,36 @@ const MessageText = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
+const StyledTextInputWithIcon = styled(TextInput).attrs({
+  // selectionColor: "blue",
+  underlineColor: "transparent",
+  activeUnderlineColor: "transparent",
+  outlineColor: "transparent",
+  activeOutlineColor: "transparent",
+  placeHolderTextColor: "#676767",
+})`
+  margin-top: 8px;
+  font-size: ${(props) => props.theme.fontSizes.body};
+  color: ${(props) => props.theme.colors.text.primary};
+  font-family: ${(props) => props.theme.fonts.body};
+  border-radius: 10px;
+  height: 52px;
+  border-width: 1px;
+  background-color: "transparent";
+  ${({ isValid, value }) =>
+    isValid
+      ? `
+  border-color: #27AE60;
+`
+      : value === null || value === undefined || value === ""
+      ? `
+      border-color: #D9D9D9;
+      `
+      : `
+border-color: #DE1621;
+`}
+`;
+
 const StyledTextInput = styled(TextInput).attrs({
   // selectionColor: "blue",
   underlineColor: "transparent",
@@ -61,24 +91,14 @@ const StyledTextInput = styled(TextInput).attrs({
   height: 52px;
   border-width: 1px;
   background-color: "transparent";
-  ${({ isValid, value, isUserNameTextInput }) =>
-    isUserNameTextInput
-      ? `
-      border-color : #D9D9D9;`
-      : isValid
-      ? `
-  border-color: #27AE60;
-`
-      : value === null || value === undefined || value === ""
-      ? `
-      border-color: #D9D9D9;
-      `
-      : `
-border-color: #DE1621;
-`};
+  border-color: ${(props) => props.theme.colors.border.primary};
 `;
 
-// isValid
+//       isUserNameTextInput
+//         ?
+// `;
+//       border-color : #D9D9D9;`
+//       : isValid
 //       ? `
 //   border-color: #27AE60;
 // `
@@ -89,6 +109,7 @@ border-color: #DE1621;
 //       : `
 // border-color: #DE1621;
 // `};
+
 const TextInputIcon = styled(TextInput.Icon).attrs({
   iconColor: "red",
 });
@@ -105,7 +126,7 @@ export const CustomTextInput = ({
   isUserNameTextInput,
 }) => {
   const [secureTextEntry, setSecureTextEntry] = useState(true);
-  console.log("custom TEXTINPUT", isUserNameTextInput, value);
+  console.log("custom TEXTINPUT", isUserNameTextInput, isValid, value);
   return (
     <Container>
       <HeadingWrapperView>
@@ -113,7 +134,7 @@ export const CustomTextInput = ({
         {isUserNameTextInput === false && <Mandatory>*</Mandatory>}
       </HeadingWrapperView>
       {isUserNameTextInput === false ? (
-        <StyledTextInput
+        <StyledTextInputWithIcon
           isValid={isValid}
           mode="outlined"
           onChangeText={onChange}
@@ -136,6 +157,7 @@ export const CustomTextInput = ({
         />
       ) : (
         <StyledTextInput
+          // isValid={isValid}
           mode="outlined"
           onChangeText={onChange}
           value={value}
@@ -143,15 +165,16 @@ export const CustomTextInput = ({
           keyboardType={keyboardType}
         />
       )}
-      {isUserNameTextInput === false ? (
-        <ErrorText>
-          {value === null || value === undefined || value === "" || isValid
-            ? ""
-            : msgToDisplay}
-        </ErrorText>
-      ) : (
-        <MessageText>{msgToDisplay}</MessageText>
-      )}
+      {
+        isUserNameTextInput === false ? (
+          <ErrorText>
+            {value === null || value === undefined || value === "" || isValid
+              ? ""
+              : msgToDisplay}
+          </ErrorText>
+        ) : null
+        // <MessageText>{msgToDisplay}</MessageText>
+      }
     </Container>
   );
 };

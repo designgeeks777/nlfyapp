@@ -8,11 +8,16 @@ export const colors = {
     caption: "#666666",
     infoMessage: "#999999",
     errorMessage: "#DE1621",
+    disabled: "#D9D9D9",
   },
   bg: {
     primary: "#FFFFFF",
     secondary: "#EF6C00",
-    disabled: "#D9D9D9",
+  },
+  border: {
+    primary: "#D9D9D9",
+    success: "#27AE60",
+    error: "#DE1621",
   },
   bgbutton: {
     primary: "linear-gradient(180deg, #E94A27 41.07%, #F26924 100%);",
@@ -20,11 +25,5 @@ export const colors = {
   },
   iconColor: {
     primary: "#666666",
-  },
-  success: {
-    successBorderColor: "#27AE60",
-  },
-  error: {
-    errorBorderColor: "#DE1621",
   },
 };
