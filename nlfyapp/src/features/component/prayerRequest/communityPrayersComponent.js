@@ -68,34 +68,9 @@ export const CommunityPrayers = () => {
     },
   ];
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const slideAnimation = useRef(new Animated.Value(0)).current;
-
-  const handleOpenModal = () => {
-    setModalVisible(true);
-    Animated.timing(slideAnimation, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const handleCloseModal = () => {
-    Animated.timing(slideAnimation, {
-      toValue: 0,
-      duration: 300,
-      useNativeDriver: true,
-    }).start(() => setModalVisible(false));
-  };
-
-  const modalTranslateY = slideAnimation.interpolate({
-    inputRange: [0, 1],
-    outputRange: [600, 0],
-  });
-
   useEffect(() => {
     axios
-      .get("http://192.168.0.100:3000/api/prayerRequests")
+      .get("http://192.168.0.102:3000/api/prayerRequests")
       .then((response) => {
         console.log(response.data);
       })
@@ -107,31 +82,6 @@ export const CommunityPrayers = () => {
     <>
       <ContainerView>
         <ExpandCollapseList data={data} />
-        <TouchableOpacity onPress={handleOpenModal} style={styles.spacing}>
-          <Text style={styles.buttonText}>Write a Prayer</Text>
-        </TouchableOpacity>
-
-        <Modal visible={modalVisible} transparent={true}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={handleCloseModal}
-            style={styles.modalOverlay}
-          >
-            <Animated.View
-              style={[
-                styles.modalContainer,
-                {
-                  transform: [{ translateY: modalTranslateY }],
-                  height: 500, // set the height as per your requirement
-                },
-              ]}
-            >
-              <Text style={styles.modalTitle}>Write a Prayer</Text>
-              {/* add your form components for prayer request here */}
-              <PrayerForm />
-            </Animated.View>
-          </TouchableOpacity>
-        </Modal>
       </ContainerView>
       <ButtonView>
         <Button label="Raise Prayer Request" />

@@ -1,0 +1,109 @@
+import React, { useCallback, useState, useRef } from "react";
+import {
+  Text,
+  FlatList,
+  View,
+  Image,
+  StyleSheet,
+  Platform,
+  TouchableOpacity,
+  Animated,
+  Modal,
+} from "react-native";
+import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
+
+const styles = StyleSheet.create({
+  buttonView: {
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+    backgroundColor: "#ffffff",
+  },
+  button: {
+    backgroundColor: "#333333",
+    borderRadius: 24,
+    paddingVertical: 16,
+    paddingHorizontal: 32,
+  },
+  buttonText: {
+    color: "#008BE2",
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContainer: {
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: 16,
+  },
+  spacing: {
+    marginTop: -40,
+    marginBottom: 40,
+  },
+});
+
+export const NLFModal = () => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+    Animated.timing(slideAnimation, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleCloseModal = () => {
+    Animated.timing(slideAnimation, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => setModalVisible(false));
+  };
+
+  const modalTranslateY = slideAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [600, 0],
+  });
+  return (
+    <>
+      <TouchableOpacity onPress={handleOpenModal} style={styles.spacing}>
+        <Text style={styles.buttonText}>Write a Prayer</Text>
+      </TouchableOpacity>
+
+      <Modal visible={modalVisible} transparent={true}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={handleCloseModal}
+          style={styles.modalOverlay}
+        >
+          <Animated.View
+            style={[
+              styles.modalContainer,
+              {
+                transform: [{ translateY: modalTranslateY }],
+                height: 500, // set the height as per your requirement
+              },
+            ]}
+          >
+            <Text style={styles.modalTitle}>Write a Prayer</Text>
+            {/* add your form components for prayer request here */}
+            <PrayerForm />
+          </Animated.View>
+        </TouchableOpacity>
+      </Modal>
+    </>
+  );
+};
