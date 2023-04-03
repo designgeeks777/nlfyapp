@@ -11,6 +11,7 @@ import {
   Modal,
 } from "react-native";
 import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
+import { SuccessModalContent } from "./successModalContent.component";
 
 const styles = StyleSheet.create({
   buttonView: {
@@ -54,6 +55,18 @@ const styles = StyleSheet.create({
 
 export const NLFModal = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [success, setSuccess] = useState(false);
+
+  const handleSuccessChange = (successValue) => {
+    setSuccess(successValue);
+    if (successValue) {
+      setTimeout(() => {
+        //setSuccess(false);
+        handleCloseModal();
+      }, 2000);
+    }
+  };
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
   const handleOpenModal = () => {
@@ -99,11 +112,22 @@ export const NLFModal = (props) => {
               },
             ]}
           >
-            <Text style={styles.modalTitle}>
-              Pray for {props.request.raisedBy}
-            </Text>
-            {/* add your form components for prayer request here */}
-            <PrayerForm request={props.request} />
+            {!success && (
+              <Text style={styles.modalTitle}>
+                Pray for {props.request.raisedBy}
+              </Text>
+            )}
+
+            {!success && (
+              <PrayerForm
+                request={props.request}
+                //handleCloseModal={handleCloseModal}
+                handleSuccessChange={handleSuccessChange}
+              />
+            )}
+            {success && (
+              <SuccessModalContent message="Prayer response sent succesfully" />
+            )}
           </Animated.View>
         </TouchableOpacity>
       </Modal>

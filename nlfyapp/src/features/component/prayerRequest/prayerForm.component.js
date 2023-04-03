@@ -12,13 +12,22 @@ const ButtonWrapper = styled(View)`
 `;
 export const PrayerForm = (props) => {
   const [text, setText] = useState("");
-  const [showButton, setShowButton] = useState(false);
   const [inputFocused, setInputFocused] = useState(false);
+  const [success, setSuccess] = useState(false);
 
   const handleSubmit = () => {
     // handle the submission of the prayer request here
     console.log("Submit");
     console.log("props.request", props.request);
+
+    const responseHandler = (response) => {
+      console.log("Response:", response.status);
+      if (response.status === 200) {
+        console.log("Success");
+        setSuccess(true);
+      }
+    };
+
     const updateBody = {
       responses: [
         {
@@ -32,10 +41,15 @@ export const PrayerForm = (props) => {
     console.log("url:", url);
     axios
       .patch(url, updateBody)
-      .then((response) => console.log("Response:", response.status))
+      .then(responseHandler)
       .catch((err) => console.log(err));
     //console.log("Response Data", data);
+    //props.handleCloseModal();
   };
+
+  useEffect(() => {
+    props.handleSuccessChange(success);
+  }, [success, props]);
 
   return (
     <>
