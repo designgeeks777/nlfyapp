@@ -18,7 +18,7 @@ import { ExpandCollapseList } from "../../../components/expandCollapse.Community
 
 const ContainerView = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight || 0}px;
+  //margin-top: ${StatusBar.currentHeight || 0}px;
 `;
 
 const ButtonView = styled(View)`
@@ -27,13 +27,12 @@ const ButtonView = styled(View)`
 `;
 
 export const CommunityPrayers = () => {
-  var data = [
+  /*var data = [
     {
       _id: "642292f1dfe16a803fda708f",
       raisedBy: "Ria",
       requestMessage:
         "Hello, Keep praying for my job, this is the final week of my presentation, also pray for my family",
-      profilePic: require("nlfyapp/assets/profile1.jpg"),
       dateOfPosting: "23/11/2023",
       responses: [],
       likes: [],
@@ -44,7 +43,6 @@ export const CommunityPrayers = () => {
       raisedBy: "Robin",
       requestMessage:
         "Please pray for my family's health, Please pray for my family's health, Please pray for my family's health,  Please pray for my family's health,  Please pray for my family's health, Pray for my new job.",
-      profilePic: require("nlfyapp/assets/profile2.jpg"),
       dateOfPosting: "23/11/2023",
       responses: [],
       likes: [],
@@ -54,7 +52,6 @@ export const CommunityPrayers = () => {
       _id: "6422c3b4ca06f6fb57d3be90",
       raisedBy: "Sandeep",
       requestMessage: "Pray for my health",
-      profilePic: require("nlfyapp/assets/profile1.jpg"),
       dateOfPosting: "23/11/2023",
       responses: [
         {
@@ -66,18 +63,21 @@ export const CommunityPrayers = () => {
       likes: [],
       __v: 0,
     },
-  ];
+  ]; */
 
   useEffect(() => {
     axios
       .get("http://192.168.0.102:3000/api/prayerRequests")
       .then((response) => {
         console.log(response.data);
+        setData(response.data);
       })
       .catch((error) => {
         console.error(error);
       });
   }, []);
+
+  const [data, setData] = useState([]);
   return (
     <>
       <ContainerView>

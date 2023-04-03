@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import {
   Text,
   FlatList,
@@ -52,7 +52,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const NLFModal = () => {
+export const NLFModal = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
@@ -77,10 +77,11 @@ export const NLFModal = () => {
     inputRange: [0, 1],
     outputRange: [600, 0],
   });
+
   return (
     <>
       <TouchableOpacity onPress={handleOpenModal} style={styles.spacing}>
-        <Text style={styles.buttonText}>Write a Prayer</Text>
+        <Text style={styles.buttonText}>Write a Prayer: </Text>
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent={true}>
@@ -98,7 +99,9 @@ export const NLFModal = () => {
               },
             ]}
           >
-            <Text style={styles.modalTitle}>Write a Prayer</Text>
+            <Text style={styles.modalTitle}>
+              Write prayer for {props.raisedBy}
+            </Text>
             {/* add your form components for prayer request here */}
             <PrayerForm />
           </Animated.View>

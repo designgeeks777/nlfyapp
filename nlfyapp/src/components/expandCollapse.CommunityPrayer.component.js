@@ -10,10 +10,18 @@ import {
   TouchableOpacity,
   Animated,
   Modal,
+  Dimensions,
 } from "react-native";
 import { Button, Card, Paragraph } from "react-native-paper";
 import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
 import { NLFModal } from "./NLFModal.component";
+import styled from "styled-components";
+
+const { height, width } = Dimensions.get("window");
+
+const FlexRow = styled(View)`
+  flex-direction: ;
+`;
 
 const Item = (props) => {
   const [requestTextShown, setRequestTextShown] = useState(false);
@@ -31,27 +39,30 @@ const Item = (props) => {
   }, []);
 
   const cardStyle = {
-    width: "70%",
+    width: width * 0.74,
     backgroundColor: "rgba(242, 105, 36, 0.3)",
-    alignSelf: props.position === "left" ? "flex-end" : "flex-start",
-    marginLeft: props.position === "left" ? 0 : 10,
-    marginRight: props.position === "left" ? 10 : 0,
+    //alignSelf: props.position === "left" ? "flex-end" : "flex-start",
+    marginLeft: props.position === "left" ? width * 0.02 : 0,
+    //marginRight: props.position === "left" ? width * 0.05 : 0,
     shadowColor: "transparent",
     borderRadius: 30,
+    marginBottom: height * 0.05,
   };
 
   const containerStyle = {
     flexDirection: props.position === "left" ? "row" : "row-reverse",
     alignItems: "center",
-    marginBottom: 10,
-    marginLeft: props.position === "left" ? 30 : 30, // align profile and name side by side to the requestmessage
-    marginTop: Platform.OS === "ios" ? 0 : 10, // add top margin for android devices
+    marginBottom: Platform.OS === "ios" ? 0 : height * 0.06,
+    marginLeft: width * 0.04,
+    marginRight: width * 0.04, // align profile and name side by side to the requestmessage
+    //marginTop: Platform.OS === "ios" ? 0 : 80, // add top margin for android devices
+    //marginTop: Platform.OS === "ios" ? 0 : height * 0.04,
   };
 
   const nameStyle = {
     marginRight: props.position === "left" ? 0 : -40,
     marginLeft: props.position === "left" ? -40 : 0,
-    top: Platform.OS === "ios" ? 95 : 85, // Add margin top to move the name down a little
+    top: width * 0.1, // Add margin top to move the name down a little
   };
   const textStyle = {
     lineHeight: 16,
@@ -60,47 +71,65 @@ const Item = (props) => {
     bottom: 5,
   };
 
+  const setFlex = {
+    flexDirection: props.position === "left" ? "row" : "row-reverse",
+  };
+
+  const writeprayer = {
+    //marginRight: props.position === "left" ? 0 : -40,
+    marginLeft: props.position === "left" ? width * 0.1 : width * 0.09,
+    flexDirection: props.position === "left" ? "row-reverse" : "row",
+  };
+
   const styles = StyleSheet.create({
     profilePicture: {
-      width: 45,
-      height: 45,
-      borderRadius: 30,
-      top: Platform.OS === "ios" ? 60 : 70, // Add margin top to move the profile down a little
+      width: width * 0.1,
+      height: height * 0.06,
+      borderRadius: 20,
+      //top: Platform.OS === "ios" ? 60 : width * 0.2, // Add margin top to move the profile down a little
     },
   });
 
   return (
     <>
-      <View style={containerStyle}>
-        <Image
-          style={styles.profilePicture}
-          source="nlfyapp/assets/profile1.jpg"
-        />
-        <Text style={nameStyle}>{props.item.raisedBy}</Text>
-      </View>
-      <Card style={cardStyle}>
-        <Card.Content>
-          <Paragraph
-            onTextLayout={onTextLayout}
-            numberOfLines={requestTextShown && props.selected ? undefined : 3}
-            style={textStyle}
-          >
-            {props.item.requestMessage}
-          </Paragraph>
-        </Card.Content>
-        {requestLengthMore ? (
-          <Card.Actions style={{ justifyContent: "flex-end", marginTop: -25 }}>
-            <Button
-              mode="text"
-              icon={props.selected ? "chevron-up" : "chevron-down"}
-              onPress={toggleRequestNumberOfLines}
+      <View style={setFlex}>
+        <View style={containerStyle}>
+          <Image
+            style={styles.profilePicture}
+            source={require("nlfyapp/assets/profile1.jpg")}
+          />
+          <Text style={nameStyle}>{props.item.raisedBy}</Text>
+        </View>
+
+        <Card style={cardStyle}>
+          <Card.Content>
+            <Paragraph
+              onTextLayout={onTextLayout}
+              numberOfLines={requestTextShown && props.selected ? undefined : 3}
+              style={textStyle}
             >
-              {requestTextShown && props.selected ? "collapse" : "expand"}
-            </Button>
-          </Card.Actions>
-        ) : null}
-      </Card>
-      <NLFModal />
+              {props.item.requestMessage}
+            </Paragraph>
+          </Card.Content>
+          {requestLengthMore ? (
+            <Card.Actions
+              style={{ justifyContent: "flex-end", marginTop: -25 }}
+            >
+              <Button
+                mode="text"
+                icon={props.selected ? "chevron-up" : "chevron-down"}
+                onPress={toggleRequestNumberOfLines}
+              >
+                {requestTextShown && props.selected ? "collapse" : "expand"}
+              </Button>
+            </Card.Actions>
+          ) : null}
+        </Card>
+      </View>
+
+      <View style={writeprayer}>
+        <NLFModal raisedBy={props.item.raisedBy} />
+      </View>
     </>
   );
 };
