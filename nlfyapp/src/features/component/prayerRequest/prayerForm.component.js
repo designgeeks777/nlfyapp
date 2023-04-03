@@ -1,31 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, StyleSheet, TextInput } from "react-native";
 import { Button } from "../../../components/button";
 import styled from "styled-components";
+import axios from "axios";
+import { BASEURL } from "../../../../APIKey";
 
 const ButtonWrapper = styled(View)`
   padding-top: 60px;
+  padding-bottom: 30px;
+  align-items: center;
 `;
-export const PrayerForm = () => {
+export const PrayerForm = (props) => {
   const [text, setText] = useState("");
+  const [showButton, setShowButton] = useState(false);
+  const [inputFocused, setInputFocused] = useState(false);
 
   const handleSubmit = () => {
     // handle the submission of the prayer request here
     console.log("Submit");
+    console.log("props.request", props.request);
+    const updateBody = {
+      responses: [
+        {
+          responseBy: "Tia",
+          responseMessage: text,
+          dateOfResponse: "23/11/2023",
+        },
+      ],
+    };
+    const url = `${BASEURL}prayerRequests/${props.request._id}`;
+    console.log("url:", url);
+    axios
+      .patch(url, updateBody)
+      .then((response) => console.log("Response:", response.status))
+      .catch((err) => console.log(err));
+    //console.log("Response Data", data);
   };
 
   return (
-    <View style={{ flex: 1, alignItems: "center" }}>
-      <TextInput
-        placeholder="Enter your prayer request here"
-        mode="outlined"
-        style={styles.inp}
-        textAlignVertical="top"
-      />
-      <ButtonWrapper>
-        <Button label="Submit" handleClick={handleSubmit} />
-      </ButtonWrapper>
-    </View>
+    <>
+      <View style={{ flex: 1, alignItems: "center" }}>
+        <TextInput
+          placeholder="Enter your prayer here"
+          mode="outlined"
+          style={styles.inp}
+          textAlignVertical="top"
+          value={text} // bind text state variable to input field
+          onChangeText={(value) => setText(value)} // update text state variable whenever user types into input field
+          onFocus={() => setInputFocused(true)} // set inputFocused to true when TextInput is focused
+          onBlur={() => setInputFocused(false)}
+        />
+      </View>
+      {!inputFocused && (
+        <ButtonWrapper>
+          <Button label="Submit" handleClick={handleSubmit} />
+        </ButtonWrapper>
+      )}
+    </>
   );
 };
 

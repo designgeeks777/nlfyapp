@@ -81,7 +81,7 @@ export const NLFModal = (props) => {
   return (
     <>
       <TouchableOpacity onPress={handleOpenModal} style={styles.spacing}>
-        <Text style={styles.buttonText}>Write a Prayer: </Text>
+        <Text style={styles.buttonText}>Write Prayer </Text>
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent={true}>
@@ -100,10 +100,10 @@ export const NLFModal = (props) => {
             ]}
           >
             <Text style={styles.modalTitle}>
-              Write prayer for {props.raisedBy}
+              Pray for {props.request.raisedBy}
             </Text>
             {/* add your form components for prayer request here */}
-            <PrayerForm />
+            <PrayerForm request={props.request} />
           </Animated.View>
         </TouchableOpacity>
       </Modal>

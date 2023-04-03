@@ -128,7 +128,7 @@ const Item = (props) => {
       </View>
 
       <View style={writeprayer}>
-        <NLFModal raisedBy={props.item.raisedBy} />
+        <NLFModal request={props.item} />
       </View>
     </>
   );
