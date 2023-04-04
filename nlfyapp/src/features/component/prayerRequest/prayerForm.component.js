@@ -19,7 +19,7 @@ export const PrayerForm = (props) => {
 
   const handleSubmit = () => {
     // handle the submission of the prayer request here
-    console.log("Submit");
+
     console.log("props.request", props.request);
 
     const responseHandler = (response) => {
@@ -30,15 +30,22 @@ export const PrayerForm = (props) => {
       }
     };
 
-    const updateBody = {
-      responses: [
-        {
-          responseBy: "Tia",
-          responseMessage: text,
-          dateOfResponse: "23/11/2023",
-        },
-      ],
+    const existingresponses = [];
+    props.request.responses.map((response) => {
+      existingresponses.push(response);
+    });
+    const newresponse = {
+      responseBy: "Tia",
+      responseMessage: text,
+      dateOfResponse: "23/11/2023",
     };
+    existingresponses.push(newresponse);
+
+    const updateBody = {
+      responses: existingresponses,
+    };
+
+    console.log("Existing Responses:", existingresponses);
     const url = `${BASEURL}prayerRequests/${props.request._id}`;
     console.log("url:", url);
     axios
