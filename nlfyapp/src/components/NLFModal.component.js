@@ -82,7 +82,10 @@ export const NLFModal = (props) => {
       toValue: 0,
       duration: 300,
       useNativeDriver: true,
-    }).start(() => setModalVisible(false));
+    }).start(() => {
+      setModalVisible(false);
+      setSuccess(false); // reset the success state
+    });
   };
 
   const modalTranslateY = slideAnimation.interpolate({
