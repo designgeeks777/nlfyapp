@@ -30,14 +30,22 @@ export const PrayerForm = (props) => {
       }
     };
 
-    const existingresponses = [];
-    props.request.responses.map((response) => {
+    const existingresponses = [...props.request.responses];
+    /*props.request.responses.map((response) => {
       existingresponses.push(response);
-    });
+    });*/
+
+    //get current date and add
+    const currentDate = new Date();
+    const day = currentDate.getDate().toString().padStart(2, "0");
+    const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // add 1 to get the correct month since January is 0
+    const year = currentDate.getFullYear();
+    const formattedDate = `${day}/${month}/${year}`;
+    console.log("Formatted Date", formattedDate);
     const newresponse = {
       responseBy: "Tia",
       responseMessage: text,
-      dateOfResponse: "23/11/2023",
+      dateOfResponse: formattedDate,
     };
     existingresponses.push(newresponse);
 
