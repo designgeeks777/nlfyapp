@@ -1,29 +1,28 @@
 import React, { useCallback, useState, useRef, useEffect } from "react";
 import {
   Text,
-  FlatList,
-  View,
-  Image,
   StyleSheet,
-  Platform,
   TouchableOpacity,
   Animated,
   Modal,
+  Dimensions,
 } from "react-native";
 import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
 import { SuccessModalContent } from "./successModalContent.component";
 
+const { width } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   buttonView: {
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    //paddingVertical: 16,
+    //paddingHorizontal: 32,
     backgroundColor: "#ffffff",
   },
   button: {
     backgroundColor: "#333333",
     borderRadius: 24,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    //paddingVertical: width * 0.2,
+    //paddingHorizontal: 32,
   },
   buttonText: {
     color: "#008BE2",
@@ -40,16 +39,16 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    padding: 24,
+    padding: width * 0.05,
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: width * 0.05,
   },
   spacing: {
-    marginTop: -40,
-    marginBottom: 40,
+    marginTop: -width * 0.1,
+    marginBottom: width * 0.1,
   },
 });
 

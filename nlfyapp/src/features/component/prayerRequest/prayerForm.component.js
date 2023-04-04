@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput } from "react-native";
+import { View, StyleSheet, TextInput, Dimensions } from "react-native";
 import { Button } from "../../../components/button";
 import styled from "styled-components";
 import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
 
+const { width } = Dimensions.get("window");
+
 const ButtonWrapper = styled(View)`
-  padding-top: 60px;
   padding-bottom: 30px;
   align-items: center;
 `;
+
 export const PrayerForm = (props) => {
   const [text, setText] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
@@ -66,9 +68,9 @@ export const PrayerForm = (props) => {
         />
       </View>
       {!inputFocused && (
-        <ButtonWrapper>
+        <View style={styles.buttonwrapper}>
           <Button label="Submit" handleClick={handleSubmit} />
-        </ButtonWrapper>
+        </View>
       )}
     </>
   );
@@ -82,5 +84,9 @@ const styles = StyleSheet.create({
     borderColor: "gray",
     borderWidth: 1,
     padding: 10,
+  },
+  buttonwrapper: {
+    paddingBottom: width * 0.1,
+    alignItems: "center",
   },
 });
