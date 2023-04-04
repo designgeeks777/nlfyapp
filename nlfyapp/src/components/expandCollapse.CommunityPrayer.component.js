@@ -24,6 +24,8 @@ const FlexRow = styled(View)`
 `;
 
 const Item = (props) => {
+  const { data, id, position } = props;
+
   const [requestTextShown, setRequestTextShown] = useState(false);
   const [requestLengthMore, setRequestLengthMore] = useState(false);
 
@@ -75,10 +77,12 @@ const Item = (props) => {
     flexDirection: props.position === "left" ? "row" : "row-reverse",
   };
 
+  //marginRight: props.position === "left" ? 0 : -40,
+  //marginLeft: props.position === "left" ? width * 0.1 : width * 0.09,
+  //flexDirection: props.position === "left" ? "row-reverse" : "row",
   const writeprayer = {
-    //marginRight: props.position === "left" ? 0 : -40,
-    marginLeft: props.position === "left" ? width * 0.1 : width * 0.09,
-    flexDirection: props.position === "left" ? "row-reverse" : "row",
+    marginLeft: position === "left" ? width * 0.1 : width * 0.09,
+    flexDirection: position === "left" ? "row-reverse" : "row",
   };
 
   const styles = StyleSheet.create({
@@ -141,11 +145,11 @@ export const ExpandCollapseList = (props) => {
     const position = index % 2 === 0 ? "left" : "right";
     return (
       <Item
-        item={item}
-        selected={selectedId === item._id}
-        onSelect={onSelectItem}
+        data={props.data}
         id={item._id}
         position={position}
+        item={item}
+        selected={selectedId === item._id}
       />
     );
   };
