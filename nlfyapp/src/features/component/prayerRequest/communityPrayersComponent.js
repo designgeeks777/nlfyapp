@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/native";
-import { Card } from "react-native-paper";
+
 import axios from "axios";
 import {
-  Text,
   View,
   StatusBar,
   StyleSheet,
@@ -13,8 +12,8 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/button";
-import { PrayerForm } from "./prayerForm.component";
 import { ExpandCollapseList } from "../../../components/expandCollapse.CommunityPrayer.component";
+import { RaisePrayerForm } from "./raisePrayerForm.component";
 
 const ContainerView = styled(SafeAreaView)`
   flex: 1;
@@ -27,44 +26,6 @@ const ButtonView = styled(View)`
 `;
 
 export const CommunityPrayers = () => {
-  /*var data = [
-    {
-      _id: "642292f1dfe16a803fda708f",
-      raisedBy: "Ria",
-      requestMessage:
-        "Hello, Keep praying for my job, this is the final week of my presentation, also pray for my family",
-      dateOfPosting: "23/11/2023",
-      responses: [],
-      likes: [],
-      __v: 0,
-    },
-    {
-      _id: "64229306dfe16a803fda7091",
-      raisedBy: "Robin",
-      requestMessage:
-        "Please pray for my family's health, Please pray for my family's health, Please pray for my family's health,  Please pray for my family's health,  Please pray for my family's health, Pray for my new job.",
-      dateOfPosting: "23/11/2023",
-      responses: [],
-      likes: [],
-      __v: 0,
-    },
-    {
-      _id: "6422c3b4ca06f6fb57d3be90",
-      raisedBy: "Sandeep",
-      requestMessage: "Pray for my health",
-      dateOfPosting: "23/11/2023",
-      responses: [
-        {
-          responseBy: "Ria",
-          responseMessage: "Praying",
-          dateOfResponse: "23/11/2023",
-        },
-      ],
-      likes: [],
-      __v: 0,
-    },
-  ]; */
-
   useEffect(() => {
     axios
       .get("http://192.168.0.102:3000/api/prayerRequests")
@@ -78,14 +39,75 @@ export const CommunityPrayers = () => {
   }, []);
 
   const [data, setData] = useState([]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleSuccessChange = (successValue) => {
+    setSuccess(successValue);
+    if (successValue) {
+      setTimeout(() => {
+        //setSuccess(false);
+        handleCloseModal();
+      }, 2000);
+    }
+  };
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+    Animated.timing(slideAnimation, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleCloseModal = () => {
+    Animated.timing(slideAnimation, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setModalVisible(false);
+      setSuccess(false); // reset the success state
+    });
+  };
+
+  const modalTranslateY = slideAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [600, 0],
+  });
+  const handleClick = () => {
+    setModalVisible(true);
+    handleOpenModal();
+  };
   return (
     <>
       <ContainerView>
         <ExpandCollapseList data={data} />
       </ContainerView>
       <ButtonView>
-        <Button label="Raise Prayer Request" />
+        <Button label="Raise Prayer Request" handleClick={handleClick} />
       </ButtonView>
+      <Modal visible={modalVisible} transparent={true}>
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={handleCloseModal}
+          style={styles.modalOverlay}
+        >
+          <Animated.View
+            style={[
+              styles.modalContainer,
+              {
+                transform: [{ translateY: modalTranslateY }],
+                height: 500, // set the height as per your requirement
+              },
+            ]}
+          >
+            <RaisePrayerForm handleSuccessChange={handleSuccessChange} />
+          </Animated.View>
+        </TouchableOpacity>
+      </Modal>
     </>
   );
 };

@@ -92,6 +92,11 @@ const Item = (props) => {
       borderRadius: 20,
       //top: Platform.OS === "ios" ? 60 : width * 0.2, // Add margin top to move the profile down a little
     },
+    flatlistWrapper: {
+      flex: 1,
+      position: "absolute",
+      bottom: 0,
+    },
   });
 
   return (
@@ -150,6 +155,7 @@ export const ExpandCollapseList = (props) => {
         position={position}
         item={item}
         selected={selectedId === item._id}
+        onSelect={onSelectItem}
       />
     );
   };
@@ -161,14 +167,30 @@ export const ExpandCollapseList = (props) => {
     setSelectedId(id);
   };
 
+  const styles = StyleSheet.create({
+    profilePicture: {
+      width: width * 0.1,
+      height: height * 0.06,
+      borderRadius: 20,
+      //top: Platform.OS === "ios" ? 60 : width * 0.2, // Add margin top to move the profile down a little
+    },
+    flatlistWrapper: {
+      flex: 1,
+      position: "absolute",
+      bottom: 0,
+    },
+  });
+
   return (
-    <FlatList
-      data={props.data}
-      initialNumToRender={props.data.length}
-      contentContainerStyle={{ paddingBottom: 150 }}
-      renderItem={renderItem}
-      keyExtractor={(item) => item._id}
-      extraData={selectedId}
-    />
+    <View style={styles.flatlistWrapper}>
+      <FlatList
+        data={props.data}
+        initialNumToRender={props.data.length}
+        contentContainerStyle={{ paddingBottom: 150 }}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id}
+        extraData={selectedId}
+      />
+    </View>
   );
 };
