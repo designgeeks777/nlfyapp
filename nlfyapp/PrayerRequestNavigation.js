@@ -1,6 +1,6 @@
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import React from "react";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator, TransitionSpecs } from "@react-navigation/stack";
 import { PrayerRequest } from "./src/features/prayerRequest.screen";
 import { ChurchPrayers } from "./src/features/component/prayerRequest/churchPrayersComponent";
 import { MyPrayersScreen } from "./src/features/component/prayerRequest/myPrayersComponent";
@@ -9,7 +9,27 @@ const Stack = createStackNavigator();
 
 export const PrayerRequestNavigation = () => {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator
+      screenOptions={{
+        headerShown: false,
+        cardStyleInterpolator: ({ current }) => ({
+          cardStyle: {
+            transform: [
+              {
+                translateX: current.progress.interpolate({
+                  inputRange: [0, 1],
+                  outputRange: [500, 0],
+                }),
+              },
+            ],
+          },
+        }),
+        transitionSpec: {
+          open: TransitionSpecs.TransitionIOSSpec,
+          close: TransitionSpecs.TransitionIOSSpec,
+        },
+      }}
+    >
       <Stack.Screen
         name="PrayerRequest"
         component={PrayerRequest}
