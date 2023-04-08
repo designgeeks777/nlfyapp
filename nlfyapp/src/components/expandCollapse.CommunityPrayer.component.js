@@ -178,6 +178,8 @@ export const ExpandCollapseList = (props) => {
       flex: 1,
       position: "absolute",
       bottom: 0,
+      height: height * 0.64,
+      overflow: "scroll",
     },
   });
 
