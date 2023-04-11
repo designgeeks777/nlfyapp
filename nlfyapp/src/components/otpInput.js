@@ -33,15 +33,17 @@ const SplitBoxes = styled(View)`
   padding: 12px;
   margin: 2px;
   min-width: 50px;
-  ${({ isValid, code }) =>
-    isValid
+  ${({ isValid, value, maxLength, resetError }) =>
+    value.length < maxLength ||
+    (value.length === maxLength && isValid === null) ||
+    resetError
       ? `
-  border-color: #27AE60;
+  border-color: #D9D9D9;
 `
-      : code === null || code === undefined || code === ""
+      : isValid
       ? `
-      border-color: #D9D9D9;
-      `
+    border-color: #27AE60;
+    `
       : `
 border-color: #DE1621;
 `};
@@ -67,15 +69,29 @@ const SplitBoxText = styled(Text)`
 `;
 
 const SplitBoxesFocused = styled(SplitBoxes)`
-  border-color: ${(props) =>
-    props.isValid
-      ? // ? props.code === null || props.code === undefined || props.code === ""
-        props.theme.colors.border.success
-      : // : props.theme.colors.border.error
-        props.theme.colors.border.error};
   background-color: transparent;
+  ${({ isValid, value, maxLength, resetError }) =>
+    value.length < maxLength ||
+    (value.length === maxLength && isValid === null) ||
+    resetError
+      ? `
+border-color: #000000;
+`
+      : isValid
+      ? `
+  border-color: #27AE60;
+  `
+      : `
+border-color: #DE1621;
+`};
 `;
 
+// border-color: ${(props) =>
+//   props.isValid
+//     ? // ? props.code === null || props.code === undefined || props.code === ""
+//       props.theme.colors.border.success
+//     : // : props.theme.colors.border.error
+//       props.theme.colors.border.error};
 // const MessageText = styled(Text)`
 //   top: 8px;
 //   color: ${(props) => props.theme.colors.text.primary};
@@ -84,8 +100,14 @@ const SplitBoxesFocused = styled(SplitBoxes)`
 //   font-weight: ${(props) => props.theme.fontWeights.regular};
 // `;
 
-export const OTPInput = ({ code, setCode, maximumLength, isValidOTPCode }) => {
-  // console.log("inOTPINPUT", isValidOTPCode);
+export const OTPInput = ({
+  code,
+  setCode,
+  maximumLength,
+  isValidOTPCode,
+  resetError,
+}) => {
+  // console.log("inOTPINPUT", isValidOTPCode, code);
   const boxArray = new Array(maximumLength).fill(0);
   const inputRef = useRef();
   const boxDigit = (_, index) => {
@@ -100,16 +122,23 @@ export const OTPInput = ({ code, setCode, maximumLength, isValidOTPCode }) => {
 
     const StyledSplitBoxes =
       isInputBoxFocused && isValueFocused ? SplitBoxesFocused : SplitBoxes;
+    // console.log("IN SPLIT BOXES", isValidOTPCode, code.length, maximumLength);
     return (
-      <StyledSplitBoxes key={index} isValid={isValidOTPCode} value={code}>
+      <StyledSplitBoxes
+        key={index}
+        isValid={isValidOTPCode}
+        value={code}
+        maxLength={maximumLength}
+        resetError={resetError}
+      >
         <SplitBoxText>{digit}</SplitBoxText>
       </StyledSplitBoxes>
     );
   };
 
   const [isInputBoxFocused, setIsInputBoxFocused] = useState(false);
-  const [isValid, setIsValid] = useState(false);
-  const [isPinReady, setIsPinReady] = useState(false);
+  // const [isValid, setIsValid] = useState(false);
+  // const [isOtpCodeReady, setIsOtpCodeReady] = useState(false);
 
   const handleOnPress = () => {
     setIsInputBoxFocused(true);
@@ -120,20 +149,20 @@ export const OTPInput = ({ code, setCode, maximumLength, isValidOTPCode }) => {
     setIsInputBoxFocused(false);
   };
 
-  useEffect(() => {
-    // update pin ready status
-    if (code.length === maximumLength) {
-      setIsPinReady(true);
-    } else {
-      setIsPinReady(false);
-    }
-    console.log("isPinReady", isPinReady);
-    // clean up function
-    // return () => {
-    //   setIsPinReady(false);
-    //   console.log("isPinReady clean up", isPinReady);
-    // };
-  }, [code, maximumLength, isPinReady, setIsPinReady]);
+  // useEffect(() => {
+  //   // update pin ready status
+  //   if (code.length === maximumLength) {
+  //     setIsOtpCodeReady(true);
+  //   } else {
+  //     setIsOtpCodeReady(false);
+  //   }
+  //   // console.log("isOtpCodeReady", isOtpCodeReady);
+  //   // clean up function
+  //   // return () => {
+  //   //   setIsOtpCodeReady(false);
+  //   //   console.log("isOtpCodeReady clean up", isOtpCodeReady);
+  //   // };
+  // }, [code, maximumLength, isOtpCodeReady, setIsOtpCodeReady]);
 
   return (
     <OTPInputContainer>
@@ -150,6 +179,8 @@ export const OTPInput = ({ code, setCode, maximumLength, isValidOTPCode }) => {
         onFocus={handleOnPress}
         onBlur={handleOnBlur}
         keyboardType="number-pad"
+        caretHidden={true}
+        // setIsOtpCodeReady={setIsOtpCodeReady}
       />
     </OTPInputContainer>
   );

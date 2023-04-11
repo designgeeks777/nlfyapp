@@ -55,6 +55,7 @@ export const SignUp = () => {
     console.log("Navigation to Second Screen triggered");
     navigation.navigate("Stepper");
     // navigation.navigate("UploadPicSignUp");
+    // navigation.navigate("Home");
   };
   return (
     <SafeAreaView>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   Image,
@@ -25,6 +25,8 @@ import { Stories } from "./stories.screen";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+import { Devotionals } from "./devotionals.screen";
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -233,7 +235,7 @@ export const Onboarding = () => {
           <TextScreen2Orange>Swipe to get started</TextScreen2Orange>
         </Slide3>
 
-        {/* <NavigationContainer independent={true}>
+        <NavigationContainer independent={true}>
           <Tab.Navigator screenOptions={createScreenOptions}>
             <Tab.Screen
               name="Home"
@@ -278,8 +280,17 @@ export const Onboarding = () => {
                 headerShown: false,
               }}
             />
+            <Tab.Screen
+              name="Devotionals"
+              component={Devotionals}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
+            />
           </Tab.Navigator>
-        </NavigationContainer> */}
+        </NavigationContainer>
       </Swiper>
     </SafeArea>
   );

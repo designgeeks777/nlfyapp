@@ -1,25 +1,17 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  TouchableOpacity,
-} from "react-native";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { ProgressStep, ProgressSteps } from "react-native-progress-steps";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { CustomTextInput } from "../components/textinput";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { OTPInput } from "../components/otpInput";
-import { RadioButton, TextInput } from "react-native-paper";
+import { RadioButton } from "react-native-paper";
 import styled from "styled-components";
-import { Button } from "../components/button";
 import { useNavigation } from "@react-navigation/native";
 import { AuthenticationContext } from "../services/authentication/authentication.context";
 import * as fb from "firebase/compat";
-import { getAuth, RecaptchaVerifier } from "firebase/auth";
 import axios from "axios";
-//import { BASEURL } from "../../APIKey";
+import { BASEURL } from "../../APIKey";
 
 const { height, width } = Dimensions.get("window");
 const containerHeight = height * 0.1;
@@ -36,7 +28,6 @@ const MessageText = styled(Text)`
       : props.theme.colors.text.errorMessage};
   font-family: ${(props) => props.theme.fonts.body};
 `;
-const BASEURL = "http://192.168.0.102:3000/api/";
 export const Stepper = () => {
   const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
@@ -50,12 +41,13 @@ export const Stepper = () => {
     updateProfile,
   } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState(false);
-  const [isValidPhoneNumber, setisValidPhoneNumber] = useState(false);
-  const [isValidName, setisValidName] = useState(false);
-  const [showNameErrorMsg, setshowNameErrorMsg] = useState(false);
-  const [otpCode, setOTPCode] = useState("");
-  const maximumCodeLength = 6;
-  const [isPinReady, setIsPinReady] = useState(false);
+  const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
+  const [isValidName, setIsValidName] = useState(false);
+  const [showNameErrorMsg, setShowNameErrorMsg] = useState(false);
+  const [otpCode, setOtpCode] = useState("");
+  const maximumOtpCodeLength = 6;
+  const [isOtpCodeReady, setIsOtpCodeReady] = useState(false);
+
   const [user, setUser] = useState({
     uid: "",
     name: "",
@@ -64,18 +56,19 @@ export const Stepper = () => {
     profilePic: "",
   });
   const [errorMsg, setErrorMsg] = useState("");
-  const [userRegistered, setuserRegistered] = useState(false);
+  const [userRegistered, setUserRegistered] = useState(false);
   const [allStepsDone, setAllStepsDone] = useState(false);
+  const [resetError, setResetErrors] = useState(false);
 
   const handlePhoneNumberChange = (value) => {
     setUser({ ...user, mobileNumber: value });
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
     if (user.mobileNumber.length !== 0 && user.mobileNumber.match(regexp)) {
-      setisValidPhoneNumber(true);
+      setIsValidPhoneNumber(true);
       setErrorMsg("");
       console.log("in verify step match", user.mobileNumber);
     } else {
-      setisValidPhoneNumber(false);
+      setIsValidPhoneNumber(false);
       setErrorMsg("Enter a valid phone number");
       console.log("mismatch");
     }
@@ -84,7 +77,7 @@ export const Stepper = () => {
   useEffect(() => {
     console.log("userRegistered changed", userRegistered);
     if (userRegistered) {
-      setisValidPhoneNumber(false);
+      setIsValidPhoneNumber(false);
       setErrors(true);
     }
   }, [userRegistered]);
@@ -92,15 +85,7 @@ export const Stepper = () => {
   const checkIfUserAlreadyRegistered = async () => {
     let dataexists = false;
     try {
-      /*console.log(
-        "User mobile Number in checkIfUserAlreadyExists:",
-        user.mobileNumber
-      );
-      const url = `${BASEURL}users/${user.mobileNumber}`;
-      console.log("Calling URL :", url);*/
       const response = await axios.get(`${BASEURL}/users/`);
-      console.log("USER EXISTS piena", response.data);
-
       if (response.data) {
         const data = response.data;
 
@@ -109,21 +94,16 @@ export const Stepper = () => {
           if (item.mobileNumber === user.mobileNumber) {
             console.log("User Exists");
             dataexists = true;
-            setuserRegistered(true);
+            setUserRegistered(true);
           }
         });
-        //console.log("USER EXISTS");
-        console.log("Response:", response.data);
-        //setuserRegistered(true);
-        //return true;
       } else {
         console.log("USER DOESNT EXISTS");
-        setuserRegistered(false);
+        setUserRegistered(false);
         dataexists = false;
       }
     } catch (err) {
       console.log(err, "User Not Registered signin");
-      //setuserRegistered(false);
       dataexists = false;
     }
     return dataexists;
@@ -135,36 +115,47 @@ export const Stepper = () => {
     console.log("userRegistered onVerify", isRegistered);
     if (isRegistered) {
       console.log("isRegistered true");
-      setuserRegistered(true);
+      setUserRegistered(true);
       setErrorMsg("Mobile number already registered, please log in");
-      setisValidPhoneNumber(false);
+      setIsValidPhoneNumber(false);
     } else {
       console.log("isRegistered false");
-      setisValidPhoneNumber(true);
+      setIsValidPhoneNumber(true);
       setErrorMsg("");
       onSignInWithPhoneNumber(user.mobileNumber, recaptchaVerifier.current);
     }
   };
+  const onClickConfirmCode = () => {
+    setResetErrors(false);
+    confirmCode(otpCode);
+  };
+  useEffect(() => {
+    console.log("isOtpCodeReady", otpCode.length);
+    setIsOtpCodeReady(otpCode.length === maximumOtpCodeLength);
+    if (otpCode.length <= 5) {
+      setResetErrors(true);
+    }
+  }, [otpCode]);
 
   const handleNameChange = (name) => {
     setUser({ ...user, name: name });
     console.log("handleNameChange", name, name.length);
     if (name.length > 0 && /^[A-Za-z]+$/.test(name)) {
-      setisValidName(true);
+      setIsValidName(true);
     } else {
-      setisValidName(false);
+      setIsValidName(false);
     }
   };
 
   const onSubmitUser = () => {
     console.log("length", user.name.length, isValidName, user.name);
     if (user.name.length === 0) {
-      setisValidName(false);
-      setshowNameErrorMsg(true);
+      setIsValidName(false);
+      setShowNameErrorMsg(true);
     } else {
       setAllStepsDone(true);
-      setisValidName(true);
-      setshowNameErrorMsg(false);
+      setIsValidName(true);
+      setShowNameErrorMsg(false);
       updateProfile(user.name);
       navigation.navigate("UploadPicSignUp", {
         userName: user.name,
@@ -172,8 +163,6 @@ export const Stepper = () => {
       });
     }
   };
-
-  // var phoneno = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
 
   const styles = StyleSheet.create({
     progressStepViewStyle: {
@@ -230,7 +219,6 @@ export const Stepper = () => {
       marginTop: 28,
     },
     OTPText: { top: 8 },
-    // RadioGroupRow: { flex: 2, backgroundColor: "#ECECEC" },
     SelectGenderText: {
       left: 20,
       top: 16,
@@ -246,14 +234,6 @@ export const Stepper = () => {
       justifyContent: "flex-start",
     },
   });
-
-  /*const isUserRegistered = async () => {
-    const phnNumber = user.mobileNumber;
-    console.log("User mobile number in isUserRegistered:", phnNumber);
-    const isRegistered = await checkIfUserAlreadyRegistered();
-    console.log("In checkUserRegistered - isRegistered:", isRegistered);
-    return isRegistered;
-  };*/
 
   return (
     <SafeAreaView style={styles.containerView}>
@@ -298,7 +278,6 @@ export const Stepper = () => {
                 autoFocus
                 autoCompleteType="tel"
                 textContentType="telephoneNumber"
-                // msgToDisplay="Enter a valid phone number"
                 msgToDisplay={error || errorMsg}
                 value={user.mobileNumber}
                 onChange={handlePhoneNumberChange}
@@ -306,26 +285,18 @@ export const Stepper = () => {
                 maxLength={15}
                 isUserNameTextInput={false}
               />
-              {/* <MessageText>
-                {user.mobileNumber === null ||
-                user.mobileNumber === undefined ||
-                user.mobileNumber === "" ||
-                isValidPhoneNumber
-                  ? ""
-                  : errorMsg}
-              </MessageText> */}
             </View>
           </ProgressStep>
           <ProgressStep
             label="Verify"
-            onNext={() => confirmCode(otpCode)}
+            onNext={() => onClickConfirmCode()}
             nextBtnText="Confirm"
             previousBtnDisabled
             scrollable={false}
             previousBtnText=""
             nextBtnStyle={styles.progressStepNextButtonStyle}
             nextBtnTextStyle={styles.progressStepNextButtonTextStyle}
-            // nextBtnDisabled={!isValidOTPCode}
+            nextBtnDisabled={!isOtpCodeReady}
             errors={!isValidOTPCode}
           >
             <View style={styles.progressStepViewStyle}>
@@ -334,15 +305,14 @@ export const Stepper = () => {
               </Text>
               <OTPInput
                 code={otpCode}
-                setCode={setOTPCode}
-                maximumLength={maximumCodeLength}
-                setIsPinReady={setIsPinReady}
+                setCode={setOtpCode}
+                maximumLength={maximumOtpCodeLength}
+                // setIsOtpCodeReady={setIsOtpCodeReady}
                 isValidOTPCode={isValidOTPCode}
+                resetError={resetError}
               />
               <MessageText>
-                {otpCode.length === maximumCodeLength && !isValidOTPCode
-                  ? error
-                  : ""}
+                {isOtpCodeReady && !isValidOTPCode && !resetError ? error : ""}
               </MessageText>
             </View>
           </ProgressStep>
@@ -361,9 +331,7 @@ export const Stepper = () => {
                 label="Enter name"
                 placeholder="Sam"
                 keyboardType="default"
-                // msgToDisplay="Let's us know what you like us to call you!"
                 value={user.name}
-                // isValid={isValidName}
                 onChange={handleNameChange}
                 isUserNameTextInput={true}
               />
