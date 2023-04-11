@@ -58,23 +58,11 @@ export const Events = () => {
   return (
     <>
       <SafeAreaViewWrapper>
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <WrapperView>
-            <BackButton text="Events" />
-          </WrapperView>
-          <ViewSearchbar>
-            <SearchBar
-              placeholder="Search"
-              onChangeText={onChangeSearch}
-              value={searchQuery}
-              isFocused={isSearchBarFocused}
-              onFocus={() => setIsSearchBarFocused(true)}
-              onBlur={() => setIsSearchBarFocused(false)}
-              placeholderTextColor="gray"
-            />
-          </ViewSearchbar>
-          <EventDateCard />
-        </ScrollView>
+        <WrapperView>
+          <BackButton text="Events" />
+        </WrapperView>
+
+        <EventDateCard />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
     </>
