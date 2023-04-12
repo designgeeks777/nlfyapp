@@ -11,6 +11,7 @@ export const fontWeights = {
 };
 
 export const fontSizes = {
+  errorMessage: "10px",
   title: "12px",
   caption: "14px",
   body: "16px",
