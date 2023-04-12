@@ -11,7 +11,7 @@ const Stack = createStackNavigator();
 
 export const HomeStackNavigation = () => {
   return (
-    <Stack.Navigator screenOptions={{ headerShown: false }}>
+    <Stack.Navigator id="HomeStackModal" screenOptions={{ headerShown: false }}>
       <Stack.Screen name="HomeStack" component={Home} />
       <Stack.Screen name="OnboardingStack" component={HasLaunchedOnboarding} />
       <Stack.Screen name="SignUp" component={SignUp} />

@@ -128,7 +128,6 @@ export const UploadPicSignUp = (props) => {
   let icon =
     gender === "male" ? maleDefaultProfilePic : femaleDefaultProfilePic;
   const [image, setImage] = useState(null);
-  const [defaultPic, setDefaultPic] = useState(false);
 
   const onRegisterUser = async (def) => {
     const imageData = new FormData();
@@ -202,7 +201,6 @@ export const UploadPicSignUp = (props) => {
       if (!response.canceled) {
         hideModal();
         setImage(response.assets[0]);
-        setDefaultPic(false);
         console.log("RESPONSE GALLERY");
       }
     }
@@ -227,7 +225,6 @@ export const UploadPicSignUp = (props) => {
       if (!response.canceled) {
         hideModal();
         setImage(response.assets[0].uri);
-        setDefaultPic(false);
         console.log("RESPONSE CAMERA", response.assets[0].uri);
       }
       console.log("Camera open", image);
@@ -235,7 +232,7 @@ export const UploadPicSignUp = (props) => {
   };
   const onPressSkipForNow = () => {
     onRegisterUser("Def");
-    console.log("SKIP", image, defaultPic);
+    // console.log("SKIP", image);
   };
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);

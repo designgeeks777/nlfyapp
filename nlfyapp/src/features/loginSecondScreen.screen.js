@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, useLayoutEffect } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import * as firebase from "firebase/compat";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
@@ -12,7 +12,7 @@ import { BASEURL } from "../../APIKey";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
-export const LoginSecondScreen = (props) => {
+export const LoginSecondScreen = ({ route }) => {
   const recaptchaVerifier = React.useRef(null);
   const attemptInvisibleVerification = useState(true);
   const [isValid, setIsValid] = useState(false);
@@ -32,6 +32,8 @@ export const LoginSecondScreen = (props) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [userRegistered, setUserRegistered] = useState(false);
   const [resetError, setResetErrors] = useState(false);
+  const navigation = useNavigation();
+  const [username, setUsername] = useState(null);
 
   const handleChange = (value) => {
     setPhoneNumber(value);
@@ -60,6 +62,7 @@ export const LoginSecondScreen = (props) => {
             console.log("User Exists");
             dataexists = true;
             setUserRegistered(true);
+            setUsername(item.name);
           }
         });
       } else {
@@ -84,7 +87,7 @@ export const LoginSecondScreen = (props) => {
 
   const onSignIn = async () => {
     const isregistered = await checkIfUserAlreadyRegistered();
-    if (isregistered) {
+    if (!isregistered) {
       console.log("isRegistered login");
       setIsValid(true);
       setErrorMsg("");
@@ -95,16 +98,18 @@ export const LoginSecondScreen = (props) => {
       setErrorMsg("Enter your registered mobile number");
     }
   };
-  const navigation = useNavigation();
   const onClickConfirmCode = () => {
     setResetErrors(false);
     confirmCode(code);
-    // console.log("GOT TO GOMEEEEEEEEEEEEE", isValidOTPCode, isPinReady);
-    // if (isValidOTPCode || isPinReady) {
-    //   console.log("GOT TO GOMEEEEEEEEEEEEE");
-    //   navigation.navigate("HomeStack");
-    // }
+    const HomeStackModalNavigator = navigation.getId();
+    if (HomeStackModalNavigator === "HomeStackModal") {
+      navigation.navigate("HomeStack");
+    } else {
+      navigation.navigate("Home");
+    }
+    console.log("HomeStack confirm code", HomeStackModalNavigator);
   };
+
   useEffect(() => {
     console.log("isOtpCodeReady", code.length);
     setIsPinReady(code.length === maximumCodeLength);
@@ -200,7 +205,7 @@ export const LoginSecondScreen = (props) => {
         </>
       ) : (
         <>
-          <Heading>Please verfiy, its you {user?.displayName}</Heading>
+          <Heading>Please verfiy, its you {username}</Heading>
           {/* <Heading>Please verfiy, its you David</Heading> */}
           <OTPMessageText>
             Enter 6 digit verification code sent to the number

@@ -71,13 +71,9 @@ export const HasLaunchedOnboarding = ({ route }) => {
     if (!navigation || !route) return;
     const mainBottomTabNavigator = navigation.getParent("MainBottomTab");
     if (mainBottomTabNavigator) {
-      // if (route.name === "OnboardingStack") {
       mainBottomTabNavigator.setOptions({
-        // tabBarButton: () => null,
-        // tabBarVisible: false,
         tabBarStyle: { display: "none" },
       });
-      // }
     }
     return mainBottomTabNavigator
       ? () => {
