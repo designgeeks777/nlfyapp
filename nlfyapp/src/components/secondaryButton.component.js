@@ -32,7 +32,7 @@ const ButtonText = styled(Text)`
 
 export const SecondaryButton = ({ label, handleClick }) => {
   return (
-    <PressableButton activeOpacity={0.5}>
+    <PressableButton activeOpacity={0.5} onPress={handleClick}>
       <ButtonText>{label}</ButtonText>
     </PressableButton>
   );
