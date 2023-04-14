@@ -87,7 +87,7 @@ export const LoginSecondScreen = ({ route }) => {
 
   const onSignIn = async () => {
     const isregistered = await checkIfUserAlreadyRegistered();
-    if (!isregistered) {
+    if (isregistered) {
       console.log("isRegistered login");
       setIsValid(true);
       setErrorMsg("");

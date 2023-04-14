@@ -132,7 +132,7 @@ export const Stepper = () => {
     if (HomeStackModalNavigator === "HomeStackModal") {
       navigation.navigate("UploadPicSignUp");
     } else {
-      navigatiosn.navigate("UploadPicSignUp");
+      navigation.navigate("UploadPicSignUp");
     }*/
   };
   useEffect(() => {

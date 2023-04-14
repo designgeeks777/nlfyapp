@@ -34,7 +34,6 @@ export const LifeGroups = () => {
         <WrapperView>
           <BackButton text="Life Groups" />
         </WrapperView>
-
         <LifeGroupCard />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />

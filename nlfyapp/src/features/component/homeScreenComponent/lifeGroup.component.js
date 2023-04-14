@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React, useState, useContext } from "react";
 import { View, Alert } from "react-native";
 //import { Alert } from "react-native-paper";
 import styled from "styled-components";
@@ -7,15 +7,20 @@ import { HomeScreenHeading } from "../homeScreenHeading.component";
 import { LifeGroupCardList } from "./lifeGroupCardList.component";
 import { useNavigation } from "@react-navigation/native";
 
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+
 const ButtonView = styled(View)`
   padding-top: 30px;
 `;
 
 export const LifeGroup = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(true); // assuming default is not logged in
+  const { user } = useContext(AuthenticationContext);
+  console.log("User in LG", user);
+  console.log(null === user);
+  // assuming default is not logged in
   const navigation = useNavigation();
   const handleJoinButtonClick = () => {
-    if (!isLoggedIn) {
+    if (null === user) {
       Alert.alert("Please login/signup to join a lifegroup");
     } else {
       // navigate to a specific screen
@@ -32,6 +37,8 @@ export const LifeGroup = () => {
         lefttop="50px"
         righttop="30px"
         navigateTo="Life Groups"
+        user={user}
+        conditionalNavigation={true}
       />
       <LifeGroupCardList />
       <ButtonView>
