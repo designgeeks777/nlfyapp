@@ -150,15 +150,18 @@ export const ExpandCollapseList = ({ screenName }) => {
           cancelToken: source.token,
         });
         //Sort devotionals/stories in ascending order based on date
-        const filteredDatas = response.data.sort((a, b) =>
-          b.datePosted
-            .split("-")
-            .reverse()
-            .join()
-            .localeCompare(a.datePosted.split("-").reverse().join())
-        );
-
+        //Converting string date object to date to for sorting
+        let filteredDatas = response.data.map((obj) => {
+          const [day, month, year] = obj.datePosted.split("-");
+          let devotionalDate = new Date(year, month - 1, day);
+          return { ...obj, date: devotionalDate };
+        });
+        filteredDatas = filteredDatas.sort((a, b) => {
+          return b.date.getTime() > a.date.getTime();
+        });
+        console.log(filteredDatas);
         setData(filteredDatas);
+
         setIsLoading(false);
       } catch (error) {
         if (axios.isCancel(error)) {
@@ -171,10 +174,10 @@ export const ExpandCollapseList = ({ screenName }) => {
 
     loadData();
 
-    // const intervalId = setInterval(loadData, 5000);
+    const intervalId = setInterval(loadData, 5000);
 
     return () => {
-      // clearInterval(intervalId);
+      clearInterval(intervalId);
       source.cancel("Component unmounted");
     };
   }, [screenName]);
@@ -215,7 +218,7 @@ export const ExpandCollapseList = ({ screenName }) => {
           {filteredData.length > 0 ? (
             <FlatList
               showsVerticalScrollIndicator={false}
-              contentContainerStyle={{ paddingBottom: 50 }}
+              contentContainerStyle={{ paddingBottom: 0 }}
               data={filteredData}
               initialNumToRender={data.length}
               renderItem={({ item }) => (
