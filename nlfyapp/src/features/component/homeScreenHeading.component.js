@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, Alert } from "react-native";
 import styled from "styled-components";
 import { useNavigation } from "@react-navigation/native";
 
@@ -9,6 +9,8 @@ export const HomeScreenHeading = ({
   lefttop,
   righttop,
   navigateTo,
+  user,
+  conditionalNavigation,
 }) => {
   const LeftSideText = styled(Text)`
     top: ${lefttop};
@@ -34,7 +36,15 @@ export const HomeScreenHeading = ({
   const navigation = useNavigation();
 
   const handlePress = () => {
-    navigation.navigate(navigateTo);
+    if (conditionalNavigation) {
+      if (user) {
+        navigation.navigate(navigateTo);
+      } else {
+        Alert.alert("Please login/signup to see this");
+      }
+    } else {
+      navigation.navigate(navigateTo);
+    }
   };
   return (
     <>
