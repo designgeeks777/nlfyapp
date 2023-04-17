@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   Image,
@@ -24,6 +24,10 @@ import { PrayerRequest } from "./prayerRequest.screen";
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
+import { createStackNavigator } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+import { Devotionals } from "./devotionals.screen";
 
 const { width, height } = Dimensions.get("window");
 const slide1ImageWidth = width * 1;
@@ -193,7 +197,15 @@ export const Onboarding = () => {
       setScrollEnabled(false);
     }
   };
-
+  const navigation = useNavigation();
+  const navigateToSignUp = () => {
+    console.log("NavigateToSignUp");
+    navigation.navigate("SignUp");
+  };
+  const navigateToLogin = () => {
+    console.log("NavigateToLogin");
+    navigation.navigate("Login");
+  };
   return (
     <SafeArea>
       <Swiper
@@ -232,10 +244,12 @@ export const Onboarding = () => {
           <TextScreen2Orange>
             Sign Up to have a customized experience or swipe
           </TextScreen2Orange>
-          <Button label="Sign Up" />
+          <Button label="Sign Up" handleClick={navigateToSignUp} />
           <TextScreen2>
             Already a member?
-            <TextScreen1Orange> Log in</TextScreen1Orange>
+            <TextScreen1Orange onPress={navigateToLogin}>
+              Log in
+            </TextScreen1Orange>
           </TextScreen2>
         </Slide2>
         <Slide3>
@@ -249,7 +263,7 @@ export const Onboarding = () => {
           {/* <TextScreen2Orange>Swipe to get started</TextScreen2Orange> */}
         </Slide3>
 
-        <NavigationContainer>
+        <NavigationContainer independent={true}>
           <Tab.Navigator screenOptions={createScreenOptions}>
             <Tab.Screen
               name="Home"
@@ -288,6 +302,15 @@ export const Onboarding = () => {
             <Tab.Screen
               name="Stories"
               component={Stories}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name="Devotionals"
+              component={Devotionals}
               options={{
                 tabBarButton: () => null,
                 tabBarVisible: false,

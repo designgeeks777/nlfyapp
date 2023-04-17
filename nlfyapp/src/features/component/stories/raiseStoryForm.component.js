@@ -23,18 +23,29 @@ export const RaiseStoryForm = (props) => {
     const day = currentDate.getDate().toString().padStart(2, "0");
     const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // add 1 to get the correct month since January is 0
     const year = currentDate.getFullYear();
-    const formattedDate = `${day}-${month}-${year}`;
+    const formattedDate = `${day}/${month}/${year}`;
 
-    const url = `${BASEURL}/stories`;
-    const postbody = {
-      submittedBy: "Jude",
-      content: text,
-      datePosted: formattedDate,
-    };
-
+    let userDetails = {};
+    const url = `${BASEURL}/users/${props.user.uid}`;
     axios
-      .post(url, postbody)
-      .then(responseHandler)
+      .get(url)
+      .then((response) => {
+        //set the userName for posting Story Request
+        userDetails = {
+          name: response.data.name,
+        };
+
+        const storiesUrl = `${BASEURL}/stories`;
+        const postbody = {
+          submittedBy: userDetails.name,
+          content: text,
+          datePosted: formattedDate,
+        };
+        axios
+          .post(storiesUrl, postbody)
+          .then(responseHandler)
+          .catch((err) => console.log(err));
+      })
       .catch((err) => console.log(err));
   };
 

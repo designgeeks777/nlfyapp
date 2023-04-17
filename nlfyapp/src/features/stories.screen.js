@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
 import styled from "styled-components";
 import { BackButton } from "../components/backButton";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
@@ -15,6 +15,7 @@ import {
 import { ExpandCollapseList } from "../components/expandCollapse.component";
 import { RaiseStoryForm } from "./component/stories/raiseStoryForm.component";
 import { Button } from "../components/button";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
@@ -40,6 +41,7 @@ const ButtonView = styled(View)`
 export const Stories = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [success, setSuccess] = useState(false);
+  const { user } = useContext(AuthenticationContext);
 
   const handleSuccessChange = (successValue) => {
     setSuccess(successValue);
@@ -90,9 +92,11 @@ export const Stories = () => {
         <ExpandCollapseList screenName="stories" />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
-      <ButtonView>
-        <Button label="Raise Story Request" handleClick={handleClick} />
-      </ButtonView>
+      {user === null || user?.isAnonymous ? null : (
+        <ButtonView>
+          <Button label="Raise Story Request" handleClick={handleClick} />
+        </ButtonView>
+      )}
       <Modal visible={modalVisible} transparent={true}>
         <TouchableOpacity
           activeOpacity={1}
@@ -108,7 +112,10 @@ export const Stories = () => {
               },
             ]}
           >
-            <RaiseStoryForm handleSuccessChange={handleSuccessChange} />
+            <RaiseStoryForm
+              handleSuccessChange={handleSuccessChange}
+              user={user}
+            />
           </Animated.View>
         </TouchableOpacity>
       </Modal>
