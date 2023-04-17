@@ -35,9 +35,13 @@ const StyledLinearGradient = styled(LinearGradient)`
   align-items: center;
 `;
 
-export const Button = ({ label, handleClick }) => {
+export const Button = ({ label, handleClick, disabled }) => {
   return (
-    <PressableButton activeOpacity={0.5} onPress={handleClick}>
+    <PressableButton
+      activeOpacity={0.5}
+      onPress={handleClick}
+      disabled={disabled}
+    >
       <StyledLinearGradient
         start={{ x: 180, y: 0.25 }}
         end={{ x: 180, y: 1.0 }}
