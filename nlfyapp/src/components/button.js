@@ -7,6 +7,7 @@ import Pressable from "./pressable";
 const { width } = Dimensions.get("window");
 const buttonWidth = width * 0.9;
 const PressableButton = styled(Pressable)`
+  position: relative;
   align-items: center;
   padding-vertical: 16px;
   padding-horizontal: 32px;
@@ -14,6 +15,8 @@ const PressableButton = styled(Pressable)`
   width: ${buttonWidth}px;
   height: 56px;
   background-color: ${(props) => props.theme.colors.bgbutton.primary};
+  bottom: ${(props) => (props.isSignUpLastButton ? "90px" : "0px")};
+  left: ${(props) => (props.isSignUpLastButton ? "18px" : "0px")};
 `;
 
 const ButtonText = styled(Text)`

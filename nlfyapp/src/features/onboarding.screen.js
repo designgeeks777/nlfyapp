@@ -32,6 +32,8 @@ const slide1ImageWidth = width * 1;
 const slide1ImageHeight = height * 0.5;
 const slide2ImageWidth = width * 0.5;
 const slide2ImageHeight = height * 0.3;
+import { createStackNavigator } from "@react-navigation/stack";
+import { useNavigation } from "@react-navigation/native";
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -195,7 +197,15 @@ export const Onboarding = () => {
       setScrollEnabled(false);
     }
   };
-
+  const navigation = useNavigation();
+  const navigateToSignUp = () => {
+    console.log("NavigateToSignUp");
+    navigation.navigate("SignUp");
+  };
+  const navigateToLogin = () => {
+    console.log("NavigateToLogin");
+    navigation.navigate("Login");
+  };
   return (
     <SafeArea>
       <Swiper
@@ -237,7 +247,9 @@ export const Onboarding = () => {
           <Button label="Sign Up" />
           <TextScreen2>
             Already a member?
-            <TextScreen1Orange> Log in</TextScreen1Orange>
+            <TextScreen1Orange onPress={navigateToLogin}>
+              Log in
+            </TextScreen1Orange>
           </TextScreen2>
         </Slide2>
         <Slide3>
@@ -251,7 +263,7 @@ export const Onboarding = () => {
           {/* <TextScreen2Orange>Swipe to get started</TextScreen2Orange> */}
         </Slide3>
 
-        <NavigationContainer>
+        <NavigationContainer independent={true}>
           <Tab.Navigator screenOptions={createScreenOptions}>
             <Tab.Screen
               name="Home"
