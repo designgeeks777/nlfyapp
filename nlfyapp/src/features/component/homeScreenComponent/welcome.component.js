@@ -138,7 +138,6 @@ export const Welcome = (props) => {
     if (isAuthenticated) {
       axios
         .get(`${BASEURL}/users/${user?.phoneNumber}`)
-        // .get(`${BASEURL}/users/+916309831992`)
         .then((response) => {
           if (response.data) {
             console.log("Welcome response", response.data);
