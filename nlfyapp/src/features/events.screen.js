@@ -12,7 +12,6 @@ import styled from "styled-components";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { BackButton } from "../components/backButton";
 
-import { Searchbar } from "react-native-paper";
 import { EventDateCard } from "./component/event/eventDateCard.component";
 
 const { width } = Dimensions.get("window");
@@ -31,30 +30,7 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
   margin-top: ${StatusBar.currentHeight}px;
 `;
 
-const SearchBar = styled(Searchbar)`
-  margin-horizontal: 10px;
-  margin-vertical: 10px;
-  elevation: 0;
-  border-radius: 10px;
-
-  ${({ isFocused }) =>
-    isFocused &&
-    `
-    border-width: 1px;
-    border-color: orange;
-  `}
-`;
-
-const ViewSearchbar = styled(View)`
-  padding: 10px;
-`;
 export const Events = () => {
-  const [searchQuery, setSearchQuery] = useState("");
-  const [isSearchBarFocused, setIsSearchBarFocused] = useState(false);
-
-  const onChangeSearch = (query) => {
-    setSearchQuery(query);
-  };
   return (
     <>
       <SafeAreaViewWrapper>

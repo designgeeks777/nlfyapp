@@ -12,7 +12,9 @@ import {
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
+import { PrayerRequest } from "./src/features/prayerRequest.screen";
 import styled from "styled-components";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,7 +26,6 @@ import { Navigation } from "./src/infrastructure/navigation";
 import { Devotionals } from "./src/features/devotionals.screen";
 import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 import { HomeStackNavigation } from "./HomeNavigation";
-import { PrayerRequest } from "./src/features/prayerRequest.screen";
 
 const HomeView = styled(View)`
   flex: 1;

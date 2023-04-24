@@ -178,7 +178,7 @@ export const LoginSecondScreen = ({ route }) => {
         firebaseConfig={firebase.app.options}
         attemptInvisibleVerification={false}
       />
-      {confirmResult === null || !confirmResult ? (
+      {!confirmResult ? (
         <>
           <Heading>We are glad to have you back.</Heading>
           <CustomTextInput
