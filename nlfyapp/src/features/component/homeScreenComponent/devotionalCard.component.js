@@ -12,7 +12,7 @@ const cardContentWidth = width * 0.8;
 const DevotionalCard = styled(Card)`
   top: 20px;
   width: ${cardWidth}px;
-  height: 180px;
+  height: 210px;
   border-radius: 10px;
 `;
 
@@ -46,7 +46,7 @@ const CardReadmore = styled(Text)`
 const StyledLinearGradient = styled(LinearGradient)`
   border-radius: 10px;
   width: ${cardWidth}px;
-  height: 180px;
+  height: 210px;
   padding: 5px;
 `;
 
@@ -69,14 +69,16 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
         }
       >
         <Card.Content>
-          <CardTitle variant="titleLarge" onPress={goToDevotionalsScreen}>
-            {cardContentTitle}
-          </CardTitle>
+          <CardTitle variant="titleLarge">{cardContentTitle}</CardTitle>
           <CardContent numberOfLines={5} variant="bodyMedium">
             {cardContentText}
           </CardContent>
-          <CardReadmore variant="bodyMedium">Read More...</CardReadmore>
         </Card.Content>
+        <Card.Actions>
+          <CardReadmore variant="bodyMedium" onPress={goToDevotionalsScreen}>
+            Read More...
+          </CardReadmore>
+        </Card.Actions>
       </StyledLinearGradient>
     </DevotionalCard>
   );

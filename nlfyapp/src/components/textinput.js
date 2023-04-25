@@ -91,7 +91,7 @@ const StyledTextInput = styled(TextInput).attrs({
   activeOutlineColor: "transparent",
   placeHolderTextColor: "#676767",
   contentStyle: {
-    paddingLeft: 0,
+    paddingLeft: 10,
     paddingHorizontal: 0,
     paddingTop: 0,
     paddingBottom: 10,

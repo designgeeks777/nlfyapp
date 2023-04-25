@@ -128,12 +128,6 @@ export const Stepper = () => {
   const onClickConfirmCode = () => {
     setResetErrors(false);
     confirmCode(otpCode);
-    /*const HomeStackModalNavigator = navigation.getId();
-    if (HomeStackModalNavigator === "HomeStackModal") {
-      navigation.navigate("UploadPicSignUp");
-    } else {
-      navigation.navigate("UploadPicSignUp");
-    }*/
   };
   useEffect(() => {
     console.log("isOtpCodeReady", otpCode.length);

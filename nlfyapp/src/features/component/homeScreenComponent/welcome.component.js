@@ -14,7 +14,7 @@ import { AuthenticationContext } from "../../../services/authentication/authenti
 import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
-import { useNavigation } from "@react-navigation/native";
+import { CommonActions, useNavigation } from "@react-navigation/native";
 import * as ImagePicker from "expo-image-picker";
 import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormData from "form-data";
@@ -138,7 +138,6 @@ export const Welcome = (props) => {
     if (isAuthenticated) {
       axios
         .get(`${BASEURL}/users/${user?.phoneNumber}`)
-        // .get(`${BASEURL}/users/+916309831992`)
         .then((response) => {
           if (response.data) {
             console.log("Welcome response", response.data);
@@ -161,6 +160,12 @@ export const Welcome = (props) => {
     }, 1000);
   };
   const handleLogout = () => {
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 1,
+        routes: [{ name: "Home" }],
+      })
+    );
     onLogout();
     setUserData("");
     hideModal();
