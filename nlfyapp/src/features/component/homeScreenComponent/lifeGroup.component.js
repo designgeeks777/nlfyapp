@@ -35,7 +35,8 @@ export const LifeGroup = () => {
         lefttext="Life Groups"
         righttext="See All Life Groups"
         lefttop="50px"
-        righttop="30px"
+        righttop="32px"
+        marginleft="130px"
         navigateTo="Life Groups"
         user={user}
         conditionalNavigation={true}

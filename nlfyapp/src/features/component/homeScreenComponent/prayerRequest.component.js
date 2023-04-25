@@ -8,9 +8,10 @@ export const PrayerRequest = () => {
       <HomeScreenHeading
         lefttext="Prayer Requests"
         righttext="See All Requests"
-        lefttop="90px"
-        righttop="70px"
+        lefttop="50px"
+        righttop="50px"
         navigateTo="Prayer Request"
+        marginleft="90px"
       />
       <PrayerRequestChat />
     </>

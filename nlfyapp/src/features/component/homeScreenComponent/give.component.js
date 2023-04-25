@@ -16,6 +16,7 @@ export const Give = () => {
         lefttop="10px"
         righttop="0px"
         navigateTo="Give"
+        marginleft="0px"
       />
       <ButtonView>
         <Button label="Give" />

@@ -7,10 +7,11 @@ export const Sermon = () => {
     <>
       <HomeScreenHeading
         lefttext="Latest Sermon"
-        righttext="See All"
+        righttext="See All Sermons "
         lefttop="50px"
-        righttop="30px"
+        righttop="50px"
         navigateTo="Sermons"
+        marginleft="120px"
       />
       <SermonVideo />
     </>

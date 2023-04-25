@@ -8,8 +8,9 @@ export const Event = () => {
         lefttext="What are we upto"
         righttext="See All Events"
         lefttop="70px"
-        righttop="50px"
+        righttop="70px"
         navigateTo="Events"
+        marginleft="100px"
       />
       <EventCardList />
     </>

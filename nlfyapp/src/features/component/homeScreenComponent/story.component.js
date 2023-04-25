@@ -8,9 +8,10 @@ export const Story = () => {
       <HomeScreenHeading
         lefttext="Our Stories"
         righttext="See All Stories"
-        lefttop="30px"
-        righttop="10px"
+        lefttop="40px"
+        righttop="0px"
         navigateTo="Stories"
+        marginleft="160px"
       />
       <StoryCardList />
     </>
