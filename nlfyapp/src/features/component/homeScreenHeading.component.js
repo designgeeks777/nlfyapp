@@ -33,7 +33,8 @@ export const HomeScreenHeading = ({
     margin-top: ${righttop};
     align-self: flex-end;
     margin-left: ${marginleft};
-    margin-bottom: -30px;
+    margin-bottom: 10px;
+    z-index: 999;
   `;
 
   const HeadingWrapper = styled(View)`
@@ -43,6 +44,7 @@ export const HomeScreenHeading = ({
   const navigation = useNavigation();
 
   const handlePress = () => {
+    console.log("handlePressCalled");
     if (conditionalNavigation) {
       if (user) {
         navigation.navigate(navigateTo);

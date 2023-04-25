@@ -22,14 +22,7 @@ import { PrayerRequest } from "./prayerRequest.screen";
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
-import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
-import { AuthenticationContext } from "../services/authentication/authentication.context";
-import { Devotionals } from "./devotionals.screen";
-
-import { createStackNavigator } from "@react-navigation/stack";
-import { useNavigation } from "@react-navigation/native";
-import { AuthenticationContext } from "../services/authentication/authentication.context";
 import { Devotionals } from "./devotionals.screen";
 
 const SafeArea = styled(SafeAreaView)`
