@@ -60,24 +60,17 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
     axios
       .get(url)
       .then((response) => {
-        //console.log("response sermon", response.data.items[0]);
-        //setData(filteredDatas);
-        console.log("Response devotional", response.data[0]);
         let size = 0;
         if (response.data) {
           size = response.data.length;
           setData(response.data[size - 1]);
         }
-
-        //console.log("size", size);
       })
       .catch((error) => {
         console.error(error);
       });
   }, [url]);
-  const cardContentText =
-    "Your road led through the sea, your pathway through the mighty waters - a pathway no one knew was there - Psalms 77:19(NLT) Godactively works through your circumstances. But you cannot judge your situation apart from God’s";
-  const cardContentTitle = "God's Plan for you is grea t - Rick Warren";
+
   const navigation = useNavigation();
   const goToDevotionalsScreen = () => {
     navigation.navigate("Devotionals");
