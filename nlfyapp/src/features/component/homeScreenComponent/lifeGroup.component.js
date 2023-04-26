@@ -35,7 +35,7 @@ export const LifeGroup = () => {
         lefttext="Life Groups"
         righttext="See All Life Groups"
         lefttop="50px"
-        righttop="32px"
+        righttop="50px"
         marginleft="130px"
         navigateTo="Life Groups"
         user={user}

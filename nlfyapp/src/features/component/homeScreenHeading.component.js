@@ -44,7 +44,6 @@ export const HomeScreenHeading = ({
   const navigation = useNavigation();
 
   const handlePress = () => {
-    console.log("handlePressCalled");
     if (conditionalNavigation) {
       if (user) {
         navigation.navigate(navigateTo);

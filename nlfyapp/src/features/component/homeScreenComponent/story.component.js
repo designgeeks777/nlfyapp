@@ -9,7 +9,7 @@ export const Story = () => {
         lefttext="Our Stories"
         righttext="See All Stories"
         lefttop="40px"
-        righttop="0px"
+        righttop="40px"
         navigateTo="Stories"
         marginleft="160px"
       />
