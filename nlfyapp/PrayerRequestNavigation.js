@@ -1,4 +1,3 @@
-import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import React from "react";
 import { createStackNavigator, TransitionSpecs } from "@react-navigation/stack";
 import { PrayerRequest } from "./src/features/prayerRequest.screen";

@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   Text,
   StyleSheet,
@@ -6,9 +6,11 @@ import {
   Animated,
   Modal,
   Dimensions,
+  Alert,
 } from "react-native";
 import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
 import { SuccessModalContent } from "./successModalContent.component";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 
@@ -53,6 +55,7 @@ const styles = StyleSheet.create({
 });
 
 export const NLFModal = (props) => {
+  const { user } = useContext(AuthenticationContext);
   const [modalVisible, setModalVisible] = useState(false);
 
   const [success, setSuccess] = useState(false);
@@ -69,12 +72,16 @@ export const NLFModal = (props) => {
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
   const handleOpenModal = () => {
-    setModalVisible(true);
-    Animated.timing(slideAnimation, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
+    if (null === user) {
+      Alert.alert("Please Login/Signup to Write Prayer");
+    } else {
+      setModalVisible(true);
+      Animated.timing(slideAnimation, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    }
   };
 
   const handleCloseModal = () => {

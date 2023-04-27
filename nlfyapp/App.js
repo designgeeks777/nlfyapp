@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Onboarding } from "./src/features/onboarding.screen";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
@@ -13,7 +12,9 @@ import {
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
+
 import styled from "styled-components";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -21,8 +22,10 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./src/features/sermons.screen";
 import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
-
+import { Navigation } from "./src/infrastructure/navigation";
 import { Devotionals } from "./src/features/devotionals.screen";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
+import { HomeStackNavigation } from "./HomeNavigation";
 
 import { PrayerRequestNavigation } from "./PrayerRequestNavigation";
 
@@ -104,70 +107,75 @@ const App = () => {
   }
 
   const Tab = createBottomTabNavigator();
-
+  console.log("hasLaunched", hasLaunched);
   return (
     <>
       <ThemeProvider theme={theme}>
-        {hasLaunched ? (
-          <NavigationContainer>
-            <Tab.Navigator screenOptions={createScreenOptions}>
-              <Tab.Screen
-                name="Home"
-                component={HomeWrapper}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Prayer Request"
-                component={PrayerRequestNavigation}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Give"
-                component={Give}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Sermons"
-                component={Sermons}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Life Groups"
-                component={LifeGroups}
-                options={{ headerShown: false }}
-              />
-              <Tab.Screen
-                name="Events"
-                component={Events}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false,
-                  headerShown: false,
-                }}
-              />
-              <Tab.Screen
-                name="Stories"
-                component={Stories}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false,
-                  headerShown: false,
-                }}
-              />
-              <Tab.Screen
-                name="Devotionals"
-                component={Devotionals}
-                options={{
-                  tabBarButton: () => null,
-                  tabBarVisible: false,
-                  headerShown: false,
-                }}
-              />
-            </Tab.Navigator>
-          </NavigationContainer>
-        ) : (
-          <Onboarding />
-        )}
+        <AuthenticationContextProvider>
+          {hasLaunched ? (
+            <NavigationContainer>
+              <Tab.Navigator
+                screenOptions={createScreenOptions}
+                id="MainBottomTab"
+              >
+                <Tab.Screen
+                  name="Home"
+                  component={HomeStackNavigation}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Prayer Request"
+                  component={PrayerRequestNavigation}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Give"
+                  component={Give}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Sermons"
+                  component={Sermons}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Life Groups"
+                  component={LifeGroups}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Events"
+                  component={Events}
+                  options={{
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false,
+                  }}
+                />
+                <Tab.Screen
+                  name="Stories"
+                  component={Stories}
+                  options={{
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false,
+                  }}
+                />
+                <Tab.Screen
+                  name="Devotionals"
+                  component={Devotionals}
+                  options={{
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false,
+                  }}
+                />
+              </Tab.Navigator>
+            </NavigationContainer>
+          ) : (
+            <Navigation />
+          )}
+        </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
     </>

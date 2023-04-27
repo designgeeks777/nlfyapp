@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, StyleSheet, TextInput, Dimensions } from "react-native";
 import { Button } from "../../../components/button";
 import styled from "styled-components";
 import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 
@@ -13,6 +14,7 @@ const ButtonWrapper = styled(View)`
 `;
 
 export const PrayerForm = (props) => {
+  const { user } = useContext(AuthenticationContext);
   const [text, setText] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -43,7 +45,10 @@ export const PrayerForm = (props) => {
     const formattedDate = `${day}/${month}/${year}`;
     console.log("Formatted Date", formattedDate);
     const newresponse = {
-      responseBy: "Tia",
+      responseBy: {
+        uid: user.uid,
+        name: user.displayName,
+      },
       responseMessage: text,
       dateOfResponse: formattedDate,
     };

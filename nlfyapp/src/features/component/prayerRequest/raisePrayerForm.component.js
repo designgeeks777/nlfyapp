@@ -1,19 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, Dimensions, Text } from "react-native";
+import React, { useState, useEffect, useContext } from "react";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Dimensions,
+  Text,
+  Alert,
+} from "react-native";
 import { Button } from "../../../components/button";
 import styled from "styled-components";
 import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
 import { SuccessModalContent } from "../../../components/successModalContent.component";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 
-const ButtonWrapper = styled(View)`
-  padding-bottom: 30px;
-  align-items: center;
-`;
-
 export const RaisePrayerForm = (props) => {
+  const { user } = useContext(AuthenticationContext);
+  console.log("User in Raise Prayer", user);
+  //console.log(null === user);
   const [text, setText] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -38,7 +44,8 @@ export const RaisePrayerForm = (props) => {
     const url = `${BASEURL}prayerRequests/`;
     console.log("url:", url);
     const postbody = {
-      raisedBy: "Tina",
+      raisedBy: user.displayName,
+      raisedByUid: user.uid,
       requestMessage: text,
       dateOfPosting: formattedDate,
     };
@@ -55,31 +62,36 @@ export const RaisePrayerForm = (props) => {
 
   return (
     <>
-      {!success && (
-        <Text style={styles.modalTitle}>Write your Prayer Request</Text>
-      )}
-      {!success && (
-        <View style={{ flex: 1, alignItems: "center" }}>
-          <TextInput
-            placeholder="Enter your prayer here"
-            mode="outlined"
-            style={styles.inp}
-            textAlignVertical="top"
-            value={text} // bind text state variable to input field
-            onChangeText={(value) => setText(value)} // update text state variable whenever user types into input field
-            onFocus={() => setInputFocused(true)} // set inputFocused to true when TextInput is focused
-            onBlur={() => setInputFocused(false)}
-          />
-        </View>
-      )}
-      {!inputFocused && !success && (
-        <View style={styles.buttonwrapper}>
-          <Button label="Submit" handleClick={handleSubmit} />
-        </View>
-      )}
-
-      {success && (
-        <SuccessModalContent message="Prayer request sent succesfully" />
+      {user ? (
+        <>
+          {!success && (
+            <Text style={styles.modalTitle}>Write your Prayer Request</Text>
+          )}
+          {!success && (
+            <View style={{ flex: 1, alignItems: "center" }}>
+              <TextInput
+                placeholder="Enter your prayer here"
+                mode="outlined"
+                style={styles.inp}
+                textAlignVertical="top"
+                value={text}
+                onChangeText={(value) => setText(value)}
+                onFocus={() => setInputFocused(true)}
+                onBlur={() => setInputFocused(false)}
+              />
+            </View>
+          )}
+          {!inputFocused && !success && (
+            <View style={styles.buttonwrapper}>
+              <Button label="Submit" handleClick={handleSubmit} />
+            </View>
+          )}
+          {success && (
+            <SuccessModalContent message="Prayer request sent succesfully" />
+          )}
+        </>
+      ) : (
+        Alert.alert("Please login/signup to Raise a Prayer Request")
       )}
     </>
   );

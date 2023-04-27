@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components/native";
 
 import axios from "axios";
+import { BASEURL } from "../../../../APIKey";
 import {
   View,
   StatusBar,
@@ -9,6 +10,7 @@ import {
   TouchableOpacity,
   Animated,
   Modal,
+  Text,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/button";
@@ -26,19 +28,39 @@ const ButtonView = styled(View)`
 `;
 
 export const CommunityPrayers = () => {
+  const url = `${BASEURL}prayerRequests`;
+
   useEffect(() => {
-    axios
-      .get("http://192.168.0.102:3000/api/prayerRequests")
-      .then((response) => {
-        console.log(response.data);
+    const source = axios.CancelToken.source();
+    const loadData = async () => {
+      try {
+        const response = await axios.get(url, {
+          cancelToken: source.token,
+        });
         setData(response.data);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  }, []);
+
+        setIsLoading(false);
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled");
+        } else {
+          console.error(error);
+        }
+      }
+    };
+
+    loadData();
+
+    const intervalId = setInterval(loadData, 60000);
+
+    return () => {
+      clearInterval(intervalId);
+      source.cancel("Component unmounted");
+    };
+  }, [url]);
 
   const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [success, setSuccess] = useState(false);
 
@@ -84,7 +106,11 @@ export const CommunityPrayers = () => {
   return (
     <>
       <ContainerView>
-        <ExpandCollapseList data={data} />
+        {isLoading ? (
+          <Text>Loading All Prayer Requests...</Text>
+        ) : (
+          <ExpandCollapseList data={data} />
+        )}
       </ContainerView>
       <ButtonView>
         <Button label="Raise Prayer Request" handleClick={handleClick} />
