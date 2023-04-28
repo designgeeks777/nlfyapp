@@ -1,5 +1,5 @@
 //supports both Android and IOS devices
-import React, { useCallback, useState, useRef } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import {
   Text,
   FlatList,
@@ -12,6 +12,8 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
+
+import { BASEURL } from "../../APIKey";
 import { Button, Card, Paragraph } from "react-native-paper";
 import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
 import { NLFModal } from "./NLFModal.component";
@@ -24,7 +26,39 @@ const FlexRow = styled(View)`
 `;
 
 const Item = (props) => {
-  const { data, id, position } = props;
+  const { position, item } = props;
+
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    fetchUsers(); // Call the fetchUsers function on component mount
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const url = `${BASEURL}users`;
+      const response = await fetch(url);
+      const userdata = await response.json();
+      setUserList(userdata); // Set the fetched user data in the state
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserProfilePic = () => {
+    // Loop through the userList to find the user with matching uid
+
+    for (let i = 0; i < userList.length; i++) {
+      if (userList[i].uid === item.raisedByUid) {
+        if (userList[i].profilePic) {
+          return { uri: userList[i].profilePic }; // Set the profile pic URI
+        } else {
+          return require("nlfyapp/assets/profile1.jpg"); // Set the default profile pic
+        }
+      }
+    }
+    return require("nlfyapp/assets/profile1.jpg"); // Set the default profile pic if no user is found
+  };
 
   const [requestTextShown, setRequestTextShown] = useState(false);
   const [requestLengthMore, setRequestLengthMore] = useState(false);
@@ -103,10 +137,7 @@ const Item = (props) => {
     <>
       <View style={setFlex}>
         <View style={containerStyle}>
-          <Image
-            style={styles.profilePicture}
-            source={require("nlfyapp/assets/profile1.jpg")}
-          />
+          <Image style={styles.profilePicture} source={getUserProfilePic()} />
           <Text style={nameStyle}>{props.item.raisedBy}</Text>
         </View>
 

@@ -33,9 +33,6 @@ export const PrayerForm = (props) => {
     };
 
     const existingresponses = [...props.request.responses];
-    /*props.request.responses.map((response) => {
-      existingresponses.push(response);
-    });*/
 
     //get current date and add
     const currentDate = new Date();
