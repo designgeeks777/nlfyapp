@@ -20,6 +20,8 @@ import { RaisePrayerForm } from "./raisePrayerForm.component";
 const ContainerView = styled(SafeAreaView)`
   flex: 1;
   //margin-top: ${StatusBar.currentHeight || 0}px;
+  justify-content: center;
+  align-items: center;
 `;
 
 const ButtonView = styled(View)`

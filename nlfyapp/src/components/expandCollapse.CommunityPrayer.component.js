@@ -223,6 +223,7 @@ export const ExpandCollapseList = (props) => {
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         extraData={selectedId}
+        showsVerticalScrollIndicator={false}
       />
     </View>
   );
