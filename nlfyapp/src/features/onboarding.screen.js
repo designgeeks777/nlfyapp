@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   Text,
   Image,
@@ -34,6 +34,8 @@ const slide2ImageWidth = width * 0.5;
 const slide2ImageHeight = height * 0.3;
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+import { Devotionals } from "./devotionals.screen";
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -302,6 +304,15 @@ export const Onboarding = () => {
             <Tab.Screen
               name="Stories"
               component={Stories}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name="Devotionals"
+              component={Devotionals}
               options={{
                 tabBarButton: () => null,
                 tabBarVisible: false,

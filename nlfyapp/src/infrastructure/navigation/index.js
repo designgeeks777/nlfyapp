@@ -5,11 +5,12 @@ import { MyStack } from "../../../StackNavigation";
 import { AppNavigator } from "./app.navigator";
 
 export const Navigation = () => {
-  const { isAuthenticated } = useContext(AuthenticationContext);
+  const { isAuthenticated, registered } = useContext(AuthenticationContext);
+  console.log("isAuthenticated", isAuthenticated, registered);
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? <AppNavigator /> : <MyStack />}
+      {isAuthenticated && registered ? <AppNavigator /> : <MyStack />}
     </NavigationContainer>
   );
 };

@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Onboarding } from "./src/features/onboarding.screen";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
@@ -21,93 +20,63 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./src/features/sermons.screen";
 import { Events } from "./src/features/events.screen";
 import { Stories } from "./src/features/stories.screen";
-import { MyStack } from "./StackNavigation";
-
-import * as firebase from "firebase/compat";
-// import fb from "firebase/compat/app";
-import Constants from "expo-constants";
-import { FIREBASECONFIG } from "./APIKeys";
-import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 import { Navigation } from "./src/infrastructure/navigation";
+import { Devotionals } from "./src/features/devotionals.screen";
+import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
+import { HomeStackNavigation } from "./HomeNavigation";
 
-const firebaseConfig = {
-  // apiKey: FIREBASECONFIG.apiKey,
-  // authDomain: FIREBASECONFIG.authDomain,
-  // projectId: FIREBASECONFIG.projectId,
-  // storageBucket: FIREBASECONFIG.storageBucket,
-  // messagingSenderId: FIREBASECONFIG.messagingSenderId,
-  // appId: FIREBASECONFIG.appId,
-  // apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  // authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  // projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  // storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  // messagingSenderId: process.env.REACT_APP_FIREBASE_SENDER_ID,
-  // appId: process.env.REACT_APP_FIREBASE_APP_ID,
-  apiKey: Constants.manifest?.web?.config?.firebase?.apiKey,
-  authDomain: Constants.manifest?.web?.config?.firebase?.authDomain,
-  projectId: Constants.manifest?.web?.config?.firebase?.projectId,
-  storageBucket: Constants.manifest?.web?.config?.firebase?.storageBucket,
-  messagingSenderId:
-    Constants.manifest?.web?.config?.firebase?.messagingSenderId,
-  appId: Constants.manifest?.web?.config?.firebase?.appId,
+const HomeView = styled(View)`
+  flex: 1;
+  top: 10px;
+  align-items: center;
+`;
+const TAB_ICON = {
+  Home: "md-home",
+  "Prayer Request": "pray",
+  Give: "donate",
+  Sermons: "bible",
+  "Life Groups": "people-arrows",
 };
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+function HomeWrapper() {
+  return (
+    <HomeView>
+      <Home />
+    </HomeView>
+  );
 }
 
-// const HomeView = styled(View)`
-//   flex: 1;
-//   top: 10px;
-//   align-items: center;
-// `;
-// const TAB_ICON = {
-//   Home: "md-home",
-//   "Prayer Request": "pray",
-//   Give: "donate",
-//   Sermons: "bible",
-//   "Life Groups": "people-arrows",
-// };
-
-// function HomeWrapper() {
-//   return (
-//     <HomeView>
-//       <Home />
-//     </HomeView>
-//   );
-// }
-
-// const createScreenOptions = ({ route }) => {
-//   const iconName = TAB_ICON[route.name];
-//   if (iconName === "md-home") {
-//     return {
-//       tabBarIcon: ({ size, color }) => (
-//         <Ionicons name={iconName} size={size} color={color} />
-//       ),
-//       tabBarActiveTintColor: "tomato",
-//       tabBarInactiveTintColor: "gray",
-//       tabBarStyle: {
-//         display: "flex",
-//       },
-//     };
-//   } else if (
-//     iconName === "pray" ||
-//     iconName === "people-arrows" ||
-//     iconName === "donate" ||
-//     iconName === "bible"
-//   ) {
-//     return {
-//       tabBarIcon: ({ size, color }) => (
-//         <FontAwesome5 name={iconName} size={size} color={color} />
-//       ),
-//       tabBarActiveTintColor: "tomato",
-//       tabBarInactiveTintColor: "gray",
-//       tabBarStyle: {
-//         display: "flex",
-//       },
-//     };
-//   }
-// };
+const createScreenOptions = ({ route }) => {
+  const iconName = TAB_ICON[route.name];
+  if (iconName === "md-home") {
+    return {
+      tabBarIcon: ({ size, color }) => (
+        <Ionicons name={iconName} size={size} color={color} />
+      ),
+      tabBarActiveTintColor: "tomato",
+      tabBarInactiveTintColor: "gray",
+      tabBarStyle: {
+        display: "flex",
+      },
+    };
+  } else if (
+    iconName === "pray" ||
+    iconName === "people-arrows" ||
+    iconName === "donate" ||
+    iconName === "bible"
+  ) {
+    return {
+      tabBarIcon: ({ size, color }) => (
+        <FontAwesome5 name={iconName} size={size} color={color} />
+      ),
+      tabBarActiveTintColor: "tomato",
+      tabBarInactiveTintColor: "gray",
+      tabBarStyle: {
+        display: "flex",
+      },
+    };
+  }
+};
 
 const App = () => {
   const [hasLaunched, setHasLaunched] = useState(false);
@@ -133,17 +102,76 @@ const App = () => {
     return null;
   }
 
+  const Tab = createBottomTabNavigator();
+  console.log("hasLaunched", hasLaunched);
   return (
     <>
-      {/* <NavigationContainer>
-        <ThemeProvider theme={theme}>
-          <MyStack />
-        </ThemeProvider>
-        <ExpoStatusBar style="auto" />
-      </NavigationContainer> */}
       <ThemeProvider theme={theme}>
         <AuthenticationContextProvider>
-          <Navigation />
+          {hasLaunched ? (
+            <NavigationContainer>
+              <Tab.Navigator
+                screenOptions={createScreenOptions}
+                id="MainBottomTab"
+              >
+                <Tab.Screen
+                  name="Home"
+                  component={HomeStackNavigation}
+                  // component={HomeWrapper}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Prayer Request"
+                  component={PrayerRequest}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Give"
+                  component={Give}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Sermons"
+                  component={Sermons}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Life Groups"
+                  component={LifeGroups}
+                  options={{ headerShown: false }}
+                />
+                <Tab.Screen
+                  name="Events"
+                  component={Events}
+                  options={{
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false,
+                  }}
+                />
+                <Tab.Screen
+                  name="Stories"
+                  component={Stories}
+                  options={{
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false,
+                  }}
+                />
+                <Tab.Screen
+                  name="Devotionals"
+                  component={Devotionals}
+                  options={{
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false,
+                  }}
+                />
+              </Tab.Navigator>
+            </NavigationContainer>
+          ) : (
+            <Navigation />
+          )}
         </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />

@@ -1,13 +1,5 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Dimensions,
-  Alert,
-  KeyboardAvoidingView,
-  Platform,
-} from "react-native";
+import React, { useState, useContext, useEffect, useLayoutEffect } from "react";
+import { View, Text, StyleSheet, Dimensions } from "react-native";
 import * as firebase from "firebase/compat";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { CustomTextInput } from "../components/textinput";
@@ -15,97 +7,116 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { OTPInput } from "../components/otpInput";
 import styled from "styled-components";
 import { Button } from "../components/button";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+import { BASEURL } from "../../APIKey";
+import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
-const { width } = Dimensions.get("window");
-const containerWidth = width * 0.9;
-
-export const LoginSecondScreen = (props) => {
-  const navigation = useNavigation();
+export const LoginSecondScreen = ({ route }) => {
   const recaptchaVerifier = React.useRef(null);
   const attemptInvisibleVerification = useState(true);
-  const [user, setUser] = useState(null);
-  const [mobile, setMobile] = useState(null);
-  const [isValid, setisValid] = useState(false);
-  const [confirm, setConfirm] = useState(null);
+  const [isValid, setIsValid] = useState(false);
   const [code, setCode] = useState("");
   const maximumCodeLength = 6;
-  const [validOtpCode, setValidOtpCode] = useState(false);
   const [isPinReady, setIsPinReady] = useState(false);
-
-  //   const [phoneNumber, setphoneNumber] = useState("");
+  const [loginError, setLoginError] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const {
+    user,
+    error,
+    isValidOTPCode,
+    onSignInWithPhoneNumber,
+    confirmCode,
+    confirmResult,
+  } = useContext(AuthenticationContext);
+  const [errorMsg, setErrorMsg] = useState("");
+  const [userRegistered, setUserRegistered] = useState(false);
+  const [resetError, setResetErrors] = useState(false);
+  const navigation = useNavigation();
+  const [username, setUsername] = useState(null);
 
   const handleChange = (value) => {
-    setMobile(value);
+    setPhoneNumber(value);
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
-    if (mobile.match(regexp)) {
-      setisValid(true);
-      console.log("in verify step match", mobile);
+    if (phoneNumber.match(regexp)) {
+      setIsValid(true);
+      setErrorMsg("");
+      console.log("in verify step match", phoneNumber);
     } else {
-      setisValid(false);
+      setIsValid(false);
+      setErrorMsg("Enter a valid phone number");
       console.log("mismatch");
     }
   };
 
-  const signInWithMobileNumber = () => {
-    console.log("came here", recaptchaVerifier.current);
-    // const confirmation = await firebase.auth().signInWithPhoneNumber(mobile);
-    // setConfirm(confirmation);
-    if (isValid) {
-      firebase
-        .auth()
-        .signInWithPhoneNumber(mobile, recaptchaVerifier.current)
-        .then((confirmationResult) => {
-          setConfirm(confirmationResult);
-          var credential = firebase.auth.PhoneAuthProvider.credential(
-            confirmationResult.verificationId,
-            code
-          );
-          console.log("credential", credential);
-          setIsPinReady(true);
-        })
-        .catch((e) => {
-          setIsPinReady(false);
-          setisValid(false);
-          console.log("ERROR SIGN IN", e);
+  const checkIfUserAlreadyRegistered = async () => {
+    let dataexists = false;
+    try {
+      const response = await axios.get(`${BASEURL}/users/`);
+
+      if (response.data) {
+        const data = response.data;
+
+        data.forEach((item) => {
+          if (item.mobileNumber === phoneNumber) {
+            console.log("User Exists");
+            dataexists = true;
+            setUserRegistered(true);
+            setUsername(item.name);
+          }
         });
-    } else {
-      setisValid(false);
-      console.log("ERROR SIGN IN else block");
+      } else {
+        console.log("USER DOESNT EXISTS");
+        setUserRegistered(false);
+        dataexists = false;
+      }
+    } catch (err) {
+      console.log(err, "User Not Registered signin");
+      dataexists = false;
     }
+    return dataexists;
   };
 
-  const confirmCode = () => {
-    // try {
-    if (isPinReady) {
-      confirm
-        .confirm(code)
-        .then((u) => {
-          setIsPinReady(true);
-          setValidOtpCode(true);
-          setUser(u);
-          navigation.navigate("Home");
-        })
-        .catch((e) => {
-          console.log("ERROR Code", e);
-        });
-    } else {
-      setValidOtpCode(false);
-      console.log("Else block error Code");
+  useEffect(() => {
+    console.log("userRegistered changed", userRegistered);
+    if (!userRegistered) {
+      setIsValid(false);
+      setLoginError(true);
     }
-    // } catch (error) {
-    //   console.log("Invalid code.");
-    // }
+  }, [userRegistered]);
+
+  const onSignIn = async () => {
+    const isregistered = await checkIfUserAlreadyRegistered();
+    if (!isregistered) {
+      console.log("isRegistered login");
+      setIsValid(true);
+      setErrorMsg("");
+      onSignInWithPhoneNumber(phoneNumber, recaptchaVerifier.current);
+    } else {
+      setIsValid(false);
+      console.log("is not Registered login");
+      setErrorMsg("Enter your registered mobile number");
+    }
+  };
+  const onClickConfirmCode = () => {
+    setResetErrors(false);
+    confirmCode(code);
+    const HomeStackModalNavigator = navigation.getId();
+    if (HomeStackModalNavigator === "HomeStackModal") {
+      navigation.navigate("HomeStack");
+    } else {
+      navigation.navigate("Home");
+    }
+    console.log("HomeStack confirm code", HomeStackModalNavigator);
   };
 
-  const signOut = () => {
-    firebase.auth().signOut();
-    setUser(null);
-    setCode(null);
-    setMobile(null);
-    // navigation.navigate("Home");
-    // return () => useRef();
-  };
+  useEffect(() => {
+    console.log("isOtpCodeReady", code.length);
+    setIsPinReady(code.length === maximumCodeLength);
+    if (code.length <= 5) {
+      setResetErrors(true);
+    }
+  }, [code]);
 
   const Heading = styled(Text)`
     color: ${(props) => props.theme.colors.text.secondary};
@@ -121,9 +132,12 @@ export const LoginSecondScreen = (props) => {
   const MessageText = styled(Text)`
     align-self: flex-start;
     top: 10px;
-    left: 10px;
+    left: 20px;
     font-size: ${(props) => props.theme.fontSizes.title};
-    color: ${(props) => props.theme.colors.text.infoMessage};
+    color: ${(props) =>
+      props.isValid
+        ? props.theme.colors.text.infoMessage
+        : props.theme.colors.text.errorMessage};
     font-family: ${(props) => props.theme.fonts.body};
   `;
 
@@ -148,62 +162,74 @@ export const LoginSecondScreen = (props) => {
     justify-content: flex-end;
     margin-bottom: 80px;
   `;
+  const styles = StyleSheet.create({
+    containerView: {
+      flex: 1,
+      padding: 10,
+      alignItems: "center",
+      backgroundColor: "#ffffff",
+    },
+  });
+
   return (
-    <WrapperView>
+    <SafeAreaView style={styles.containerView}>
       <FirebaseRecaptchaVerifierModal
         ref={recaptchaVerifier}
         firebaseConfig={firebase.app.options}
-        attemptInvisibleVerification={attemptInvisibleVerification}
+        attemptInvisibleVerification={false}
       />
-      {!confirm ? (
+      {!confirmResult ? (
         <>
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : "height"}
-            style={{ flex: 1 }}
-          >
-            <Heading>We are glad to have you back.</Heading>
-            <CustomTextInput
-              label="Mobile Number"
-              maxLength={15}
-              placeholder="(+91)999989080"
-              autoFocus
-              autoCompleteType="tel"
-              keyboardType="phone-pad"
-              textContentType="telephoneNumber"
-              msgToDisplay="Enter your registered mobile number"
-              value={mobile}
-              onChange={(newValue) => handleChange(newValue)}
-              isValid={isValid}
-              isUserNameTextInput={false}
-            />
-          </KeyboardAvoidingView>
-          {/* <MessageText>Enter your registered mobile number.</MessageText> */}
+          <Heading>We are glad to have you back.</Heading>
+          <CustomTextInput
+            label="Mobile Number"
+            maxLength={15}
+            placeholder="(+91)999989080"
+            autoFocus
+            autoCompleteType="tel"
+            keyboardType="phone-pad"
+            textContentType="telephoneNumber"
+            msgToDisplay={error || errorMsg}
+            value={phoneNumber}
+            onChange={handleChange}
+            isValid={isValid}
+            isUserNameTextInput={false}
+          />
           <LoginButtonView>
-            <Button label="Continue" handleClick={signInWithMobileNumber} />
+            <Button
+              label="Continue"
+              handleClick={onSignIn}
+              disabled={!isValid}
+            />
           </LoginButtonView>
         </>
       ) : (
         <>
-          <Heading>Please verfiy, its you David</Heading>
+          <Heading>Please verfiy, its you {username}</Heading>
+          {/* <Heading>Please verfiy, its you David</Heading> */}
           <OTPMessageText>
-            Enter 4 digit verification code sent to the number
+            Enter 6 digit verification code sent to the number
           </OTPMessageText>
           <OTPInput
             code={code}
             setCode={(e) => setCode(e)}
             maximumLength={maximumCodeLength}
-            setIsPinReady={setIsPinReady}
-            isValidOTPCode={validOtpCode}
+            // setIsPinReady={setIsPinReady}
+            isValidOTPCode={isValidOTPCode}
+            resetError={resetError}
           />
+          <MessageText>
+            {isPinReady && !isValidOTPCode && !resetError ? error : ""}
+          </MessageText>
           <LoginButtonView>
             <Button
               label="Confirm Code"
-              handleClick={confirmCode}
-              isLoginButton={true}
+              handleClick={() => onClickConfirmCode()}
+              disabled={!isPinReady}
             />
           </LoginButtonView>
         </>
       )}
-    </WrapperView>
+    </SafeAreaView>
   );
 };

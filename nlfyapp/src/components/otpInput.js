@@ -27,19 +27,40 @@ const SplitOTPBoxesContainer = styled(Pressable)`
 `;
 
 const SplitBoxes = styled(View)`
-  border-color: ${(props) => props.theme.colors.bg.disabled};
+  border-color: ${(props) => props.theme.colors.border.primary};
   border-width: 1px;
   border-radius: 10px;
   padding: 12px;
   margin: 2px;
   min-width: 50px;
-  ${({ isValid }) =>
-    isValid &&
+  ${({ isValid, value, maxLength, resetError }) =>
+    value.length < maxLength ||
+    (value.length === maxLength && isValid === null) ||
+    resetError
+      ? `
+  border-color: #D9D9D9;
+`
+      : isValid
+      ? `
+    border-color: #27AE60;
     `
-  border-color: #27AE60;
+      : `
+border-color: #DE1621;
 `};
 `;
 
+// ${({ isValid, value }) =>
+//   isValid
+//     ? `
+// border-color: #27AE60;
+// `
+//     : value === null || value === undefined || value === ""
+//     ? `
+//     border-color: #D9D9D9;
+//     `
+//     : `
+// border-color: #DE1621;
+// `}
 const SplitBoxText = styled(Text)`
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.button};
@@ -48,10 +69,29 @@ const SplitBoxText = styled(Text)`
 `;
 
 const SplitBoxesFocused = styled(SplitBoxes)`
-  border-color: ${(props) => props.theme.colors.bg.disabled};
   background-color: transparent;
+  ${({ isValid, value, maxLength, resetError }) =>
+    value.length < maxLength ||
+    (value.length === maxLength && isValid === null) ||
+    resetError
+      ? `
+border-color: #000000;
+`
+      : isValid
+      ? `
+  border-color: #27AE60;
+  `
+      : `
+border-color: #DE1621;
+`};
 `;
 
+// border-color: ${(props) =>
+//   props.isValid
+//     ? // ? props.code === null || props.code === undefined || props.code === ""
+//       props.theme.colors.border.success
+//     : // : props.theme.colors.border.error
+//       props.theme.colors.border.error};
 // const MessageText = styled(Text)`
 //   top: 8px;
 //   color: ${(props) => props.theme.colors.text.primary};
@@ -64,9 +104,10 @@ export const OTPInput = ({
   code,
   setCode,
   maximumLength,
-  setIsPinReady,
   isValidOTPCode,
+  resetError,
 }) => {
+  // console.log("inOTPINPUT", isValidOTPCode, code);
   const boxArray = new Array(maximumLength).fill(0);
   const inputRef = useRef();
   const boxDigit = (_, index) => {
@@ -81,15 +122,23 @@ export const OTPInput = ({
 
     const StyledSplitBoxes =
       isInputBoxFocused && isValueFocused ? SplitBoxesFocused : SplitBoxes;
+    // console.log("IN SPLIT BOXES", isValidOTPCode, code.length, maximumLength);
     return (
-      <StyledSplitBoxes key={index}>
+      <StyledSplitBoxes
+        key={index}
+        isValid={isValidOTPCode}
+        value={code}
+        maxLength={maximumLength}
+        resetError={resetError}
+      >
         <SplitBoxText>{digit}</SplitBoxText>
       </StyledSplitBoxes>
     );
   };
 
   const [isInputBoxFocused, setIsInputBoxFocused] = useState(false);
-  const [isValid, setIsValid] = useState(false);
+  // const [isValid, setIsValid] = useState(false);
+  // const [isOtpCodeReady, setIsOtpCodeReady] = useState(false);
 
   const handleOnPress = () => {
     setIsInputBoxFocused(true);
@@ -100,14 +149,20 @@ export const OTPInput = ({
     setIsInputBoxFocused(false);
   };
 
-  useEffect(() => {
-    // update pin ready status
-    setIsPinReady(code.length === maximumLength);
-    // clean up function
-    return () => {
-      setIsPinReady(false);
-    };
-  }, [code, maximumLength, setIsPinReady]);
+  // useEffect(() => {
+  //   // update pin ready status
+  //   if (code.length === maximumLength) {
+  //     setIsOtpCodeReady(true);
+  //   } else {
+  //     setIsOtpCodeReady(false);
+  //   }
+  //   // console.log("isOtpCodeReady", isOtpCodeReady);
+  //   // clean up function
+  //   // return () => {
+  //   //   setIsOtpCodeReady(false);
+  //   //   console.log("isOtpCodeReady clean up", isOtpCodeReady);
+  //   // };
+  // }, [code, maximumLength, isOtpCodeReady, setIsOtpCodeReady]);
 
   return (
     <OTPInputContainer>
@@ -124,6 +179,8 @@ export const OTPInput = ({
         onFocus={handleOnPress}
         onBlur={handleOnBlur}
         keyboardType="number-pad"
+        caretHidden={true}
+        // setIsOtpCodeReady={setIsOtpCodeReady}
       />
     </OTPInputContainer>
   );
