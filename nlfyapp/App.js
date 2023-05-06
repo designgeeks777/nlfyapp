@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import { useFonts, Lato_400Regular } from "@expo-google-fonts/lato";
@@ -12,7 +12,9 @@ import {
   storingData,
 } from "./src/components/asyncstorage.component";
 import { Home } from "./src/features/home.screen";
+
 import styled from "styled-components";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
@@ -24,6 +26,8 @@ import { Navigation } from "./src/infrastructure/navigation";
 import { Devotionals } from "./src/features/devotionals.screen";
 import { AuthenticationContextProvider } from "./src/services/authentication/authentication.context";
 import { HomeStackNavigation } from "./HomeNavigation";
+
+import { PrayerRequestNavigation } from "./PrayerRequestNavigation";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -117,12 +121,11 @@ const App = () => {
                 <Tab.Screen
                   name="Home"
                   component={HomeStackNavigation}
-                  // component={HomeWrapper}
                   options={{ headerShown: false }}
                 />
                 <Tab.Screen
                   name="Prayer Request"
-                  component={PrayerRequest}
+                  component={PrayerRequestNavigation}
                   options={{ headerShown: false }}
                 />
                 <Tab.Screen

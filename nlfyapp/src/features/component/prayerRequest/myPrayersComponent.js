@@ -1,15 +1,89 @@
-import React from "react";
-import { View, Text, StatusBar, SafeAreaView } from "react-native";
-import styled from "styled-components/native";
+// import React from "react";
+// import { View, Text, Dimensions, SafeAreaView, StatusBar } from "react-native";
+// import { BackButton } from "../../../components/backButton";
+// import { TabButton } from "../../../components/tabButton";
+// import { TabButtonUnselected } from "../../../components/TabButtonUnselected";
+// import styled from "styled-components";
+
+// import { useNavigation } from "@react-navigation/native";
+
+// const { width } = Dimensions.get("window");
+// const wrapperWidth = width * 0.9;
+
+// const WrapperView = styled(View)`
+//   width: ${wrapperWidth}px;
+//   border-radius: 10px;
+//   margin-left: 10px;
+//   padding-top: 51px;
+// `;
+
+// const SafeAreaViewWrapper = styled(SafeAreaView)`
+//   flex: 1;
+//   padding-top: ${StatusBar.currentHeight}px;
+//   margin-top: -15px;
+//   z-index: 2;
+//   margin-right: 2px;
+// `;
+
+// const ButtonsWrapper = styled(View)`
+//   flex-direction: row;
+// `;
+
+// export const MyPrayersScreen = () => {
+//   const navigation = useNavigation();
+//   const navigateToChurchPrayers = () => {
+//     navigation.navigate("ChurchPrayers");
+//   };
+//   const navigateToCommunityPrayers = () => {
+//     navigation.navigate("PrayerRequest");
+//   };
+//   return (
+//     <>
+//       <WrapperView>
+//         <BackButton text="Prayer Requests" />
+//       </WrapperView>
+//       <SafeAreaViewWrapper>
+//         <View style={{ flexDirection: "column", flex: 1 }}>
+//           <ButtonsWrapper>
+//             <TabButtonUnselected
+//               label="Church"
+//               handleClick={navigateToChurchPrayers}
+//             />
+//             <TabButtonUnselected
+//               label="Community"
+//               handleClick={navigateToCommunityPrayers}
+//             />
+//             <TabButton label="My Prayers" />
+//           </ButtonsWrapper>
+//           <Text>Content</Text>
+//         </View>
+//       </SafeAreaViewWrapper>
+//     </>
+//   );
+// };
+
+import React, { useEffect, useState, useContext } from "react";
+import { View, Text, Dimensions, SafeAreaView, StatusBar } from "react-native";
+import { BackButton } from "../../../components/backButton";
 import { TabButton } from "../../../components/tabButton";
 import { TabButtonUnselected } from "../../../components/TabButtonUnselected";
-import { BackButton } from "../../../components/backButton";
-import { useNavigation } from "@react-navigation/native";
+import styled from "styled-components";
+
+import axios from "axios";
+import { BASEURL } from "../../../../APIKey";
+
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+
+//import { ExpandCollapseList } from "../../../components/expandCollapse.myPrayerComponent";
 import { ExpandCollapseListMyPrayers } from "../../../components/expandCollapse.MyPrayers";
-//const { width } = Dimensions.get("window");
+import { useNavigation } from "@react-navigation/native";
+
+const { width } = Dimensions.get("window");
+const wrapperWidth = width * 0.9;
+const marginRight = width * 0.05;
 
 const WrapperView = styled(View)`
-  width: 900px;
+  width: ${wrapperWidth}px;
   border-radius: 10px;
   margin-left: 10px;
   padding-top: 51px;
@@ -21,86 +95,61 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
   margin-top: -15px;
   z-index: 2;
 `;
+
 const ButtonsWrapper = styled(View)`
   flex-direction: row;
+  justify-content: center;
+  margin-right: ${marginRight}px;
 `;
 
 export const MyPrayersScreen = () => {
-  var data = [
-    {
-      id: 1,
-      date: "Submitted on 23/11/2022",
-      myPrayers:
-        "Please pray for my health.Have been suffering for quite sometime",
-    },
-    {
-      id: 2,
-      date: "Submitted on 05/01/2023",
-      myPrayers:
-        "I'm struggling with a chronic illness and could use some prayers for physical and emotional healing.",
-    },
-    {
-      id: 3,
-      date: "Submitted on 02/02/2023",
-      myPrayers:
-        "I'm traveling overseas and would appreciate your prayers for protection and safety. I'm traveling overseas and would appreciate your prayers for protection and safety.",
-    },
-    {
-      id: 4,
-      date: "Submitted on 23/02/2022",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-    {
-      id: 5,
-      date: "Submitted on 25/03/2023",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-    {
-      id: 6,
-      date: "Submitted on 25/03/2023",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-    {
-      id: 7,
-      date: "Submitted on 25/03/2023",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-    {
-      id: 8,
-      date: "Submitted on 25/03/2023",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-    {
-      id: 9,
-      date: "Submitted on 25/03/2023",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-    {
-      id: 10,
-      date: "Submitted on 25/03/2023",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-    {
-      id: 11,
-      date: "Submitted on 25/03/2023",
-      myPrayers:
-        "I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones, I'm trying to deepen my relationship with God and would appreciate your prayers for my spiritual growth and for the salvation of my loved ones",
-    },
-  ];
-  const navigation = useNavigation();
-  const navigateToCommunityPrayers = () => {
-    navigation.navigate("PrayerRequest");
-  };
+  const url = `${BASEURL}prayerRequests`;
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
+  const { user } = useContext(AuthenticationContext);
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    const loadData = async () => {
+      try {
+        const response = await axios.get(url, {
+          cancelToken: source.token,
+        });
+
+        const filteredData = response.data.filter(
+          (record) => record.raisedByUid === user.uid
+        );
+        //console.log("Filtered Data", filteredData);
+
+        setData(filteredData);
+
+        setIsLoading(false);
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled");
+        } else {
+          console.error(error);
+        }
+      }
+    };
+
+    loadData();
+
+    const intervalId = setInterval(loadData, 60000);
+
+    return () => {
+      clearInterval(intervalId);
+      source.cancel("Component unmounted");
+    };
+  }, [url, user.uid]);
+
+  const navigation = useNavigation();
   const navigateToChurchPrayers = () => {
     navigation.navigate("ChurchPrayers");
+  };
+  const navigateToCommunityPrayers = () => {
+    navigation.navigate("PrayerRequest");
   };
   return (
     <>
@@ -120,8 +169,10 @@ export const MyPrayersScreen = () => {
             />
             <TabButton label="My Prayers" />
           </ButtonsWrapper>
+          <View>
+            <ExpandCollapseListMyPrayers data={data} />
+          </View>
         </View>
-        <ExpandCollapseListMyPrayers data={data} />
       </SafeAreaViewWrapper>
     </>
   );
