@@ -6,7 +6,10 @@ import {
   Animated,
   Modal,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
   Alert,
+  ScrollView,
 } from "react-native";
 
 const { width } = Dimensions.get("window");
@@ -39,6 +42,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: width * 0.05,
+    minHeight: Dimensions.get("window").height * 0.6, // set the minimum height to 60% of the screen height
+    paddingBottom: 25, // adding some bottom padding for the submit button
   },
   modalTitle: {
     fontSize: 24,
@@ -53,6 +58,7 @@ const styles = StyleSheet.create({
 
 export const MyPrayerResponseModal = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
@@ -91,73 +97,89 @@ export const MyPrayerResponseModal = (props) => {
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent={true}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={handleCloseModal}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.modalOverlay}
         >
-          <Animated.View
-            style={[
-              styles.modalContainer,
-              {
-                transform: [{ translateY: modalTranslateY }],
-                height: 500, // set the height as per your requirement
-              },
-            ]}
+          <TouchableOpacity
+            activeOpacity={1}
+            // onPress={handleCloseModal}
+            onPress={() => {
+              if (!scrolling) {
+                handleCloseModal();
+              }
+            }}
+            style={styles.modalOverlay}
           >
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
+            <Animated.View
+              style={[
+                styles.modalContainer,
+                {
+                  transform: [{ translateY: modalTranslateY }],
+                  //height: 500, // set the height as per your requirement
+                },
+              ]}
+            >
+              <ScrollView
+                onTouchStartCapture={() => setScrolling(true)}
+                onTouchEndCapture={() => setScrolling(false)}
+                style={{ flex: 1 }}
+              >
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
 
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
 
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
 
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
 
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
 
-            <Text>Hello</Text>
-            <Text>Hello</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-            <Text>Hello world</Text>
-          </Animated.View>
-        </TouchableOpacity>
+                <Text>Hello</Text>
+                <Text>Hello</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+                <Text>Hello world</Text>
+              </ScrollView>
+            </Animated.View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );
