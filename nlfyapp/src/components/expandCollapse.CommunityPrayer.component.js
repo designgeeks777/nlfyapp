@@ -174,7 +174,7 @@ const Item = (props) => {
   );
 };
 
-export const ExpandCollapseList = (props) => {
+export const ExpandCollapseListCommunityPrayer = (props) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item, index }) => {

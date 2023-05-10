@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useContext } from "react";
 import {
   Text,
   StyleSheet,
@@ -6,18 +6,27 @@ import {
   Animated,
   Modal,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  Alert,
+  ScrollView,
 } from "react-native";
+
 import { ExpandCollapseListPrayerResponse } from "./expandCollapse.PrayerResponses.component";
 
 const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   buttonView: {
+    //paddingVertical: 16,
+    //paddingHorizontal: 32,
     backgroundColor: "#ffffff",
   },
   button: {
     backgroundColor: "#333333",
     borderRadius: 24,
+    //paddingVertical: width * 0.2,
+    //paddingHorizontal: 32,
   },
   buttonText: {
     color: "#008BE2",
@@ -35,6 +44,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: width * 0.05,
+    minHeight: Dimensions.get("window").height * 0.6, // set the minimum height to 60% of the screen height
+    paddingBottom: 25, // adding some bottom padding for the submit button
   },
   modalTitle: {
     fontSize: 24,
@@ -54,6 +65,7 @@ const styles = StyleSheet.create({
 
 export const MyPrayerResponseModal = (props) => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [scrolling, setScrolling] = useState(false);
 
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
@@ -92,24 +104,42 @@ export const MyPrayerResponseModal = (props) => {
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent={true}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={handleCloseModal}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.modalOverlay}
         >
-          <Animated.View
-            style={[
-              styles.modalContainer,
-              {
-                transform: [{ translateY: modalTranslateY }],
-                height: 600, // set the height as per your requirement
-              },
-            ]}
+          <TouchableOpacity
+            activeOpacity={1}
+            // onPress={handleCloseModal}
+            onPress={() => {
+              if (!scrolling) {
+                handleCloseModal();
+              }
+            }}
+            style={styles.modalOverlay}
           >
-            <Text style={styles.responsesHeading}>Responses</Text>
-            <ExpandCollapseListPrayerResponse data={props.request.responses} />
-          </Animated.View>
-        </TouchableOpacity>
+            <Animated.View
+              style={[
+                styles.modalContainer,
+                {
+                  transform: [{ translateY: modalTranslateY }],
+                  //height: 500, // set the height as per your requirement
+                },
+              ]}
+            >
+              <ScrollView
+                onTouchStartCapture={() => setScrolling(true)}
+                onTouchEndCapture={() => setScrolling(false)}
+                style={{ flex: 1 }}
+              >
+                <Text style={styles.responsesHeading}>Responses</Text>
+                <ExpandCollapseListPrayerResponse
+                  data={props.request.responses}
+                />
+              </ScrollView>
+            </Animated.View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );

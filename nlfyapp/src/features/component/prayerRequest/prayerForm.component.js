@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, StyleSheet, TextInput, Dimensions } from "react-native";
+import { View, StyleSheet, TextInput, Text, Dimensions } from "react-native";
 import { Button } from "../../../components/button";
 import styled from "styled-components";
 import axios from "axios";
@@ -18,19 +18,50 @@ export const PrayerForm = (props) => {
   const [text, setText] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [inputBorderColor, setInputBorderColor] = useState("gray");
+  const [disableSubmit, setDisableSubmit] = useState(true);
+  const [valid, setValid] = useState(true);
 
-  const handleSubmit = () => {
-    // handle the submission of the prayer request here
+  const MAX_INPUT_LENGTH = 1000; // Maximum allowed length of input
+  // Error messages
+  const INVALID_PRAYER_ERROR = "Please enter a valid prayer request.";
+  const MAX_LENGTH_ERROR = `Please limit your prayer request to ${MAX_INPUT_LENGTH} characters.`;
+
+  const handleTextChange = (value) => {
+    if (value.trim().length <= MAX_INPUT_LENGTH) {
+      setText(value);
+      setValid(""); // Clear error message when user starts typing
+    }
+
+    // Check if input value is valid or not
+    if (!/[a-zA-Z]/.test(value.trim()) || /^\d+$/.test(value.trim())) {
+      setValid(INVALID_PRAYER_ERROR);
+      setInputBorderColor("red");
+      setDisableSubmit(true);
+      return;
+    }
+    // Check if input value exceeds maximum allowed length
+    if (value.trim().length > MAX_INPUT_LENGTH) {
+      setValid(MAX_LENGTH_ERROR);
+      setInputBorderColor("red");
+      setDisableSubmit(true);
+      return;
+    }
+
+    // Clear error message and reset input border color if no errors
+    setValid("");
+    setInputBorderColor("gray");
+    setDisableSubmit(false);
+  };
+
+  const handleSubmit = async () => {
+    console.log("Submit clicked");
+    if (text.trim() === "") {
+      return; // return early if text is empty or only contains whitespace
+    }
 
     console.log("props.request", props.request);
-
-    const responseHandler = (response) => {
-      console.log("Response:", response.status);
-      if (response.status === 200) {
-        console.log("Success");
-        setSuccess(true);
-      }
-    };
 
     const existingresponses = [...props.request.responses];
 
@@ -41,6 +72,7 @@ export const PrayerForm = (props) => {
     const year = currentDate.getFullYear();
     const formattedDate = `${day}/${month}/${year}`;
     console.log("Formatted Date", formattedDate);
+
     const newresponse = {
       responseBy: {
         uid: user.uid,
@@ -58,17 +90,54 @@ export const PrayerForm = (props) => {
     console.log("Existing Responses:", existingresponses);
     const url = `${BASEURL}prayerRequests/${props.request._id}`;
     console.log("url:", url);
-    axios
-      .patch(url, updateBody)
-      .then(responseHandler)
-      .catch((err) => console.log(err));
-    //console.log("Response Data", data);
-    //props.handleCloseModal();
+
+    //Using Promise.race to set a timeout on an axios request and handle the timeout as a rejection
+    console.log("Function start");
+    console.log("Before HTTP request");
+
+    // Create a new promise that resolves after a certain amount of time
+    const timeoutPromise = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        reject(new Error("Request timed out"));
+      }, 3000);
+    });
+
+    // Make the axios request and race it against the timeout promise
+    Promise.race([axios.patch(url, updateBody), timeoutPromise])
+      .then((response) => {
+        console.log("Response :", response.status);
+        if (response.status === 200) {
+          console.log("Success");
+          setSuccess(true);
+          setError(false);
+        }
+      })
+      .catch((err) => {
+        if (err.message === "Request timed out") {
+          console.log("Request timed out");
+          setError(true);
+          setSuccess(false);
+        } else {
+          console.log("PATCH ERROR", err);
+          setError(true);
+          setSuccess(false);
+        }
+      })
+      .finally(() => {
+        console.log("HTTP request complete");
+      });
+
+    console.log("AFTER HTTP request");
   };
 
   useEffect(() => {
     props.handleSuccessChange(success);
   }, [success, props]);
+
+  useEffect(() => {
+    console.log("Calling handle error change", error);
+    props.handleErrorChange(error);
+  }, [error, props]);
 
   return (
     <>
@@ -76,18 +145,31 @@ export const PrayerForm = (props) => {
         <TextInput
           placeholder="Enter your prayer here"
           mode="outlined"
-          style={styles.inp}
+          style={[
+            styles.inp,
+            {
+              borderColor: inputBorderColor,
+            },
+          ]}
+          multiline={true} // enable multiline
           textAlignVertical="top"
-          value={text} // bind text state variable to input field
-          onChangeText={(value) => setText(value)} // update text state variable whenever user types into input field
+          value={text}
+          onChangeText={handleTextChange}
           onFocus={() => setInputFocused(true)} // set inputFocused to true when TextInput is focused
           onBlur={() => setInputFocused(false)}
         />
+        {valid !== "" && <Text style={styles.errorMessage}>{valid}</Text>}
       </View>
       {!inputFocused && (
-        <View style={styles.buttonwrapper}>
-          <Button label="Submit" handleClick={handleSubmit} />
-        </View>
+        <ButtonWrapper
+          style={{ opacity: disableSubmit ? 0.5 : 1 }} // Setting the opacity of the button based on the disableSubmit state
+        >
+          <Button
+            label="Submit"
+            handleClick={handleSubmit}
+            disabled={disableSubmit}
+          />
+        </ButtonWrapper>
       )}
     </>
   );
@@ -98,12 +180,10 @@ const styles = StyleSheet.create({
     height: 200,
     width: "100%",
     borderRadius: 10,
-    borderColor: "gray",
     borderWidth: 1,
     padding: 10,
   },
-  buttonwrapper: {
-    paddingBottom: width * 0.1,
-    alignItems: "center",
+  errorMessage: {
+    color: "red",
   },
 });

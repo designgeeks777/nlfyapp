@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components/native";
 
 import axios from "axios";
@@ -10,12 +10,17 @@ import {
   TouchableOpacity,
   Animated,
   Modal,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
   Text,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/button";
-import { ExpandCollapseList } from "../../../components/expandCollapse.CommunityPrayer.component";
+import { ExpandCollapseListCommunityPrayer } from "../../../components/expandCollapse.CommunityPrayer.component";
 import { RaisePrayerForm } from "./raisePrayerForm.component";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
+const { width } = Dimensions.get("window");
 
 const ContainerView = styled(SafeAreaView)`
   flex: 1;
@@ -30,6 +35,20 @@ const ButtonView = styled(View)`
 `;
 
 export const CommunityPrayers = () => {
+  //const url = `${BASEURL}prayerRequests/`;
+
+  // useEffect(() => {
+  //   axios
+  //     .get(url)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
   const url = `${BASEURL}prayerRequests`;
 
   useEffect(() => {
@@ -65,17 +84,15 @@ export const CommunityPrayers = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [success, setSuccess] = useState(false);
+  const { user } = useContext(AuthenticationContext);
+  const [err, setErr] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // initialize errorMessage state
 
-  const handleSuccessChange = (successValue) => {
-    setSuccess(successValue);
-    if (successValue) {
-      setTimeout(() => {
-        //setSuccess(false);
-        handleCloseModal();
-      }, 2000);
-    }
-  };
   const slideAnimation = useRef(new Animated.Value(0)).current;
+
+  // useEffect(() => {
+  //   console.log("Checking error status", error);
+  // }, [error]);
 
   const handleOpenModal = () => {
     setModalVisible(true);
@@ -94,7 +111,28 @@ export const CommunityPrayers = () => {
     }).start(() => {
       setModalVisible(false);
       setSuccess(false); // reset the success state
+      setErr(false);
+      setErrorMessage("");
     });
+  };
+
+  const handleSuccessChange = (successValue) => {
+    setSuccess(successValue);
+    if (successValue) {
+      setTimeout(() => {
+        //setSuccess(false);
+        handleCloseModal();
+      }, 2000);
+    }
+  };
+
+  const handleErrorChange = (errorValue) => {
+    setErr(errorValue);
+    if (errorValue) {
+      setTimeout(() => {
+        handleCloseModal();
+      }, 2000);
+    }
   };
 
   const modalTranslateY = slideAnimation.interpolate({
@@ -107,34 +145,48 @@ export const CommunityPrayers = () => {
   };
   return (
     <>
+      {/* <ContainerView>
+        <ExpandCollapseListCommunityPrayer data={data} />
+      </ContainerView> */}
       <ContainerView>
         {isLoading ? (
           <Text>Loading All Prayer Requests...</Text>
         ) : (
-          <ExpandCollapseList data={data} />
+          <ExpandCollapseListCommunityPrayer data={data} />
         )}
       </ContainerView>
-      <ButtonView>
-        <Button label="Raise Prayer Request" handleClick={handleClick} />
-      </ButtonView>
+      {user === null || user?.isAnonymous ? null : (
+        <ButtonView>
+          <Button label="Raise Prayer Request" handleClick={handleClick} />
+        </ButtonView>
+      )}
+
       <Modal visible={modalVisible} transparent={true}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={handleCloseModal}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.modalOverlay}
         >
-          <Animated.View
-            style={[
-              styles.modalContainer,
-              {
-                transform: [{ translateY: modalTranslateY }],
-                height: 500, // set the height as per your requirement
-              },
-            ]}
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleCloseModal}
+            style={styles.modalOverlay}
           >
-            <RaisePrayerForm handleSuccessChange={handleSuccessChange} />
-          </Animated.View>
-        </TouchableOpacity>
+            <Animated.View
+              style={[
+                styles.modalContainer,
+                {
+                  transform: [{ translateY: modalTranslateY }],
+                },
+              ]}
+            >
+              <RaisePrayerForm
+                handleSuccessChange={handleSuccessChange}
+                handleErrorChange={handleErrorChange}
+                user={user}
+              />
+            </Animated.View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );
@@ -142,15 +194,15 @@ export const CommunityPrayers = () => {
 
 const styles = StyleSheet.create({
   buttonView: {
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    // paddingVertical: 16,
+    // paddingHorizontal: 32,
     backgroundColor: "#ffffff",
   },
   button: {
     backgroundColor: "#333333",
     borderRadius: 24,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
+    // paddingVertical: 16,
+    // paddingHorizontal: 32,
   },
   buttonText: {
     color: "#008BE2",
@@ -167,15 +219,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    padding: 24,
+    padding: width * 0.05,
+    minHeight: Dimensions.get("window").height * 0.6, // set the minimum height to 60% of the screen height
+    paddingBottom: 25, // adding some bottom padding for the submit button
   },
   modalTitle: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 16,
+    marginBottom: width * 0.05,
   },
   spacing: {
-    marginTop: -40,
-    marginBottom: 40,
+    marginTop: -width * 0.1,
+    marginBottom: width * 0.1,
   },
 });

@@ -1,4 +1,5 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef, useContext, useEffect } from "react";
+
 import {
   Text,
   StyleSheet,
@@ -6,25 +7,24 @@ import {
   Animated,
   Modal,
   Dimensions,
+  KeyboardAvoidingView,
+  Platform,
   Alert,
 } from "react-native";
 import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
 import { SuccessModalContent } from "./successModalContent.component";
+import { FailureModalContent } from "./failureModalContent.component";
 import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   buttonView: {
-    //paddingVertical: 16,
-    //paddingHorizontal: 32,
     backgroundColor: "#ffffff",
   },
   button: {
     backgroundColor: "#333333",
     borderRadius: 24,
-    //paddingVertical: width * 0.2,
-    //paddingHorizontal: 32,
   },
   buttonText: {
     color: "#008BE2",
@@ -42,6 +42,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: width * 0.05,
+    minHeight: Dimensions.get("window").height * 0.6, // set the minimum height to 60% of the screen height
+    paddingBottom: 25, // adding some bottom padding for the submit button
   },
   modalTitle: {
     fontSize: 24,
@@ -57,22 +59,18 @@ const styles = StyleSheet.create({
 export const NLFModal = (props) => {
   const { user } = useContext(AuthenticationContext);
   const [modalVisible, setModalVisible] = useState(false);
-
   const [success, setSuccess] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // initialize errorMessage state
 
-  const handleSuccessChange = (successValue) => {
-    setSuccess(successValue);
-    if (successValue) {
-      setTimeout(() => {
-        //setSuccess(false);
-        handleCloseModal();
-      }, 2000);
-    }
-  };
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
+  useEffect(() => {
+    console.log("Checking error status", error);
+  }, [error]);
+
   const handleOpenModal = () => {
-    if (null === user) {
+    if (user === null) {
       Alert.alert("Please Login/Signup to Write Prayer");
     } else {
       setModalVisible(true);
@@ -91,8 +89,31 @@ export const NLFModal = (props) => {
       useNativeDriver: true,
     }).start(() => {
       setModalVisible(false);
-      setSuccess(false); // reset the success state
+      setSuccess(false);
+      setError(false);
+      setErrorMessage("");
     });
+  };
+
+  const handleSuccessChange = (successValue) => {
+    setSuccess(successValue);
+    if (successValue) {
+      setTimeout(() => {
+        //setSuccess(false);
+        handleCloseModal();
+      }, 2000);
+    }
+  };
+
+  const handleErrorChange = (errorValue) => {
+    // use useCallback to memoize the function
+    setError(errorValue);
+    setErrorMessage(errorMessage);
+    if (errorValue) {
+      setTimeout(() => {
+        handleCloseModal();
+      }, 2000);
+    }
   };
 
   const modalTranslateY = slideAnimation.interpolate({
@@ -107,38 +128,48 @@ export const NLFModal = (props) => {
       </TouchableOpacity>
 
       <Modal visible={modalVisible} transparent={true}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={handleCloseModal}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.modalOverlay}
         >
-          <Animated.View
-            style={[
-              styles.modalContainer,
-              {
-                transform: [{ translateY: modalTranslateY }],
-                height: 500, // set the height as per your requirement
-              },
-            ]}
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleCloseModal}
+            style={styles.modalOverlay}
           >
-            {!success && (
-              <Text style={styles.modalTitle}>
-                Pray for {props.request.raisedBy}
-              </Text>
-            )}
+            <Animated.View
+              style={[
+                styles.modalContainer,
+                {
+                  transform: [{ translateY: modalTranslateY }],
+                },
+              ]}
+            >
+              {!success && !error && (
+                <Text style={styles.modalTitle}>
+                  Pray for {props.request.raisedBy}
+                </Text>
+              )}
 
-            {!success && (
-              <PrayerForm
-                request={props.request}
-                //handleCloseModal={handleCloseModal}
-                handleSuccessChange={handleSuccessChange}
-              />
-            )}
-            {success && (
-              <SuccessModalContent message="Prayer response sent succesfully" />
-            )}
-          </Animated.View>
-        </TouchableOpacity>
+              {!success && !error && (
+                <PrayerForm
+                  request={props.request}
+                  //handleCloseModal={handleCloseModal}
+                  handleSuccessChange={handleSuccessChange}
+                  handleErrorChange={handleErrorChange}
+                />
+              )}
+
+              {success && (
+                <SuccessModalContent message="Prayer response sent succesfully" />
+              )}
+
+              {error && (
+                <FailureModalContent message="Sorry, we couldnt process the request Please try after sometime." />
+              )}
+            </Animated.View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );
