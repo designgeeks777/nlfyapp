@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components/native";
 
 import axios from "axios";
+import { BASEURL } from "../../../../APIKey";
 import {
   View,
   StatusBar,
@@ -18,7 +19,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/button";
 import { ExpandCollapseListCommunityPrayer } from "../../../components/expandCollapse.CommunityPrayer.component";
 import { RaisePrayerForm } from "./raisePrayerForm.component";
-import { BASEURL } from "../../../../APIKey";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 const { width } = Dimensions.get("window");
 
@@ -35,7 +35,7 @@ const ButtonView = styled(View)`
 `;
 
 export const CommunityPrayers = () => {
-  const url = `${BASEURL}prayerRequests/`;
+  //const url = `${BASEURL}prayerRequests/`;
 
   // useEffect(() => {
   //   axios
@@ -48,6 +48,8 @@ export const CommunityPrayers = () => {
   //       console.error(error);
   //     });
   // }, []);
+
+  const url = `${BASEURL}prayerRequests`;
 
   useEffect(() => {
     const source = axios.CancelToken.source();

@@ -74,7 +74,6 @@ export const PrayerForm = (props) => {
     console.log("Formatted Date", formattedDate);
 
     const newresponse = {
-      // responseBy: "Tia",
       responseBy: {
         uid: user.uid,
         name: user.displayName,

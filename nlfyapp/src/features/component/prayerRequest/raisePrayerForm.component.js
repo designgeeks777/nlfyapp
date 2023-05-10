@@ -13,6 +13,7 @@ import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
 import { SuccessModalContent } from "../../../components/successModalContent.component";
 import { FailureModalContent } from "../../../components/failureModalContent.component";
+
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
@@ -21,7 +22,6 @@ const ButtonWrapper = styled(View)`
   padding-bottom: 30px;
   align-items: center;
 `;
-
 export const RaisePrayerForm = (props) => {
   const { user } = useContext(AuthenticationContext);
   console.log("User in Raise Prayer", user);

@@ -12,6 +12,8 @@ import {
   ScrollView,
 } from "react-native";
 
+import { ExpandCollapseListPrayerResponse } from "./expandCollapse.PrayerResponses.component";
+
 const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
@@ -53,6 +55,11 @@ const styles = StyleSheet.create({
   spacing: {
     marginTop: -width * 0.1,
     marginBottom: width * 0.1,
+  },
+  responsesHeading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: width * 0.05,
   },
 });
 
@@ -125,57 +132,10 @@ export const MyPrayerResponseModal = (props) => {
                 onTouchEndCapture={() => setScrolling(false)}
                 style={{ flex: 1 }}
               >
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-
-                <Text>Hello</Text>
-                <Text>Hello</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
-                <Text>Hello world</Text>
+                <Text style={styles.responsesHeading}>Responses</Text>
+                <ExpandCollapseListPrayerResponse
+                  data={props.request.responses}
+                />
               </ScrollView>
             </Animated.View>
           </TouchableOpacity>
