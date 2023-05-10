@@ -106,6 +106,7 @@ export const MyPrayersScreen = () => {
             <TabButton label="My Prayers" />
           </ButtonsWrapper>
           <View>
+            {isLoading}
             <ExpandCollapseList data={data} />
           </View>
         </View>

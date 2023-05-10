@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from "react";
+import React, { useState, useRef } from "react";
 import {
   Text,
   StyleSheet,
@@ -6,22 +6,18 @@ import {
   Animated,
   Modal,
   Dimensions,
-  Alert,
 } from "react-native";
+import { ExpandCollapseListPrayerResponse } from "./expandCollapse.PrayerResponses.component";
 
 const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   buttonView: {
-    //paddingVertical: 16,
-    //paddingHorizontal: 32,
     backgroundColor: "#ffffff",
   },
   button: {
     backgroundColor: "#333333",
     borderRadius: 24,
-    //paddingVertical: width * 0.2,
-    //paddingHorizontal: 32,
   },
   buttonText: {
     color: "#008BE2",
@@ -48,6 +44,11 @@ const styles = StyleSheet.create({
   spacing: {
     marginTop: -width * 0.1,
     marginBottom: width * 0.1,
+  },
+  responsesHeading: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: width * 0.05,
   },
 });
 
@@ -101,11 +102,12 @@ export const MyPrayerResponseModal = (props) => {
               styles.modalContainer,
               {
                 transform: [{ translateY: modalTranslateY }],
-                height: 500, // set the height as per your requirement
+                height: 600, // set the height as per your requirement
               },
             ]}
           >
-            <Text>Hello</Text>
+            <Text style={styles.responsesHeading}>Responses</Text>
+            <ExpandCollapseListPrayerResponse data={props.request.responses} />
           </Animated.View>
         </TouchableOpacity>
       </Modal>
