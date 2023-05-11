@@ -224,5 +224,19 @@ export const ExpandCollapseListPrayerResponse = (props) => {
     </View>
   );
 
-  return <FlatList data={props.data} renderItem={renderItem} />;
+  return (
+    <FlatList
+      onTouchStartCapture={() => {
+        console.log("OnTouchStartCaoture Called");
+        props.onScrolling(true);
+      }}
+      onTouchEndCapture={() => {
+        console.log("OnTouchEndCaoture Called");
+        props.onScrolling(false);
+      }}
+      data={props.data}
+      renderItem={renderItem}
+      scrollEnabled={true}
+    />
+  );
 };

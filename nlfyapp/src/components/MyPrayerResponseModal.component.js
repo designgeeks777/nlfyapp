@@ -90,6 +90,10 @@ export const MyPrayerResponseModal = (props) => {
     });
   };
 
+  const handleScrolling = (value) => {
+    setScrolling(value);
+  };
+
   const modalTranslateY = slideAnimation.interpolate({
     inputRange: [0, 1],
     outputRange: [600, 0],
@@ -112,6 +116,7 @@ export const MyPrayerResponseModal = (props) => {
             activeOpacity={1}
             // onPress={handleCloseModal}
             onPress={() => {
+              console.log("On Press");
               if (!scrolling) {
                 handleCloseModal();
               }
@@ -123,20 +128,15 @@ export const MyPrayerResponseModal = (props) => {
                 styles.modalContainer,
                 {
                   transform: [{ translateY: modalTranslateY }],
-                  //height: 500, // set the height as per your requirement
+                  height: 500, // set the height as per your requirement
                 },
               ]}
             >
-              <ScrollView
-                onTouchStartCapture={() => setScrolling(true)}
-                onTouchEndCapture={() => setScrolling(false)}
-                style={{ flex: 1 }}
-              >
-                <Text style={styles.responsesHeading}>Responses</Text>
-                <ExpandCollapseListPrayerResponse
-                  data={props.request.responses}
-                />
-              </ScrollView>
+              <Text style={styles.responsesHeading}>Responses</Text>
+              <ExpandCollapseListPrayerResponse
+                data={props.request.responses}
+                onScrolling={handleScrolling}
+              />
             </Animated.View>
           </TouchableOpacity>
         </KeyboardAvoidingView>
