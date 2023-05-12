@@ -65,10 +65,6 @@ export const NLFModal = (props) => {
 
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
-  useEffect(() => {
-    console.log("Checking error status", error);
-  }, [error]);
-
   const handleOpenModal = () => {
     if (user === null) {
       Alert.alert("Please Login/Signup to Write Prayer");

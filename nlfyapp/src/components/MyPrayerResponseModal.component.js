@@ -8,25 +8,19 @@ import {
   Dimensions,
   KeyboardAvoidingView,
   Platform,
-  Alert,
-  ScrollView,
 } from "react-native";
 
-import { ExpandCollapseListPrayerResponse } from "./expandCollapse.PrayerResponses.component";
+import { ExpandCollapseList } from "./expandCollapse.myPrayerComponent";
 
 const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   buttonView: {
-    //paddingVertical: 16,
-    //paddingHorizontal: 32,
     backgroundColor: "#ffffff",
   },
   button: {
     backgroundColor: "#333333",
     borderRadius: 24,
-    //paddingVertical: width * 0.2,
-    //paddingHorizontal: 32,
   },
   buttonText: {
     color: "#008BE2",
@@ -133,7 +127,7 @@ export const MyPrayerResponseModal = (props) => {
               ]}
             >
               <Text style={styles.responsesHeading}>Responses</Text>
-              <ExpandCollapseListPrayerResponse
+              <ExpandCollapseList
                 data={props.request.responses}
                 onScrolling={handleScrolling}
               />

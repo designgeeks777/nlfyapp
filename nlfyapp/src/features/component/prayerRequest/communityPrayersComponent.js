@@ -90,10 +90,6 @@ export const CommunityPrayers = () => {
 
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
-  // useEffect(() => {
-  //   console.log("Checking error status", error);
-  // }, [error]);
-
   const handleOpenModal = () => {
     setModalVisible(true);
     Animated.timing(slideAnimation, {
