@@ -10,7 +10,7 @@ import {
   Platform,
 } from "react-native";
 
-import { ExpandCollapseList } from "./expandCollapse.myPrayerComponent";
+import { ExpandCollapseList } from "./expandCollapse.prayerResponse.component";
 
 const { width } = Dimensions.get("window");
 
