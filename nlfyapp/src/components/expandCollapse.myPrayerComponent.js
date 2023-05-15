@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   FlatList,
   View,
@@ -10,8 +10,6 @@ import {
 import { useNavigation } from "@react-navigation/native";
 
 import { Button, Card, Paragraph } from "react-native-paper";
-
-import { MyPrayerResponseModal } from "./MyPrayerResponseModal.component";
 
 const { height, width } = Dimensions.get("window");
 
@@ -73,6 +71,7 @@ const Item = (props) => {
 
   const navigation = useNavigation();
   const navigateToResponses = () => {
+    console.log("item.responses in expand collapse", item.responses);
     navigation.navigate("PrayerResponse", { responses: item.responses });
   };
 

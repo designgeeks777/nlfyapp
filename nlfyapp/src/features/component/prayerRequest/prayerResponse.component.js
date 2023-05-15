@@ -24,14 +24,14 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
 
 const ListWrapper = styled(View)`
   flex: 1;
-  margin-top: 2 0px;
-  justify-content: center;
+  margin-top: 20px;
+
   align-items: center;
 `;
 
 export const PrayerResponse = ({ route }) => {
   const { responses } = route.params;
-
+  console.log("Responses", route.params);
   return (
     <>
       <SafeAreaViewWrapper>
@@ -42,6 +42,7 @@ export const PrayerResponse = ({ route }) => {
           <ExpandCollapseList data={responses} />
         </ListWrapper>
       </SafeAreaViewWrapper>
+
       <ExpoStatusBar style="auto" />
     </>
   );
