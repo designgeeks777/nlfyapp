@@ -1,60 +1,32 @@
-import React from "react";
+import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components/native";
-import { Card } from "react-native-paper";
+
+import axios from "axios";
+import { BASEURL } from "../../../../APIKey";
 import {
-  Text,
   View,
-  Image,
-  ScrollView,
   StatusBar,
-  SafeAreaView,
+  StyleSheet,
+  TouchableOpacity,
+  Animated,
+  Modal,
+  Dimensions,
+  KeyboardAvoidingView,
+  Platform,
+  Text,
 } from "react-native";
-import { Dimensions } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/button";
-
+import { ExpandCollapseListCommunityPrayer } from "../../../components/expandCollapse.CommunityPrayer.component";
+import { RaisePrayerForm } from "./raisePrayerForm.component";
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 const { width } = Dimensions.get("window");
-const cardWidth = width * 0.75;
 
-const Container = styled(View)`
-  margin-horizontal: 20px;
-`;
-
-const PrayerCard = styled(Card)`
-  top: ${(props) => props.top}px;
-  align-self: ${(props) => (props.isRight ? "flex-end" : "flex-start")};
-  width: ${cardWidth}px;
-  height: 80px;
-  background-color: [ "#F26924", "rgba(242, 105, 36, 0.10)"];
-  border-radius: 20px;
-  shadow-color: transparent;
+const ContainerView = styled(SafeAreaView)`
+  flex: 1;
+  //margin-top: ${StatusBar.currentHeight || 0}px;
   justify-content: center;
-`;
-
-const PrayerText = styled(Text)`
-  color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props) => props.theme.fontSizes.body};
-  font-weight: ${(props) => props.theme.fontWeights.regular};
-  font-family: ${(props) => props.theme.fonts.body};
-`;
-
-const ProfilePicture = styled(Image)`
-  width: 50px;
-  height: 50px;
-  border-radius: 30px;
-`;
-const PrayerCardContent = styled(View)`
-  flex-direction: ${(props) => (props.isRight ? "row" : "row-reverse")};
   align-items: center;
-  justify-content: center;
-  padding: 10px;
-`;
-
-const NameText = styled(Text)`
-  color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props) => props.theme.fontSizes.caption};
-  font-weight: ${(props) => props.theme.fontWeights.medium};
-  font-family: ${(props) => props.theme.fonts.body};
-  margin: 4px;
 `;
 
 const ButtonView = styled(View)`
@@ -62,136 +34,198 @@ const ButtonView = styled(View)`
   align-items: center;
 `;
 
-const SafeAreaViewWrapper = styled(SafeAreaView)`
-  flex: 1;
-  margin-top: ${StatusBar.currentHeight || 0}px;
-`;
-
 export const CommunityPrayers = () => {
-  const PrayerContentRequest =
-    "Keep praying for my job, this is the final week of my presentation.";
-  const PrayerContentResponse = "Thanks for your prayers, I have been healed..";
+  //const url = `${BASEURL}prayerRequests/`;
+
+  // useEffect(() => {
+  //   axios
+  //     .get(url)
+  //     .then((response) => {
+  //       console.log(response.data);
+  //       setData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
+  const url = `${BASEURL}prayerRequests`;
+
+  useEffect(() => {
+    const source = axios.CancelToken.source();
+    const loadData = async () => {
+      try {
+        const response = await axios.get(url, {
+          cancelToken: source.token,
+        });
+        setData(response.data);
+
+        setIsLoading(false);
+      } catch (error) {
+        if (axios.isCancel(error)) {
+          console.log("Request canceled");
+        } else {
+          console.error(error);
+        }
+      }
+    };
+
+    loadData();
+
+    const intervalId = setInterval(loadData, 60000);
+
+    return () => {
+      clearInterval(intervalId);
+      source.cancel("Component unmounted");
+    };
+  }, [url]);
+
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { user } = useContext(AuthenticationContext);
+  const [err, setErr] = useState(false);
+  const [errorMessage, setErrorMessage] = useState(""); // initialize errorMessage state
+
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+    Animated.timing(slideAnimation, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleCloseModal = () => {
+    Animated.timing(slideAnimation, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setModalVisible(false);
+      setSuccess(false); // reset the success state
+      setErr(false);
+      setErrorMessage("");
+    });
+  };
+
+  const handleSuccessChange = (successValue) => {
+    setSuccess(successValue);
+    if (successValue) {
+      setTimeout(() => {
+        //setSuccess(false);
+        handleCloseModal();
+      }, 2000);
+    }
+  };
+
+  const handleErrorChange = (errorValue) => {
+    setErr(errorValue);
+    if (errorValue) {
+      setTimeout(() => {
+        handleCloseModal();
+      }, 2000);
+    }
+  };
+
+  const modalTranslateY = slideAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [600, 0],
+  });
+  const handleClick = () => {
+    setModalVisible(true);
+    handleOpenModal();
+  };
   return (
     <>
-      <SafeAreaViewWrapper>
-        <ScrollView>
-          <Container>
-            <View style={{ top: -25 }}>
-              <PrayerCard elevation={0} top={30} isRight={true}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">{PrayerContentRequest}</PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ top: -40 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile1.jpg")}
-                />
-                <NameText variant="caption">Robin</NameText>
-              </View>
+      {/* <ContainerView>
+        <ExpandCollapseListCommunityPrayer data={data} />
+      </ContainerView> */}
+      <ContainerView>
+        {isLoading ? (
+          <Text>Loading All Prayer Requests...</Text>
+        ) : (
+          <ExpandCollapseListCommunityPrayer data={data} />
+        )}
+      </ContainerView>
+      {user === null || user?.isAnonymous ? null : (
+        <ButtonView>
+          <Button label="Raise Prayer Request" handleClick={handleClick} />
+        </ButtonView>
+      )}
 
-              <PrayerCard elevation={0} top={5} isRight={false}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">
-                    {PrayerContentResponse}
-                  </PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ marginLeft: 320, bottom: 70 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile2.jpg")}
-                />
-                <NameText variant="caption">Sandeep</NameText>
-              </View>
-
-              <PrayerCard elevation={0} top={-20} isRight={true}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">
-                    Please pray for my family's health.
-                  </PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ bottom: 90 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile1.jpg")}
-                />
-                <NameText variant="caption">Paul</NameText>
-              </View>
-
-              <PrayerCard elevation={0} top={-45} isRight={false}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">
-                    I need prayer for my family's health and safety.
-                  </PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ marginLeft: 320, bottom: 115 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile2.jpg")}
-                />
-                <NameText variant="caption">Jonah</NameText>
-              </View>
-              <PrayerCard elevation={0} top={-55} isRight={true}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">
-                    Please pray for my family's health.
-                  </PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ bottom: 125 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile1.jpg")}
-                />
-                <NameText variant="caption">Paul</NameText>
-              </View>
-
-              <PrayerCard elevation={0} top={-80} isRight={false}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">
-                    I need prayer for my family's health and safety.
-                  </PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ marginLeft: 320, bottom: 155 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile2.jpg")}
-                />
-                <NameText variant="caption">Jonah</NameText>
-              </View>
-              <PrayerCard elevation={0} top={-90} isRight={true}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">
-                    Please pray for my family's health.
-                  </PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ bottom: 160 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile1.jpg")}
-                />
-                <NameText variant="caption">Paul</NameText>
-              </View>
-
-              <PrayerCard elevation={0} top={-115} isRight={false}>
-                <PrayerCardContent>
-                  <PrayerText variant="body">
-                    I need prayer for my family's health and safety.
-                  </PrayerText>
-                </PrayerCardContent>
-              </PrayerCard>
-              <View style={{ marginLeft: 320, bottom: 195 }}>
-                <ProfilePicture
-                  source={require("nlfyapp/assets/profile2.jpg")}
-                />
-                <NameText variant="caption">Jonah</NameText>
-              </View>
-            </View>
-          </Container>
-        </ScrollView>
-      </SafeAreaViewWrapper>
-
-      <ButtonView>
-        <Button label="Raise Prayer Request" />
-      </ButtonView>
+      <Modal visible={modalVisible} transparent={true}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.modalOverlay}
+        >
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleCloseModal}
+            style={styles.modalOverlay}
+          >
+            <Animated.View
+              style={[
+                styles.modalContainer,
+                {
+                  transform: [{ translateY: modalTranslateY }],
+                },
+              ]}
+            >
+              <RaisePrayerForm
+                handleSuccessChange={handleSuccessChange}
+                handleErrorChange={handleErrorChange}
+                user={user}
+              />
+            </Animated.View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </Modal>
     </>
   );
 };
+
+const styles = StyleSheet.create({
+  buttonView: {
+    // paddingVertical: 16,
+    // paddingHorizontal: 32,
+    backgroundColor: "#ffffff",
+  },
+  button: {
+    backgroundColor: "#333333",
+    borderRadius: 24,
+    // paddingVertical: 16,
+    // paddingHorizontal: 32,
+  },
+  buttonText: {
+    color: "#008BE2",
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "right",
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContainer: {
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: width * 0.05,
+    minHeight: Dimensions.get("window").height * 0.6, // set the minimum height to 60% of the screen height
+    paddingBottom: 25, // adding some bottom padding for the submit button
+  },
+  modalTitle: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginBottom: width * 0.05,
+  },
+  spacing: {
+    marginTop: -width * 0.1,
+    marginBottom: width * 0.1,
+  },
+});

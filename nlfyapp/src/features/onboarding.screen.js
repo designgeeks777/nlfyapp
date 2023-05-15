@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   Image,
@@ -18,12 +18,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./sermons.screen";
 import { Events } from "./events.screen";
-import { PrayerRequest } from "./prayerRequest.screen";
+
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
+
 import { useNavigation } from "@react-navigation/native";
+
 import { Devotionals } from "./devotionals.screen";
+
+import { PrayerRequestNavigation } from "../../PrayerRequestNavigation";
 
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
@@ -241,7 +245,7 @@ export const Onboarding = () => {
             />
             <Tab.Screen
               name="Prayer Request"
-              component={PrayerRequest}
+              component={{ PrayerRequestNavigation }}
               options={{ headerShown: false }}
             />
             <Tab.Screen
