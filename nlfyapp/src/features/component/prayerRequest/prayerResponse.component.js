@@ -1,4 +1,4 @@
-import React, { useLayoutEffect } from "react";
+import React from "react";
 
 import { BackButton } from "../../../components/backButton";
 import { View, Dimensions, SafeAreaView, StatusBar } from "react-native";
@@ -31,7 +31,7 @@ const ListWrapper = styled(View)`
 
 export const PrayerResponse = ({ route }) => {
   const { responses } = route.params;
-  console.log("Responses", route.params);
+
   return (
     <>
       <SafeAreaViewWrapper>

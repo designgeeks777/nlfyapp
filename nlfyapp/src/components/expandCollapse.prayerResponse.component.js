@@ -1,5 +1,5 @@
 //supports both Android and IOS devices
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FlatList, View, StyleSheet, Dimensions, Text } from "react-native";
 
 import { Button, Card, Paragraph } from "react-native-paper";
@@ -7,7 +7,7 @@ import { Button, Card, Paragraph } from "react-native-paper";
 const { height, width } = Dimensions.get("window");
 
 const Item = (props) => {
-  const { item, numberOfResponse } = props;
+  const { item } = props;
 
   const [requestTextShown, setRequestTextShown] = useState(false);
   const [requestLengthMore, setRequestLengthMore] = useState(false);
