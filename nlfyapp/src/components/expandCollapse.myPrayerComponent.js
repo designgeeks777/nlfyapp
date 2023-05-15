@@ -1,6 +1,13 @@
-//supports both Android and IOS devices
-import React, { useCallback, useEffect, useState } from "react";
-import { FlatList, View, StyleSheet, Dimensions } from "react-native";
+import React, { useCallback, useState } from "react";
+import {
+  FlatList,
+  View,
+  StyleSheet,
+  Dimensions,
+  Text,
+  TouchableOpacity,
+} from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
 import { Button, Card, Paragraph } from "react-native-paper";
 
@@ -52,6 +59,23 @@ const Item = (props) => {
     marginTop: width * 0.04,
   };
 
+  const spacing = {
+    marginTop: -width * 0.1,
+    marginBottom: width * 0.1,
+  };
+
+  const buttonText = {
+    color: "#008BE2",
+    fontSize: 12,
+    fontWeight: "bold",
+    textAlign: "right",
+  };
+
+  const navigation = useNavigation();
+  const navigateToResponses = () => {
+    navigation.navigate("PrayerResponse", { responses: item.responses });
+  };
+
   return (
     <>
       <View style={setFlex}>
@@ -81,10 +105,9 @@ const Item = (props) => {
         </Card>
       </View>
       <View style={prayerResponse}>
-        <MyPrayerResponseModal
-          request={props.item}
-          numberOfResponse={numberOfResponse}
-        />
+        <TouchableOpacity onPress={navigateToResponses} style={spacing}>
+          <Text style={buttonText}>{numberOfResponse} Responses </Text>
+        </TouchableOpacity>
       </View>
     </>
   );

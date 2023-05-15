@@ -146,14 +146,6 @@ export const ExpandCollapseList = (props) => {
   return (
     <View style={styles.containerStyle}>
       <FlatList
-        onTouchStartCapture={() => {
-          console.log("OnTouchStartCapture Called");
-          props.onScrolling(true);
-        }}
-        onTouchEndCapture={() => {
-          console.log("OnTouchEndCapture Called");
-          props.onScrolling(false);
-        }}
         data={props.data}
         initialNumToRender={props.data.length}
         contentContainerStyle={{ paddingBottom: 150 }}

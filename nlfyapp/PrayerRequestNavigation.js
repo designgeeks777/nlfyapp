@@ -3,6 +3,7 @@ import { createStackNavigator, TransitionSpecs } from "@react-navigation/stack";
 import { PrayerRequest } from "./src/features/prayerRequest.screen";
 import { ChurchPrayers } from "./src/features/component/prayerRequest/churchPrayersComponent";
 import { MyPrayersScreen } from "./src/features/component/prayerRequest/myPrayersComponent";
+import { PrayerResponse } from "./src/features/component/prayerRequest/prayerResponse.component";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,11 @@ export const PrayerRequestNavigation = () => {
       <Stack.Screen
         name="MyPrayers"
         component={MyPrayersScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PrayerResponse"
+        component={PrayerResponse}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
