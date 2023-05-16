@@ -1,5 +1,11 @@
 //supports both Android and IOS devices
-import React, { useCallback, useState, useRef, useEffect } from "react";
+import React, {
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+} from "react";
 import {
   Text,
   FlatList,
@@ -19,6 +25,8 @@ import { PrayerForm } from "../features/component/prayerRequest/prayerForm.compo
 import { NLFModal } from "./NLFModal.component";
 import styled from "styled-components";
 
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+
 const { height, width } = Dimensions.get("window");
 
 const FlexRow = styled(View)`
@@ -26,7 +34,7 @@ const FlexRow = styled(View)`
 `;
 
 const Item = (props) => {
-  const { position, item } = props;
+  const { position, item, user } = props;
 
   const [userList, setUserList] = useState([]);
 
@@ -175,6 +183,7 @@ const Item = (props) => {
 };
 
 export const ExpandCollapseListCommunityPrayer = (props) => {
+  const { user } = useContext(AuthenticationContext);
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item, index }) => {
@@ -187,6 +196,7 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
         item={item}
         selected={selectedId === item._id}
         onSelect={onSelectItem}
+        user={user}
       />
     );
   };

@@ -1,5 +1,5 @@
 import React from "react";
-import { View } from "react-native";
+import { Alert, View } from "react-native";
 import { Button } from "../../../components/button";
 import { HomeScreenHeading } from "../homeScreenHeading.component";
 import styled from "styled-components";
@@ -9,6 +9,11 @@ const ButtonView = styled(View)`
 `;
 
 export const Give = () => {
+  const handleClick = () => {
+    Alert.alert(
+      "We are working on this.You will be able to give your offerings soon"
+    );
+  };
   return (
     <>
       <HomeScreenHeading
@@ -19,7 +24,7 @@ export const Give = () => {
         marginleft="0px"
       />
       <ButtonView>
-        <Button label="Give" />
+        <Button label="Give" handleClick={handleClick} />
       </ButtonView>
     </>
   );

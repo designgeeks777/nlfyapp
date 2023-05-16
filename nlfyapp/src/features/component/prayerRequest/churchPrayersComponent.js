@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import styled from "styled-components/native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Card } from "react-native-paper";
@@ -9,6 +9,7 @@ import {
   Dimensions,
   Text,
   View,
+  Alert,
 } from "react-native";
 
 import { BackButton } from "../../../components/backButton";
@@ -19,6 +20,8 @@ import { useNavigation } from "@react-navigation/native";
 
 import { BASEURL } from "../../../../APIKey";
 import axios from "axios";
+
+import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 
@@ -94,7 +97,7 @@ export const ChurchPrayers = () => {
         const response = await axios.get(url, {
           cancelToken: source.token,
         });
-        //console.log("Church Prayer Response", response.data.reverse());
+
         setData(response.data.reverse());
 
         setIsLoading(false);
@@ -117,8 +120,7 @@ export const ChurchPrayers = () => {
     };
   }, [url]);
 
-  //const { wrapperwidth } = Dimensions.get("window");
-  //const wrapperWidth = wrapperwidth * 0.9;
+  const { user } = useContext(AuthenticationContext);
 
   const WrapperView = styled(View)`
     width: 900px;
@@ -132,7 +134,11 @@ export const ChurchPrayers = () => {
   };
 
   const navigateToMyPrayers = () => {
-    navigation.navigate("MyPrayers");
+    if (null === user) {
+      Alert.alert("Kindly login/signup to see My Prayers");
+    } else {
+      navigation.navigate("MyPrayers");
+    }
   };
 
   return (

@@ -1,22 +1,15 @@
-import React from "react";
-import {
-  View,
-  Text,
-  Dimensions,
-  StatusBar,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
+import React, { useContext } from "react";
+import { View, Dimensions, StatusBar, SafeAreaView, Alert } from "react-native";
 import styled from "styled-components";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { BackButton } from "../components/backButton";
-import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+
 import { CommunityPrayers } from "./component/prayerRequest/communityPrayersComponent";
-import { ChurchPrayers } from "./component/prayerRequest/churchPrayersComponent";
-import { NavigationContainer } from "@react-navigation/native";
+
 import { TabButton } from "../components/tabButton";
 import { TabButtonUnselected } from "../components/TabButtonUnselected";
-import { MyPrayersScreen } from "./component/prayerRequest/myPrayersComponent";
+
+import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 import { useNavigation } from "@react-navigation/native";
 
@@ -42,12 +35,17 @@ const ButtonsWrapper = styled(View)`
 `;
 
 export const PrayerRequest = ({ route }) => {
+  const { user } = useContext(AuthenticationContext);
   const navigation = useNavigation();
   const navigateToChurchPrayers = () => {
     navigation.navigate("ChurchPrayers");
   };
   const navigateToMyPrayers = () => {
-    navigation.navigate("MyPrayers");
+    if (null === user) {
+      Alert.alert("KIndly login/signup to see My Prayers");
+    } else {
+      navigation.navigate("MyPrayers");
+    }
   };
   return (
     <>
