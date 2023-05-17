@@ -1,5 +1,11 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import { ProgressStep, ProgressSteps } from "react-native-progress-steps";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { CustomTextInput } from "../components/textinput";
@@ -36,6 +42,10 @@ const LoadingText = styled(Text)`
   color: ${(props) => props.theme.colors.border.success};
   font-family: ${(props) => props.theme.fonts.body};
 `;
+
+const ActivityIndicatorView = styled(View)`
+  flex-direction: row;
+`;
 export const Stepper = () => {
   const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
@@ -49,6 +59,7 @@ export const Stepper = () => {
     updateProfile,
     isLoading,
     isLoadingOTP,
+    errorOTP,
   } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
@@ -332,11 +343,14 @@ export const Stepper = () => {
                 resetError={resetError}
               />
               {isLoadingOTP ? (
-                <LoadingText>Validating OTP</LoadingText>
+                <ActivityIndicatorView>
+                  <LoadingText>Validating OTP</LoadingText>
+                  <ActivityIndicator color="#27AE60" />
+                </ActivityIndicatorView>
               ) : (
                 <MessageText>
                   {isOtpCodeReady && !isValidOTPCode && !resetError
-                    ? error
+                    ? errorOTP
                     : ""}
                 </MessageText>
               )}

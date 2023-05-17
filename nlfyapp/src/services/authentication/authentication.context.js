@@ -14,6 +14,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [isLoadingOTP, setIsLoadingOTP] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
+  const [errorOTP, setErrorOTP] = useState(null);
   const [confirmResult, setConfirm] = useState(null);
   const [isValidOTPCode, setIsValidOTPCode] = useState(null);
   const [userId, setUserId] = useState("");
@@ -65,7 +66,8 @@ export const AuthenticationContextProvider = ({ children }) => {
     [userId]
   );
   const testPhoneNumber = "+1 650-555-4567";
-  const testOtpCode = "328476";
+  const testOtpCode = "328476"; // correct otp
+  //const testOtpCode = "328477"; // Incorrect otp
   const onSignInWithPhoneNumber = async (phoneNumber, appVerifier) => {
     phoneNumber = testPhoneNumber;
     console.log("SIGN IN AUTH CONTEXT", phoneNumber);
@@ -118,22 +120,22 @@ export const AuthenticationContextProvider = ({ children }) => {
             registered,
             isValidOTPCode
           );
-          setError("");
+          setErrorOTP("");
         })
         .catch((e) => {
           setIsLoadingOTP(false);
           setIsValidOTPCode(false);
           switch (e.code) {
             case "auth/invalid-verification-code":
-              setError("Invalid verification code");
+              setErrorOTP("Invalid verification code");
               break;
             case "(auth/code-expired)":
-              setError(
+              setErrorOTP(
                 "The SMS code has expired. Please re-send the verification code to try again."
               );
               break;
             default:
-              setError(e.message);
+              setErrorOTP(e.message);
               break;
           }
           console.log("error in confirm code", e.message, isValidOTPCode);
@@ -176,6 +178,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         isLoading,
         isLoadingOTP,
         error,
+        errorOTP,
         registered,
         isValidOTPCode,
         confirmResult,
