@@ -28,6 +28,14 @@ const MessageText = styled(Text)`
       : props.theme.colors.text.errorMessage};
   font-family: ${(props) => props.theme.fonts.body};
 `;
+
+const LoadingText = styled(Text)`
+  padding-left: 20px;
+  align-self: flex-start;
+  font-size: ${(props) => props.theme.fontSizes.title};
+  color: ${(props) => props.theme.colors.border.success};
+  font-family: ${(props) => props.theme.fonts.body};
+`;
 export const Stepper = () => {
   const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
@@ -39,6 +47,8 @@ export const Stepper = () => {
     onSignInWithPhoneNumber,
     confirmCode,
     updateProfile,
+    isLoading,
+    isLoadingOTP,
   } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
@@ -163,6 +173,15 @@ export const Stepper = () => {
       });
     }
   };
+
+  useEffect(() => {
+    console.log("OTP Code length", otpCode.length);
+    if (otpCode.length === maximumOtpCodeLength) {
+      console.log("Correct length Call Confirm code");
+      setResetErrors(false);
+      confirmCode(otpCode);
+    }
+  }, [otpCode]);
 
   const styles = StyleSheet.create({
     progressStepViewStyle: {
@@ -289,14 +308,14 @@ export const Stepper = () => {
           </ProgressStep>
           <ProgressStep
             label="Verify"
-            onNext={() => onClickConfirmCode()}
+            //onNext={() => onClickConfirmCode()}
             nextBtnText="Confirm"
             previousBtnDisabled
             scrollable={false}
             previousBtnText=""
             nextBtnStyle={styles.progressStepNextButtonStyle}
             nextBtnTextStyle={styles.progressStepNextButtonTextStyle}
-            nextBtnDisabled={!isOtpCodeReady}
+            nextBtnDisabled={!isValidOTPCode || isLoading}
             errors={!isValidOTPCode}
           >
             <View style={styles.progressStepViewStyle}>
@@ -311,9 +330,15 @@ export const Stepper = () => {
                 isValidOTPCode={isValidOTPCode}
                 resetError={resetError}
               />
-              <MessageText>
-                {isOtpCodeReady && !isValidOTPCode && !resetError ? error : ""}
-              </MessageText>
+              {isLoadingOTP ? (
+                <LoadingText>Validating OTP</LoadingText>
+              ) : (
+                <MessageText>
+                  {isOtpCodeReady && !isValidOTPCode && !resetError
+                    ? error
+                    : ""}
+                </MessageText>
+              )}
             </View>
           </ProgressStep>
           <ProgressStep

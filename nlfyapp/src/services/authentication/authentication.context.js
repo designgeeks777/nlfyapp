@@ -11,6 +11,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   // const auth = useRef(getAuth()).current;
   const [registered, setRegistered] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingOTP, setIsLoadingOTP] = useState(false);
   const [user, setUser] = useState(null);
   const [error, setError] = useState(null);
   const [confirmResult, setConfirm] = useState(null);
@@ -99,25 +100,28 @@ export const AuthenticationContextProvider = ({ children }) => {
   };
   const confirmCode = async (otpCode) => {
     console.log("CONFIRM OTP AUTH CONTEXT", otpCode);
-    setIsLoading(true);
+    //setIsValidOTPCode(true);
+    setIsLoadingOTP(true);
     try {
       await confirmResult
         .confirm(otpCode)
         .then((result) => {
-          setIsLoading(false);
+          console.log("Result confirmed");
+          //setIsLoading(false);
           setIsValidOTPCode(true);
-          setUser(result.user);
-          console.log(
+          setIsLoadingOTP(false);
+          //setUser(result.user);
+          /*console.log(
             "User Info confirm code call",
             user,
             result.user.displayName,
             registered,
             isValidOTPCode
-          );
-          setError("");
+          );*/
+          //setError("");
         })
         .catch((e) => {
-          setIsLoading(false);
+          setIsLoadingOTP(false);
           setIsValidOTPCode(false);
           switch (e.code) {
             case "auth/invalid-verification-code":
@@ -170,6 +174,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         isAuthenticated: !!user,
         user,
         isLoading,
+        isLoadingOTP,
         error,
         registered,
         isValidOTPCode,

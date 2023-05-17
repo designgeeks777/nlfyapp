@@ -235,7 +235,7 @@ export const Onboarding = () => {
           <TextScreen2Orange>Swipe to get started</TextScreen2Orange>
         </Slide3>
 
-        <NavigationContainer independent={true}>
+        {/*<NavigationContainer independent={true}>
           <Tab.Navigator screenOptions={createScreenOptions}>
             <Tab.Screen
               name="Home"
@@ -290,7 +290,7 @@ export const Onboarding = () => {
               }}
             />
           </Tab.Navigator>
-        </NavigationContainer>
+        </NavigationContainer> */}
       </Swiper>
     </SafeArea>
   );
