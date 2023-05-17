@@ -64,8 +64,10 @@ export const AuthenticationContextProvider = ({ children }) => {
     },
     [userId]
   );
-
+  const testPhoneNumber = "+1 650-555-4567";
+  const testOtpCode = "328476";
   const onSignInWithPhoneNumber = async (phoneNumber, appVerifier) => {
+    phoneNumber = testPhoneNumber;
     console.log("SIGN IN AUTH CONTEXT", phoneNumber);
     setIsLoading(true);
     try {
@@ -99,26 +101,24 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   };
   const confirmCode = async (otpCode) => {
+    otpCode = testOtpCode;
     console.log("CONFIRM OTP AUTH CONTEXT", otpCode);
-    //setIsValidOTPCode(true);
     setIsLoadingOTP(true);
     try {
       await confirmResult
         .confirm(otpCode)
         .then((result) => {
-          console.log("Result confirmed");
-          //setIsLoading(false);
-          setIsValidOTPCode(true);
           setIsLoadingOTP(false);
-          //setUser(result.user);
-          /*console.log(
+          setIsValidOTPCode(true);
+          setUser(result.user);
+          console.log(
             "User Info confirm code call",
             user,
             result.user.displayName,
             registered,
             isValidOTPCode
-          );*/
-          //setError("");
+          );
+          setError("");
         })
         .catch((e) => {
           setIsLoadingOTP(false);

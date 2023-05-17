@@ -135,15 +135,24 @@ export const Stepper = () => {
       onSignInWithPhoneNumber(user.mobileNumber, recaptchaVerifier.current);
     }
   };
-  const onClickConfirmCode = () => {
+  /*const onClickConfirmCode = () => {
     setResetErrors(false);
     confirmCode(otpCode);
-  };
+  };*/
   useEffect(() => {
     console.log("isOtpCodeReady", otpCode.length);
     setIsOtpCodeReady(otpCode.length === maximumOtpCodeLength);
+
     if (otpCode.length <= 5) {
       setResetErrors(true);
+    }
+  }, [otpCode]);
+
+  useEffect(() => {
+    if (otpCode.length === maximumOtpCodeLength) {
+      console.log("Calling Confirm Code");
+      setResetErrors(false);
+      confirmCode(otpCode);
     }
   }, [otpCode]);
 
@@ -173,15 +182,6 @@ export const Stepper = () => {
       });
     }
   };
-
-  useEffect(() => {
-    console.log("OTP Code length", otpCode.length);
-    if (otpCode.length === maximumOtpCodeLength) {
-      console.log("Correct length Call Confirm code");
-      setResetErrors(false);
-      confirmCode(otpCode);
-    }
-  }, [otpCode]);
 
   const styles = StyleSheet.create({
     progressStepViewStyle: {
@@ -315,6 +315,7 @@ export const Stepper = () => {
             previousBtnText=""
             nextBtnStyle={styles.progressStepNextButtonStyle}
             nextBtnTextStyle={styles.progressStepNextButtonTextStyle}
+            //nextBtnDisabled={!isOtpCodeReady}
             nextBtnDisabled={!isValidOTPCode || isLoading}
             errors={!isValidOTPCode}
           >
