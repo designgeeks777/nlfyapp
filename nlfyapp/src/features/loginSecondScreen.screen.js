@@ -63,18 +63,23 @@ export const LoginSecondScreen = ({ route }) => {
             dataexists = true;
             setUserRegistered(true);
             setUsername(item.name);
+            console.log("Data Exists For Each", dataexists);
+            return dataexists;
           }
         });
       } else {
         console.log("USER DOESNT EXISTS");
         setUserRegistered(false);
         dataexists = false;
+        console.log("User Doesnt exist", dataexists);
+        return dataexists;
       }
     } catch (err) {
       console.log(err, "User Not Registered signin");
       dataexists = false;
+      console.log("User Doesnt exist", dataexists);
+      return dataexists;
     }
-    return dataexists;
   };
 
   useEffect(() => {
