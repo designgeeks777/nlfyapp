@@ -60,6 +60,7 @@ export const Stepper = () => {
     isLoading,
     isLoadingOTP,
     errorOTP,
+    resetConfirmResult,
   } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
@@ -192,6 +193,7 @@ export const Stepper = () => {
         gender: user.gender,
       });
     }
+    resetConfirmResult();
   };
 
   const styles = StyleSheet.create({

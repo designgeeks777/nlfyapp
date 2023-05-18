@@ -28,6 +28,7 @@ export const LoginSecondScreen = ({ route }) => {
     onSignInWithPhoneNumber,
     confirmCode,
     confirmResult,
+    resetConfirmResult,
   } = useContext(AuthenticationContext);
   const [errorMsg, setErrorMsg] = useState("");
   const [userRegistered, setUserRegistered] = useState(false);
@@ -107,6 +108,7 @@ export const LoginSecondScreen = ({ route }) => {
     setResetErrors(false);
     confirmCode(code);
     const HomeStackModalNavigator = navigation.getId();
+    resetConfirmResult();
     if (HomeStackModalNavigator === "HomeStackModal") {
       navigation.navigate("HomeStack");
     } else {
