@@ -103,12 +103,14 @@ export const LoginSecondScreen = ({ route }) => {
       console.log("is not Registered login");
       setErrorMsg("Enter your registered mobile number");
     }
+    //resetConfirmResult();
   };
   const onClickConfirmCode = () => {
     setResetErrors(false);
     confirmCode(code);
     const HomeStackModalNavigator = navigation.getId();
     resetConfirmResult();
+    console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
     if (HomeStackModalNavigator === "HomeStackModal") {
       navigation.navigate("HomeStack");
     } else {
@@ -177,6 +179,12 @@ export const LoginSecondScreen = ({ route }) => {
       backgroundColor: "#ffffff",
     },
   });
+
+  //Reset confirmResult on load of login screen if there is any previous step.
+  //This is added as part of a fix where on click of back Button in login screen and clicking on ligin again was taking to the OTP Screen
+  useEffect(() => {
+    resetConfirmResult();
+  }, []);
 
   return (
     <SafeAreaView style={styles.containerView}>
