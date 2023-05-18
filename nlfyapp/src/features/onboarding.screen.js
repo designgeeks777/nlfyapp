@@ -245,7 +245,7 @@ export const Onboarding = () => {
             />
             <Tab.Screen
               name="Prayer Request"
-              component={{ PrayerRequestNavigation }}
+              component={PrayerRequestNavigation}
               options={{ headerShown: false }}
             />
             <Tab.Screen

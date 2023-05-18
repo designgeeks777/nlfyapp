@@ -8,7 +8,8 @@ import axios from "axios";
 
 const { width } = Dimensions.get("window");
 const containerWidth = width * 0.9;
-
+const containerheight = width * 0.5;
+const containerTop = width * 0.1 + 5;
 const channelId = "UCveuID2qdKDhzeJ_QM4JXqA";
 const apiKey = youtubeAPIKey;
 const maxResults = 2;
@@ -16,14 +17,15 @@ const videosUrl = `https://www.googleapis.com/youtube/v3/search?order=date&part=
 
 const styles = StyleSheet.create({
   videoContainer: {
-    top: 40,
     width: containerWidth,
-    height: 200,
+    // height: 200,
+    height: containerheight,
     //borderRadius: 30,
     justifyContent: "center",
     //alignItems: "center",
     //padding: 10,
-    marginTop: 24,
+    // marginTop: 40,
+    marginTop: containerTop,
   },
   video: {
     width: "100%",

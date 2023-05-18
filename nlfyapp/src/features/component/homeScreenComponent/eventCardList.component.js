@@ -11,7 +11,7 @@ const { width } = Dimensions.get("window");
 const cardWidth = width * 0.4;
 
 const EventCard = styled(Card)`
-  top: 60px;
+  top: ${width * 0.030}px;
   width: ${cardWidth}px;
   margin: ${width * 0.01}px;
   height: ${width * 0.36}px;
@@ -25,6 +25,7 @@ const EventCard = styled(Card)`
 `;
 
 const EventCardTitle = styled(Text)`
+
   color: ${(props) => props.theme.colors.text.title};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -32,7 +33,8 @@ const EventCardTitle = styled(Text)`
 `;
 
 const EventCardContent = styled(Text)`
-  padding-top: 4px;
+  
+  padding-top:${width * 0.001}px;
   color: ${(props) => props.theme.colors.text.title};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};

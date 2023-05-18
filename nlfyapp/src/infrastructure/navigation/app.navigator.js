@@ -16,6 +16,7 @@ import { LifeGroups } from "../../features/lifeGroups.screen";
 import { Events } from "../../features/events.screen";
 import { Stories } from "../../features/stories.screen";
 import { Devotionals } from "../../features/devotionals.screen";
+import { PrayerRequestNavigation } from "../../../PrayerRequestNavigation";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -85,7 +86,7 @@ export const AppNavigator = () => {
             />
             <Tab.Screen
               name="Prayer Request"
-              component={PrayerRequest}
+              component={PrayerRequestNavigation}
               options={{ headerShown: false }}
             />
             <Tab.Screen

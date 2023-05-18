@@ -17,7 +17,6 @@ import { useNavigation } from "@react-navigation/native";
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
 const marginRight = width * 0.05;
-
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
