@@ -61,11 +61,15 @@ const Item = (props) => {
         if (userList[i].profilePic) {
           return { uri: userList[i].profilePic }; // Set the profile pic URI
         } else {
-          return require("nlfyapp/assets/profile1.jpg"); // Set the default profile pic
+          if (userList[i].gender === "male") {
+            return require("nlfyapp/assets/upload-pic-sign-up-male.png"); //  Set default male profile pic
+          } else if (userList[i].gender === "female") {
+            return require("nlfyapp/assets/upload-pic-sign-up-female.jpg"); //  Set default female profile pic
+          }
         }
       }
     }
-    return require("nlfyapp/assets/profile1.jpg"); // Set the default profile pic if no user is found
+    return require("nlfyapp/assets/upload-pic-sign-up-male.png"); // Set the default profile pic if no user is found
   };
 
   const [requestTextShown, setRequestTextShown] = useState(false);
