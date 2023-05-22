@@ -1,23 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
 import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 
+import { BASEURL } from "../../../../APIKey";
+import axios from "axios";
+
 const { width } = Dimensions.get("window");
 const cardWidth = width * 0.9;
-const cardContentWidth = width * 0.8;
+const cardTop = width * 0.09;
+const cardHeight = width * 0.5;
+const padding = width * 0.02;
 
 const DevotionalCard = styled(Card)`
-  top: 20px;
+  top:  ${cardTop}px;
   width: ${cardWidth}px;
-  height: 210px;
+  height: ${cardHeight * 1.16}px;
   border-radius: 10px;
 `;
 
 const CardTitle = styled(Text)`
-  padding-top: 8px;
+  padding-top: ${cardTop * 0.1}px; 
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -29,14 +34,14 @@ const CardContent = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
-  width: ${cardContentWidth}px;
-  top: 5px;
+  width: ${cardWidth * 0.9}px;
+  top: ${cardTop * 0.2}px;
 `;
 
 const CardReadmore = styled(Text)`
   align-self: flex-end;
   text-align: right;
-  top: 10px;
+  top: ${cardTop * 0.3}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
@@ -46,14 +51,28 @@ const CardReadmore = styled(Text)`
 const StyledLinearGradient = styled(LinearGradient)`
   border-radius: 10px;
   width: ${cardWidth}px;
-  height: 210px;
-  padding: 5px;
+  height: ${cardHeight * 1.17}px;
+  padding: ${padding}px;
 `;
 
 export const HomePageDevotionalCard = ({ devotional = {} }) => {
-  const cardContentText =
-    "Your road led through the sea, your pathway through the mighty waters - a pathway no one knew was there - Psalms 77:19(NLT) Godactively works through your circumstances. But you cannot judge your situation apart from God’s";
-  const cardContentTitle = "God's Plan for you is great - Rick Warren";
+  const [data, setData] = useState([]);
+  const url = `${BASEURL}devotionals/`;
+  useEffect(() => {
+    axios
+      .get(url)
+      .then((response) => {
+        let size = 0;
+        if (response.data) {
+          size = response.data.length;
+          setData(response.data[size - 1]);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, [url]);
+
   const navigation = useNavigation();
   const goToDevotionalsScreen = () => {
     navigation.navigate("Devotionals");
@@ -69,10 +88,14 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
         }
       >
         <Card.Content>
-          <CardTitle variant="titleLarge">{cardContentTitle}</CardTitle>
-          <CardContent numberOfLines={5} variant="bodyMedium">
-            {cardContentText}
-          </CardContent>
+          {data && (
+            <>
+              <CardTitle variant="titleLarge">{data.subject}</CardTitle>
+              <CardContent numberOfLines={5} variant="bodyMedium">
+                {data.content}
+              </CardContent>
+            </>
+          )}
         </Card.Content>
         <Card.Actions>
           <CardReadmore variant="bodyMedium" onPress={goToDevotionalsScreen}>

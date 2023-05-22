@@ -35,20 +35,6 @@ const ButtonView = styled(View)`
 `;
 
 export const CommunityPrayers = () => {
-  //const url = `${BASEURL}prayerRequests/`;
-
-  // useEffect(() => {
-  //   axios
-  //     .get(url)
-  //     .then((response) => {
-  //       console.log(response.data);
-  //       setData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
-
   const url = `${BASEURL}prayerRequests`;
 
   useEffect(() => {
@@ -141,9 +127,6 @@ export const CommunityPrayers = () => {
   };
   return (
     <>
-      {/* <ContainerView>
-        <ExpandCollapseListCommunityPrayer data={data} />
-      </ContainerView> */}
       <ContainerView>
         {isLoading ? (
           <Text>Loading All Prayer Requests...</Text>
@@ -190,15 +173,11 @@ export const CommunityPrayers = () => {
 
 const styles = StyleSheet.create({
   buttonView: {
-    // paddingVertical: 16,
-    // paddingHorizontal: 32,
     backgroundColor: "#ffffff",
   },
   button: {
     backgroundColor: "#333333",
     borderRadius: 24,
-    // paddingVertical: 16,
-    // paddingHorizontal: 32,
   },
   buttonText: {
     color: "#008BE2",

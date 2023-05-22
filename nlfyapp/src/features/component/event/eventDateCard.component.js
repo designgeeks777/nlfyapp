@@ -18,9 +18,11 @@ import axios from "axios";
 
 import styled from "styled-components";
 import { Divider } from "../../../components/divider.component";
+import { BASEURL } from "../../../../APIKey";
 
 const { width, height } = Dimensions.get("window");
-import { BASEURL } from "../../../../APIKey";
+const cardWidth = width * 0.2;
+
 const ViewEventCard = styled(SafeAreaView)`
   padding: 0px 24px 40px 24px;
 `;
@@ -37,7 +39,6 @@ const StyledLinearGradient = styled(LinearGradient)`
   height: ${height * 0.1}px;
   border-radius: 15px;
   justify-content: center;
-
   width: ${width * 0.2}px;
 `;
 
@@ -48,7 +49,7 @@ const EventCard = styled(Card)`
   height: ${height * 0.15}px;
   border-radius: 15px;
   top: ${height * 0.02}px;
-  width: 24%;
+  width: ${width * 0.2}px;//width: 24%;
 `;
 
 const CardWrapperView = styled(View)`

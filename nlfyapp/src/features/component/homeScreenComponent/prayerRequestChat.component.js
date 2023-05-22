@@ -6,6 +6,8 @@ import { Dimensions } from "react-native";
 
 const { width } = Dimensions.get("window");
 const cardWidth = width * 0.7;
+const cardHeight = width * 0.23;
+const padding = width * 0.02;
 
 const Container = styled(View)``;
 
@@ -13,7 +15,7 @@ const PrayerCard = styled(Card)`
   top: ${(props) => props.top}px;
   align-self: ${(props) => (props.isRight ? "flex-end" : "flex-start")};
   width: ${cardWidth}px;
-  height: 80px;
+  height:  ${cardHeight}px; //height: 80px;
   background-color: [ "#F26924", "rgba(242, 105, 36, 0.10)"];
   border-radius: 20px;
   shadow-color: transparent;
@@ -28,15 +30,15 @@ const PrayerText = styled(Text)`
 `;
 
 const ProfilePicture = styled(Image)`
-  width: 50px;
-  height: 50px;
+  width: ${cardWidth * 0.2}px; //width: 50px;
+  height:  ${cardHeight* 0.6}px; //height: 50px;
   border-radius: 30px;
 `;
 const PrayerCardContent = styled(View)`
   flex-direction: ${(props) => (props.isRight ? "row" : "row-reverse")};
   align-items: center;
   justify-content: center;
-  padding: 10px;
+  padding: ${padding}px; //padding: 10px;
 `;
 
 const NameText = styled(Text)`
@@ -52,25 +54,33 @@ export const PrayerRequestChat = () => {
   const PrayerContentResponse = "Thanks for your prayers, I have been healed..";
   return (
     <Container>
-      <PrayerCard elevation={0} top={95} isRight={true}>
-        <PrayerCardContent>
-          <PrayerText variant="body">{PrayerContentRequest}</PrayerText>
-        </PrayerCardContent>
-      </PrayerCard>
-      <View style={{ marginLeft: 20, top: 25 }}>
-        <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
-        <NameText variant="caption">Robin</NameText>
+      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}>
+        <View style={{ marginLeft: 10, marginTop: 30 }}>
+          <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
+          <NameText variant="caption">Robin</NameText>
+      </View>
+        <View style={{ marginLeft: 10 }}>
+          <PrayerCard elevation={0} top={10} isRight={true}>
+            <PrayerCardContent>
+              <PrayerText variant="body">{PrayerContentRequest}</PrayerText>
+            </PrayerCardContent>
+          </PrayerCard>
+        </View>
       </View>
 
-      <PrayerCard elevation={0} top={50} isRight={false}>
-        <PrayerCardContent>
-          <PrayerText variant="body">{PrayerContentResponse}</PrayerText>
-        </PrayerCardContent>
-      </PrayerCard>
-      <View style={{ marginLeft: 300, bottom: 20 }}>
-        <ProfilePicture source={require("nlfyapp/assets/profile2.jpg")} />
-        <NameText variant="caption">Sandeep</NameText>
+
+      <View style={{ flexDirection: "row-reverse", alignItems: "center", marginBottom: 10 }}>
+        <View style={{ marginLeft: 15, marginTop: 15 }}>
+          <ProfilePicture source={require("nlfyapp/assets/profile2.jpg")} />
+          <NameText variant="caption">Sandeep</NameText>
+        </View>
+        <PrayerCard elevation={0} top={10} isRight={false}>
+          <PrayerCardContent>
+            <PrayerText variant="body">{PrayerContentResponse}</PrayerText>
+          </PrayerCardContent>
+        </PrayerCard>
       </View>
     </Container>
+
   );
 };

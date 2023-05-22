@@ -1,5 +1,11 @@
 //supports both Android and IOS devices
-import React, { useCallback, useState, useRef, useEffect } from "react";
+import React, {
+  useCallback,
+  useState,
+  useRef,
+  useEffect,
+  useContext,
+} from "react";
 import {
   Text,
   FlatList,
@@ -19,6 +25,8 @@ import { PrayerForm } from "../features/component/prayerRequest/prayerForm.compo
 import { NLFModal } from "./NLFModal.component";
 import styled from "styled-components";
 
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+
 const { height, width } = Dimensions.get("window");
 
 const FlexRow = styled(View)`
@@ -26,7 +34,7 @@ const FlexRow = styled(View)`
 `;
 
 const Item = (props) => {
-  const { position, item } = props;
+  const { position, item, user } = props;
 
   const [userList, setUserList] = useState([]);
 
@@ -53,11 +61,15 @@ const Item = (props) => {
         if (userList[i].profilePic) {
           return { uri: userList[i].profilePic }; // Set the profile pic URI
         } else {
-          return require("nlfyapp/assets/profile1.jpg"); // Set the default profile pic
+          if (userList[i].gender === "male") {
+            return require("nlfyapp/assets/upload-pic-sign-up-male.png"); //  Set default male profile pic
+          } else {
+            return require("nlfyapp/assets/upload-pic-sign-up-female.jpg"); //  Set default female profile pic
+          }
         }
       }
     }
-    return require("nlfyapp/assets/profile1.jpg"); // Set the default profile pic if no user is found
+    return require("nlfyapp/assets/upload-pic-sign-up-male.png"); // Set the default profile pic if no user is found
   };
 
   const [requestTextShown, setRequestTextShown] = useState(false);
@@ -175,6 +187,7 @@ const Item = (props) => {
 };
 
 export const ExpandCollapseListCommunityPrayer = (props) => {
+  const { user } = useContext(AuthenticationContext);
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item, index }) => {
@@ -187,6 +200,7 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
         item={item}
         selected={selectedId === item._id}
         onSelect={onSelectItem}
+        user={user}
       />
     );
   };

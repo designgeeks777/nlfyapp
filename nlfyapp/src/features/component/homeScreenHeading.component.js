@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity, Alert } from "react-native";
+import { Text, TouchableOpacity, Alert, View } from "react-native";
 import styled from "styled-components";
 import { useNavigation } from "@react-navigation/native";
 
@@ -8,6 +8,7 @@ export const HomeScreenHeading = ({
   righttext,
   lefttop,
   righttop,
+  marginleft,
   navigateTo,
   user,
   conditionalNavigation,
@@ -19,6 +20,7 @@ export const HomeScreenHeading = ({
     font-size: ${(props) => props.theme.fontSizes.bodylarge};
     font-weight: ${(props) => props.theme.fontWeights.bold};
     font-family: ${(props) => props.theme.fonts.body};
+    margin-bottom: 10px;
   `;
   const RightSideText = styled(Text)`
     color: ${(props) => props.theme.colors.text.seeall};
@@ -28,9 +30,15 @@ export const HomeScreenHeading = ({
   `;
 
   const Touchable = styled(TouchableOpacity)`
-    top: ${righttop};
-    margin-right: 8px;
+    margin-top: ${righttop};
     align-self: flex-end;
+    margin-left: ${marginleft};
+    margin-bottom: 10px;
+    z-index: 999;
+  `;
+
+  const HeadingWrapper = styled(View)`
+    flex-direction: row;
   `;
 
   const navigation = useNavigation();
@@ -47,11 +55,11 @@ export const HomeScreenHeading = ({
     }
   };
   return (
-    <>
+    <HeadingWrapper>
       <LeftSideText>{lefttext}</LeftSideText>
-      <Touchable onPress={handlePress}>
+      <Touchable onPress={handlePress} activeOpacity={0.6}>
         <RightSideText>{righttext}</RightSideText>
       </Touchable>
-    </>
+    </HeadingWrapper>
   );
 };
