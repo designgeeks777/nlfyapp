@@ -63,7 +63,7 @@ const Item = (props) => {
         } else {
           if (userList[i].gender === "male") {
             return require("nlfyapp/assets/upload-pic-sign-up-male.png"); //  Set default male profile pic
-          } else if (userList[i].gender === "female") {
+          } else {
             return require("nlfyapp/assets/upload-pic-sign-up-female.jpg"); //  Set default female profile pic
           }
         }
