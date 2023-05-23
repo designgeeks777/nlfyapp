@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import {
   Text,
   Image,
@@ -22,6 +22,7 @@ import { PrayerRequest } from "./prayerRequest.screen";
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
+import { HomeStackNavigation } from "../../HomeNavigation";
 
 import { createStackNavigator } from "@react-navigation/stack";
 import { useNavigation } from "@react-navigation/native";
@@ -235,11 +236,12 @@ export const Onboarding = () => {
           <TextScreen2Orange>Swipe to get started</TextScreen2Orange>
         </Slide3>
 
-        {/*<NavigationContainer independent={true}>
-          <Tab.Navigator screenOptions={createScreenOptions}>
+        <NavigationContainer independent={true}>
+          <Tab.Navigator screenOptions={createScreenOptions} id="MainBottomTab">
             <Tab.Screen
               name="Home"
-              component={HomeWrapper}
+              component={HomeStackNavigation}
+              // component={HomeWrapper}
               options={{ headerShown: false }}
             />
             <Tab.Screen
@@ -290,7 +292,7 @@ export const Onboarding = () => {
               }}
             />
           </Tab.Navigator>
-        </NavigationContainer> */}
+        </NavigationContainer>
       </Swiper>
     </SafeArea>
   );

@@ -110,7 +110,7 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <AuthenticationContextProvider>
-          {/* {hasLaunched ? (
+          {hasLaunched ? (
             <NavigationContainer>
               <Tab.Navigator
                 screenOptions={createScreenOptions}
@@ -171,8 +171,9 @@ const App = () => {
                 />
               </Tab.Navigator>
             </NavigationContainer>
-                ) */}
-          <Navigation />
+          ) : (
+            <Navigation />
+          )}
         </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
