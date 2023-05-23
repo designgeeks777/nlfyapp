@@ -1,5 +1,11 @@
 import React, { useState, useContext, useEffect, useLayoutEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import * as firebase from "firebase/compat";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { CustomTextInput } from "../components/textinput";
@@ -28,12 +34,19 @@ export const LoginSecondScreen = ({ route }) => {
     onSignInWithPhoneNumber,
     confirmCode,
     confirmResult,
+    resetConfirmResult,
+    isLoadingOTP,
+    isLoading,
+    errorOTP,
   } = useContext(AuthenticationContext);
   const [errorMsg, setErrorMsg] = useState("");
   const [userRegistered, setUserRegistered] = useState(false);
   const [resetError, setResetErrors] = useState(false);
   const navigation = useNavigation();
   const [username, setUsername] = useState(null);
+  const [otpCode, setOtpCode] = useState("");
+  const maximumOtpCodeLength = 6;
+  const [isOtpCodeReady, setIsOtpCodeReady] = useState(false);
 
   const handleChange = (value) => {
     setPhoneNumber(value);
@@ -63,18 +76,23 @@ export const LoginSecondScreen = ({ route }) => {
             dataexists = true;
             setUserRegistered(true);
             setUsername(item.name);
+            console.log("Data Exists For Each", dataexists);
+            return dataexists;
           }
         });
       } else {
         console.log("USER DOESNT EXISTS");
         setUserRegistered(false);
         dataexists = false;
+        console.log("User Doesnt exist", dataexists);
+        return dataexists;
       }
     } catch (err) {
       console.log(err, "User Not Registered signin");
       dataexists = false;
+      console.log("User Doesnt exist", dataexists);
+      return dataexists;
     }
-    return dataexists;
   };
 
   useEffect(() => {
@@ -97,15 +115,21 @@ export const LoginSecondScreen = ({ route }) => {
       console.log("is not Registered login");
       setErrorMsg("Enter your registered mobile number");
     }
+    //resetConfirmResult();
   };
   const onClickConfirmCode = () => {
     setResetErrors(false);
     confirmCode(code);
     const HomeStackModalNavigator = navigation.getId();
-    if (HomeStackModalNavigator === "HomeStackModal") {
-      navigation.navigate("HomeStack");
-    } else {
-      navigation.navigate("Home");
+
+    console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
+    if (isValidOTPCode) {
+      resetConfirmResult();
+      if (HomeStackModalNavigator === "HomeStackModal") {
+        navigation.navigate("HomeStack");
+      } else {
+        navigation.navigate("Home");
+      }
     }
     console.log("HomeStack confirm code", HomeStackModalNavigator);
   };
@@ -141,6 +165,18 @@ export const LoginSecondScreen = ({ route }) => {
     font-family: ${(props) => props.theme.fonts.body};
   `;
 
+  const LoadingText = styled(Text)`
+    padding-left: 20px;
+    align-self: flex-start;
+    font-size: ${(props) => props.theme.fontSizes.title};
+    color: ${(props) => props.theme.colors.border.success};
+    font-family: ${(props) => props.theme.fonts.body};
+  `;
+
+  const ActivityIndicatorView = styled(View)`
+    flex-direction: row;
+  `;
+
   const OTPMessageText = styled(Text)`
     align-self: center;
     padding-top: 10px;
@@ -171,6 +207,21 @@ export const LoginSecondScreen = ({ route }) => {
     },
   });
 
+  //Reset confirmResult on load of login screen if there is any previous step.
+  //This is added as part of a fix where on click of back Button in login screen and clicking on ligin again was taking to the OTP Screen
+  useEffect(() => {
+    resetConfirmResult();
+  }, []);
+
+  useEffect(() => {
+    console.log("isOtpCodeReady", otpCode.length);
+    setIsOtpCodeReady(otpCode.length === maximumOtpCodeLength);
+
+    if (otpCode.length <= 5) {
+      setResetErrors(true);
+    }
+  }, [otpCode]);
+
   return (
     <SafeAreaView style={styles.containerView}>
       <FirebaseRecaptchaVerifierModal
@@ -195,6 +246,14 @@ export const LoginSecondScreen = ({ route }) => {
             isValid={isValid}
             isUserNameTextInput={false}
           />
+          {isLoading ? (
+            <ActivityIndicatorView>
+              <LoadingText>Checking number</LoadingText>
+              <ActivityIndicator color="#27AE60" />
+            </ActivityIndicatorView>
+          ) : (
+            <></>
+          )}
           <LoginButtonView>
             <Button
               label="Continue"
@@ -211,21 +270,29 @@ export const LoginSecondScreen = ({ route }) => {
             Enter 6 digit verification code sent to the number
           </OTPMessageText>
           <OTPInput
-            code={code}
-            setCode={(e) => setCode(e)}
-            maximumLength={maximumCodeLength}
-            // setIsPinReady={setIsPinReady}
+            code={otpCode}
+            setCode={setOtpCode}
+            maximumLength={maximumOtpCodeLength}
+            // setIsOtpCodeReady={setIsOtpCodeReady}
             isValidOTPCode={isValidOTPCode}
             resetError={resetError}
           />
-          <MessageText>
-            {isPinReady && !isValidOTPCode && !resetError ? error : ""}
-          </MessageText>
+          {isLoadingOTP ? (
+            <ActivityIndicatorView>
+              <LoadingText>Validating OTP</LoadingText>
+              <ActivityIndicator color="#27AE60" />
+            </ActivityIndicatorView>
+          ) : (
+            <MessageText>
+              {isOtpCodeReady && !isValidOTPCode && !resetError ? errorOTP : ""}
+            </MessageText>
+          )}
+
           <LoginButtonView>
             <Button
               label="Confirm Code"
               handleClick={() => onClickConfirmCode()}
-              disabled={!isPinReady}
+              disabled={!isOtpCodeReady}
             />
           </LoginButtonView>
         </>

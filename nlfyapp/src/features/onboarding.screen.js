@@ -22,6 +22,7 @@ import { Events } from "./events.screen";
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
+import { HomeStackNavigation } from "../../HomeNavigation";
 
 import { useNavigation } from "@react-navigation/native";
 
@@ -237,10 +238,11 @@ export const Onboarding = () => {
         </Slide3>
 
         <NavigationContainer independent={true}>
-          <Tab.Navigator screenOptions={createScreenOptions}>
+          <Tab.Navigator screenOptions={createScreenOptions} id="MainBottomTab">
             <Tab.Screen
               name="Home"
-              component={HomeWrapper}
+              component={HomeStackNavigation}
+              // component={HomeWrapper}
               options={{ headerShown: false }}
             />
             <Tab.Screen

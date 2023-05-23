@@ -1,5 +1,11 @@
 import React, { useState, useContext, useRef, useEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import { ProgressStep, ProgressSteps } from "react-native-progress-steps";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { CustomTextInput } from "../components/textinput";
@@ -28,6 +34,18 @@ const MessageText = styled(Text)`
       : props.theme.colors.text.errorMessage};
   font-family: ${(props) => props.theme.fonts.body};
 `;
+
+const LoadingText = styled(Text)`
+  padding-left: 20px;
+  align-self: flex-start;
+  font-size: ${(props) => props.theme.fontSizes.title};
+  color: ${(props) => props.theme.colors.border.success};
+  font-family: ${(props) => props.theme.fonts.body};
+`;
+
+const ActivityIndicatorView = styled(View)`
+  flex-direction: row;
+`;
 export const Stepper = () => {
   const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
@@ -39,6 +57,10 @@ export const Stepper = () => {
     onSignInWithPhoneNumber,
     confirmCode,
     updateProfile,
+    isLoading,
+    isLoadingOTP,
+    errorOTP,
+    resetConfirmResult,
   } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
@@ -125,15 +147,24 @@ export const Stepper = () => {
       onSignInWithPhoneNumber(user.mobileNumber, recaptchaVerifier.current);
     }
   };
-  const onClickConfirmCode = () => {
+  /*const onClickConfirmCode = () => {
     setResetErrors(false);
     confirmCode(otpCode);
-  };
+  };*/
   useEffect(() => {
     console.log("isOtpCodeReady", otpCode.length);
     setIsOtpCodeReady(otpCode.length === maximumOtpCodeLength);
+
     if (otpCode.length <= 5) {
       setResetErrors(true);
+    }
+  }, [otpCode]);
+
+  useEffect(() => {
+    if (otpCode.length === maximumOtpCodeLength) {
+      console.log("Calling Confirm Code");
+      setResetErrors(false);
+      confirmCode(otpCode);
     }
   }, [otpCode]);
 
@@ -162,6 +193,7 @@ export const Stepper = () => {
         gender: user.gender,
       });
     }
+    resetConfirmResult();
   };
 
   const styles = StyleSheet.create({
@@ -289,14 +321,15 @@ export const Stepper = () => {
           </ProgressStep>
           <ProgressStep
             label="Verify"
-            onNext={() => onClickConfirmCode()}
+            //onNext={() => onClickConfirmCode()}
             nextBtnText="Confirm"
             previousBtnDisabled
             scrollable={false}
             previousBtnText=""
             nextBtnStyle={styles.progressStepNextButtonStyle}
             nextBtnTextStyle={styles.progressStepNextButtonTextStyle}
-            nextBtnDisabled={!isOtpCodeReady}
+            //nextBtnDisabled={!isOtpCodeReady}
+            nextBtnDisabled={!isValidOTPCode || isLoading}
             errors={!isValidOTPCode}
           >
             <View style={styles.progressStepViewStyle}>
@@ -311,9 +344,18 @@ export const Stepper = () => {
                 isValidOTPCode={isValidOTPCode}
                 resetError={resetError}
               />
-              <MessageText>
-                {isOtpCodeReady && !isValidOTPCode && !resetError ? error : ""}
-              </MessageText>
+              {isLoadingOTP ? (
+                <ActivityIndicatorView>
+                  <LoadingText>Validating OTP</LoadingText>
+                  <ActivityIndicator color="#27AE60" />
+                </ActivityIndicatorView>
+              ) : (
+                <MessageText>
+                  {isOtpCodeReady && !isValidOTPCode && !resetError
+                    ? errorOTP
+                    : ""}
+                </MessageText>
+              )}
             </View>
           </ProgressStep>
           <ProgressStep
