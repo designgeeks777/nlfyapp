@@ -63,35 +63,36 @@ export const LoginSecondScreen = ({ route }) => {
   };
 
   const checkIfUserAlreadyRegistered = async () => {
-    let dataexists = false;
     try {
       const response = await axios.get(`${BASEURL}/users/`);
 
       if (response.data) {
         const data = response.data;
 
-        data.forEach((item) => {
+        for (const item of data) {
           if (item.mobileNumber === phoneNumber) {
             console.log("User Exists");
-            dataexists = true;
             setUserRegistered(true);
             setUsername(item.name);
-            console.log("Data Exists For Each", dataexists);
-            return dataexists;
+            console.log("Data Exists For Each", true);
+            return true;
           }
-        });
-      } else {
-        console.log("USER DOESNT EXISTS");
+        }
+
+        console.log("USER DOESN'T EXIST");
         setUserRegistered(false);
-        dataexists = false;
-        console.log("User Doesnt exist", dataexists);
-        return dataexists;
+        console.log("User Doesn't exist", false);
+        return false;
+      } else {
+        console.log("USER DOESN'T EXIST");
+        setUserRegistered(false);
+        console.log("User Doesn't exist", false);
+        return false;
       }
     } catch (err) {
       console.log(err, "User Not Registered signin");
-      dataexists = false;
-      console.log("User Doesnt exist", dataexists);
-      return dataexists;
+      console.log("User Doesn't exist", false);
+      return false;
     }
   };
 
