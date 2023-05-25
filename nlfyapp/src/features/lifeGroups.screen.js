@@ -14,13 +14,15 @@ import { LifeGroupCard } from "./component/lifeGroup/lifeGroupCard.component";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
+const wrapperPadding = width * 0.05;
+const wrapperMargin = width * 0.03;
+const borderRadius = width * 0.9;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
-  border-radius: 10px;
-  padding-bottom: ${width * 0.05}px;
-  top: ${width * 0.05}px;
-  margin-left: 10px;
+  border-radius: ${borderRadius}px;
+  margin-left: ${wrapperMargin }px;
+  padding-top:${wrapperPadding}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`

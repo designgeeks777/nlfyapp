@@ -6,25 +6,23 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
-
 import { Searchbar } from "react-native-paper";
-
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { LinearGradient } from "expo-linear-gradient";
-
 import { Card, Text } from "react-native-paper";
-import axios from "axios";
-
-import styled from "styled-components";
 import { Divider } from "../../../components/divider.component";
 import { BASEURL } from "../../../../APIKey";
+import axios from "axios";
+import styled from "styled-components";
 
 const { width, height } = Dimensions.get("window");
-const cardWidth = width * 0.2;
+const padding = width;
 
 const ViewEventCard = styled(SafeAreaView)`
-  padding: 0px 24px 40px 24px;
+  padding-top:${padding * 0.01}px;
+  padding-right: ${padding * 0.04}px;
+  padding-bottom: ${padding * 0.01}px;
+  padding-left: ${padding * 0.04}px;
 `;
 
 const MonthHeading = styled(Text)`
@@ -32,7 +30,8 @@ const MonthHeading = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.medium};
   font-family: ${(props) => props.theme.fonts.body};
-  padding-bottom: 10px;
+  padding-bottom: ${padding * 0.04}px;
+  margin-top: ${padding * 0.1 - 60}px;
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
@@ -47,9 +46,9 @@ const EventCard = styled(Card)`
   border-color: transparent;
   background-color: "transparent";
   height: ${height * 0.15}px;
-  border-radius: 15px;
+  border-radius:15px;
   top: ${height * 0.02}px;
-  width: ${width * 0.2}px;//width: 24%;
+  width: ${width * 0.2}px;
 `;
 
 const CardWrapperView = styled(View)`
@@ -61,7 +60,7 @@ const DividerPadding = styled(Card)`
 `;
 
 const EventCardContent = styled(Text)`
-  padding: 2px;
+  padding: ${padding * 0.003}px;
   text-align-vertical: center;
   text-align: center;
   color: ${(props) => props.theme.colors.text.inverse};
@@ -70,13 +69,9 @@ const EventCardContent = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-/*const CardWrapperView = styled(View)`
-  flex-direction: row;
-`;*/
-
 const Content = styled(View)`
-  top: ${height * 0.03}px;
-  padding-left: 14px;
+  top: ${height * 0.02}px;
+  padding-left: ${padding * 0.04}px;
 `;
 
 const EventHeading = styled(Text)`
@@ -86,11 +81,11 @@ const EventHeading = styled(Text)`
 `;
 
 const EventTiming = styled(Text)`
-  padding-top: 2px;
+  padding-top:${padding * 0.01}px;
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.medium};
   font-family: ${(props) => props.theme.fonts.body};
-  padding-bottom: 2px;
+  padding-bottom: ${padding * 0.01}px;
 `;
 
 const EventLocation = styled(Text)`
@@ -100,10 +95,10 @@ const EventLocation = styled(Text)`
 `;
 
 const SearchBar = styled(Searchbar)`
-  margin-horizontal: 10px;
-  margin-vertical: 10px;
+  margin-horizontal:  ${padding * 0.01}px;
+  margin-vertical: ${padding * 0.01}px;
   elevation: 0;
-  border-radius: 10px;
+  border-radius: ${width * 0.04}px;
 
   ${({ isFocused }) =>
     isFocused &&
@@ -114,7 +109,7 @@ const SearchBar = styled(Searchbar)`
 `;
 
 const ViewSearchbar = styled(View)`
-  padding: 10px;
+  padding: ${padding * 0.03}px;
 `;
 
 const EventItem = ({ event }) => {
@@ -244,7 +239,7 @@ export const EventDateCard = () => {
                 keyExtractor={(item) => item._id}
                 renderItem={({ item }) => <EventItem event={item} />}
                 initialNumToRender={data.length}
-                contentContainerStyle={{ paddingBottom: 150 }}
+                contentContainerStyle={{ paddingBottom: width * 0.01 }}
               />
             ) : (
               <Text>No events found</Text>

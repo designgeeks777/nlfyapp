@@ -88,12 +88,12 @@ export const RaiseStoryForm = (props) => {
 
 const styles = StyleSheet.create({
   inp: {
-    height: 200,
-    width: "100%",
-    borderRadius: 10,
+    height: width * 0.6,
+    width:width * 0.9,
+    borderRadius: width * 0.02,
     borderColor: "gray",
-    borderWidth: 1,
-    padding: 10,
+    borderWidth: width * 0.003,
+    padding: width * 0.03,
   },
   buttonwrapper: {
     paddingBottom: width * 0.1,

@@ -19,12 +19,14 @@ import { AuthenticationContext } from "../services/authentication/authentication
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
+const wrapperPadding = width * 0.05;
+const wrapperMargin = width * 0.03;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
-  border-radius: 10px;
-  top: 20px;
-  margin-left: 10px;
+  border-radius: ${width * 0.9}px; //10px;
+  margin-left: ${wrapperMargin }px;
+  padding-top:${wrapperPadding}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -34,7 +36,7 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
 `;
 
 const ButtonView = styled(View)`
-  padding-bottom: 30px;
+  padding-bottom:  ${wrapperPadding * 1.5}px;
   align-items: center;
 `;
 
@@ -124,23 +126,6 @@ export const Stories = () => {
 };
 
 const styles = StyleSheet.create({
-  buttonView: {
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-    backgroundColor: "#ffffff",
-  },
-  button: {
-    backgroundColor: "#333333",
-    borderRadius: 24,
-    paddingVertical: 16,
-    paddingHorizontal: 32,
-  },
-  buttonText: {
-    color: "#008BE2",
-    fontSize: 12,
-    fontWeight: "bold",
-    textAlign: "right",
-  },
   modalOverlay: {
     flex: 1,
     backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -150,15 +135,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#ffffff",
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
-    padding: 24,
-  },
-  modalTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 16,
-  },
-  spacing: {
-    marginTop: -40,
-    marginBottom: 40,
+    padding: width * 0.08,
   },
 });

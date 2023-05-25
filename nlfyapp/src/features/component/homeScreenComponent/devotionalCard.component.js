@@ -4,7 +4,6 @@ import { Card, Text } from "react-native-paper";
 import { Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
-
 import { BASEURL } from "../../../../APIKey";
 import axios from "axios";
 
@@ -18,7 +17,7 @@ const DevotionalCard = styled(Card)`
   top:  ${cardTop}px;
   width: ${cardWidth}px;
   height: ${cardHeight * 1.16}px;
-  border-radius: 10px;
+  border-radius: ${width * 0.03}px;
 `;
 
 const CardTitle = styled(Text)`
@@ -49,7 +48,7 @@ const CardReadmore = styled(Text)`
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
-  border-radius: 10px;
+  border-radius: ${width * 0.03}px;
   width: ${cardWidth}px;
   height: ${cardHeight * 1.17}px;
   padding: ${padding}px;

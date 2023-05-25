@@ -24,25 +24,25 @@ const { width, height } = Dimensions.get("window");
 
 const WelcomeText = styled(Text)`
   position: absolute;
-  top: 10px;
+  top: ${width * 0.03}px;
   color: ${(props) => props.theme.colors.text.title};
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
 `;
 const Profile = styled(View)`
-  margin-left: 10px;
-  height: 40px;
-  width: 40px;
-  border-radius: 20px;
+  margin-left: ${width * 0.02}px;
+  height:${width * 0.11}px;
+  width: ${width * 0.11}px;
+  border-radius: ${width * 0.05}px;
   overflow: hidden;
   justify-content: center;
   align-items: center;
 `;
 const ProfilePic = styled(Image)`
-  height: 100%;
-  width: 100%;
-  border-radius: 20px;
+  height:  ${width * 0.11}px;
+  width:  ${width * 0.11}px;
+  border-radius:  ${width * 0.02}px;
 `;
 
 const ModalContainer = styled(View)`
