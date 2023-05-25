@@ -118,9 +118,11 @@ export const LoginSecondScreen = ({ route }) => {
     }
     //resetConfirmResult();
   };
-  const onClickConfirmCode = () => {
+  const onClickContinue = () => {
     setResetErrors(false);
-    confirmCode(code);
+
+    //console.log("On CLick Confirm code otpCode", otpCode);
+    //confirmCode(otpCode);
     const HomeStackModalNavigator = navigation.getId();
 
     console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
@@ -223,6 +225,14 @@ export const LoginSecondScreen = ({ route }) => {
     }
   }, [otpCode]);
 
+  useEffect(() => {
+    if (otpCode.length === maximumOtpCodeLength) {
+      console.log("Calling Confirm Code");
+      setResetErrors(false);
+      confirmCode(otpCode);
+    }
+  }, [otpCode]);
+
   return (
     <SafeAreaView style={styles.containerView}>
       <FirebaseRecaptchaVerifierModal
@@ -259,7 +269,7 @@ export const LoginSecondScreen = ({ route }) => {
             <Button
               label="Continue"
               handleClick={onSignIn}
-              disabled={!isValid}
+              disabled={!isValid || isLoading}
             />
           </LoginButtonView>
         </>
@@ -291,9 +301,10 @@ export const LoginSecondScreen = ({ route }) => {
 
           <LoginButtonView>
             <Button
-              label="Confirm Code"
-              handleClick={() => onClickConfirmCode()}
-              disabled={!isOtpCodeReady}
+              label="Continue"
+              handleClick={() => onClickContinue()}
+              //disabled={!isOtpCodeReady}
+              disabled={!isValidOTPCode || isLoading || !isOtpCodeReady}
             />
           </LoginButtonView>
         </>
