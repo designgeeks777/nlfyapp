@@ -154,18 +154,12 @@ export const Welcome = (props) => {
 
   const navigateToSignUp = () => {
     console.log("GO TO SIGN UP");
-    navigation.navigate("OnboardingStack");
+    navigation.navigate("Login");
     setTimeout(() => {
       hideModal();
     }, 1000);
   };
   const handleLogout = () => {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "Home" }],
-      })
-    );
     onLogout();
     setUserData("");
     hideModal();

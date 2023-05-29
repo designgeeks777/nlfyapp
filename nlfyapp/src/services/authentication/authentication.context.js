@@ -74,7 +74,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     setConfirm(null);
   };
   const onSignInWithPhoneNumber = async (phoneNumber, appVerifier) => {
-    phoneNumber = testPhoneNumber;
+    //phoneNumber = testPhoneNumber;
     console.log("SIGN IN AUTH CONTEXT", phoneNumber);
     setIsLoading(true);
     try {
@@ -108,7 +108,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   };
   const confirmCode = async (otpCode) => {
-    otpCode = testOtpCode;
+    //otpCode = testOtpCode;
     console.log("CONFIRM OTP AUTH CONTEXT", otpCode);
     setIsLoadingOTP(true);
     try {
