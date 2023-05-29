@@ -154,7 +154,7 @@ export const Welcome = (props) => {
 
   const navigateToSignUp = () => {
     console.log("GO TO SIGN UP");
-    navigation.navigate("Login");
+    navigation.navigate("OnboardingStack");
     setTimeout(() => {
       hideModal();
     }, 1000);
