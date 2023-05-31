@@ -1,6 +1,5 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import styled from "styled-components/native";
-
 import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
 import {
@@ -10,27 +9,28 @@ import {
   TouchableOpacity,
   Animated,
   Modal,
+  SafeAreaView,
   Dimensions,
   KeyboardAvoidingView,
   Platform,
   Text,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Button } from "../../../components/button";
 import { ExpandCollapseListCommunityPrayer } from "../../../components/expandCollapse.CommunityPrayer.component";
 import { RaisePrayerForm } from "./raisePrayerForm.component";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 const { width } = Dimensions.get("window");
 
-const ContainerView = styled(SafeAreaView)`
+const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  //margin-top: ${StatusBar.currentHeight || 0}px;
+  padding-top: ${StatusBar.currentHeight}px;
+  margin-top: ${StatusBar.currentHeight - 35 || 0}px;
   justify-content: center;
   align-items: center;
 `;
 
 const ButtonView = styled(View)`
-  padding-bottom: 30px;
+  padding-bottom:${width * 0.08}px;  
   align-items: center;
 `;
 
@@ -72,7 +72,7 @@ export const CommunityPrayers = () => {
   const [success, setSuccess] = useState(false);
   const { user } = useContext(AuthenticationContext);
   const [err, setErr] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); // initialize errorMessage state
+  const [errorMessage, setErrorMessage] = useState(""); 
 
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
@@ -127,13 +127,13 @@ export const CommunityPrayers = () => {
   };
   return (
     <>
-      <ContainerView>
+      <SafeAreaViewWrapper>
         {isLoading ? (
           <Text>Loading All Prayer Requests...</Text>
         ) : (
           <ExpandCollapseListCommunityPrayer data={data} />
         )}
-      </ContainerView>
+      </SafeAreaViewWrapper>
       {user === null || user?.isAnonymous ? null : (
         <ButtonView>
           <Button label="Raise Prayer Request" handleClick={handleClick} />

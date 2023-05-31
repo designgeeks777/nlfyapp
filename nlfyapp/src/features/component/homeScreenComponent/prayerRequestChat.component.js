@@ -15,9 +15,9 @@ const PrayerCard = styled(Card)`
   top: ${(props) => props.top}px;
   align-self: ${(props) => (props.isRight ? "flex-end" : "flex-start")};
   width: ${cardWidth}px;
-  height:  ${cardHeight}px; //height: 80px;
+  height:  ${cardHeight}px;
   background-color: [ "#F26924", "rgba(242, 105, 36, 0.10)"];
-  border-radius: 20px;
+  border-radius:  ${width * 0.05}px;
   shadow-color: transparent;
   justify-content: center;
 `;
@@ -30,15 +30,15 @@ const PrayerText = styled(Text)`
 `;
 
 const ProfilePicture = styled(Image)`
-  width: ${cardWidth * 0.2}px; //width: 50px;
-  height:  ${cardHeight* 0.6}px; //height: 50px;
-  border-radius: 30px;
+  width: ${cardWidth * 0.2}px; 
+  height:  ${cardHeight* 0.6}px; 
+  border-radius: ${width * 0.09}px;
 `;
 const PrayerCardContent = styled(View)`
   flex-direction: ${(props) => (props.isRight ? "row" : "row-reverse")};
   align-items: center;
   justify-content: center;
-  padding: ${padding}px; //padding: 10px;
+  padding: ${padding}px; 
 `;
 
 const NameText = styled(Text)`
@@ -54,13 +54,13 @@ export const PrayerRequestChat = () => {
   const PrayerContentResponse = "Thanks for your prayers, I have been healed..";
   return (
     <Container>
-      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 20 }}>
-        <View style={{ marginLeft: 10, marginTop: 30 }}>
-          <ProfilePicture source={require("nlfyapp/assets/profile1.jpg")} />
+      <View style={{ flexDirection: "row", alignItems: "center", marginBottom: width * 0.03 }}>
+        <View style={{ marginLeft:  width * 0.03 , marginTop: width * 0.09 }}>
+          <ProfilePicture source={require("nlfyapp/assets/upload-pic-sign-up-male.png")} />
           <NameText variant="caption">Robin</NameText>
       </View>
-        <View style={{ marginLeft: 10 }}>
-          <PrayerCard elevation={0} top={10} isRight={true}>
+           <View style={{ marginLeft: width * 0.03 }}>
+          <PrayerCard elevation={0} top={width * 0.04} isRight={true}>
             <PrayerCardContent>
               <PrayerText variant="body">{PrayerContentRequest}</PrayerText>
             </PrayerCardContent>
@@ -69,18 +69,17 @@ export const PrayerRequestChat = () => {
       </View>
 
 
-      <View style={{ flexDirection: "row-reverse", alignItems: "center", marginBottom: 10 }}>
-        <View style={{ marginLeft: 15, marginTop: 15 }}>
-          <ProfilePicture source={require("nlfyapp/assets/profile2.jpg")} />
+      <View style={{ flexDirection: "row-reverse", alignItems: "center", marginBottom: width * 0.03 }}>
+        <View style={{ marginLeft:  width * 0.03, marginTop:  width * 0.03 }}>
+          <ProfilePicture source={require("nlfyapp/assets/upload-pic-sign-up-male.png")} />
           <NameText variant="caption">Sandeep</NameText>
         </View>
-        <PrayerCard elevation={0} top={10} isRight={false}>
+        <PrayerCard elevation={0} top={ width * 0.03} isRight={false}>
           <PrayerCardContent>
             <PrayerText variant="body">{PrayerContentResponse}</PrayerText>
           </PrayerCardContent>
         </PrayerCard>
       </View>
     </Container>
-
   );
 };

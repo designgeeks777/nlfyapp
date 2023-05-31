@@ -7,22 +7,21 @@ import {
   ScrollView,
   Text,
 } from "react-native";
-
 import styled from "styled-components";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { BackButton } from "../components/backButton";
-
 import { EventDateCard } from "./component/event/eventDateCard.component";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
+const wrapperPadding = width * 0.05;
+const wrapperMargin = width * 0.03;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
-  border-radius: 10px;
-  padding-bottom: ${width * 0.05}px;
-  top: ${width * 0.05}px;
-  margin-left: 10px;
+  border-radius: ${width * 0.9}px; //10px;
+  margin-left: ${wrapperMargin }px;
+  padding-top:${wrapperPadding}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -37,7 +36,6 @@ export const Events = () => {
         <WrapperView>
           <BackButton text="Events" />
         </WrapperView>
-
         <EventDateCard />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />

@@ -8,10 +8,12 @@ import axios from "axios";
 import { BASEURL } from "../../APIKey";
 
 const { width, height } = Dimensions.get("window");
-
+const marginHorizontal = width * 0.01;
+const marginVertical = width * 0.04;
+const padding = width;
 const SearchBar = styled(Searchbar)`
-  margin-horizontal: 10px;
-  margin-vertical: 20px;
+  margin-horizontal:${marginHorizontal }px;
+  margin-vertical:${marginVertical }px;
   elevation: 0;
   border-radius: 10px;
 
@@ -24,11 +26,14 @@ const SearchBar = styled(Searchbar)`
 `;
 
 const ViewSearchbar = styled(View)`
-  padding: 10px;
+  padding: ${padding * 0.04 }px;
 `;
 
 const CardView = styled(View)`
-  padding: 0 24px 24px 24px;
+  padding-top:${padding * 0.01}px;
+  padding-right: ${padding * 0.06}px;
+  padding-bottom:${padding * 0.06}px;
+  padding-left: ${padding * 0.06}px;
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
@@ -38,29 +43,34 @@ const StyledLinearGradient = styled(LinearGradient)`
 
 const CardDate = styled(Text)`
   color: ${(props) => props.theme.colors.text.primary};
-  font-size: ${(props) => props.theme.fontSizes.title};
-  font-weight: ${(props) => props.theme.fontWeights.bold};
-  font-family: ${(props) => props.theme.fonts.body};
-  line-height: ${(props) => props.theme.lineHeights.button};
-`;
-
-const CardTitle = styled(Text)`
-  padding: 8px 8px 0px 8px;
-  text-align-vertical: center;
-  text-align: center;
-  color: ${(props) => props.theme.colors.text.inverse};
-  font-size: ${(props) => props.theme.fontSizes.title};
+  font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
   line-height: ${(props) => props.theme.lineHeights.primary};
+  margin-bottom:${padding * 0.03 }px; 
 `;
 
-const CardContent = styled(Text)`
-  padding: 12px 8px 8px 8px;
-  text-align: center;
-  text-align-vertical: center;
+const CardTitle = styled(Text)`
+  padding-top: ${(props) => (props.numberOfLines > 2 ? padding * 0.1 : padding * 0.05)}px;
+  padding-right: ${padding * 0.05}px;
+  padding-bottom: ${(props) => (props.numberOfLines > 2 ? padding * 0.05 : padding * 0.02)}px;
+  padding-left: ${padding * 0.06}px;
   color: ${(props) => props.theme.colors.text.inverse};
-  font-size: ${(props) => props.theme.fontSizes.title};
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.bold};
+  font-family: ${(props) => props.theme.fonts.body};
+  line-height: ${(props) => props.theme.lineHeights.primary};
+  text-align-vertical: center;
+  text-align: center;
+  `;
+
+const CardContent = styled(Text)`
+  padding-top:${padding * 0.03}px;
+  padding-right: ${padding * 0.04}px;
+  padding-bottom: ${padding * 0.01}px;
+  padding-left: ${padding * 0.05}px;
+  color: ${(props) => props.theme.colors.text.inverse};
+  font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
   font-family: ${(props) => props.theme.fonts.body};
   line-height: ${(props) => props.theme.lineHeights.button};
@@ -87,6 +97,7 @@ const Item = (props) => {
             ? ` - by ${props.item.submittedBy}`
             : null}
         </CardDate>
+      
         <Card>
           <StyledLinearGradient
             start={{ x: 180, y: 0.25 }}

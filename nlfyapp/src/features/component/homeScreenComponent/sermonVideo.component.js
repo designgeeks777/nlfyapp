@@ -18,14 +18,11 @@ const videosUrl = `https://www.googleapis.com/youtube/v3/search?order=date&part=
 const styles = StyleSheet.create({
   videoContainer: {
     width: containerWidth,
-    // height: 200,
     height: containerheight,
-    //borderRadius: 30,
+    borderRadius: 30,
     justifyContent: "center",
-    //alignItems: "center",
-    //padding: 10,
-    // marginTop: 40,
-    marginTop: containerTop,
+   
+  marginTop: containerTop,
   },
   video: {
     width: "100%",
@@ -51,7 +48,6 @@ export const SermonVideo = () => {
     axios
       .get(videosUrl)
       .then((response) => {
-        //console.log("response sermon", response.data.items[0]);
         setVideo(response.data.items[0]);
       })
       .catch((error) => {

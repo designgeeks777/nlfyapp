@@ -1,22 +1,25 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
-import { FlatList } from "react-native";
-
+import { FlatList,Dimensions } from "react-native";
 import { BASEURL } from "../../../../APIKey";
 import axios from "axios";
 
+const { width } = Dimensions.get("window");
+const wrapperPadding = width * 0.05;
+const wrapperMargin = width * 0.03;
+
 const StoryCard = styled(Card)`
-  top: 10px;
-  width: 225px;
-  height: 100px;
-  border-radius: 15px;
-  border-width: 1px;
+  top: ${wrapperPadding * 0.7}px;
+  width: ${width * 0.6}px;
+  height: ${width * 0.3}px;
+  border-radius: ${width * 0.03}px;
+  border-width: ${width * 0.002}px;
   border-color: #e3aa8d;
   background-color: ${(props) => props.theme.colors.bg.primary};
   shadow-color: transparent;
-  margin-bottom: 14px;
-  margin-right: 10px;
+  margin-bottom: ${wrapperMargin * 1.4}px;
+  margin-right: ${wrapperMargin * 0.9}px;
 `;
 
 const StoryCardContent = styled(Text)`

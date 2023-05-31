@@ -1,4 +1,3 @@
-//supports both Android and IOS devices
 import React, {
   useCallback,
   useState,
@@ -18,13 +17,10 @@ import {
   Modal,
   Dimensions,
 } from "react-native";
-
 import { BASEURL } from "../../APIKey";
 import { Button, Card, Paragraph } from "react-native-paper";
-import { PrayerForm } from "../features/component/prayerRequest/prayerForm.component";
 import { NLFModal } from "./NLFModal.component";
 import styled from "styled-components";
-
 import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 const { height, width } = Dimensions.get("window");
@@ -89,9 +85,7 @@ const Item = (props) => {
   const cardStyle = {
     width: width * 0.74,
     backgroundColor: "rgba(242, 105, 36, 0.3)",
-    //alignSelf: props.position === "left" ? "flex-end" : "flex-start",
-    marginLeft: props.position === "left" ? width * 0.02 : 0,
-    //marginRight: props.position === "left" ? width * 0.05 : 0,
+    marginLeft: props.position === "left" ? width * 0.01 : 0,
     shadowColor: "transparent",
     borderRadius: 30,
     marginBottom: height * 0.05,
@@ -100,34 +94,30 @@ const Item = (props) => {
   const containerStyle = {
     flexDirection: props.position === "left" ? "row" : "row-reverse",
     alignItems: "center",
-    marginBottom: Platform.OS === "ios" ? 0 : height * 0.06,
+    marginBottom: Platform.OS === "ios" ? 0 : height * 0.05,
     marginLeft: width * 0.04,
-    marginRight: width * 0.04, // align profile and name side by side to the requestmessage
-    //marginTop: Platform.OS === "ios" ? 0 : 80, // add top margin for android devices
-    //marginTop: Platform.OS === "ios" ? 0 : height * 0.04,
+    marginRight: width * 0.01, 
   };
 
   const nameStyle = {
     marginRight: props.position === "left" ? 0 : -40,
     marginLeft: props.position === "left" ? -40 : 0,
-    top: width * 0.1, // Add margin top to move the name down a little
+    top: width * 0.1, 
   };
   const textStyle = {
     lineHeight: 16,
     textAlign: "left",
-    padding: 5,
-    bottom: 5,
+    
+    padding: width * 0.02,
+    bottom: width * 0.02,
   };
 
   const setFlex = {
     flexDirection: props.position === "left" ? "row" : "row-reverse",
   };
 
-  //marginRight: props.position === "left" ? 0 : -40,
-  //marginLeft: props.position === "left" ? width * 0.1 : width * 0.09,
-  //flexDirection: props.position === "left" ? "row-reverse" : "row",
   const writeprayer = {
-    marginLeft: position === "left" ? width * 0.1 : width * 0.09,
+    marginLeft: position === "left" ? width * 0.04 : width * 0.06,
     flexDirection: position === "left" ? "row-reverse" : "row",
   };
 
@@ -136,7 +126,6 @@ const Item = (props) => {
       width: width * 0.1,
       height: height * 0.06,
       borderRadius: 20,
-      //top: Platform.OS === "ios" ? 60 : width * 0.2, // Add margin top to move the profile down a little
     },
     flatlistWrapper: {
       flex: 1,
@@ -171,6 +160,7 @@ const Item = (props) => {
                 mode="text"
                 icon={props.selected ? "chevron-up" : "chevron-down"}
                 onPress={toggleRequestNumberOfLines}
+                labelStyle={{ color: "black" , fontWeight: "normal" }}
               >
                 {requestTextShown && props.selected ? "collapse" : "expand"}
               </Button>
@@ -217,7 +207,6 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
       width: width * 0.1,
       height: height * 0.06,
       borderRadius: 20,
-      //top: Platform.OS === "ios" ? 60 : width * 0.2, // Add margin top to move the profile down a little
     },
     flatlistWrapper: {
       flex: 1,
@@ -225,7 +214,9 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
       bottom: 0,
       height: height * 0.64,
       overflow: "scroll",
+      marginTop: width * 0.01,
     },
+    
   });
 
   return (
@@ -233,7 +224,7 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
       <FlatList
         data={props.data}
         initialNumToRender={props.data.length}
-        contentContainerStyle={{ paddingBottom: 150 }}
+        contentContainerStyle={{ paddingBottom:width * 0.01 }}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         extraData={selectedId}

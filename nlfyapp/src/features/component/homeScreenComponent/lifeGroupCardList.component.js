@@ -1,8 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import { Card, Text } from "react-native-paper";
-import { View } from "react-native";
+import { View, Dimensions } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+
+const { width } = Dimensions.get("window");
+const padding = width * 0.03;
+const cardHeight = width * 0.2;
+const Margin = width * 0.01;
+const borderRadius = width * 0.9;
 
 const LifeGroupCardWrapperView = styled(View)`
   flex: 1;
@@ -15,21 +21,21 @@ const LifeGroupCard = styled(Card)`
   shadow-color: transparent;
   border-color: transparent;
   background-color: "transparent";
-  height: 80px;
-  border-radius: 15px;
-  margin: 3px;
-  top: 10px;
+  height: ${cardHeight}px; 
+  border-radius: ${borderRadius}px;
+  margin: ${Margin}px;
+  top:${padding}px;
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
-  height: 80px;
-  border-radius: 15px;
+  height:${cardHeight}px;
+  border-radius: ${borderRadius * 0.05}px;
   justify-content: center;
-  margin: 3px;
+  margin: ${Margin}px;
 `;
 
 const LifeGroupCardContent = styled(Text)`
-  padding: 6px;
+  padding: ${padding * 0.7}px;
   text-align-vertical: center;
   text-align: center;
   color: ${(props) => props.theme.colors.text.inverse};
