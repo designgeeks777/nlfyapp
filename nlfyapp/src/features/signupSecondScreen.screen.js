@@ -14,12 +14,11 @@ import axios from "axios";
 import { BASEURL } from "../../APIKey";
 
 const { height, width } = Dimensions.get("window");
-const containerHeight = height * 0.1;
 const progressStepViewHeight = height * 0.5;
-const containerWidth = width * 0.9;
 
 const MessageText = styled(Text)`
-  padding-left: 20px;
+  //padding-left: 20px;
+  padding-left:${width * 0.1}px; 
   align-self: flex-start;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) =>
@@ -28,12 +27,13 @@ const MessageText = styled(Text)`
       : props.theme.colors.text.errorMessage};
   font-family: ${(props) => props.theme.fonts.body};
 `;
+
+
 export const Stepper = () => {
   const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
   const attemptInvisibleVerification = useState(false);
   const {
-    // user,
     error,
     isValidOTPCode,
     onSignInWithPhoneNumber,
@@ -169,7 +169,7 @@ export const Stepper = () => {
       // height: 300,
       height: progressStepViewHeight,
       alignItems: "center",
-      // backgroundColor: "#ececec",
+      backgroundColor: "#ececec",
     },
     containerView: {
       flex: 1,
@@ -181,25 +181,26 @@ export const Stepper = () => {
     progressStepNextButtonStyle: {
       fontSize: 18,
       borderRadius: 50,
-      width: containerWidth,
-      height: containerHeight,
-      left: 42,
+      width: width * 0.9,
+      height: height * 0.09,
+      left:width * 0.12,
       justifyContent: "center",
-      backgroundColor: "#E94A27",
+      backgroundColor:  "#F26924",
     },
     progressStepNextButtonTextStyle: {
       color: "#FFFFFF",
       textAlign: "center",
       fontWeight: "bold",
-      letterSpacing: 0.25,
-      lineHeight: 21,
+      letterSpacing: height * 0.003, 
+      lineHeight: height * 0.03,
     },
     disabledProgressStepNextButtonStyle: {
       fontSize: 18,
       padding: 16,
       borderRadius: 50,
-      width: 300,
+      width: width * 0.3,
       height: 56,
+      //height: height * 0.05,
       left: 32,
       flex: 1,
       alignItems: "center",
@@ -216,18 +217,21 @@ export const Stepper = () => {
       fontWeight: "bold",
       fontSize: 20,
       textAlign: "center",
-      marginTop: 28,
+      marginTop: width * 0.1,
     },
-    OTPText: { top: 8 },
+    OTPText: { 
+      //top: 8,
+      top: width * 0.08,
+    },
     SelectGenderText: {
-      left: 20,
-      top: 16,
+      left: width * 0.05,
+      top: width * 0.04,
       color: "#666666",
       alignSelf: "flex-start",
     },
     RadioButtonRow: {
-      left: 12,
-      top: 20,
+      left: width * 0.03,
+      top: width * 0.05,
       flexDirection: "row",
       alignItems: "center",
       alignSelf: "stretch",
@@ -246,11 +250,11 @@ export const Stepper = () => {
       <View style={styles.containerProgressSteps}>
         <Text style={styles.heading}>Sign Up with Mobile Number</Text>
         <ProgressSteps
-          topOffset={20}
-          marginBottom={28}
+          topOffset={width * 0.04}
+          marginBottom={width * 0.1}
           activeLabelColor="#000000"
-          activeLabelFontSize={10}
-          labelFontSize={10}
+          activeLabelFontSize={width * 0.03}
+          labelFontSize={width * 0.03}
           completedLabelColor="lightgray"
           activeStepNumColor="#4bb543"
           disabledStepNumColor="transparent"
@@ -329,7 +333,7 @@ export const Stepper = () => {
             <View style={styles.progressStepViewStyle}>
               <CustomTextInput
                 label="Enter name"
-                placeholder="Sam"
+                placeholder="sam"
                 keyboardType="default"
                 value={user.name}
                 onChange={handleNameChange}

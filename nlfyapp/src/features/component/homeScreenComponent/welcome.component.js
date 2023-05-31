@@ -24,7 +24,7 @@ const { width, height } = Dimensions.get("window");
 
 const WelcomeText = styled(Text)`
   position: absolute;
-  top: ${width * 0.03}px;
+  top: ${width * 0.01}px;
   color: ${(props) => props.theme.colors.text.title};
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -32,6 +32,7 @@ const WelcomeText = styled(Text)`
 `;
 const Profile = styled(View)`
   margin-left: ${width * 0.02}px;
+  top: ${width * 0.01}px;
   height:${width * 0.11}px;
   width: ${width * 0.11}px;
   border-radius: ${width * 0.05}px;
@@ -40,13 +41,13 @@ const Profile = styled(View)`
   align-items: center;
 `;
 const ProfilePic = styled(Image)`
-  height:  ${width * 0.11}px;
-  width:  ${width * 0.11}px;
+  height: 100%;
+  width: 100%;
   border-radius:  ${width * 0.02}px;
 `;
 
 const ModalContainer = styled(View)`
-  padding: 36px;
+  padding:${width * 0.1}px;
   height: ${height}px;
   background-color: ${(props) =>
     props.profilePicVisibleBgColor
@@ -54,7 +55,7 @@ const ModalContainer = styled(View)`
       : props.theme.colors.bg.primary};
 `;
 const Heading = styled(Text)`
-  margin-bottom: 20px;
+  margin-bottom: ${width * 0.05}px;
   color: ${(props) => props.theme.colors.text.title};
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.button};
@@ -67,22 +68,22 @@ const Caption = styled(Text)`
   font-weight: ${(props) => props.theme.fontWeights.medium};
   line-height: ${(props) => props.theme.lineHeights.button};
   letter-spacing: ${(props) => props.theme.space[1]};
-  margin-top: 8px;
+  padding:${width * 0.01}px;
 `;
 const RowView = styled(View)`
   flex-direction: row;
   align-self: ${(props) => (props.modalIcon ? "flex-start" : "flex-end")};
   align-items: center;
   justify-content: space-between;
-  top: 8px;
+  top:${width * 0.01}px;
 `;
 const ModalProfilePicContainer = styled(View)`
   align-self: center;
   border-width: 1px;
   border-color: ${(props) => props.theme.colors.border.primary};
-  height: 200px;
-  width: 200px;
-  border-radius: 100px;
+  height: ${width * 0.5}px;
+  width: ${width * 0.5}px;  
+  border-radius: ${width * 0.9}px; 
   overflow: hidden;
   justify-content: center;
   align-items: center;
@@ -99,13 +100,13 @@ const FontAwesome5Icon = styled(FontAwesome5)`
   background-color: ${(props) => props.theme.colors.bg.secondary};
   border-radius: 28px;
   align-self: center;
-  padding: 12px;
+  padding: ${width * 0.04}px;
 `;
 const ButtonView = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  margin-bottom: 42px;
+  margin-bottom:${width * 0.07}px;
 `;
 const StyledTextInput = styled(TextInput).attrs({
   selectionColor: "#D9D9D9",
@@ -115,11 +116,11 @@ const StyledTextInput = styled(TextInput).attrs({
   activeOutlineColor: "transparent",
   placeHolderTextColor: "#676767",
 })`
-  margin-bottom: 42px;
+  margin-bottom: ${width * 0.04}px;
   font-size: ${(props) => props.theme.fontSizes.body};
   color: ${(props) => props.theme.colors.text.primary};
   font-family: ${(props) => props.theme.fonts.body};
-  border-bottom-width: 1px;
+  border-bottom-width: ${width * 0.001}px;
   background-color: "transparent";
 `;
 
@@ -313,7 +314,7 @@ export const Welcome = (props) => {
               {/* {user?.isAnonymous ? ( */}
               {user === null || user?.isAnonymous ? (
                 <>
-                  <Caption onPress={navigateToSignUp}>Login</Caption>
+                  <Caption onPress={navigateToSignUp}  style={{color:"#EF6C00", marginTop : width*0.02}}>Login</Caption>
                 </>
               ) : (
                 <>
@@ -326,7 +327,7 @@ export const Welcome = (props) => {
                       )}
                     </ModalProfilePicContainer>
                     <TouchableOpacityIcon onPress={openProfilePicModal}>
-                      <FontAwesome5Icon name="camera" size={28} />
+                      <FontAwesome5Icon name="camera" size={width * 0.06} />
                     </TouchableOpacityIcon>
                   </View>
                   <Caption>Name</Caption>
@@ -357,7 +358,7 @@ export const Welcome = (props) => {
                     </ButtonView>
                   ) : null}
                   <Text
-                    style={{ alignSelf: "flex-start" }}
+                    style={{ alignSelf: "flex-start", padding:width * 0.01, color:"#EF6C00"}}
                     onPress={handleLogout}
                     disabled={profilePicVisible}
                   >
@@ -372,7 +373,7 @@ export const Welcome = (props) => {
               style={{
                 backgroundColor: "white",
                 width: width,
-                padding: 20,
+                padding: width * 0.03,
                 bottom: 0,
                 position: "absolute",
                 elevation: 2,
@@ -385,11 +386,11 @@ export const Welcome = (props) => {
               </TouchableWithoutFeedback>
               <RowView modalIcon={true}>
                 <TouchableOpacityIcon modalIcon={true} onPress={onOpenCamera}>
-                  <FontAwesome5Icon name="camera" size={28} />
+                  <FontAwesome5Icon name="camera" size={width*0.07} />
                   <Caption>Camera</Caption>
                 </TouchableOpacityIcon>
                 <TouchableOpacityIcon modalIcon={true} onPress={onOpenGallery}>
-                  <FontAwesome5Icon name="image" size={28} />
+                  <FontAwesome5Icon name="image" size={width*0.07} />
                   <Caption>Gallery</Caption>
                 </TouchableOpacityIcon>
               </RowView>
