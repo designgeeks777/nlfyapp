@@ -258,11 +258,11 @@ export const UploadPicSignUp = (props) => {
           </View>
           <RowView>
             <TouchableOpacityIcon modalIcon={true} onPress={onOpenCamera}>
-              <FontAwesome5Icon modalIcon={true} name="camera" size={28} />
+              <FontAwesome5Icon modalIcon={true} name="camera" size={width * 0.06} />
               <ModalIconCaption>Camera</ModalIconCaption>
             </TouchableOpacityIcon>
             <TouchableOpacityIcon modalIcon={true} onPress={onOpenGallery}>
-              <FontAwesome5Icon modalIcon={true} name="image" size={28} />
+              <FontAwesome5Icon modalIcon={true} name="image" size={width * 0.06} />
               <ModalIconCaption>Gallery</ModalIconCaption>
             </TouchableOpacityIcon>
           </RowView>
@@ -283,7 +283,7 @@ export const UploadPicSignUp = (props) => {
             )}
           </ProfilePicContainer>
           <TouchableOpacityIcon onPress={showModal}>
-            <FontAwesome5Icon name="camera" size={28} />
+            <FontAwesome5Icon name="camera" size={width * 0.06} />
           </TouchableOpacityIcon>
         </View>
         <OptionsContainer>
