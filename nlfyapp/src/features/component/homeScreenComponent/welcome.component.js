@@ -125,7 +125,13 @@ const StyledTextInput = styled(TextInput).attrs({
 
 export const Welcome = (props) => {
   const [userData, setUserData] = useState(null);
-  const { onLogout, user, isAuthenticated } = useContext(AuthenticationContext);
+  const {
+    onLogout,
+    user,
+    isAuthenticated,
+    dataInLocalAPICompleted,
+    isDataPostInLocalAPICompleted,
+  } = useContext(AuthenticationContext);
   const [visible, setVisible] = useState(false);
   const [profilePicVisible, setProfilePicVisible] = useState(false);
   const [showUpdateOptions, setShowUpdateOptions] = useState(false);
@@ -150,7 +156,7 @@ export const Welcome = (props) => {
           setUserData("");
         });
     }
-  }, [isAuthenticated, user?.phoneNumber]);
+  }, [isAuthenticated, user?.phoneNumber, dataInLocalAPICompleted]);
 
   const navigateToSignUp = () => {
     console.log("GO TO SIGN UP");
@@ -160,8 +166,10 @@ export const Welcome = (props) => {
     }, 1000);
   };
   const handleLogout = () => {
-    onLogout();
+    isDataPostInLocalAPICompleted(false);
     setUserData("");
+    onLogout();
+
     hideModal();
   };
   const showModal = () => {
@@ -392,7 +400,7 @@ export const Welcome = (props) => {
         </Modal>
       ) : null}
       <>
-        <WelcomeText>Welcome {userData?.name}</WelcomeText>
+        <WelcomeText>Welcome {user?.displayName}</WelcomeText>
         <RowView>
           {/* {user?.isAnonymous ? ( */}
           {user === null || user?.isAnonymous ? (

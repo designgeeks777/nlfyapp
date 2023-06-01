@@ -19,6 +19,8 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [isValidOTPCode, setIsValidOTPCode] = useState(null);
   const [userId, setUserId] = useState("");
 
+  const [dataInLocalAPICompleted, setDataInLocalAPICompleted] = useState(false);
+
   useEffect(() => {
     const unsubscribeFromAuthStatuChanged = onAuthStateChanged(
       auth,
@@ -175,6 +177,12 @@ export const AuthenticationContextProvider = ({ children }) => {
     });
   };
 
+  const isDataPostInLocalAPICompleted = (value) => {
+    console.log("isDataPostInLocal called");
+    console.log("Value before setter", dataInLocalAPICompleted);
+    setDataInLocalAPICompleted(value);
+  };
+
   return (
     <AuthenticationContext.Provider
       value={{
@@ -187,6 +195,8 @@ export const AuthenticationContextProvider = ({ children }) => {
         registered,
         isValidOTPCode,
         confirmResult,
+        dataInLocalAPICompleted,
+        isDataPostInLocalAPICompleted,
         resetConfirmResult,
         setIsValidOTPCode,
         setRegistered,
