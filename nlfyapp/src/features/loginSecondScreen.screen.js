@@ -246,7 +246,7 @@ export const LoginSecondScreen = ({ route }) => {
           <CustomTextInput
             label="Mobile Number"
             maxLength={15}
-            placeholder="(+91)999989080"
+            placeholder="+91999989080"
             autoFocus
             autoCompleteType="tel"
             keyboardType="phone-pad"

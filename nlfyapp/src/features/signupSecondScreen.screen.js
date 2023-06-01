@@ -305,7 +305,7 @@ export const Stepper = () => {
             <View style={styles.progressStepViewStyle}>
               <CustomTextInput
                 label="Mobile Number"
-                placeholder="(+91)999989080"
+                placeholder="+91999989080"
                 keyboardType="phone-pad"
                 autoFocus
                 autoCompleteType="tel"
