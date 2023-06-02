@@ -177,6 +177,8 @@ export const AuthenticationContextProvider = ({ children }) => {
     });
   };
 
+  //This is added to be triggered from uploadPicSignUp to address the issue of name and pic npt loading in second signup
+  //Adding this function will trigger a change in the value and hence call the useEffect in the welcome.component.js
   const isDataPostInLocalAPICompleted = (value) => {
     console.log("isDataPostInLocal called");
     console.log("Value before setter", dataInLocalAPICompleted);

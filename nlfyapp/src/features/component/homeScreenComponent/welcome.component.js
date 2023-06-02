@@ -20,6 +20,8 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormData from "form-data";
 import mime from "mime";
 
+import defaultImageMale from "../../../../assets/upload-pic-sign-up-male.png";
+import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.jpg";
 const { width, height } = Dimensions.get("window");
 
 const WelcomeText = styled(Text)`
@@ -131,6 +133,7 @@ export const Welcome = (props) => {
     isAuthenticated,
     dataInLocalAPICompleted,
     isDataPostInLocalAPICompleted,
+    updateProfile,
   } = useContext(AuthenticationContext);
   const [visible, setVisible] = useState(false);
   const [profilePicVisible, setProfilePicVisible] = useState(false);
@@ -208,10 +211,28 @@ export const Welcome = (props) => {
       imageData.append("profilePic", {
         uri: newImageUri,
         type: mime.getType(newImageUri),
+
         name: newImageUri.split("/").pop(),
       });
+    } else {
+      const defaultMaleImageUri =
+        Image.resolveAssetSource(defaultImageMale).uri;
+      const defaultFemaleImageUri =
+        Image.resolveAssetSource(defaultImageFemale).uri;
+      const newImageUri =
+        userData.gender === "male"
+          ? defaultMaleImageUri
+          : defaultFemaleImageUri;
+      let defaultImageName =
+        userData.gender === "male"
+          ? "upload-pic-sign-up-male.png"
+          : "upload-pic-sign-up-female.jpg";
+      imageData.append("profilePic", {
+        uri: newImageUri,
+        type: userData.gender === "male" ? "image/png" : "image/jpg",
+        name: defaultImageName,
+      });
     }
-
     try {
       await axios
         .patch(`${BASEURL}/users/${userData._id}`, imageData, {
@@ -221,6 +242,7 @@ export const Welcome = (props) => {
         })
         .then((response) => {
           console.log("USERS", response.data);
+          updateProfile(username);
           if (response.data) {
             setShowUpdateOptions(false);
             setUserData(response.data);
