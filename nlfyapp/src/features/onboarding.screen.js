@@ -6,29 +6,26 @@ import {
   StyleSheet,
   StatusBar,
   SafeAreaView,
+  Dimensions
 } from "react-native";
 import Swiper from "react-native-swiper";
 import styled from "styled-components/native";
 import { Button } from "../components/button";
 import { Home } from "./home.screen";
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Sermons } from "./sermons.screen";
 import { Events } from "./events.screen";
-
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
-
 import { useNavigation } from "@react-navigation/native";
-
 import { Devotionals } from "./devotionals.screen";
-
 import { PrayerRequestNavigation } from "../../PrayerRequestNavigation";
 
+const { width } = Dimensions.get("window");
 const SafeArea = styled(SafeAreaView)`
   flex: 1;
   margin-top: ${StatusBar.currentHeight}px;
@@ -54,37 +51,37 @@ const Slide3 = styled(View)`
 
 const Slide4 = styled(View)`
   flex: 1;
-  top: -20px;
+  top:  ${width * 0.01}px;
   justify-content: center;
   align-items: center;
 `;
 
 const Slide1Image = styled(Image)`
-  height: 500px;
-  width: 500px;
+  height:  ${width * 1.2}px; 
+  width: ${width}px; 
   align-self: center;
   position: absolute;
-  top: 0;
+  top:  ${width * 0.05}px; 
 `;
 
-const Slide2Image = styled(Image)`
-  height: 250px;
-  width: 250px;
-  border-radius: 10px;
+const SlideImage = styled(Image)`
+   height: ${width * 0.7}px;
+   width:  ${width * 0.7}px;
 `;
+
 
 const TextSlide1 = styled(Text)`
   align-items: center;
-  top: 200px;
+  top: ${width * 0.5}px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.header};
-  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-const TextSlide2 = styled(Text)`
-  top: 200px;
-  padding-top: 16px;
+const JoinText = styled(Text)`
+  top: ${width * 0.6}px;
+  padding-top: ${width * 0.01}px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.medium};
@@ -100,12 +97,31 @@ const TextScreen2 = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   margin-left: ${(props) => props.theme.space[3]};
   margin-right: ${(props) => props.theme.space[3]};
-  top: 20px;
+  top: ${width * -0.01}px;
+`;
+const TextScreen3 = styled(Text)`
+  color: ${(props) => props.theme.colors.text.primary};
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+  margin-left: ${(props) => props.theme.space[3]};
+  margin-right: ${(props) => props.theme.space[3]};
+  top: ${width * 0.1}px;
+`;
+
+const MemberText = styled(Text)`
+  color: ${(props) => props.theme.colors.text.primary};
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+  margin-left: ${(props) => props.theme.space[3]};
+  margin-right: ${(props) => props.theme.space[3]};
+  top: ${width * 0.11}px;
 `;
 
 const TextScreen2Orange = styled(Text)`
-  top: 40px;
-  padding-top: 16px;
+  top:  ${width * 0.01}px;
+  padding-top: ${width * 0.1}px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.medium};
@@ -113,14 +129,20 @@ const TextScreen2Orange = styled(Text)`
 `;
 
 const TextScreen1Orange = styled(Text)`
-  top: 220px;
-  padding-top: 16px;
+  top: ${width * 0.65}px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.medium};
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
+const TextScreen3Orange = styled(Text)`
+  top:  ${width * 0.3}px;
+  color: ${(props) => props.theme.colors.text.secondary};
+  font-size: ${(props) => props.theme.fontSizes.caption};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+`;
 const createScreenOptions = ({ route }) => {
   const iconName = TAB_ICON[route.name];
   if (iconName === "md-home") {
@@ -203,14 +225,14 @@ export const Onboarding = () => {
           <Slide1Image source={require("nlfyapp/assets/onboarding1.jpg")} />
           <TextSlide1>You Matter to God</TextSlide1>
           <TextSlide1>You Matter to Us</TextSlide1>
-          <TextSlide2>
+          <JoinText>
             Join this beautiful family to experience spiritual richness,
             healing, fellowship, community and much more
-          </TextSlide2>
+          </JoinText>
           <TextScreen1Orange>Swipe</TextScreen1Orange>
         </Slide1>
         <Slide2>
-          <Slide2Image source={require("nlfyapp/assets/onboarding2.png")} />
+          <SlideImage source={require("nlfyapp/assets/onboarding2.png")} />
           <TextScreen2>
             Easily join this spiritual family which is not just a Sunday church
             but cares about you..
@@ -220,20 +242,20 @@ export const Onboarding = () => {
             Sign Up to have a customized experience or swipe
           </TextScreen2Orange>
           <Button label="Sign Up" handleClick={navigateToSignUp} />
-          <TextScreen2>
+          <MemberText >
             Already a member?
-            <TextScreen1Orange onPress={navigateToLogin}>
+            <TextScreen2Orange  onPress={navigateToLogin}>
               Log in
-            </TextScreen1Orange>
-          </TextScreen2>
+            </TextScreen2Orange>
+          </MemberText>
         </Slide2>
         <Slide3>
-          <Slide2Image source={require("nlfyapp/assets/onboarding3.png")} />
-          <TextScreen2>
-            Have fellowship, listen sermons,be part of life groups,give easily
+          <SlideImage source={require("nlfyapp/assets/onboarding3.png")} />
+          <TextScreen3>
+            Have fellowship, listen sermons, be part of life groups, give easily
             as God leads you
-          </TextScreen2>
-          <TextScreen2Orange>Swipe to get started</TextScreen2Orange>
+          </TextScreen3>
+          <TextScreen3Orange>Swipe to get started</TextScreen3Orange>
         </Slide3>
 
         <NavigationContainer independent={true}>

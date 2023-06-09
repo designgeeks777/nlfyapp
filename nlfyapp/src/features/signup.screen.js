@@ -14,7 +14,6 @@ const textheight = height * 0.5;
 
 const WrapperView = styled(View)`
   flex: 1;
-
   align-items: center;
 `;
 
@@ -25,16 +24,16 @@ const YouAreThereImage = styled(ImageBackground)`
 `;
 
 const GoogleButtonPadding = styled(View)`
-  top: 10px;
+  top:${width * 0.02}px;
 `;
 const PrimaryButtonPadding = styled(View)`
-  top: 110px;
+  top:${width * 0.3}px;
 `;
 
 const BoldText = styled(Text)`
   align-items: center;
   top: ${textheight}px;
-  padding-left: 40px;
+  padding-left:${width * 0.09}px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -54,8 +53,6 @@ export const SignUp = () => {
   const navigateToSignUpSecondScreen = () => {
     console.log("Navigation to Second Screen triggered");
     navigation.navigate("Stepper");
-    // navigation.navigate("UploadPicSignUp");
-    // navigation.navigate("Home");
   };
   return (
     <SafeAreaView>

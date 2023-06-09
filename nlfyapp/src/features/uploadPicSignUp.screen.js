@@ -18,9 +18,9 @@ import defaultImageFemale from "../../assets/profile2.jpg";
 const { width } = Dimensions.get("window");
 
 const ContainerView = styled(SafeAreaView)`
-  margin-left: 32px;
-  margin-right: 32px;
-  margin-bottom: 42px;
+  margin-left: ${width * 0.1}px; 
+  margin-right: ${width * 0.1}px; 
+  margin-bottom:${width * 0.2}px; 
   flex: 1;
   justify-content: space-around;
 `;
@@ -43,20 +43,20 @@ const Caption = styled(Text)`
 
 const ProfilePicContainer = styled(View)`
   align-self: center;
-  border-width: 1px;
+  border-width: ${width * 0.002}px; 
   border-color: ${(props) => props.theme.colors.border.primary};
-  height: 200px;
-  width: 200px;
-  border-radius: 100px;
+  height: ${width * 0.5}px; 
+  width:  ${width * 0.5}px; 
+  border-radius:  ${width * 0.9}px; 
   overflow: hidden;
   justify-content: center;
   align-items: center;
 `;
 
 const ProfilePic = styled(Image)`
-  height: 200px;
-  width: 200px;
-  border-radius: 100px;
+  height:  ${width * 0.6}px; 
+  width:  ${width * 0.6}px; 
+  border-radius:  ${width * 0.5}px; 
 `;
 
 const OptionsContainer = styled(View)`
@@ -68,7 +68,7 @@ const ModalHeading = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.bodylarge};
   font-weight: ${(props) => props.theme.fontWeights.regular};
-  margin-bottom: 28px;
+  margin-bottom:  ${width * 0.05}px; 
 `;
 
 const TouchableOpacityIcon = styled(TouchableOpacity)`
@@ -85,9 +85,9 @@ const FontAwesome5Icon = styled(FontAwesome5)`
       ? props.theme.colors.bg.primary
       : props.theme.colors.bg.primary};
   background-color: ${(props) => props.theme.colors.bg.secondary};
-  border-radius: 28px;
+  border-radius: ${width * 0.1}px; 
   align-self: center;
-  padding: 12px;
+  padding:  ${width * 0.03}px; 
 `;
 
 const ModalIconCaption = styled(Text)`
@@ -106,7 +106,7 @@ const RowView = styled(View)`
 `;
 
 const SkipForNow = styled(Text)`
-  top: 36px;
+  top:  ${width * 0.09}px; 
   color: ${(props) => props.theme.colors.text.title};
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.title};
@@ -240,6 +240,7 @@ export const UploadPicSignUp = (props) => {
   const containerStyle = {
     backgroundColor: "white",
     padding: 20,
+    //padding: width * 0.02,
     position: "absolute",
     bottom: 0,
     width: width,
@@ -257,11 +258,11 @@ export const UploadPicSignUp = (props) => {
           </View>
           <RowView>
             <TouchableOpacityIcon modalIcon={true} onPress={onOpenCamera}>
-              <FontAwesome5Icon modalIcon={true} name="camera" size={28} />
+              <FontAwesome5Icon modalIcon={true} name="camera" size={width * 0.06} />
               <ModalIconCaption>Camera</ModalIconCaption>
             </TouchableOpacityIcon>
             <TouchableOpacityIcon modalIcon={true} onPress={onOpenGallery}>
-              <FontAwesome5Icon modalIcon={true} name="image" size={28} />
+              <FontAwesome5Icon modalIcon={true} name="image" size={width * 0.06} />
               <ModalIconCaption>Gallery</ModalIconCaption>
             </TouchableOpacityIcon>
           </RowView>
@@ -282,7 +283,7 @@ export const UploadPicSignUp = (props) => {
             )}
           </ProfilePicContainer>
           <TouchableOpacityIcon onPress={showModal}>
-            <FontAwesome5Icon name="camera" size={28} />
+            <FontAwesome5Icon name="camera" size={width * 0.06} />
           </TouchableOpacityIcon>
         </View>
         <OptionsContainer>
