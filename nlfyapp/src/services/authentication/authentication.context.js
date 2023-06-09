@@ -79,9 +79,11 @@ export const AuthenticationContextProvider = ({ children }) => {
     setConfirm(null);
   };
   const onSignInWithPhoneNumber = async (phoneNumber, appVerifier) => {
-    //phoneNumber = testPhoneNumber;
+    phoneNumber = testPhoneNumber;
     console.log("SIGN IN AUTH CONTEXT", phoneNumber);
     setIsLoading(true);
+    //This is set to avoid pre-stored value
+    setIsValidOTPCode(false);
     try {
       console.log("CALLED>>>>>>>>>>>>>>>>>>>>>>>>.");
       await firebase
@@ -113,7 +115,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   };
   const confirmCode = async (otpCode) => {
-    //otpCode = testOtpCode;
+    otpCode = testOtpCode;
     console.log("CONFIRM OTP AUTH CONTEXT", otpCode);
     setIsLoadingOTP(true);
     try {
