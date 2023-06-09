@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import styled from "styled-components/native";
 import { Button } from "../components/button";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
 
 const { width, height } = Dimensions.get("window");
 const slide2ImageWidth = width * 0.5;
@@ -67,6 +67,11 @@ const Slide2Image = styled(Image)`
 
 export const HasLaunchedOnboarding = ({ route }) => {
   const navigation = useNavigation();
+  useFocusEffect(
+    React.useCallback(() => {
+      navigation.setOptions({ headerShown: false });
+    }, [navigation])
+  );
   useLayoutEffect(() => {
     if (!navigation || !route) return;
     const mainBottomTabNavigator = navigation.getParent("MainBottomTab");

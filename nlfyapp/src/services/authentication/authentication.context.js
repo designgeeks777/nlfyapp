@@ -5,6 +5,8 @@ import axios from "axios";
 import { BASEURL } from "../../../APIKey";
 import { auth } from "../../../firebase";
 
+import { useNavigation } from "@react-navigation/native";
+
 export const AuthenticationContext = createContext();
 
 export const AuthenticationContextProvider = ({ children }) => {
@@ -20,6 +22,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const [userId, setUserId] = useState("");
 
   const [dataInLocalAPICompleted, setDataInLocalAPICompleted] = useState(false);
+  //const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribeFromAuthStatuChanged = onAuthStateChanged(
