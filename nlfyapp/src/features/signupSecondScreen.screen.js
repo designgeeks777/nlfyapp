@@ -5,6 +5,9 @@ import {
   StyleSheet,
   Dimensions,
   ActivityIndicator,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Platform,
 } from "react-native";
 import { ProgressStep, ProgressSteps } from "react-native-progress-steps";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
@@ -18,6 +21,10 @@ import { AuthenticationContext } from "../services/authentication/authentication
 import * as fb from "firebase/compat";
 import axios from "axios";
 import { BASEURL } from "../../APIKey";
+
+//import OTPInputView from "@twotalltotems/react-native-otp-input";
+//import OtpInputs from "react-native-otp-inputs";
+import OtpInputView from "./component/OTPInputView.component";
 
 const { height, width } = Dimensions.get("window");
 const containerHeight = height * 0.1;
@@ -265,6 +272,25 @@ export const Stepper = () => {
       alignSelf: "stretch",
       justifyContent: "flex-start",
     },
+    borderStyleBase: {
+      width: 30,
+      height: 45,
+    },
+
+    borderStyleHighLighted: {
+      borderColor: "#03DAC6",
+    },
+
+    underlineStyleBase: {
+      width: 30,
+      height: 45,
+      borderWidth: 0,
+      borderBottomWidth: 1,
+    },
+
+    underlineStyleHighLighted: {
+      borderColor: "#03DAC6",
+    },
   });
 
   return (
@@ -302,22 +328,48 @@ export const Stepper = () => {
             nextBtnDisabled={!isValidPhoneNumber}
             errors={errors}
           >
-            <View style={styles.progressStepViewStyle}>
-              <CustomTextInput
-                label="Mobile Number"
-                placeholder="+91999989080"
-                keyboardType="phone-pad"
-                autoFocus
-                autoCompleteType="tel"
-                textContentType="telephoneNumber"
-                msgToDisplay={error || errorMsg}
-                value={user.mobileNumber}
-                onChange={handlePhoneNumberChange}
-                isValid={isValidPhoneNumber}
-                maxLength={15}
-                isUserNameTextInput={false}
-              />
-            </View>
+            {Platform.OS === "ios" && (
+              <TouchableWithoutFeedback
+                onPress={Keyboard.dismiss}
+                accessible={false}
+              >
+                <View style={styles.progressStepViewStyle}>
+                  <CustomTextInput
+                    label="Mobile Number"
+                    placeholder="+91999989080"
+                    keyboardType="phone-pad"
+                    autoFocus
+                    autoCompleteType="tel"
+                    textContentType="telephoneNumber"
+                    msgToDisplay={error || errorMsg}
+                    value={user.mobileNumber}
+                    onChange={handlePhoneNumberChange}
+                    isValid={isValidPhoneNumber}
+                    maxLength={15}
+                    isUserNameTextInput={false}
+                  />
+                </View>
+              </TouchableWithoutFeedback>
+            )}
+
+            {Platform.OS === "android" && (
+              <View style={styles.progressStepViewStyle}>
+                <CustomTextInput
+                  label="Mobile Number"
+                  placeholder="+91999989080"
+                  keyboardType="phone-pad"
+                  autoFocus
+                  autoCompleteType="tel"
+                  textContentType="telephoneNumber"
+                  msgToDisplay={error || errorMsg}
+                  value={user.mobileNumber}
+                  onChange={handlePhoneNumberChange}
+                  isValid={isValidPhoneNumber}
+                  maxLength={15}
+                  isUserNameTextInput={false}
+                />
+              </View>
+            )}
           </ProgressStep>
           <ProgressStep
             label="Verify"
@@ -336,26 +388,29 @@ export const Stepper = () => {
               <Text style={styles.OTPText}>
                 Enter 6 digit verification code sent to the number
               </Text>
-              <OTPInput
-                code={otpCode}
-                setCode={setOtpCode}
-                maximumLength={maximumOtpCodeLength}
-                // setIsOtpCodeReady={setIsOtpCodeReady}
-                isValidOTPCode={isValidOTPCode}
-                resetError={resetError}
-              />
-              {isLoadingOTP ? (
-                <ActivityIndicatorView>
-                  <LoadingText>Validating OTP</LoadingText>
-                  <ActivityIndicator color="#27AE60" />
-                </ActivityIndicatorView>
-              ) : (
-                <MessageText>
-                  {isOtpCodeReady && !isValidOTPCode && !resetError
-                    ? errorOTP
-                    : ""}
-                </MessageText>
-              )}
+              <View style={{ flex: 1 }}>
+                <OTPInput
+                  code={otpCode}
+                  setCode={setOtpCode}
+                  maximumLength={maximumOtpCodeLength}
+                  // setIsOtpCodeReady={setIsOtpCodeReady}
+                  isValidOTPCode={isValidOTPCode}
+                  resetError={resetError}
+                />
+
+                {isLoadingOTP ? (
+                  <ActivityIndicatorView>
+                    <LoadingText>Validating OTP</LoadingText>
+                    <ActivityIndicator color="#27AE60" />
+                  </ActivityIndicatorView>
+                ) : (
+                  <MessageText>
+                    {isOtpCodeReady && !isValidOTPCode && !resetError
+                      ? errorOTP
+                      : ""}
+                  </MessageText>
+                )}
+              </View>
             </View>
           </ProgressStep>
           <ProgressStep
@@ -369,14 +424,17 @@ export const Stepper = () => {
             onSubmit={() => onSubmitUser()}
           >
             <View style={styles.progressStepViewStyle}>
-              <CustomTextInput
-                label="Enter name"
-                placeholder="Sam"
-                keyboardType="default"
-                value={user.name}
-                onChange={handleNameChange}
-                isUserNameTextInput={true}
-              />
+              <View>
+                <CustomTextInput
+                  label="Enter name"
+                  placeholder="Sam"
+                  keyboardType="default"
+                  value={user.name}
+                  onChange={handleNameChange}
+                  isUserNameTextInput={true}
+                />
+              </View>
+
               <MessageText isValid={isValidName}>
                 {isValidName || !showNameErrorMsg
                   ? ""

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { TextInput, View, Text, Pressable } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import styled from "styled-components/native";
 
 const OTPInputContainer = styled(View)`
@@ -165,23 +166,32 @@ export const OTPInput = ({
   // }, [code, maximumLength, isOtpCodeReady, setIsOtpCodeReady]);
 
   return (
-    <OTPInputContainer>
-      {/* <MessageText>
+    <View style={{ height: 100 }}>
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <OTPInputContainer>
+          {/* <MessageText>
         Enter 6 digit verification code sent to the number
       </MessageText> */}
-      <SplitOTPBoxesContainer>{boxArray.map(boxDigit)}</SplitOTPBoxesContainer>
-      <TextInputHidden
-        isValid={isValidOTPCode}
-        value={code}
-        onChangeText={setCode}
-        maxLength={maximumLength}
-        ref={inputRef}
-        onFocus={handleOnPress}
-        onBlur={handleOnBlur}
-        keyboardType="number-pad"
-        caretHidden={true}
-        // setIsOtpCodeReady={setIsOtpCodeReady}
-      />
-    </OTPInputContainer>
+          <SplitOTPBoxesContainer>
+            {boxArray.map(boxDigit)}
+          </SplitOTPBoxesContainer>
+          <TextInputHidden
+            isValid={isValidOTPCode}
+            value={code}
+            onChangeText={setCode}
+            maxLength={maximumLength}
+            ref={inputRef}
+            onFocus={handleOnPress}
+            onBlur={handleOnBlur}
+            keyboardType="number-pad"
+            caretHidden={true}
+            // setIsOtpCodeReady={setIsOtpCodeReady}
+          />
+        </OTPInputContainer>
+      </ScrollView>
+    </View>
   );
 };
