@@ -166,10 +166,9 @@ export const Stepper = () => {
 
   const styles = StyleSheet.create({
     progressStepViewStyle: {
-      // height: 300,
       height: progressStepViewHeight,
       alignItems: "center",
-      backgroundColor: "#ececec",
+      backgroundColor: "#ffffff",
     },
     containerView: {
       flex: 1,
@@ -182,17 +181,18 @@ export const Stepper = () => {
       fontSize: 18,
       borderRadius: 50,
       width: width * 0.9,
-      height: height * 0.09,
+      height: height * 0.08,
       left:width * 0.12,
       justifyContent: "center",
       backgroundColor:  "#F26924",
+      bottom:220,
     },
     progressStepNextButtonTextStyle: {
-      color: "#FFFFFF",
+      color: "#ffffff",
       textAlign: "center",
       fontWeight: "bold",
-      letterSpacing: height * 0.003, 
-      lineHeight: height * 0.03,
+      letterSpacing: height * 0.001, 
+      lineHeight: height * 0.04,
     },
     disabledProgressStepNextButtonStyle: {
       fontSize: 18,
