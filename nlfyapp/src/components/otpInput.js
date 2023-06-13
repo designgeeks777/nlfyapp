@@ -166,7 +166,7 @@ export const OTPInput = ({
   // }, [code, maximumLength, isOtpCodeReady, setIsOtpCodeReady]);
 
   return (
-    <View style={{ height: 120 }}>
+    <View style={{ height: 200 }}>
       <ScrollView
         contentContainerStyle={{ flexGrow: 1 }}
         keyboardShouldPersistTaps="handled"

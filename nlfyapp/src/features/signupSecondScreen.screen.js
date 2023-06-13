@@ -1,4 +1,10 @@
-import React, { useState, useContext, useRef, useEffect } from "react";
+import React, {
+  useState,
+  useContext,
+  useRef,
+  useEffect,
+  ScrollView,
+} from "react";
 import {
   View,
   Text,
@@ -24,7 +30,7 @@ import { BASEURL } from "../../APIKey";
 
 //import OTPInputView from "@twotalltotems/react-native-otp-input";
 //import OtpInputs from "react-native-otp-inputs";
-import OtpInputView from "./component/OTPInputView.component";
+//import OtpInputView from "./component/OTPInputView.component";
 
 const { height, width } = Dimensions.get("window");
 const containerHeight = height * 0.1;
@@ -43,8 +49,8 @@ const MessageText = styled(Text)`
 `;
 
 const LoadingText = styled(Text)`
-  padding-left: 20px;
-  align-self: flex-start;
+  flex: 1; /* Add this line */
+  text-align: center;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) => props.theme.colors.border.success};
   font-family: ${(props) => props.theme.fonts.body};
@@ -52,6 +58,8 @@ const LoadingText = styled(Text)`
 
 const ActivityIndicatorView = styled(View)`
   flex-direction: row;
+  justify-content: center; /* Add this line */
+  align-items: center; /* Add this line */
 `;
 export const Stepper = () => {
   const navigation = useNavigation();
@@ -388,6 +396,7 @@ export const Stepper = () => {
               <Text style={styles.OTPText}>
                 Enter 6 digit verification code sent to the number
               </Text>
+
               <View style={{ flex: 1 }}>
                 <OTPInput
                   code={otpCode}
