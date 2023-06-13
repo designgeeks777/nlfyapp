@@ -210,7 +210,7 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
     flatlistWrapper: {
       flex: 1,
       position: "absolute",
-      height: height * 0.74,
+      height: height * 0.63,
       //overflow: "scroll",
     },
   });

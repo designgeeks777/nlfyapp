@@ -14,6 +14,7 @@ import {
   KeyboardAvoidingView,
   Platform,
   Text,
+  Alert,
 } from "react-native";
 import { Button } from "../../../components/button";
 import { ExpandCollapseListCommunityPrayer } from "../../../components/expandCollapse.CommunityPrayer.component";
@@ -23,17 +24,19 @@ const { width } = Dimensions.get("window");
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  padding-top: ${StatusBar.currentHeight * 0.9}px;
+  //padding-top: ${StatusBar.currentHeight * 0.9}px;
+  padding-bottom: ${StatusBar.currentHeight * 0.1}px;
   margin-top: ${StatusBar.currentHeight - 35 || 0}px;
 `;
 
 const Container = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight* 0.4|| 0}px;
+  margin-top: ${StatusBar.currentHeight * 0.9 || 0}px;
+  //margin-bottom: ${StatusBar.currentHeight * 0.4 || 0}px;
 `;
 
 const ButtonView = styled(View)`
-  padding-bottom:${width * 0.08}px;  
+  padding-bottom:${width * 0.01}px;  
   align-items: center;
 `;
 
@@ -75,7 +78,7 @@ export const CommunityPrayers = () => {
   const [success, setSuccess] = useState(false);
   const { user } = useContext(AuthenticationContext);
   const [err, setErr] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(""); 
+  const [errorMessage, setErrorMessage] = useState("");
 
   const slideAnimation = useRef(new Animated.Value(0)).current;
 
@@ -131,17 +134,26 @@ export const CommunityPrayers = () => {
   return (
     <>
       <SafeAreaViewWrapper>
-         <View style={{ flexDirection: "column", flex: 1}}>
-             <Container>
-        {isLoading ? (
-          <Text>Loading All Prayer Requests...</Text>
-        ) : (
-          <ExpandCollapseListCommunityPrayer data={data} />
-        )}
-        </Container>
+        <View style={{ flexDirection: "column", flex: 1 }}>
+          <Container>
+            {isLoading ? (
+              <Text>Loading All Prayer Requests...</Text>
+            ) : (
+              <ExpandCollapseListCommunityPrayer data={data} />
+            )}
+          </Container>
         </View>
       </SafeAreaViewWrapper>
-      {user === null || user?.isAnonymous ? null : (
+      {/* {user === null || user?.isAnonymous ? null : (
+        <ButtonView>
+          <Button label="Raise Prayer Request" handleClick={handleClick} />
+        </ButtonView>
+      )} */}
+      {user === null || user?.isAnonymous ? (
+        <ButtonView>
+          <Button label="Raise Prayer Request" handleClick={() => Alert.alert("Kindly login/signup to Raise your Prayer Request")} />
+        </ButtonView>
+      ) : (
         <ButtonView>
           <Button label="Raise Prayer Request" handleClick={handleClick} />
         </ButtonView>
