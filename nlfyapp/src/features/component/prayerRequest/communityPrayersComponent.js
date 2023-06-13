@@ -144,11 +144,6 @@ export const CommunityPrayers = () => {
           </Container>
         </View>
       </SafeAreaViewWrapper>
-      {/* {user === null || user?.isAnonymous ? null : (
-        <ButtonView>
-          <Button label="Raise Prayer Request" handleClick={handleClick} />
-        </ButtonView>
-      )} */}
       {user === null || user?.isAnonymous ? (
         <ButtonView>
           <Button label="Raise Prayer Request" handleClick={() => Alert.alert("Kindly login/signup to Raise your Prayer Request")} />
