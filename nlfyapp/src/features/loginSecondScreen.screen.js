@@ -160,7 +160,7 @@ export const LoginSecondScreen = ({ route }) => {
   const styles = StyleSheet.create({
     containerView: {
       flex: 1,
-      padding: width * 0.01, 
+      padding: width * 0.06, 
       alignItems: "center",
       backgroundColor: "#ffffff",
     },

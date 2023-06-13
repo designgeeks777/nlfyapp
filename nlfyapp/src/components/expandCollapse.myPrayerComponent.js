@@ -93,7 +93,7 @@ const Item = (props) => {
                 mode="text"
                 icon={props.selected ? "chevron-up" : "chevron-down"}
                 onPress={toggleRequestNumberOfLines}
-                labelStyle={{ color: "black" , fontWeight: "normal" }}
+                labelStyle={{ color: "#46458C" , fontWeight: "normal" }}
               >
                 {requestTextShown && props.selected ? "collapse" : "expand"}
               </Button>

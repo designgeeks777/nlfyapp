@@ -28,7 +28,6 @@ const MessageText = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-
 export const Stepper = () => {
   const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
@@ -166,69 +165,60 @@ export const Stepper = () => {
 
   const styles = StyleSheet.create({
     progressStepViewStyle: {
-      height: progressStepViewHeight,
+      height: progressStepViewHeight * 0.6,
       alignItems: "center",
       backgroundColor: "#ffffff",
+      paddingTop: width * 0.02,
     },
+
     containerView: {
       flex: 1,
       backgroundColor: "#ffffff",
     },
+
     containerProgressSteps: {
+      paddingTop: width * 0.02,
       flex: 1,
     },
+
     progressStepNextButtonStyle: {
       fontSize: 18,
       borderRadius: 50,
       width: width * 0.9,
       height: height * 0.08,
-      left:width * 0.12,
+      left: width * 0.12,
       justifyContent: "center",
-      backgroundColor:  "#F26924",
-      bottom:220,
+      backgroundColor: "#E94A27",
     },
+
     progressStepNextButtonTextStyle: {
       color: "#ffffff",
       textAlign: "center",
       fontWeight: "bold",
-      letterSpacing: height * 0.001, 
+      letterSpacing: height * 0.001,
       lineHeight: height * 0.04,
     },
-    disabledProgressStepNextButtonStyle: {
-      fontSize: 18,
-      padding: 16,
-      borderRadius: 50,
-      width: width * 0.3,
-      height: 56,
-      //height: height * 0.05,
-      left: 32,
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-      textAlign: "center",
-      color: "#ECECEC",
-      backgroundImage: "linear-gradient(180deg, #E94A27 41.07%, #F26924 100%)",
-      backgroundColor: "#FFFFFF",
-      borderColor: "#ECECEC",
-      borderWidth: 1,
-    },
+
     heading: {
       color: "#F26924",
       fontWeight: "bold",
       fontSize: 20,
       textAlign: "center",
       marginTop: width * 0.1,
+
     },
-    OTPText: { 
-      //top: 8,
-      top: width * 0.08,
+    OTPText: {
+
+      top: width * 0.1,
     },
+
     SelectGenderText: {
       left: width * 0.05,
       top: width * 0.04,
       color: "#666666",
       alignSelf: "flex-start",
     },
+
     RadioButtonRow: {
       left: width * 0.03,
       top: width * 0.05,
@@ -277,7 +267,7 @@ export const Stepper = () => {
             <View style={styles.progressStepViewStyle}>
               <CustomTextInput
                 label="Mobile Number"
-                placeholder="(+91)999989080"
+                placeholder="(+91)9999999999"
                 keyboardType="phone-pad"
                 autoFocus
                 autoCompleteType="tel"
@@ -338,7 +328,9 @@ export const Stepper = () => {
                 value={user.name}
                 onChange={handleNameChange}
                 isUserNameTextInput={true}
+              // style={styles.customTextInput}
               />
+
               <MessageText isValid={isValidName}>
                 {isValidName || !showNameErrorMsg
                   ? ""
@@ -354,7 +346,7 @@ export const Stepper = () => {
                     setUser({ ...user, gender: "male" });
                   }}
                 />
-                <Text style={{ marginRight: 40 }}>Male</Text>
+                <Text style={{ marginRight: width * 0.09 }}>Male</Text>
                 <RadioButton
                   value="female"
                   status={user.gender === "female" ? "checked" : "unchecked"}
