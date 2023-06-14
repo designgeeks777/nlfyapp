@@ -9,7 +9,6 @@ const buttonWidth = width * 0.4;
 const PressableButton = styled(Pressable)`
   align-items: center;
   padding-vertical: 14px;
-
   border-radius: 50px;
   width: ${buttonWidth}px;
   height: 50px;

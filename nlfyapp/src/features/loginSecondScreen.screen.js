@@ -18,6 +18,8 @@ import { BASEURL } from "../../APIKey";
 import axios from "axios";
 import { useNavigation } from "@react-navigation/native";
 
+const { width } = Dimensions.get("window");
+
 export const LoginSecondScreen = ({ route }) => {
   const recaptchaVerifier = React.useRef(null);
   const attemptInvisibleVerification = useState(true);
@@ -152,14 +154,14 @@ export const LoginSecondScreen = ({ route }) => {
     font-weight: ${(props) => props.theme.fontWeights.bold};
     letter-spacing: ${(props) => props.theme.space[1]};
     text-align: center;
-    margin-top: 28px;
-    margin-bottom: 28px;
+    margin-top: ${width * 0.1}px;
+    margin-bottom: ${width * 0.1}px;
   `;
 
   const MessageText = styled(Text)`
     align-self: flex-start;
-    top: 10px;
-    left: 20px;
+    top: ${width * 0.01}px;
+    left: ${width * 0.02}px;
     font-size: ${(props) => props.theme.fontSizes.title};
     color: ${(props) =>
       props.isValid
@@ -182,29 +184,22 @@ export const LoginSecondScreen = ({ route }) => {
 
   const OTPMessageText = styled(Text)`
     align-self: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: ${width * 0.01}px;
+    padding-bottom: ${width * 0.001}px;
     font-size: ${(props) => props.theme.fontSizes.caption};
     color: ${(props) => props.theme.colors.text.primary};
     font-family: ${(props) => props.theme.fonts.body};
   `;
 
-  const WrapperView = styled(SafeAreaView)`
-    flex: 1;
-    padding: 10px;
-    align-items: center;
-    background-color: ${(props) => props.theme.colors.bg.primary};
-  `;
-
   const LoginButtonView = styled(View)`
     flex: 1;
     justify-content: flex-end;
-    margin-bottom: 80px;
+    margin-bottom: ${width * 0.2}px;
   `;
   const styles = StyleSheet.create({
     containerView: {
       flex: 1,
-      padding: 10,
+      padding: width * 0.06,
       alignItems: "center",
       backgroundColor: "#ffffff",
     },
@@ -246,7 +241,7 @@ export const LoginSecondScreen = ({ route }) => {
           <CustomTextInput
             label="Mobile Number"
             maxLength={15}
-            placeholder="+91999989080"
+            placeholder="+919999890801"
             autoFocus
             autoCompleteType="tel"
             keyboardType="phone-pad"

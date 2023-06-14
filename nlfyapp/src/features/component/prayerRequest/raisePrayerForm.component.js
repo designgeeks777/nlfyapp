@@ -13,19 +13,17 @@ import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
 import { SuccessModalContent } from "../../../components/successModalContent.component";
 import { FailureModalContent } from "../../../components/failureModalContent.component";
-
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 
 const ButtonWrapper = styled(View)`
-  padding-bottom: 30px;
+  padding-bottom: ${width * 0.05}px;
   align-items: center;
 `;
 export const RaisePrayerForm = (props) => {
   const { user } = useContext(AuthenticationContext);
   console.log("User in Raise Prayer", user);
-  //console.log(null === user);
   const [text, setText] = useState("");
   const [inputFocused, setInputFocused] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -180,12 +178,12 @@ export const RaisePrayerForm = (props) => {
 
 const styles = StyleSheet.create({
   inp: {
-    height: 200,
-    width: "100%",
-    borderRadius: 10,
+    height: width * 0.6,
+    width: width * 0.9,
+    borderRadius: width * 0.02,
     borderColor: "gray",
-    borderWidth: 1,
-    padding: 10,
+    borderWidth: width * 0.003,
+    padding: width * 0.03,
   },
   modalTitle: {
     fontSize: 24,

@@ -30,7 +30,6 @@ export const LifeGroup = () => {
     } else {
       // navigate to a specific screen
       console.log("Navigate");
-
       navigation.navigate("Life Groups");
     }
   };

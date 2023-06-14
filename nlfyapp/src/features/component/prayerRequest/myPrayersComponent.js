@@ -3,38 +3,41 @@ import { View, Text, Dimensions, SafeAreaView, StatusBar } from "react-native";
 import { BackButton } from "../../../components/backButton";
 import { TabButton } from "../../../components/tabButton";
 import { TabButtonUnselected } from "../../../components/TabButtonUnselected";
-import styled from "styled-components";
-
-import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
-
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
-
-import { ExpandCollapseList } from "../../../components/expandCollapse.myPrayerComponent";
-
+import { ExpandCollapseListMyPrayers } from "../../../components/expandCollapse.myPrayerComponent";
 import { useNavigation } from "@react-navigation/native";
+import styled from "styled-components";
+import axios from "axios";
 
 const { width } = Dimensions.get("window");
+
 const wrapperWidth = width * 0.9;
-const marginRight = width * 0.05;
+const wrapperPadding = width * 0.13;
+const wrapperMargin = width * 0.03;
+
 const WrapperView = styled(View)`
-  width: ${wrapperWidth}px;
-  border-radius: 10px;
-  margin-left: 10px;
-  padding-top: 51px;
+  width:${wrapperWidth * 0.9}px;
+  margin-left: ${wrapperMargin }px;
+  padding-top:${wrapperPadding }px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  padding-top: ${StatusBar.currentHeight}px;
-  margin-top: -15px;
-  z-index: 2;
+  padding-top: ${StatusBar.currentHeight * 0.9}px;
+  margin-top: ${StatusBar.currentHeight - 35 || 0}px;
+  z-index: 5;
 `;
+
+const Container = styled(SafeAreaView)`
+  flex: 1;
+  margin-top: ${StatusBar.currentHeight* 0.9|| 0}px;
+  `;
 
 const ButtonsWrapper = styled(View)`
   flex-direction: row;
   justify-content: center;
-  margin-right: ${marginRight}px;
+  margin-right: ${width * 0.03}px;
 `;
 
 export const MyPrayersScreen = () => {
@@ -55,7 +58,6 @@ export const MyPrayersScreen = () => {
         const filteredData = response.data.filter(
           (record) => record.raisedByUid === user.uid
         );
-        //console.log("Filtered Data", filteredData);
 
         setData(filteredData);
 
@@ -104,10 +106,10 @@ export const MyPrayersScreen = () => {
             />
             <TabButton label="My Prayers" />
           </ButtonsWrapper>
-          <View>
+          <Container>
             {isLoading}
-            <ExpandCollapseList data={data} />
-          </View>
+            <ExpandCollapseListMyPrayers data={data} />
+          </Container>
         </View>
       </SafeAreaViewWrapper>
     </>

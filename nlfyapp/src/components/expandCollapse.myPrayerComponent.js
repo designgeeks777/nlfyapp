@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-
 import { Button, Card, Paragraph } from "react-native-paper";
 
 const { height, width } = Dimensions.get("window");
@@ -31,20 +30,18 @@ const Item = (props) => {
   const cardStyle = {
     width: width * 0.9,
     backgroundColor: "rgba(242, 105, 36, 0.3)",
-
     marginLeft: width * 0.04,
     marginRight: width * 0.04,
-
     shadowColor: "transparent",
-    borderRadius: 30,
+    borderRadius:width * 0.06,
     marginBottom: width * 0.06,
   };
 
   const textStyle = {
-    lineHeight: 16,
+    lineHeight:width * 0.045,
     textAlign: "left",
-    padding: 5,
-    bottom: 5,
+    padding: width * 0.02,
+    bottom: width * 0.02,
   };
 
   const setFlex = {
@@ -96,6 +93,7 @@ const Item = (props) => {
                 mode="text"
                 icon={props.selected ? "chevron-up" : "chevron-down"}
                 onPress={toggleRequestNumberOfLines}
+                labelStyle={{ color: "#46458C" , fontWeight: "normal" }}
               >
                 {requestTextShown && props.selected ? "collapse" : "expand"}
               </Button>
@@ -112,7 +110,7 @@ const Item = (props) => {
   );
 };
 
-export const ExpandCollapseList = (props) => {
+export const ExpandCollapseListMyPrayers = (props) => {
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item, index, data }) => {
@@ -138,31 +136,12 @@ export const ExpandCollapseList = (props) => {
     setSelectedId(id);
   };
 
-  const styles = StyleSheet.create({
-    profilePicture: {
-      width: width * 0.1,
-      height: height * 0.06,
-      borderRadius: 20,
-      //top: Platform.OS === "ios" ? 60 : width * 0.2, // Add margin top to move the profile down a little
-    },
-    flatlistWrapper: {
-      flex: 1,
-      position: "absolute",
-      bottom: 0,
-      height: height * 0.64,
-      overflow: "scroll",
-    },
-    containerStyle: {
-      marginTop: width * 0.05,
-    },
-  });
-
   return (
-    <View style={styles.containerStyle}>
+    <View>
       <FlatList
         data={props.data}
         initialNumToRender={props.data.length}
-        contentContainerStyle={{ paddingBottom: 150 }}
+        contentContainerStyle={{ paddingBottom: width * 0.01 }}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
         extraData={selectedId}

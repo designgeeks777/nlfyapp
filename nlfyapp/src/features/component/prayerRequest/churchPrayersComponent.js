@@ -11,36 +11,35 @@ import {
   View,
   Alert,
 } from "react-native";
-
 import { BackButton } from "../../../components/backButton";
 import { TabButtonUnselected } from "../../../components/TabButtonUnselected";
 import { TabButton } from "../../../components/tabButton";
-
 import { useNavigation } from "@react-navigation/native";
-
 import { BASEURL } from "../../../../APIKey";
 import axios from "axios";
-
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
 
 const cardWidth = width * 0.9;
-const cardHeight = 72;
+const cardHeight = width * 0.2;
 const cardContentWidth = width * 0.8;
+const wrapperWidth = width * 0.9;
+const wrapperPadding = width * 0.13;
+const wrapperMargin = width * 0.03;
 
 const ChurchPrayersCard = styled(Card)`
   width: ${cardWidth}px;
   height: ${cardHeight}px;
-  border-radius: 10px;
+  border-radius: ${width *0.03}px;
   justify-content: center;
   align-items: center;
 `;
 const StyledLinearGradient = styled(LinearGradient)`
-  border-radius: 10px;
+  border-radius: ${width *0.03}px;
   width: ${cardWidth}px;
   height: ${cardHeight}px;
-  padding: 5px;
+  padding: ${StatusBar.currentHeight * 0.35}px;
 `;
 
 const PrayerContent = styled(Text)`
@@ -50,19 +49,19 @@ const PrayerContent = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   width: ${cardContentWidth + 32}px;
   text-align: center;
-  padding: 10px;
+  padding: ${StatusBar.currentHeight * 0.2}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  padding-top: ${StatusBar.currentHeight}px;
-  margin-top: -15px;
-  z-index: 2;
+  padding-top: ${StatusBar.currentHeight * 0.9}px;
+  margin-top: ${StatusBar.currentHeight - 35 || 0}px;
+  z-index: 5;
 `;
 
 const Container = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight || 0}px;
+  margin-top: ${StatusBar.currentHeight* 0.9|| 0}px;
 `;
 
 const ButtonsWrapper = styled(View)`
@@ -71,14 +70,14 @@ const ButtonsWrapper = styled(View)`
 `;
 
 const ChurchPrayerCard = ({ title }) => (
-  <View style={{ paddingVertical: 10, top: -5 }}>
+  <View style={{ paddingVertical: width *0.03, top: width *0.001 }}>
     <ChurchPrayersCard>
       <StyledLinearGradient
         start={{ x: 180, y: 0.1 }}
         end={{ x: 180, y: 0.9 }}
         colors={["#F22424", "rgba(242, 105, 36, 0.80)"]}
       >
-        <PrayerContent numberOfLines={3} variant="bodyMedium">
+        <PrayerContent numberOfLines={2} variant="bodyMedium">
           {title}
         </PrayerContent>
       </StyledLinearGradient>
@@ -123,12 +122,12 @@ export const ChurchPrayers = () => {
   const { user } = useContext(AuthenticationContext);
 
   const WrapperView = styled(View)`
-    width: 900px;
-    border-radius: 10px;
-    margin-left: 10px;
-    padding-top: 51px;
+    width:${wrapperWidth * 0.9}px;
+    margin-left: ${wrapperMargin }px;
+    padding-top:${wrapperPadding }px;
   `;
   const navigation = useNavigation();
+  
   const navigateToCommunityPrayers = () => {
     navigation.navigate("PrayerRequest");
   };
@@ -161,7 +160,7 @@ export const ChurchPrayers = () => {
           </ButtonsWrapper>
           <Container>
             {isLoading ? (
-              <Text>Loading church Prayers</Text>
+              <Text>Loading Church Prayers...</Text>
             ) : (
               <FlatList
                 data={data}
@@ -170,7 +169,7 @@ export const ChurchPrayers = () => {
                 )}
                 keyExtractor={(item) => item._id}
                 contentContainerStyle={{
-                  paddingBottom: 20,
+                  paddingBottom:width *0.01,
                   justifyContent: "center",
                   alignItems: "center",
                 }}

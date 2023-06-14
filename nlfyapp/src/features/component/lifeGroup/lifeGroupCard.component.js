@@ -9,29 +9,26 @@ import {
 } from "react-native";
 import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
-
 import { Divider } from "../../../components/divider.component";
-
 import { SafeAreaView } from "react-native-safe-area-context";
-
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
-
 import styled from "styled-components";
 import { JoinButton } from "./joinButton.component";
 
 const { width } = Dimensions.get("window");
+const padding = width;
 
 const ViewLifeGroupCard = styled(SafeAreaView)`
-  padding: 0px 24px 40px 24px;
+padding: ${padding * 0.04}px; 
 `;
 
 const LifeGroupName = styled(Text)`
-  padding-top: 10px;
+  padding-top: ${padding * 0.04}px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
-  padding-bottom: 4px;
+  padding-bottom: ${padding * 0.01}px; 
 `;
 
 const LifeGroupLeaders = styled(Text)`
@@ -39,7 +36,7 @@ const LifeGroupLeaders = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
-  padding-bottom: 4px;
+  padding-bottom: ${padding * 0.01}px;
 `;
 
 const LifeGroupMeetingTime = styled(Text)`
@@ -47,7 +44,7 @@ const LifeGroupMeetingTime = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.medium};
   font-family: ${(props) => props.theme.fonts.body};
-  padding-bottom: 10px;
+  padding-bottom:${padding * 0.05}px;
 `;
 
 const FlexView = styled(View)`
@@ -55,7 +52,7 @@ const FlexView = styled(View)`
 `;
 
 const LeftContent = styled(View)`
-  width: ${width * 0.54}px;
+  width: ${width * 0.58}px;
 `;
 
 const LeadersWillContactView = styled(View)`
@@ -252,7 +249,7 @@ export const LifeGroupCard = () => {
               />
             )}
             initialNumToRender={data.length}
-            contentContainerStyle={{ paddingBottom: 150 }}
+            contentContainerStyle={{ paddingBottom: width * 0.01 }}
           />
         )}
       </ViewLifeGroupCard>
