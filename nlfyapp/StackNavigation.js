@@ -7,6 +7,7 @@ import { Onboarding } from "./src/features/onboarding.screen";
 import { SignUp } from "./src/features/signup.screen";
 import { Stepper } from "./src/features/signupSecondScreen.screen";
 import { UploadPicSignUp } from "./src/features/uploadPicSignUp.screen";
+import { HasLaunchedOnboarding } from "./src/features/hasLaunchedOnboarding.screen";
 
 const Stack = createStackNavigator();
 
@@ -48,6 +49,7 @@ export const MyStack = () => {
         component={LoginSecondScreen}
         options={{ headerShown: false }}
       />
+      <Stack.Screen name="OnboardingStack" component={HasLaunchedOnboarding} />
     </Stack.Navigator>
   );
 };

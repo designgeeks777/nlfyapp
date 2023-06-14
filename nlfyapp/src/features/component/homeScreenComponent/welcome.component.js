@@ -20,6 +20,8 @@ import { TouchableWithoutFeedback } from "react-native-gesture-handler";
 import FormData from "form-data";
 import mime from "mime";
 
+import defaultImageMale from "../../../../assets/upload-pic-sign-up-male.png";
+import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.jpg";
 const { width, height } = Dimensions.get("window");
 
 const WelcomeText = styled(Text)`
@@ -126,7 +128,14 @@ const StyledTextInput = styled(TextInput).attrs({
 
 export const Welcome = (props) => {
   const [userData, setUserData] = useState(null);
-  const { onLogout, user, isAuthenticated } = useContext(AuthenticationContext);
+  const {
+    onLogout,
+    user,
+    isAuthenticated,
+    dataInLocalAPICompleted,
+    isDataPostInLocalAPICompleted,
+    updateProfile,
+  } = useContext(AuthenticationContext);
   const [visible, setVisible] = useState(false);
   const [profilePicVisible, setProfilePicVisible] = useState(false);
   const [showUpdateOptions, setShowUpdateOptions] = useState(false);
@@ -151,7 +160,7 @@ export const Welcome = (props) => {
           setUserData("");
         });
     }
-  }, [isAuthenticated, user?.phoneNumber]);
+  }, [isAuthenticated, user?.phoneNumber, dataInLocalAPICompleted]);
 
   const navigateToSignUp = () => {
     console.log("GO TO SIGN UP");
@@ -161,14 +170,10 @@ export const Welcome = (props) => {
     }, 1000);
   };
   const handleLogout = () => {
-    navigation.dispatch(
-      CommonActions.reset({
-        index: 1,
-        routes: [{ name: "Home" }],
-      })
-    );
-    onLogout();
+    isDataPostInLocalAPICompleted(false);
     setUserData("");
+    onLogout();
+
     hideModal();
   };
   const showModal = () => {
@@ -207,10 +212,28 @@ export const Welcome = (props) => {
       imageData.append("profilePic", {
         uri: newImageUri,
         type: mime.getType(newImageUri),
+
         name: newImageUri.split("/").pop(),
       });
+    } else {
+      const defaultMaleImageUri =
+        Image.resolveAssetSource(defaultImageMale).uri;
+      const defaultFemaleImageUri =
+        Image.resolveAssetSource(defaultImageFemale).uri;
+      const newImageUri =
+        userData.gender === "male"
+          ? defaultMaleImageUri
+          : defaultFemaleImageUri;
+      let defaultImageName =
+        userData.gender === "male"
+          ? "upload-pic-sign-up-male.png"
+          : "upload-pic-sign-up-female.jpg";
+      imageData.append("profilePic", {
+        uri: newImageUri,
+        type: userData.gender === "male" ? "image/png" : "image/jpg",
+        name: defaultImageName,
+      });
     }
-
     try {
       await axios
         .patch(`${BASEURL}/users/${userData._id}`, imageData, {
@@ -220,6 +243,7 @@ export const Welcome = (props) => {
         })
         .then((response) => {
           console.log("USERS", response.data);
+          updateProfile(username);
           if (response.data) {
             setShowUpdateOptions(false);
             setUserData(response.data);
@@ -399,7 +423,7 @@ export const Welcome = (props) => {
         </Modal>
       ) : null}
       <>
-        <WelcomeText>Welcome {userData?.name}</WelcomeText>
+        <WelcomeText>Welcome {user?.displayName}</WelcomeText>
         <RowView>
           {/* {user?.isAnonymous ? ( */}
           {user === null || user?.isAnonymous ? (

@@ -13,14 +13,14 @@ import * as ImagePicker from "expo-image-picker";
 import FormData from "form-data";
 import mime from "mime";
 import defaultImageMale from "../../assets/upload-pic-sign-up-male.png";
-import defaultImageFemale from "../../assets/profile2.jpg";
+import defaultImageFemale from "../../assets/upload-pic-sign-up-female.jpg";
 
 const { width } = Dimensions.get("window");
 
 const ContainerView = styled(SafeAreaView)`
-  margin-left: ${width * 0.1}px; 
-  margin-right: ${width * 0.1}px; 
-  margin-bottom:${width * 0.4}px; 
+  margin-left: ${width * 0.1}px;
+  margin-right: ${width * 0.1}px;
+  margin-bottom: ${width * 0.4}px;
   flex: 1;
   justify-content: space-around;
 `;
@@ -43,20 +43,20 @@ const Caption = styled(Text)`
 
 const ProfilePicContainer = styled(View)`
   align-self: center;
-  border-width: ${width * 0.001}px; 
+  border-width: ${width * 0.001}px;
   border-color: ${(props) => props.theme.colors.border.primary};
-  height: ${width * 0.5}px; 
-  width:  ${width * 0.5}px; 
-  border-radius:  ${width * 0.9}px; 
+  height: ${width * 0.5}px;
+  width: ${width * 0.5}px;
+  border-radius: ${width * 0.9}px;
   overflow: hidden;
   justify-content: center;
   align-items: center;
 `;
 
 const ProfilePic = styled(Image)`
-  height:  ${width * 0.6}px; 
-  width:  ${width * 0.6}px; 
-  border-radius:  ${width * 0.5}px; 
+  height: ${width * 0.6}px;
+  width: ${width * 0.6}px;
+  border-radius: ${width * 0.5}px;
 `;
 
 const OptionsContainer = styled(View)`
@@ -68,7 +68,7 @@ const ModalHeading = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.bodylarge};
   font-weight: ${(props) => props.theme.fontWeights.regular};
-  margin-bottom:  ${width * 0.05}px; 
+  margin-bottom: ${width * 0.05}px;
 `;
 
 const TouchableOpacityIcon = styled(TouchableOpacity)`
@@ -85,9 +85,9 @@ const FontAwesome5Icon = styled(FontAwesome5)`
       ? props.theme.colors.bg.primary
       : props.theme.colors.bg.primary};
   background-color: ${(props) => props.theme.colors.bg.secondary};
-  border-radius: ${width * 0.1}px; 
+  border-radius: ${width * 0.1}px;
   align-self: center;
-  padding:  ${width * 0.03}px; 
+  padding: ${width * 0.03}px;
 `;
 
 const ModalIconCaption = styled(Text)`
@@ -106,7 +106,7 @@ const RowView = styled(View)`
 `;
 
 const SkipForNow = styled(Text)`
-  top:  ${width * 0.09}px; 
+  top: ${width * 0.09}px;
   color: ${(props) => props.theme.colors.text.title};
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.title};
@@ -114,7 +114,9 @@ const SkipForNow = styled(Text)`
 `;
 
 export const UploadPicSignUp = (props) => {
-  const { user, setRegistered } = useContext(AuthenticationContext);
+  const { user, setRegistered, isDataPostInLocalAPICompleted } = useContext(
+    AuthenticationContext
+  );
   const navigation = useNavigation();
   console.log("In UPLOAD PIC");
   const userName = props?.route?.params?.userName
@@ -124,7 +126,7 @@ export const UploadPicSignUp = (props) => {
     ? props.route.params.gender
     : "male";
   const maleDefaultProfilePic = require("nlfyapp/assets/upload-pic-sign-up-male.png");
-  const femaleDefaultProfilePic = require("nlfyapp/assets/profile2.jpg");
+  const femaleDefaultProfilePic = require("nlfyapp/assets/upload-pic-sign-up-female.jpg");
   let icon =
     gender === "male" ? maleDefaultProfilePic : femaleDefaultProfilePic;
   const [image, setImage] = useState(null);
@@ -142,7 +144,9 @@ export const UploadPicSignUp = (props) => {
       const newImageUri =
         gender === "male" ? defaultMaleImageUri : defaultFemaleImageUri;
       let defaultImageName =
-        gender === "male" ? "upload-pic-sign-up-male.png" : "profile2.jpg";
+        gender === "male"
+          ? "upload-pic-sign-up-male.png"
+          : "upload-pic-sign-up-female.jpg";
       imageData.append("profilePic", {
         uri: newImageUri,
         type: gender === "male" ? "image/png" : "image/jpg",
@@ -169,8 +173,23 @@ export const UploadPicSignUp = (props) => {
         console.log("USERS", response.data);
         if (response.data) {
           console.log("INSIDE POST", response.data);
-          setRegistered(true);
-          navigation.navigate("Home");
+
+          const HomeStackModalNavigator = navigation.getId();
+
+          console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
+
+          if (HomeStackModalNavigator === "HomeStackModal") {
+            //onSetUserData();
+            isDataPostInLocalAPICompleted(true);
+            setRegistered(true);
+            navigation.navigate("HomeStack");
+          } else {
+            //onSetUserData();
+            setRegistered(true);
+            navigation.navigate("Home");
+          }
+
+          //navigation.navigate("Home");
         }
       })
       .catch((error) => {
@@ -258,11 +277,19 @@ export const UploadPicSignUp = (props) => {
           </View>
           <RowView>
             <TouchableOpacityIcon modalIcon={true} onPress={onOpenCamera}>
-              <FontAwesome5Icon modalIcon={true} name="camera" size={width * 0.06} />
+              <FontAwesome5Icon
+                modalIcon={true}
+                name="camera"
+                size={width * 0.06}
+              />
               <ModalIconCaption>Camera</ModalIconCaption>
             </TouchableOpacityIcon>
             <TouchableOpacityIcon modalIcon={true} onPress={onOpenGallery}>
-              <FontAwesome5Icon modalIcon={true} name="image" size={width * 0.06} />
+              <FontAwesome5Icon
+                modalIcon={true}
+                name="image"
+                size={width * 0.06}
+              />
               <ModalIconCaption>Gallery</ModalIconCaption>
             </TouchableOpacityIcon>
           </RowView>

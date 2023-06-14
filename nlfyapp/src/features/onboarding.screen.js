@@ -6,7 +6,7 @@ import {
   StyleSheet,
   StatusBar,
   SafeAreaView,
-  Dimensions
+  Dimensions,
 } from "react-native";
 import Swiper from "react-native-swiper";
 import styled from "styled-components/native";
@@ -21,6 +21,8 @@ import { Events } from "./events.screen";
 import { Give } from "./give.screen";
 import { LifeGroups } from "./lifeGroups.screen";
 import { Stories } from "./stories.screen";
+import { HomeStackNavigation } from "../../HomeNavigation";
+
 import { useNavigation } from "@react-navigation/native";
 import { Devotionals } from "./devotionals.screen";
 import { PrayerRequestNavigation } from "../../PrayerRequestNavigation";
@@ -51,24 +53,23 @@ const Slide3 = styled(View)`
 
 const Slide4 = styled(View)`
   flex: 1;
-  top:  ${width * 0.01}px;
+  top: ${width * 0.01}px;
   justify-content: center;
   align-items: center;
 `;
 
 const Slide1Image = styled(Image)`
-  height:  ${width * 1.2}px; 
-  width: ${width}px; 
+  height: ${width * 1.2}px;
+  width: ${width}px;
   align-self: center;
   position: absolute;
-  top:  ${width * 0.05}px; 
+  top: ${width * 0.05}px;
 `;
 
 const SlideImage = styled(Image)`
-   height: ${width * 0.7}px;
-   width:  ${width * 0.7}px;
+  height: ${width * 0.7}px;
+  width: ${width * 0.7}px;
 `;
-
 
 const TextSlide1 = styled(Text)`
   align-items: center;
@@ -120,7 +121,7 @@ const MemberText = styled(Text)`
 `;
 
 const TextScreen2Orange = styled(Text)`
-  top:  ${width * 0.01}px;
+  top: ${width * 0.01}px;
   padding-top: ${width * 0.1}px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
@@ -137,7 +138,7 @@ const TextScreen1Orange = styled(Text)`
 `;
 
 const TextScreen3Orange = styled(Text)`
-  top:  ${width * 0.3}px;
+  top: ${width * 0.3}px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.medium};
@@ -242,9 +243,9 @@ export const Onboarding = () => {
             Sign Up to have a customized experience or swipe
           </TextScreen2Orange>
           <Button label="Sign Up" handleClick={navigateToSignUp} />
-          <MemberText >
+          <MemberText>
             Already a member?
-            <TextScreen2Orange  onPress={navigateToLogin}>
+            <TextScreen2Orange onPress={navigateToLogin}>
               Log in
             </TextScreen2Orange>
           </MemberText>
@@ -259,10 +260,11 @@ export const Onboarding = () => {
         </Slide3>
 
         <NavigationContainer independent={true}>
-          <Tab.Navigator screenOptions={createScreenOptions}>
+          <Tab.Navigator screenOptions={createScreenOptions} id="MainBottomTab">
             <Tab.Screen
               name="Home"
-              component={HomeWrapper}
+              component={HomeStackNavigation}
+              // component={HomeWrapper}
               options={{ headerShown: false }}
             />
             <Tab.Screen

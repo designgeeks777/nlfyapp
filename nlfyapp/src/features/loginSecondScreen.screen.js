@@ -1,5 +1,11 @@
 import React, { useState, useContext, useEffect, useLayoutEffect } from "react";
-import { View, Text, StyleSheet, Dimensions } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  Dimensions,
+  ActivityIndicator,
+} from "react-native";
 import * as firebase from "firebase/compat";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
 import { CustomTextInput } from "../components/textinput";
@@ -30,12 +36,19 @@ export const LoginSecondScreen = ({ route }) => {
     onSignInWithPhoneNumber,
     confirmCode,
     confirmResult,
+    resetConfirmResult,
+    isLoadingOTP,
+    isLoading,
+    errorOTP,
   } = useContext(AuthenticationContext);
   const [errorMsg, setErrorMsg] = useState("");
   const [userRegistered, setUserRegistered] = useState(false);
   const [resetError, setResetErrors] = useState(false);
   const navigation = useNavigation();
   const [username, setUsername] = useState(null);
+  const [otpCode, setOtpCode] = useState("");
+  const maximumOtpCodeLength = 6;
+  const [isOtpCodeReady, setIsOtpCodeReady] = useState(false);
 
   const handleChange = (value) => {
     setPhoneNumber(value);
@@ -52,31 +65,37 @@ export const LoginSecondScreen = ({ route }) => {
   };
 
   const checkIfUserAlreadyRegistered = async () => {
-    let dataexists = false;
     try {
       const response = await axios.get(`${BASEURL}/users/`);
 
       if (response.data) {
         const data = response.data;
 
-        data.forEach((item) => {
+        for (const item of data) {
           if (item.mobileNumber === phoneNumber) {
-            console.log("USER EXISTS");
-            dataexists = true;
+            console.log("User Exists");
             setUserRegistered(true);
             setUsername(item.name);
+            console.log("Data Exists For Each", true);
+            return true;
           }
-        });
-      } else {
-        console.log("USER DOESN'T EXISTS");
+        }
+
+        console.log("USER DOESN'T EXIST");
         setUserRegistered(false);
-        dataexists = false;
+        console.log("User Doesn't exist", false);
+        return false;
+      } else {
+        console.log("USER DOESN'T EXIST");
+        setUserRegistered(false);
+        console.log("User Doesn't exist", false);
+        return false;
       }
     } catch (err) {
       console.log(err, "User Not Registered signin");
-      dataexists = false;
+      console.log("User Doesn't exist", false);
+      return false;
     }
-    return dataexists;
   };
 
   useEffect(() => {
@@ -99,15 +118,23 @@ export const LoginSecondScreen = ({ route }) => {
       console.log("is not Registered login");
       setErrorMsg("Enter your registered mobile number");
     }
+    //resetConfirmResult();
   };
-  const onClickConfirmCode = () => {
+  const onClickContinue = () => {
     setResetErrors(false);
-    confirmCode(code);
+
+    //console.log("On CLick Confirm code otpCode", otpCode);
+    //confirmCode(otpCode);
     const HomeStackModalNavigator = navigation.getId();
-    if (HomeStackModalNavigator === "HomeStackModal") {
-      navigation.navigate("HomeStack");
-    } else {
-      navigation.navigate("Home");
+
+    console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
+    if (isValidOTPCode) {
+      resetConfirmResult();
+      if (HomeStackModalNavigator === "HomeStackModal") {
+        navigation.navigate("HomeStack");
+      } else {
+        navigation.navigate("Home");
+      }
     }
     console.log("HomeStack confirm code", HomeStackModalNavigator);
   };
@@ -127,14 +154,14 @@ export const LoginSecondScreen = ({ route }) => {
     font-weight: ${(props) => props.theme.fontWeights.bold};
     letter-spacing: ${(props) => props.theme.space[1]};
     text-align: center;
-    margin-top: ${width * 0.1}px; 
-    margin-bottom: ${width * 0.1}px; 
+    margin-top: ${width * 0.1}px;
+    margin-bottom: ${width * 0.1}px;
   `;
 
   const MessageText = styled(Text)`
     align-self: flex-start;
-    top: ${width * 0.01}px; 
-    left: ${width * 0.02}px; 
+    top: ${width * 0.01}px;
+    left: ${width * 0.02}px;
     font-size: ${(props) => props.theme.fontSizes.title};
     color: ${(props) =>
       props.isValid
@@ -143,10 +170,22 @@ export const LoginSecondScreen = ({ route }) => {
     font-family: ${(props) => props.theme.fonts.body};
   `;
 
+  const LoadingText = styled(Text)`
+    padding-left: 20px;
+    align-self: flex-start;
+    font-size: ${(props) => props.theme.fontSizes.title};
+    color: ${(props) => props.theme.colors.border.success};
+    font-family: ${(props) => props.theme.fonts.body};
+  `;
+
+  const ActivityIndicatorView = styled(View)`
+    flex-direction: row;
+  `;
+
   const OTPMessageText = styled(Text)`
     align-self: center;
-    padding-top:${width * 0.01}px; 
-    padding-bottom: ${width * 0.001}px; 
+    padding-top: ${width * 0.01}px;
+    padding-bottom: ${width * 0.001}px;
     font-size: ${(props) => props.theme.fontSizes.caption};
     color: ${(props) => props.theme.colors.text.primary};
     font-family: ${(props) => props.theme.fonts.body};
@@ -155,16 +194,39 @@ export const LoginSecondScreen = ({ route }) => {
   const LoginButtonView = styled(View)`
     flex: 1;
     justify-content: flex-end;
-    margin-bottom:${width * 0.2}px; 
+    margin-bottom: ${width * 0.2}px;
   `;
   const styles = StyleSheet.create({
     containerView: {
       flex: 1,
-      padding: width * 0.06, 
+      padding: width * 0.06,
       alignItems: "center",
       backgroundColor: "#ffffff",
     },
   });
+
+  //Reset confirmResult on load of login screen if there is any previous step.
+  //This is added as part of a fix where on click of back Button in login screen and clicking on ligin again was taking to the OTP Screen
+  useEffect(() => {
+    resetConfirmResult();
+  }, []);
+
+  useEffect(() => {
+    console.log("isOtpCodeReady", otpCode.length);
+    setIsOtpCodeReady(otpCode.length === maximumOtpCodeLength);
+
+    if (otpCode.length <= 5) {
+      setResetErrors(true);
+    }
+  }, [otpCode]);
+
+  useEffect(() => {
+    if (otpCode.length === maximumOtpCodeLength) {
+      console.log("Calling Confirm Code");
+      setResetErrors(false);
+      confirmCode(otpCode);
+    }
+  }, [otpCode]);
 
   return (
     <SafeAreaView style={styles.containerView}>
@@ -179,7 +241,7 @@ export const LoginSecondScreen = ({ route }) => {
           <CustomTextInput
             label="Mobile Number"
             maxLength={15}
-            placeholder="(+91)9999999999"
+            placeholder="+919999890801"
             autoFocus
             autoCompleteType="tel"
             keyboardType="phone-pad"
@@ -190,11 +252,19 @@ export const LoginSecondScreen = ({ route }) => {
             isValid={isValid}
             isUserNameTextInput={false}
           />
+          {isLoading ? (
+            <ActivityIndicatorView>
+              <LoadingText>Checking number</LoadingText>
+              <ActivityIndicator color="#27AE60" />
+            </ActivityIndicatorView>
+          ) : (
+            <></>
+          )}
           <LoginButtonView>
             <Button
               label="Continue"
               handleClick={onSignIn}
-              disabled={!isValid}
+              disabled={!isValid || isLoading}
             />
           </LoginButtonView>
         </>
@@ -206,21 +276,30 @@ export const LoginSecondScreen = ({ route }) => {
             Enter 6 digit verification code sent to the number
           </OTPMessageText>
           <OTPInput
-            code={code}
-            setCode={(e) => setCode(e)}
-            maximumLength={maximumCodeLength}
-            // setIsPinReady={setIsPinReady}
+            code={otpCode}
+            setCode={setOtpCode}
+            maximumLength={maximumOtpCodeLength}
+            // setIsOtpCodeReady={setIsOtpCodeReady}
             isValidOTPCode={isValidOTPCode}
             resetError={resetError}
           />
-          <MessageText>
-            {isPinReady && !isValidOTPCode && !resetError ? error : ""}
-          </MessageText>
+          {isLoadingOTP ? (
+            <ActivityIndicatorView>
+              <LoadingText>Validating OTP</LoadingText>
+              <ActivityIndicator color="#27AE60" />
+            </ActivityIndicatorView>
+          ) : (
+            <MessageText>
+              {isOtpCodeReady && !isValidOTPCode && !resetError ? errorOTP : ""}
+            </MessageText>
+          )}
+
           <LoginButtonView>
             <Button
-              label="Confirm Code"
-              handleClick={() => onClickConfirmCode()}
-              disabled={!isPinReady}
+              label="Continue"
+              handleClick={() => onClickContinue()}
+              //disabled={!isOtpCodeReady}
+              disabled={!isValidOTPCode || isLoading || !isOtpCodeReady}
             />
           </LoginButtonView>
         </>

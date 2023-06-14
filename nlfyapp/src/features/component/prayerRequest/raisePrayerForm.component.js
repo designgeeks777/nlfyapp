@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     borderRadius: width * 0.02,
     borderColor: "gray",
     borderWidth: width * 0.003,
-    padding:  width * 0.03,
+    padding: width * 0.03,
   },
   modalTitle: {
     fontSize: 24,
