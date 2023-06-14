@@ -21,10 +21,12 @@ const WrapperView = styled(View)`
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  padding-top: ${StatusBar.currentHeight}px;
+  padding-top: ${StatusBar.currentHeight * 0.9}px;
   margin-top: ${StatusBar.currentHeight - 35 || 0}px;
+  padding-bottom: ${StatusBar.currentHeight * 0.9}px;
   z-index: 2;
 `;
+
 
 const ButtonsWrapper = styled(View)`
   flex-direction: row;

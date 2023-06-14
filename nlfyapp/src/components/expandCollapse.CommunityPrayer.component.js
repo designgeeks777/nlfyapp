@@ -107,7 +107,6 @@ const Item = (props) => {
   const textStyle = {
     lineHeight: 16,
     textAlign: "left",
-    
     padding: width * 0.02,
     bottom: width * 0.02,
   };
@@ -160,7 +159,7 @@ const Item = (props) => {
                 mode="text"
                 icon={props.selected ? "chevron-up" : "chevron-down"}
                 onPress={toggleRequestNumberOfLines}
-                labelStyle={{ color: "black" , fontWeight: "normal" }}
+                labelStyle={{ color: "#46458C" , fontWeight: "normal" }}
               >
                 {requestTextShown && props.selected ? "collapse" : "expand"}
               </Button>
@@ -211,12 +210,8 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
     flatlistWrapper: {
       flex: 1,
       position: "absolute",
-      bottom: 0,
-      height: height * 0.64,
-      overflow: "scroll",
-      marginTop: width * 0.01,
+      height: height * 0.63,
     },
-    
   });
 
   return (
@@ -224,9 +219,9 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
       <FlatList
         data={props.data}
         initialNumToRender={props.data.length}
-        contentContainerStyle={{ paddingBottom:width * 0.01 }}
         renderItem={renderItem}
         keyExtractor={(item) => item._id}
+        contentContainerStyle={{ paddingBottom:width * 0.01}}
         extraData={selectedId}
         showsVerticalScrollIndicator={false}
       />

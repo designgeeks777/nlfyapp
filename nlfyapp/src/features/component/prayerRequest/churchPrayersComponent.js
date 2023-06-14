@@ -54,14 +54,14 @@ const PrayerContent = styled(Text)`
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  padding-top: ${StatusBar.currentHeight}px;
+  padding-top: ${StatusBar.currentHeight * 0.9}px;
   margin-top: ${StatusBar.currentHeight - 35 || 0}px;
   z-index: 5;
 `;
 
 const Container = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight* 0.4|| 0}px;
+  margin-top: ${StatusBar.currentHeight* 0.9|| 0}px;
 `;
 
 const ButtonsWrapper = styled(View)`
@@ -160,7 +160,7 @@ export const ChurchPrayers = () => {
           </ButtonsWrapper>
           <Container>
             {isLoading ? (
-              <Text>Loading church Prayers</Text>
+              <Text>Loading Church Prayers...</Text>
             ) : (
               <FlatList
                 data={data}

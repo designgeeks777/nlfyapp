@@ -24,14 +24,14 @@ const WrapperView = styled(View)`
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  padding-top: ${StatusBar.currentHeight}px;
+  padding-top: ${StatusBar.currentHeight * 0.9}px;
   margin-top: ${StatusBar.currentHeight - 35 || 0}px;
-  z-index: 2;
+  z-index: 5;
 `;
 
 const Container = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight* 0.4|| 0}px;
+  margin-top: ${StatusBar.currentHeight* 0.9|| 0}px;
   `;
 
 const ButtonsWrapper = styled(View)`

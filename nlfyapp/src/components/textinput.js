@@ -4,11 +4,6 @@ import { TextInput } from "react-native-paper";
 import styled from "styled-components";
 import { FontAwesome5 } from "@expo/vector-icons";
 
-// export const CustomTextInput = ({ value, label, placeholder, type, onChange }) => {
-//   const handleChange = (e) => {
-//     const { value } = e;
-//     onChange(value);
-//   };
 const { width, height } = Dimensions.get("window");
 const containerWidth = width * 0.9;
 const containerHeight = height * 0.08;
@@ -22,7 +17,8 @@ const HeadingWrapperView = styled(View)`
 `;
 
 const MobileNumberText = styled(Text)`
-  top: 8px;
+  top: ${width*0.02}px;
+  left:  ${width*0.02}px;  
   color: ${(props) => props.theme.colors.text.caption};
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.caption};
@@ -30,7 +26,8 @@ const MobileNumberText = styled(Text)`
 `;
 
 const Mandatory = styled(Text)`
-  top: 6px;
+  top: ${width*0.01}px;
+  left:${width*0.03}px;
   color: ${(props) => props.theme.colors.text.secondary};
 `;
 
@@ -57,16 +54,16 @@ const StyledTextInputWithIcon = styled(TextInput).attrs({
     paddingLeft: 0,
     paddingHorizontal: 0,
     paddingTop: 0,
-    paddingBottom: 10,
+    paddingBottom:  width*0.03,
     paddingRight: 0,
   },
 })`
-  margin-top: 8px;
+  margin-top: ${width*0.05}px;
   font-size: ${(props) => props.theme.fontSizes.body};
   color: ${(props) => props.theme.colors.text.primary};
   font-family: ${(props) => props.theme.fonts.body};
   border-radius: 10px;
-  height: ${containerHeight}px;
+  height: ${containerHeight * 0.8}px;
   border-width: 1px;
   background-color: "transparent";
   ${({ isValid, value }) =>
@@ -91,40 +88,23 @@ const StyledTextInput = styled(TextInput).attrs({
   activeOutlineColor: "transparent",
   placeHolderTextColor: "#676767",
   contentStyle: {
-    paddingLeft: 10,
+    paddingLeft: width*0.03,
     paddingHorizontal: 0,
     paddingTop: 0,
-    paddingBottom: 10,
+    paddingBottom: width*0.03,
     paddingRight: 0,
   },
 })`
-  margin-top: 8px;
+  margin-top: ${width*0.05}px;
   font-size: ${(props) => props.theme.fontSizes.body};
   color: ${(props) => props.theme.colors.text.primary};
   font-family: ${(props) => props.theme.fonts.body};
   border-radius: 10px;
-  height: ${containerHeight}px;
+  height:  ${containerHeight * 0.8}px;
   border-width: 1px;
   background-color: "transparent";
   border-color: ${(props) => props.theme.colors.border.primary};
 `;
-
-//       isUserNameTextInput
-//         ?
-//
-// `;
-//       border-color : #D9D9D9;`;
-//       : isValid
-//       ? `
-//   border-color: #27AE60;
-// `
-//       : value === null || value === undefined || value === ""
-//       ? `
-//       border-color: #D9D9D9;
-//       `
-//       : `
-// border-color: #DE1621;
-// `};
 
 const TextInputIcon = styled(TextInput.Icon).attrs({
   iconColor: "red",
@@ -141,13 +121,7 @@ export const CustomTextInput = ({
   maxLength,
   isUserNameTextInput,
 }) => {
-  // console.log(
-  //   "custom TEXTINPUT",
-  //   isUserNameTextInput,
-  //   isValid,
-  //   value,
-  //   msgToDisplay
-  // );
+
   return (
     <Container>
       <HeadingWrapperView>
@@ -165,20 +139,14 @@ export const CustomTextInput = ({
           maxLength={maxLength}
           left={
             <TextInput.Icon
-              // style={{ marginTop: 8 }}
               icon={"phone"}
               iconColor="#666666"
               size={24}
-              // onPress={() => {
-              //   setSecureTextEntry(!secureTextEntry);
-              //   return false;
-              // }}
             />
           }
         />
       ) : (
         <StyledTextInput
-          // isValid={isValid}
           mode="outlined"
           onChangeText={onChange}
           value={value}
@@ -192,10 +160,8 @@ export const CustomTextInput = ({
             {value === null || value === undefined || value === "" || isValid
               ? null
               : msgToDisplay}
-            {/* {msgToDisplay} */}
           </ErrorText>
         ) : null
-        // <MessageText>{msgToDisplay}</MessageText>
       }
     </Container>
   );

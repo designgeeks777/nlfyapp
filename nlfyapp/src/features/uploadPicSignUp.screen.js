@@ -20,7 +20,7 @@ const { width } = Dimensions.get("window");
 const ContainerView = styled(SafeAreaView)`
   margin-left: ${width * 0.1}px; 
   margin-right: ${width * 0.1}px; 
-  margin-bottom:${width * 0.2}px; 
+  margin-bottom:${width * 0.4}px; 
   flex: 1;
   justify-content: space-around;
 `;
@@ -43,7 +43,7 @@ const Caption = styled(Text)`
 
 const ProfilePicContainer = styled(View)`
   align-self: center;
-  border-width: ${width * 0.002}px; 
+  border-width: ${width * 0.001}px; 
   border-color: ${(props) => props.theme.colors.border.primary};
   height: ${width * 0.5}px; 
   width:  ${width * 0.5}px; 
