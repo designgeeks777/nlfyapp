@@ -211,7 +211,6 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
       flex: 1,
       position: "absolute",
       height: height * 0.63,
-      //overflow: "scroll",
     },
   });
 

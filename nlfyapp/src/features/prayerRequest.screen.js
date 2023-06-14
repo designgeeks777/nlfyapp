@@ -19,13 +19,6 @@ const WrapperView = styled(View)`
   padding-top:${wrapperPadding }px;
 `;
 
-// const SafeAreaViewWrapper = styled(SafeAreaView)`
-//   flex: 1;
-//   padding-top: ${StatusBar.currentHeight * 0.5}px;
-//   // margin-top: ${StatusBar.currentHeight - 35 || 0}px;
-//   margin-top: ${StatusBar.currentHeight * 0.1|| 0}px;
-//   z-index: 2;
-// `;
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
   padding-top: ${StatusBar.currentHeight * 0.9}px;
