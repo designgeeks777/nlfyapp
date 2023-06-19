@@ -52,6 +52,7 @@ const LoadingText = styled(Text)`
 `;
 
 const ActivityIndicatorView = styled(View)`
+  z-index: 1;
   flex-direction: row;
   justify-content: center; /* Add this line */
   align-items: center; /* Add this line */
