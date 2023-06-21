@@ -9,9 +9,10 @@ export default {
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
     splash: {
-      image: "./assets/splash.png",
-      resizeMode: "contain",
+      image: "./assets/icon.png",
+      resizeMode: "center",
       backgroundColor: "#ffffff",
+      resize: "contain",
     },
     updates: {
       fallbackToCacheTimeout: 0,
@@ -22,12 +23,12 @@ export default {
     },
     android: {
       adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
+        foregroundImage: "./assets/icon.png",
         backgroundColor: "#FFFFFF",
       },
     },
     web: {
-      favicon: "./assets/favicon.png",
+      favicon: "./assets/icon.png",
       config: {
         firebase: {
           apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

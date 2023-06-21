@@ -233,12 +233,14 @@ export const Welcome = (props) => {
 
       console.log("Post body:", postbody);
 
-      axios
-        .post(url, postbody, { timeout: 5000 })
-        .then(() => console.log("Sucess POST Notification"))
-        .catch((err) => {
-          console.log("POST Error:", err);
-        });
+      if (postbody.expoToken !== undefined) {
+        axios
+          .post(url, postbody, { timeout: 5000 })
+          .then(() => console.log("Sucess POST Notification"))
+          .catch((err) => {
+            console.log("POST Error:", err);
+          });
+      }
     });
 
     notificationListener.current =
