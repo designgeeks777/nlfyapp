@@ -2,6 +2,11 @@ import "dotenv/config";
 
 export default {
   expo: {
+    extra: {
+      eas: {
+        projectId: "12dfc780-daf4-4cb2-8fe1-a9ede35f3524",
+      },
+    },
     name: "nlfyapp",
     slug: "nlfyapp",
     version: "1.0.0",
@@ -9,9 +14,10 @@ export default {
     icon: "./assets/icon.png",
     userInterfaceStyle: "light",
     splash: {
-      image: "./assets/splash.png",
-      resizeMode: "contain",
+      image: "./assets/icon.png",
+      resizeMode: "center",
       backgroundColor: "#ffffff",
+      resize: "contain",
     },
     updates: {
       fallbackToCacheTimeout: 0,
@@ -21,13 +27,14 @@ export default {
       supportsTablet: true,
     },
     android: {
+      package: "com.example.myapp",
       adaptiveIcon: {
-        foregroundImage: "./assets/adaptive-icon.png",
+        foregroundImage: "./assets/icon.png",
         backgroundColor: "#FFFFFF",
       },
     },
     web: {
-      favicon: "./assets/favicon.png",
+      favicon: "./assets/icon.png",
       config: {
         firebase: {
           apiKey: process.env.REACT_APP_FIREBASE_API_KEY,

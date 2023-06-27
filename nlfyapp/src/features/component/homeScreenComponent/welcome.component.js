@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState, useRef } from "react";
 import {
   View,
   Text,
@@ -22,7 +22,53 @@ import mime from "mime";
 
 import defaultImageMale from "../../../../assets/upload-pic-sign-up-male.png";
 import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.jpg";
+
+import * as Device from "expo-device";
+import * as Notifications from "expo-notifications";
+
+import { Platform } from "react-native";
+
 const { width, height } = Dimensions.get("window");
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
+
+async function registerForPushNotificationsAsync() {
+  let token;
+  if (Device.isDevice) {
+    const { status: existingStatus } =
+      await Notifications.getPermissionsAsync();
+    let finalStatus = existingStatus;
+    if (existingStatus !== "granted") {
+      const { status } = await Notifications.requestPermissionsAsync();
+      finalStatus = status;
+    }
+    if (finalStatus !== "granted") {
+      console.log("Failed to get push token for push notification!");
+      return;
+    }
+    token = (await Notifications.getExpoPushTokenAsync()).data;
+    console.log("Expo push token", token);
+  } else {
+    console.log("Must use physical device for Push Notifications");
+  }
+
+  if (Platform.OS === "android") {
+    Notifications.setNotificationChannelAsync("default", {
+      name: "default",
+      importance: Notifications.AndroidImportance.MAX,
+      vibrationPattern: [0, 250, 250, 250],
+      lightColor: "#FF231F7C",
+    });
+  }
+
+  return token;
+}
 
 const WelcomeText = styled(Text)`
   position: absolute;
@@ -35,7 +81,7 @@ const WelcomeText = styled(Text)`
 const Profile = styled(View)`
   margin-left: ${width * 0.02}px;
   top: ${width * 0.01}px;
-  height:${width * 0.11}px;
+  height: ${width * 0.11}px;
   width: ${width * 0.11}px;
   border-radius: ${width * 0.05}px;
   overflow: hidden;
@@ -45,11 +91,11 @@ const Profile = styled(View)`
 const ProfilePic = styled(Image)`
   height: 100%;
   width: 100%;
-  border-radius:  ${width * 0.02}px;
+  border-radius: ${width * 0.02}px;
 `;
 
 const ModalContainer = styled(View)`
-  padding:${width * 0.1}px;
+  padding: ${width * 0.1}px;
   height: ${height}px;
   background-color: ${(props) =>
     props.profilePicVisibleBgColor
@@ -70,22 +116,22 @@ const Caption = styled(Text)`
   font-weight: ${(props) => props.theme.fontWeights.medium};
   line-height: ${(props) => props.theme.lineHeights.button};
   letter-spacing: ${(props) => props.theme.space[1]};
-  padding:${width * 0.01}px;
+  padding: ${width * 0.01}px;
 `;
 const RowView = styled(View)`
   flex-direction: row;
   align-self: ${(props) => (props.modalIcon ? "flex-start" : "flex-end")};
   align-items: center;
   justify-content: space-between;
-  top:${width * 0.01}px;
+  top: ${width * 0.01}px;
 `;
 const ModalProfilePicContainer = styled(View)`
   align-self: center;
   border-width: 1px;
   border-color: ${(props) => props.theme.colors.border.primary};
   height: ${width * 0.5}px;
-  width: ${width * 0.5}px;  
-  border-radius: ${width * 0.9}px; 
+  width: ${width * 0.5}px;
+  border-radius: ${width * 0.9}px;
   overflow: hidden;
   justify-content: center;
   align-items: center;
@@ -108,7 +154,7 @@ const ButtonView = styled(View)`
   flex-direction: row;
   align-items: center;
   justify-content: space-around;
-  margin-bottom:${width * 0.07}px;
+  margin-bottom: ${width * 0.07}px;
 `;
 const StyledTextInput = styled(TextInput).attrs({
   selectionColor: "#D9D9D9",
@@ -142,6 +188,12 @@ export const Welcome = (props) => {
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
   const [username, setUsername] = useState(null);
+
+  const [expoPushToken, setExpoPushToken] = useState("");
+  const [notification, setNotification] = useState(false);
+  const notificationListener = useRef();
+  const responseListener = useRef();
+
   console.log("IN WELCOME", isAuthenticated);
 
   useEffect(() => {
@@ -161,6 +213,53 @@ export const Welcome = (props) => {
         });
     }
   }, [isAuthenticated, user?.phoneNumber, dataInLocalAPICompleted]);
+
+  useEffect(() => {
+    const url = `${BASEURL}notifications/`;
+    registerForPushNotificationsAsync().then((token) => {
+      let uid = "";
+      setExpoPushToken(token);
+
+      //Check if user exists
+      //Call Notofications API
+      if (isAuthenticated) {
+        console.log("User ::", user.uid);
+        uid = user.uid;
+      }
+      const postbody = {
+        expoToken: token,
+        uid: uid,
+      };
+
+      console.log("Post body:", postbody);
+
+      if (postbody.expoToken !== undefined) {
+        axios
+          .post(url, postbody, { timeout: 5000 })
+          .then(() => console.log("Sucess POST Notification"))
+          .catch((err) => {
+            console.log("POST Error:", err);
+          });
+      }
+    });
+
+    notificationListener.current =
+      Notifications.addNotificationReceivedListener((notification) => {
+        setNotification(notification);
+      });
+
+    responseListener.current =
+      Notifications.addNotificationResponseReceivedListener((response) => {
+        console.log(response);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(
+        notificationListener.current
+      );
+      Notifications.removeNotificationSubscription(responseListener.current);
+    };
+  }, [isAuthenticated]);
 
   const navigateToSignUp = () => {
     console.log("GO TO SIGN UP");
@@ -338,7 +437,12 @@ export const Welcome = (props) => {
               {/* {user?.isAnonymous ? ( */}
               {user === null || user?.isAnonymous ? (
                 <>
-                  <Caption onPress={navigateToSignUp}  style={{color:"#EF6C00", marginTop : width*0.02}}>Login</Caption>
+                  <Caption
+                    onPress={navigateToSignUp}
+                    style={{ color: "#EF6C00", marginTop: width * 0.02 }}
+                  >
+                    Login
+                  </Caption>
                 </>
               ) : (
                 <>
@@ -382,7 +486,11 @@ export const Welcome = (props) => {
                     </ButtonView>
                   ) : null}
                   <Text
-                    style={{ alignSelf: "flex-start", padding:width * 0.01, color:"#EF6C00"}}
+                    style={{
+                      alignSelf: "flex-start",
+                      padding: width * 0.01,
+                      color: "#EF6C00",
+                    }}
                     onPress={handleLogout}
                     disabled={profilePicVisible}
                   >
@@ -410,11 +518,11 @@ export const Welcome = (props) => {
               </TouchableWithoutFeedback>
               <RowView modalIcon={true}>
                 <TouchableOpacityIcon modalIcon={true} onPress={onOpenCamera}>
-                  <FontAwesome5Icon name="camera" size={width*0.07} />
+                  <FontAwesome5Icon name="camera" size={width * 0.07} />
                   <Caption>Camera</Caption>
                 </TouchableOpacityIcon>
                 <TouchableOpacityIcon modalIcon={true} onPress={onOpenGallery}>
-                  <FontAwesome5Icon name="image" size={width*0.07} />
+                  <FontAwesome5Icon name="image" size={width * 0.07} />
                   <Caption>Gallery</Caption>
                 </TouchableOpacityIcon>
               </RowView>
