@@ -12,8 +12,6 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import FormData from "form-data";
 import mime from "mime";
-import defaultImageMale from "../../assets/upload-pic-sign-up-male.png";
-import defaultImageFemale from "../../assets/upload-pic-sign-up-female.jpg";
 
 const { width } = Dimensions.get("window");
 
@@ -137,21 +135,38 @@ export const UploadPicSignUp = (props) => {
     imageData.append("name", userName);
     imageData.append("gender", gender);
     imageData.append("mobileNumber", user.phoneNumber);
-    const defaultMaleImageUri = Image.resolveAssetSource(defaultImageMale).uri;
-    const defaultFemaleImageUri =
-      Image.resolveAssetSource(defaultImageFemale).uri;
+
     if (def === "Def") {
-      const newImageUri =
-        gender === "male" ? defaultMaleImageUri : defaultFemaleImageUri;
-      let defaultImageName =
-        gender === "male"
-          ? "upload-pic-sign-up-male.png"
-          : "upload-pic-sign-up-female.jpg";
-      imageData.append("profilePic", {
-        uri: newImageUri,
-        type: gender === "male" ? "image/png" : "image/jpg",
-        name: defaultImageName,
-      });
+      const postbody = {
+        uid: user.uid,
+        name: userName,
+        gender: gender,
+        mobileNumber: user.phoneNumber,
+      };
+      await axios
+        .post(`${BASEURL}users/default`, postbody)
+        .then((response) => {
+          console.log("USERS", response.data);
+          if (response.data) {
+            console.log("INSIDE POST", response.data);
+
+            const HomeStackModalNavigator = navigation.getId();
+
+            console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
+
+            if (HomeStackModalNavigator === "HomeStackModal") {
+              isDataPostInLocalAPICompleted(true);
+              setRegistered(true);
+              navigation.navigate("HomeStack");
+            } else {
+              setRegistered(true);
+              navigation.navigate("Home");
+            }
+          }
+        })
+        .catch((error) => {
+          console.log("POST error", error);
+        });
     } else {
       const newImageUri = "file:///" + image.uri.split("file:/").join("");
       imageData.append("profilePic", {
@@ -159,42 +174,42 @@ export const UploadPicSignUp = (props) => {
         type: mime.getType(newImageUri),
         name: newImageUri.split("/").pop(),
       });
+
+      await axios
+        .post(`${BASEURL}users`, imageData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((response) => {
+          console.log("USERS", response.data);
+          if (response.data) {
+            console.log("INSIDE POST", response.data);
+
+            const HomeStackModalNavigator = navigation.getId();
+
+            console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
+
+            if (HomeStackModalNavigator === "HomeStackModal") {
+              //onSetUserData();
+              isDataPostInLocalAPICompleted(true);
+              setRegistered(true);
+              navigation.navigate("HomeStack");
+            } else {
+              //onSetUserData();
+              setRegistered(true);
+              navigation.navigate("Home");
+            }
+
+            //navigation.navigate("Home");
+          }
+        })
+        .catch((error) => {
+          console.log("POST error", error);
+        });
     }
 
     console.log("imageData", imageData);
-
-    await axios
-      .post(`${BASEURL}/users`, imageData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        console.log("USERS", response.data);
-        if (response.data) {
-          console.log("INSIDE POST", response.data);
-
-          const HomeStackModalNavigator = navigation.getId();
-
-          console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
-
-          if (HomeStackModalNavigator === "HomeStackModal") {
-            //onSetUserData();
-            isDataPostInLocalAPICompleted(true);
-            setRegistered(true);
-            navigation.navigate("HomeStack");
-          } else {
-            //onSetUserData();
-            setRegistered(true);
-            navigation.navigate("Home");
-          }
-
-          //navigation.navigate("Home");
-        }
-      })
-      .catch((error) => {
-        console.log("POST error", error);
-      });
   };
 
   const onOpenGallery = async () => {
