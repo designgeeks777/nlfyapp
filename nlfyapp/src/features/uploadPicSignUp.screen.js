@@ -12,6 +12,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
 import FormData from "form-data";
 import mime from "mime";
+import { SecondaryButton } from "../components/secondaryButton.component";
 
 const { width } = Dimensions.get("window");
 
@@ -334,7 +335,12 @@ export const UploadPicSignUp = (props) => {
             handleClick={onRegisterUser}
             disabled={image === null}
           />
-          <SkipForNow onPress={onPressSkipForNow}>Skip for now</SkipForNow>
+          <View style={{ margin: width * 0.004 }}>
+            <SecondaryButton
+              label=" Skip for now"
+              handleClick={onPressSkipForNow}
+            />
+          </View>
         </OptionsContainer>
       </ContainerView>
     </Provider>
