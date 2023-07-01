@@ -17,8 +17,8 @@ const HeadingWrapperView = styled(View)`
 `;
 
 const MobileNumberText = styled(Text)`
-  top: ${width*0.02}px;
-  left:  ${width*0.02}px;  
+  top: ${width * 0.02}px;
+  left: ${width * 0.02}px;
   color: ${(props) => props.theme.colors.text.caption};
   font-family: ${(props) => props.theme.fonts.body};
   font-size: ${(props) => props.theme.fontSizes.caption};
@@ -26,8 +26,8 @@ const MobileNumberText = styled(Text)`
 `;
 
 const Mandatory = styled(Text)`
-  top: ${width*0.01}px;
-  left:${width*0.03}px;
+  top: ${width * 0.01}px;
+  left: ${width * 0.03}px;
   color: ${(props) => props.theme.colors.text.secondary};
 `;
 
@@ -54,11 +54,11 @@ const StyledTextInputWithIcon = styled(TextInput).attrs({
     paddingLeft: 0,
     paddingHorizontal: 0,
     paddingTop: 0,
-    paddingBottom:  width*0.03,
+    paddingBottom: width * 0.03,
     paddingRight: 0,
   },
 })`
-  margin-top: ${width*0.05}px;
+  margin-top: ${width * 0.05}px;
   font-size: ${(props) => props.theme.fontSizes.body};
   color: ${(props) => props.theme.colors.text.primary};
   font-family: ${(props) => props.theme.fonts.body};
@@ -88,19 +88,19 @@ const StyledTextInput = styled(TextInput).attrs({
   activeOutlineColor: "transparent",
   placeHolderTextColor: "#676767",
   contentStyle: {
-    paddingLeft: width*0.03,
+    paddingLeft: width * 0.03,
     paddingHorizontal: 0,
     paddingTop: 0,
-    paddingBottom: width*0.03,
+    paddingBottom: width * 0.03,
     paddingRight: 0,
   },
 })`
-  margin-top: ${width*0.05}px;
+  margin-top: ${width * 0.05}px;
   font-size: ${(props) => props.theme.fontSizes.body};
   color: ${(props) => props.theme.colors.text.primary};
   font-family: ${(props) => props.theme.fonts.body};
   border-radius: 10px;
-  height:  ${containerHeight * 0.8}px;
+  height: ${containerHeight * 0.8}px;
   border-width: 1px;
   background-color: "transparent";
   border-color: ${(props) => props.theme.colors.border.primary};
@@ -121,7 +121,6 @@ export const CustomTextInput = ({
   maxLength,
   isUserNameTextInput,
 }) => {
-
   return (
     <Container>
       <HeadingWrapperView>
@@ -137,13 +136,7 @@ export const CustomTextInput = ({
           placeholder={placeholder}
           keyboardType={keyboardType}
           maxLength={maxLength}
-          left={
-            <TextInput.Icon
-              icon={"phone"}
-              iconColor="#666666"
-              size={24}
-            />
-          }
+          left={<TextInput.Icon icon={"phone"} iconColor="#666666" size={24} />}
         />
       ) : (
         <StyledTextInput
@@ -154,15 +147,13 @@ export const CustomTextInput = ({
           keyboardType={keyboardType}
         />
       )}
-      {
-        isUserNameTextInput === false ? (
-          <ErrorText>
-            {value === null || value === undefined || value === "" || isValid
-              ? null
-              : msgToDisplay}
-          </ErrorText>
-        ) : null
-      }
+      {isUserNameTextInput === false ? (
+        <ErrorText>
+          {value === null || value === undefined || value === "" || isValid
+            ? null
+            : msgToDisplay}
+        </ErrorText>
+      ) : null}
     </Container>
   );
 };

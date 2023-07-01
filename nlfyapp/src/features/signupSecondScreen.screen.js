@@ -218,6 +218,11 @@ export const Stepper = () => {
       backgroundColor: "#ffffff",
     },
 
+    centeredContainer: {
+      flex: 1,
+      alignItems: "center",
+    },
+
     containerProgressSteps: {
       paddingTop: width * 0.02,
       flex: 1,
@@ -228,9 +233,11 @@ export const Stepper = () => {
       borderRadius: 50,
       width: width * 0.9,
       height: height * 0.08,
-      left: width * 0.12,
-      justifyContent: "center",
+      left: width * 0.09,
+      alignSelf: "center",
+      alignItems: "center",
       backgroundColor: "#E94A27",
+      justifyContent: "center",
     },
 
     progressStepNextButtonTextStyle: {

@@ -5,6 +5,10 @@ import {
   StyleSheet,
   Dimensions,
   ActivityIndicator,
+  Platform,
+  TouchableWithoutFeedback,
+  Keyboard,
+  KeyboardAvoidingView,
 } from "react-native";
 import * as firebase from "firebase/compat";
 import { FirebaseRecaptchaVerifierModal } from "expo-firebase-recaptcha";
@@ -193,8 +197,8 @@ export const LoginSecondScreen = ({ route }) => {
 
   const LoginButtonView = styled(View)`
     flex: 1;
-    justify-content: flex-end;
-    margin-bottom: ${width * 0.2}px;
+    justify-content: center;
+    margin-bottom: ${width * 0.8}px;
   `;
   const styles = StyleSheet.create({
     containerView: {
@@ -238,10 +242,11 @@ export const LoginSecondScreen = ({ route }) => {
       {!confirmResult ? (
         <>
           <Heading>We are glad to have you back.</Heading>
+
           <CustomTextInput
             label="Mobile Number"
             maxLength={15}
-            placeholder="+919999890801"
+            placeholder="+919999890802"
             autoFocus
             autoCompleteType="tel"
             keyboardType="phone-pad"
@@ -252,6 +257,7 @@ export const LoginSecondScreen = ({ route }) => {
             isValid={isValid}
             isUserNameTextInput={false}
           />
+
           {isLoading ? (
             <ActivityIndicatorView>
               <LoadingText>Checking number</LoadingText>
