@@ -23,17 +23,14 @@ const YouAreThereImage = styled(ImageBackground)`
   align-self: center;
 `;
 
-const GoogleButtonPadding = styled(View)`
-  top:${width * 0.02}px;
-`;
 const PrimaryButtonPadding = styled(View)`
-  top:${width * 0.3}px;
+  top: ${width * 0.1}px;
 `;
 
 const BoldText = styled(Text)`
   align-items: center;
   top: ${textheight}px;
-  padding-left:${width * 0.09}px;
+  padding-left: ${width * 0.09}px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -63,10 +60,6 @@ export const SignUp = () => {
           </Layer>
         </YouAreThereImage>
 
-        <SecondaryButton label="Continue with Facebook" />
-        <GoogleButtonPadding>
-          <SecondaryButton label="Continue with Google" />
-        </GoogleButtonPadding>
         <PrimaryButtonPadding>
           <Button
             label="Sign Up with Mobile"
