@@ -24,11 +24,8 @@ const YouAreThereImage = styled(ImageBackground)`
   align-self: center;
 `;
 
-const GoogleButtonPadding = styled(View)`
-  top: 10px;
-`;
 const PrimaryButtonPadding = styled(View)`
-  top: 110px;
+  top: ${width * 0.06}px;
 `;
 
 const BoldText = styled(Text)`
@@ -64,10 +61,6 @@ export const Login = () => {
           </Layer>
         </YouAreThereImage>
 
-        <SecondaryButton label="Continue with Facebook" />
-        <GoogleButtonPadding>
-          <SecondaryButton label="Continue with Google" />
-        </GoogleButtonPadding>
         <PrimaryButtonPadding>
           <Button
             label="Log in with Mobile"
