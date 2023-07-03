@@ -4,7 +4,7 @@ export default {
   expo: {
     extra: {
       eas: {
-        projectId: "12dfc780-daf4-4cb2-8fe1-a9ede35f3524",
+        projectId: "c23e907f-4bfc-4df9-a615-f3e6e466ae0d",
       },
     },
     name: "nlfyapp",
@@ -15,9 +15,8 @@ export default {
     userInterfaceStyle: "light",
     splash: {
       image: "./assets/icon.png",
-      resizeMode: "center",
+      resizeMode: "contain",
       backgroundColor: "#ffffff",
-      resize: "contain",
     },
     updates: {
       fallbackToCacheTimeout: 0,
@@ -27,7 +26,8 @@ export default {
       supportsTablet: true,
     },
     android: {
-      package: "com.example.myapp",
+      package: "com.designGeeks.nlfyapp",
+      googleServicesFile: "./google-services.json",
       adaptiveIcon: {
         foregroundImage: "./assets/icon.png",
         backgroundColor: "#FFFFFF",
