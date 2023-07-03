@@ -25,8 +25,8 @@ const wrapperMargin = width * 0.03;
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: ${width * 0.9}px; //10px;
-  margin-left: ${wrapperMargin }px;
-  padding-top:${wrapperPadding}px;
+  margin-left: ${wrapperMargin}px;
+  padding-top: ${wrapperPadding}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -36,7 +36,7 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
 `;
 
 const ButtonView = styled(View)`
-  padding-bottom:  ${wrapperPadding * 1.5}px;
+  padding-bottom: ${wrapperPadding * 1.5}px;
   align-items: center;
 `;
 
@@ -96,7 +96,7 @@ export const Stories = () => {
       <ExpoStatusBar style="auto" />
       {user === null || user?.isAnonymous ? null : (
         <ButtonView>
-          <Button label="Raise Story Request" handleClick={handleClick} />
+          <Button label="Share testimony" handleClick={handleClick} />
         </ButtonView>
       )}
       <Modal visible={modalVisible} transparent={true}>
