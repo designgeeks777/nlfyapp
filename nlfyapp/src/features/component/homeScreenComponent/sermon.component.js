@@ -5,9 +5,9 @@ import { Dimensions } from "react-native";
 
 export const Sermon = () => {
   const { width } = Dimensions.get("window");
-  const lefttop = width * (75 / 375);  // Assuming a reference width of 375
-  const righttop = width * (75 / 375);  
-  const marginleft = width * (100 / 375);  
+  const lefttop = width * (75 / 375); // Assuming a reference width of 375
+  const righttop = width * (75 / 375);
+  const marginleft = width * (100 / 375);
 
   return (
     <>

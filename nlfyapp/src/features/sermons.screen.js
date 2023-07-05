@@ -15,11 +15,13 @@ import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { BackButton } from "../components/backButton";
 import { Searchbar } from "react-native-paper";
 
+import { youtubeChannelID } from "../../APIKey";
+
 import axios from "axios";
 
 import { youtubeAPIKey } from "../../APIKey";
 
-const channelId = "UCveuID2qdKDhzeJ_QM4JXqA";
+const channelId = youtubeChannelID;
 const apiKey = youtubeAPIKey;
 const maxResults = 10; // the maximum number of results to retrieve
 
