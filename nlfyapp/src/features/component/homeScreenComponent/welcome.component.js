@@ -268,12 +268,34 @@ export const Welcome = (props) => {
       hideModal();
     }, 1000);
   };
-  const handleLogout = () => {
-    isDataPostInLocalAPICompleted(false);
-    setUserData("");
-    onLogout();
+  // const handleLogout = () => {
+  //   isDataPostInLocalAPICompleted(false);
+  //   setUserData("");
+  //   onLogout();
 
-    hideModal();
+  //   hideModal();
+  // };
+  const handleLogout = () => {
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Log Out',
+          onPress: () => {
+            isDataPostInLocalAPICompleted(false);
+            setUserData('');
+            onLogout();
+            hideModal();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
   const showModal = () => {
     setVisible(true);
@@ -544,7 +566,10 @@ export const Welcome = (props) => {
             </TouchableOpacity>
           ) : (
             <>
-              <TouchableOpacity>
+              <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Announcements'); 
+              }}>
                 <Ionicons
                   name="notifications"
                   size={32}
@@ -553,7 +578,7 @@ export const Welcome = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  setVisible(true);
+                  setVisible(true); 
                 }}
               >
                 <Profile>

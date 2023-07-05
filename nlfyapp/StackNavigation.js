@@ -8,7 +8,7 @@ import { SignUp } from "./src/features/signup.screen";
 import { Stepper } from "./src/features/signupSecondScreen.screen";
 import { UploadPicSignUp } from "./src/features/uploadPicSignUp.screen";
 import { HasLaunchedOnboarding } from "./src/features/hasLaunchedOnboarding.screen";
-
+import { Announcements } from "./src/features/announcements.screen";
 const Stack = createStackNavigator();
 
 export const MyStack = () => {
@@ -47,6 +47,11 @@ export const MyStack = () => {
       <Stack.Screen
         name="LoginSecondScreen"
         component={LoginSecondScreen}
+        options={{ headerShown: false }}
+      />
+         <Stack.Screen
+        name="Announcements"
+        component={Announcements}
         options={{ headerShown: false }}
       />
       <Stack.Screen name="OnboardingStack" component={HasLaunchedOnboarding} />
