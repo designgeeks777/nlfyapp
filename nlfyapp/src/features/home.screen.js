@@ -18,6 +18,7 @@ import { Welcome } from "./component/homeScreenComponent/welcome.component";
 import { LifeGroup } from "./component/homeScreenComponent/lifeGroup.component";
 import { PrayerRequest } from "./component/homeScreenComponent/prayerRequest.component";
 import { useNavigation } from "@react-navigation/native";
+import { LiveStream } from "./component/homeScreenComponent/liveStream.component";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
@@ -45,6 +46,7 @@ export const Home = (props) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <WrapperView>
             <Welcome />
+            <LiveStream />
             <Devotional />
             <Sermon />
             <Event />
