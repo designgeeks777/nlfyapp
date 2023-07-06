@@ -288,6 +288,14 @@ export const Onboarding = () => {
               options={{ headerShown: false }}
             />
             <Tab.Screen
+                  name="Announcements"
+                  component={Announcements}
+                  options={{  
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false }}
+            />
+            <Tab.Screen
               name="Events"
               component={Events}
               options={{
