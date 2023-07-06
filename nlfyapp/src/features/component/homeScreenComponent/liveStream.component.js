@@ -46,7 +46,6 @@ export const LiveStream = () => {
   const [videoresult, setVideoresult] = useState(null);
 
   useEffect(() => {
-    const fetchLivestreamVideos = () => {
       const now = new Date();
       const day = now.getDay(); // Sunday is represented by 0 (Sunday-Saturday: 0-6)
       const hour = now.getHours();
@@ -55,7 +54,7 @@ export const LiveStream = () => {
       console.log("Hour", hour);
 
       // Check if it's Sunday and the time is within 8 AM to 12 Noon
-      if (day === 0 && hour >= 8 && hour < 12) {
+      if (day === 0 && hour >= 8 && hour < 13) {
         axios
           .get(
             `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`
@@ -80,16 +79,6 @@ export const LiveStream = () => {
       } else {
         setVideoresult(null); // Reset video result if it's not Sunday or outside the time range
       }
-    };
-
-    // Initial fetch
-    fetchLivestreamVideos();
-
-    // Set up polling interval
-    const interval = setInterval(fetchLivestreamVideos, pollingInterval);
-
-    // Clean up on component unmount
-    return () => clearInterval(interval);
   }, []);
 
   const playerRef = useRef(null);
