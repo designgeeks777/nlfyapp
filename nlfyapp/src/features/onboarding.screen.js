@@ -59,7 +59,7 @@ const Slide4 = styled(View)`
 `;
 
 const Slide1Image = styled(Image)`
-  height: ${width * 1.2}px;
+  height: ${width}px;
   width: ${width}px;
   align-self: center;
   position: absolute;
@@ -72,16 +72,17 @@ const SlideImage = styled(Image)`
 `;
 
 const TextSlide1 = styled(Text)`
+  justify-content: center;
   align-items: center;
-  top: ${width * 0.5}px;
+  top: ${width * 0.4}px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.header};
-  font-weight: ${(props) => props.theme.fontWeights.bold};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
 const JoinText = styled(Text)`
-  top: ${width * 0.6}px;
+  top: ${width * 0.5}px;
   padding-top: ${width * 0.01}px;
   color: ${(props) => props.theme.colors.text.primary};
   font-size: ${(props) => props.theme.fontSizes.body};
@@ -130,7 +131,7 @@ const TextScreen2Orange = styled(Text)`
 `;
 
 const TextScreen1Orange = styled(Text)`
-  top: ${width * 0.65}px;
+  top: ${width * 0.55}px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.medium};
