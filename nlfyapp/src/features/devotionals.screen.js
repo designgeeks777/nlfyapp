@@ -44,7 +44,6 @@ const ButtonView = styled(View)`
   align-items: center;
 `;
 
-
 export const Devotionals = () => {
   const { user } = useContext(AuthenticationContext);
   //const adminPhones = process.env.REACT_APP_ADMIN_PHONES.split(",");
@@ -123,7 +122,6 @@ export const Devotionals = () => {
                 styles.modalContainer,
                 {
                   transform: [{ translateY: modalTranslateY }],
-                  //height: 500, // set the height as per your requirement
                 },
               ]}
             >
@@ -152,3 +150,4 @@ const styles = StyleSheet.create({
     paddingBottom: width * 0.001, // adding some bottom padding for the submit button
   },
 });
+

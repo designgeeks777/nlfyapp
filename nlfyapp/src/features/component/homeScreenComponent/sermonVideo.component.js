@@ -3,6 +3,7 @@ import { Image, View, StyleSheet, Dimensions } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 import { youtubeAPIKey } from "../../../../APIKey";
+import { youtubeChannelID } from "../../../../APIKey";
 import YoutubePlayer from "react-native-youtube-iframe";
 import axios from "axios";
 
@@ -10,7 +11,7 @@ const { width } = Dimensions.get("window");
 const containerWidth = width * 0.9;
 const containerheight = width * 0.5;
 const containerTop = width * 0.1 + 5;
-const channelId = "UCveuID2qdKDhzeJ_QM4JXqA";
+const channelId = youtubeChannelID;
 const apiKey = youtubeAPIKey;
 const maxResults = 2;
 const videosUrl = `https://www.googleapis.com/youtube/v3/search?order=date&part=snippet&channelId=${channelId}&maxResults=${maxResults}&key=${apiKey}`;
@@ -21,8 +22,8 @@ const styles = StyleSheet.create({
     height: containerheight,
     borderRadius: 30,
     justifyContent: "center",
-   
-  marginTop: containerTop,
+
+    marginTop: containerTop,
   },
   video: {
     width: "100%",

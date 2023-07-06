@@ -24,7 +24,7 @@ export const HomeScreenHeading = ({
     font-size: ${(props) => props.theme.fontSizes.bodylarge};
     font-weight: ${(props) => props.theme.fontWeights.bold};
     font-family: ${(props) => props.theme.fonts.body};
-    margin-bottom:${margin * 0.01}px;
+    margin-bottom: ${margin * 0.01}px;
   `;
   const RightSideText = styled(Text)`
     color: ${(props) => props.theme.colors.text.seeall};
@@ -37,7 +37,7 @@ export const HomeScreenHeading = ({
     margin-top: ${righttop};
     align-self: flex-end;
     margin-left: ${marginleft};
-    margin-bottom:${margin * 0.02}px;
+    margin-bottom: ${margin * 0.02}px;
     z-index: 999;
   `;
 
