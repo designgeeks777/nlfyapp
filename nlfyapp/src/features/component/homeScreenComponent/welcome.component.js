@@ -268,14 +268,7 @@ export const Welcome = (props) => {
       hideModal();
     }, 1000);
   };
-  // const handleLogout = () => {
-  //   isDataPostInLocalAPICompleted(false);
-  //   setUserData("");
-  //   onLogout();
-
-  //   hideModal();
-  // };
-  const handleLogout = () => {
+ const handleLogout = () => {
     Alert.alert(
       'Confirmation',
       'Are you sure you want to log out?',
@@ -285,7 +278,8 @@ export const Welcome = (props) => {
           style: 'cancel',
         },
         {
-          text: 'Log Out',
+          text: 'LogOut',
+
           onPress: () => {
             isDataPostInLocalAPICompleted(false);
             setUserData('');
