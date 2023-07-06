@@ -3,6 +3,7 @@ import { View, Dimensions, StyleSheet } from "react-native";
 import axios from "axios";
 import { youtubeAPIKey } from "../../../../APIKey";
 import { youtubeChannelID } from "../../../../APIKey";
+import { HomeScreenHeading } from "../homeScreenHeading.component";
 
 import YoutubePlayer from "react-native-youtube-iframe";
 
@@ -45,38 +46,39 @@ export const LiveStream = () => {
   const [videoresult, setVideoresult] = useState(null);
 
   useEffect(() => {
-    const fetchLivestreamVideos = () => {
-      axios
-        .get(
-          `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`
-        )
-        .then((response) => {
-          const videos = response.data.items;
-          const livestreamVideos = videos.filter(
-            (video) => video.snippet.liveBroadcastContent === "live"
-          );
+      const now = new Date();
+      const day = now.getDay(); // Sunday is represented by 0 (Sunday-Saturday: 0-6)
+      const hour = now.getHours();
 
-          if (livestreamVideos.length > 0) {
-            const livestreamVideo = livestreamVideos[0];
-            console.log("LiveStreamVideo", livestreamVideo);
-            setVideoresult(livestreamVideo);
-          } else {
-            setVideoresult(null);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
+      console.log("Day", day);
+      console.log("Hour", hour);
 
-    // Initial fetch
-    fetchLivestreamVideos();
+      // Check if it's Sunday and the time is within 8 AM to 12 Noon
+      if (day === 0 && hour >= 8 && hour < 13) {
+        axios
+          .get(
+            `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`
+          )
+          .then((response) => {
+            const videos = response.data.items;
+            const livestreamVideos = videos.filter(
+              (video) => video.snippet.liveBroadcastContent === "live"
+            );
 
-    // Set up polling interval
-    const interval = setInterval(fetchLivestreamVideos, pollingInterval);
-
-    // Clean up on component unmount
-    return () => clearInterval(interval);
+            if (livestreamVideos.length > 0) {
+              const livestreamVideo = livestreamVideos[0];
+              console.log("LiveStreamVideo", livestreamVideo);
+              setVideoresult(livestreamVideo);
+            } else {
+              setVideoresult(null);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        setVideoresult(null); // Reset video result if it's not Sunday or outside the time range
+      }
   }, []);
 
   const playerRef = useRef(null);

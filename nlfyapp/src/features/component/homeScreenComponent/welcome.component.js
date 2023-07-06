@@ -269,11 +269,26 @@ export const Welcome = (props) => {
     }, 1000);
   };
   const handleLogout = () => {
-    isDataPostInLocalAPICompleted(false);
-    setUserData("");
-    onLogout();
-
-    hideModal();
+    Alert.alert(
+      'Confirmation',
+      'Are you sure you want to log out?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'LogOut',
+          onPress: () => {
+            isDataPostInLocalAPICompleted(false);
+            setUserData('');
+            onLogout();
+            hideModal();
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
   const showModal = () => {
     setVisible(true);
