@@ -110,7 +110,6 @@ export const Stories = () => {
               styles.modalContainer,
               {
                 transform: [{ translateY: modalTranslateY }],
-                height: 500, // set the height as per your requirement
               },
             ]}
           >
@@ -136,5 +135,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: width * 0.08,
+    minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
+    paddingBottom: width * 0.001, // adding some bottom padding for the submit button
   },
 });

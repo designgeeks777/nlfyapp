@@ -268,7 +268,7 @@ export const Welcome = (props) => {
       hideModal();
     }, 1000);
   };
-  const handleLogout = () => {
+ const handleLogout = () => {
     Alert.alert(
       'Confirmation',
       'Are you sure you want to log out?',
@@ -279,6 +279,7 @@ export const Welcome = (props) => {
         },
         {
           text: 'LogOut',
+
           onPress: () => {
             isDataPostInLocalAPICompleted(false);
             setUserData('');
@@ -559,7 +560,10 @@ export const Welcome = (props) => {
             </TouchableOpacity>
           ) : (
             <>
-              <TouchableOpacity>
+              <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('Announcements'); 
+              }}>
                 <Ionicons
                   name="notifications"
                   size={32}
@@ -568,7 +572,7 @@ export const Welcome = (props) => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => {
-                  setVisible(true);
+                  setVisible(true); 
                 }}
               >
                 <Profile>

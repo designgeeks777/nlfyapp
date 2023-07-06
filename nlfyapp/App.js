@@ -6,6 +6,7 @@ import { theme } from "./src/infrastructure/theme";
 import { View } from "react-native";
 import { Give } from "./src/features/give.screen";
 import { LifeGroups } from "./src/features/lifeGroups.screen";
+import { Announcements } from "./src/features/announcements.screen";
 
 import {
   gettingData,
@@ -143,13 +144,21 @@ const App = () => {
                   component={LifeGroups}
                   options={{ headerShown: false }}
                 />
+                 <Tab.Screen
+                  name="Announcements"
+                  component={Announcements}
+                  options={{  
+                    tabBarButton: () => null,
+                    tabBarVisible: false,
+                    headerShown: false }}
+                />
                 <Tab.Screen
                   name="Events"
                   component={Events}
                   options={{
                     tabBarButton: () => null,
                     tabBarVisible: false,
-                    headerShown: false,
+                    headerShown: false
                   }}
                 />
                 <Tab.Screen

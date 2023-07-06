@@ -44,10 +44,6 @@ const ButtonView = styled(View)`
   align-items: center;
 `;
 
-const handleClick = () => {
-  console.log("Share Devotional");
-};
-
 export const Devotionals = () => {
   const { user } = useContext(AuthenticationContext);
   //const adminPhones = process.env.REACT_APP_ADMIN_PHONES.split(",");
@@ -126,7 +122,6 @@ export const Devotionals = () => {
                 styles.modalContainer,
                 {
                   transform: [{ translateY: modalTranslateY }],
-                  height: 500, // set the height as per your requirement
                 },
               ]}
             >
@@ -151,5 +146,8 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: width * 0.08,
+    minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
+    paddingBottom: width * 0.001, // adding some bottom padding for the submit button
   },
 });
+

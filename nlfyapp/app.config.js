@@ -4,8 +4,8 @@ export default {
   expo: {
     extra: {
       eas: {
-        projectId: "c23e907f-4bfc-4df9-a615-f3e6e466ae0d",
-      },
+        projectId: "c23e907f-4bfc-4df9-a615-f3e6e466ae0d" 
+      }
     },
     name: "nlfyapp",
     slug: "nlfyapp",

@@ -17,6 +17,7 @@ import { Events } from "../../features/events.screen";
 import { Stories } from "../../features/stories.screen";
 import { Devotionals } from "../../features/devotionals.screen";
 import { PrayerRequestNavigation } from "../../../PrayerRequestNavigation";
+import { Announcements } from "../../features/announcements.screen";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -103,6 +104,15 @@ export const AppNavigator = () => {
               name="Life Groups"
               component={LifeGroups}
               options={{ headerShown: false }}
+            />
+             <Tab.Screen
+              name="Announcements"
+              component={Announcements}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
             />
             <Tab.Screen
               name="Events"

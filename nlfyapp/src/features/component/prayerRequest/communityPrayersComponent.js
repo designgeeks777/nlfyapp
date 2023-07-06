@@ -210,7 +210,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 24,
     padding: width * 0.05,
     minHeight: Dimensions.get("window").height * 0.6, // set the minimum height to 60% of the screen height
-    paddingBottom: 25, // adding some bottom padding for the submit button
+    paddingBottom: width * 0.16, // adding some bottom padding for the submit button
   },
   modalTitle: {
     fontSize: 24,
