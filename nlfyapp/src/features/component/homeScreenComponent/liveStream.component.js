@@ -55,7 +55,7 @@ export const LiveStream = () => {
       console.log("Hour", hour);
 
       // Check if it's Sunday and the time is within 8 AM to 12 Noon
-      if (day === 7 && hour >= 8 && hour < 12) {
+      if (day === 0 && hour >= 8 && hour < 12) {
         axios
           .get(
             `https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=${CHANNEL_ID}&eventType=live&type=video&key=${API_KEY}`
