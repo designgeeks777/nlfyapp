@@ -1,5 +1,12 @@
 import React, { useEffect, useState, useContext } from "react";
-import { View, Text, Dimensions, SafeAreaView, StatusBar } from "react-native";
+import {
+  View,
+  Text,
+  Dimensions,
+  SafeAreaView,
+  StatusBar,
+  Platform,
+} from "react-native";
 import { BackButton } from "../../../components/backButton";
 import { TabButton } from "../../../components/tabButton";
 import { TabButtonUnselected } from "../../../components/TabButtonUnselected";
@@ -17,9 +24,10 @@ const wrapperPadding = width * 0.13;
 const wrapperMargin = width * 0.03;
 
 const WrapperView = styled(View)`
-  width:${wrapperWidth * 0.9}px;
-  margin-left: ${wrapperMargin }px;
-  padding-top:${wrapperPadding }px;
+  width: ${wrapperWidth * 0.9}px;
+  margin-left: ${wrapperMargin}px;
+  padding-top: ${wrapperPadding}px;
+  margin-bottom: ${Platform.OS === "ios" ? `${width * 0.1}px` : "0px"};
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -31,8 +39,8 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
 
 const Container = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight* 0.9|| 0}px;
-  `;
+  margin-top: ${StatusBar.currentHeight * 0.9 || 0}px;
+`;
 
 const ButtonsWrapper = styled(View)`
   flex-direction: row;
@@ -58,8 +66,8 @@ export const MyPrayersScreen = () => {
         const filteredData = response.data.filter(
           (record) => record.raisedByUid === user.uid
         );
-
-        setData(filteredData);
+        //setData(response.data.reverse());
+        setData(filteredData.reverse());
 
         setIsLoading(false);
       } catch (error) {

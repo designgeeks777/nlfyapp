@@ -36,8 +36,9 @@ const Container = styled(SafeAreaView)`
 `;
 
 const ButtonView = styled(View)`
-  padding-bottom:${width * 0.01}px;  
+  padding-bottom: ${width * 0.01}px;
   align-items: center;
+  margin-bottom: ${Platform.OS === "ios" ? `${width * 0.1}px` : "0px"};
 `;
 
 export const CommunityPrayers = () => {
@@ -50,7 +51,7 @@ export const CommunityPrayers = () => {
         const response = await axios.get(url, {
           cancelToken: source.token,
         });
-        setData(response.data);
+        setData(response.data.reverse());
 
         setIsLoading(false);
       } catch (error) {
@@ -146,7 +147,12 @@ export const CommunityPrayers = () => {
       </SafeAreaViewWrapper>
       {user === null || user?.isAnonymous ? (
         <ButtonView>
-          <Button label="Raise Prayer Request" handleClick={() => Alert.alert("Kindly login/signup to Raise your Prayer Request")} />
+          <Button
+            label="Raise Prayer Request"
+            handleClick={() =>
+              Alert.alert("Kindly login/signup to Raise your Prayer Request")
+            }
+          />
         </ButtonView>
       ) : (
         <ButtonView>

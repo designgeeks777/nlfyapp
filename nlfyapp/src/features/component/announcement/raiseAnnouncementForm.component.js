@@ -46,7 +46,9 @@ export const RaiseAnnouncementForm = (props) => {
 
   return (
     <>
-      {!success && <Text style={styles.modalTitle}>Write your Announcement</Text>}
+      {!success && (
+        <Text style={styles.modalTitle}>Write your Announcement</Text>
+      )}
 
       {!success && (
         <View style={{ flex: 1, alignItems: "center" }}>
