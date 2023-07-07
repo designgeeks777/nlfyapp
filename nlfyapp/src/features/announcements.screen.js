@@ -9,6 +9,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 import styled from "styled-components";
@@ -17,7 +19,7 @@ import { BackButton } from "../components/backButton";
 import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 import { ExpandCollapseListAnnouncements } from "../components/expandCollapse.Announcements.component";
-import {RaiseAnnouncementForm }from "./component/announcement/raiseAnnouncementForm.component";
+import { RaiseAnnouncementForm } from "./component/announcement/raiseAnnouncementForm.component";
 import { adminPhones } from "../../APIKey";
 import { Button } from "../components/button";
 
@@ -30,9 +32,9 @@ const marginLeft = width * 0.05;
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: ${width * 0.9}px; //10px;
-  padding-bottom: ${padding}px; 
-  top: ${top}px; 
-  margin-left:  ${marginLeft}px;// margin-left: 18px;
+  padding-bottom: ${padding}px;
+  top: ${top}px;
+  margin-left: ${marginLeft}px; // margin-left: 18px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -46,56 +48,56 @@ const ButtonView = styled(View)`
 `;
 
 export const Announcements = () => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const { user } = useContext(AuthenticationContext);
-    
-    useEffect(() => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { user } = useContext(AuthenticationContext);
+
+  useEffect(() => {
     if (user) {
       console.log("User phoneNumber", user.phoneNumber);
     }
     console.log("Admin Phones", adminPhones);
   }, [user]);
-  
-    const handleSuccessChange = (successValue) => {
-      setSuccess(successValue);
-      if (successValue) {
-        setTimeout(() => {
-          //setSuccess(false);
-          handleCloseModal();
-        }, 2000);
-      }
-    };
-    const slideAnimation = useRef(new Animated.Value(0)).current;
-  
-    const handleOpenModal = () => {
-      setModalVisible(true);
-      Animated.timing(slideAnimation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    };
-  
-    const handleCloseModal = () => {
-      Animated.timing(slideAnimation, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start(() => {
-        setModalVisible(false);
-        setSuccess(false); // reset the success state
-      });
-    };
-  
-    const modalTranslateY = slideAnimation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [600, 0],
+
+  const handleSuccessChange = (successValue) => {
+    setSuccess(successValue);
+    if (successValue) {
+      setTimeout(() => {
+        //setSuccess(false);
+        handleCloseModal();
+      }, 2000);
+    }
+  };
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+    Animated.timing(slideAnimation, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleCloseModal = () => {
+    Animated.timing(slideAnimation, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setModalVisible(false);
+      setSuccess(false); // reset the success state
     });
-    const handleClick = () => {
-      setModalVisible(true);
-      handleOpenModal();
-    };
+  };
+
+  const modalTranslateY = slideAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [600, 0],
+  });
+  const handleClick = () => {
+    setModalVisible(true);
+    handleOpenModal();
+  };
 
   return (
     <>
@@ -103,17 +105,21 @@ export const Announcements = () => {
         <WrapperView>
           <BackButton text="Announcement " />
         </WrapperView>
-        <ExpandCollapseListAnnouncements/>
-        </SafeAreaViewWrapper>
+        <ExpandCollapseListAnnouncements />
+      </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
-        {user === null || user?.isAnonymous ? null : adminPhones.includes(
-            user.phoneNumber
-          ) ? (
-          <ButtonView>
-            <Button label="Announce Now" handleClick={handleClick} />
-          </ButtonView>
-        ) : null}
-        <Modal visible={modalVisible} transparent={true}>
+      {user === null || user?.isAnonymous ? null : adminPhones.includes(
+          user.phoneNumber
+        ) ? (
+        <ButtonView>
+          <Button label="Announce Now" handleClick={handleClick} />
+        </ButtonView>
+      ) : null}
+      <Modal visible={modalVisible} transparent={true}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.modalOverlay}
+        >
           <TouchableOpacity
             activeOpacity={1}
             onPress={handleCloseModal}
@@ -127,38 +133,40 @@ export const Announcements = () => {
                 },
               ]}
             >
-              <RaiseAnnouncementForm  handleSuccessChange={handleSuccessChange} />
+              <RaiseAnnouncementForm
+                handleSuccessChange={handleSuccessChange}
+              />
             </Animated.View>
           </TouchableOpacity>
-        </Modal>
+        </KeyboardAvoidingView>
+      </Modal>
     </>
   );
 };
 const styles = StyleSheet.create({
-    modalOverlay: {
-      flex: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      justifyContent: "flex-end",
-    },
-    modalContainer: {
-      backgroundColor: "#ffffff",
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
-      padding: width * 0.08,
-      minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
-      paddingBottom: width * 0.001, // adding some bottom padding for the submit button
-    },
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      },
-      message: {
-        fontSize: 16,
-        textAlign: "center",
-        marginHorizontal: 20,
-        marginTop: 20,
-        fontWeight: "bold",
-      },
-  });
-
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContainer: {
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: width * 0.08,
+    minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
+    paddingBottom: width * 0.001, // adding some bottom padding for the submit button
+  },
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  message: {
+    fontSize: 16,
+    textAlign: "center",
+    marginHorizontal: 20,
+    marginTop: 20,
+    fontWeight: "bold",
+  },
+});

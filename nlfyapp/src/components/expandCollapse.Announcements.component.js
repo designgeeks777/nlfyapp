@@ -12,8 +12,8 @@ const marginHorizontal = width * 0.01;
 const marginVertical = width * 0.04;
 const padding = width;
 const SearchBar = styled(Searchbar)`
-  margin-horizontal:${marginHorizontal }px;
-  margin-vertical:${marginVertical }px;
+  margin-horizontal: ${marginHorizontal}px;
+  margin-vertical: ${marginVertical}px;
   elevation: 0;
   border-radius: 10px;
 
@@ -26,13 +26,13 @@ const SearchBar = styled(Searchbar)`
 `;
 
 const ViewSearchbar = styled(View)`
-  padding: ${padding * 0.01 }px;
+  padding: ${padding * 0.01}px;
 `;
 
 const CardView = styled(View)`
-  padding-top:${padding * 0.01}px;
+  padding-top: ${padding * 0.01}px;
   padding-right: ${padding * 0.06}px;
-  padding-bottom:${padding * 0.06}px;
+  padding-bottom: ${padding * 0.06}px;
   padding-left: ${padding * 0.06}px;
 `;
 
@@ -47,13 +47,15 @@ const CardDate = styled(Text)`
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
   line-height: ${(props) => props.theme.lineHeights.primary};
-  margin-bottom:${padding * 0.03 }px; 
+  margin-bottom: ${padding * 0.03}px;
 `;
 
 const CardTitle = styled(Text)`
-  padding-top: ${(props) => (props.numberOfLines > 2 ? padding * 0.1 : padding * 0.05)}px;
+  padding-top: ${(props) =>
+    props.numberOfLines > 2 ? padding * 0.1 : padding * 0.05}px;
   padding-right: ${padding * 0.05}px;
-  padding-bottom: ${(props) => (props.numberOfLines > 2 ? padding * 0.05 : padding * 0.02)}px;
+  padding-bottom: ${(props) =>
+    props.numberOfLines > 2 ? padding * 0.05 : padding * 0.02}px;
   padding-left: ${padding * 0.06}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.body};
@@ -62,10 +64,10 @@ const CardTitle = styled(Text)`
   line-height: ${(props) => props.theme.lineHeights.primary};
   text-align-vertical: center;
   text-align: center;
-  `;
+`;
 
 const CardAnnouncement = styled(Text)`
-  padding-top:${padding * 0.03}px;
+  padding-top: ${padding * 0.03}px;
   padding-right: ${padding * 0.04}px;
   padding-bottom: ${padding * 0.01}px;
   padding-left: ${padding * 0.05}px;
@@ -91,10 +93,8 @@ const Item = (props) => {
   return (
     <>
       <CardView>
-        <CardDate>
-          {props.item.datePosted}
-        </CardDate>
-      
+        <CardDate>{props.item.datePosted}</CardDate>
+
         <Card>
           <StyledLinearGradient
             start={{ x: 180, y: 0.25 }}
@@ -104,10 +104,10 @@ const Item = (props) => {
               ["#F26924", "rgba(242, 73, 36, 0.76)"])
             }
           >
-              <CardTitle adjustsFontSizeToFit numberOfLines={1}>
-                {props.item.title}
-              </CardTitle>
-            
+            <CardTitle adjustsFontSizeToFit numberOfLines={1}>
+              {props.item.title}
+            </CardTitle>
+
             <CardAnnouncement
               onTextLayout={onTextLayout}
               numberOfLines={props.selected ? null : 4}
@@ -160,7 +160,7 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
           const [day, month, year] = obj.datePosted.split("/");
           let announcementDate = new Date(year, month - 1, day);
           obj.datePosted = obj.datePosted.split("/").join("-");
-          return { ...obj, date: announcementDate};
+          return { ...obj, date: announcementDate };
         });
         filteredDatas = filteredDatas.sort((a, b) => {
           return b.date.getTime() > a.date.getTime();
@@ -193,7 +193,7 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
 
   //for Announcement filter search based on title of the Announcement
   const filteredData = data.filter((item) => {
-      return item.title.toLowerCase().includes(searchQuery.toLowerCase());
+    return item.title.toLowerCase().includes(searchQuery.toLowerCase());
   });
 
   return (
@@ -210,16 +210,14 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
         />
       </ViewSearchbar>
       {isLoading ? (
-        <Text style={{ paddingLeft: 24 }}>
-          Loading...
-        </Text>
+        <Text style={{ paddingLeft: 24 }}>Loading...</Text>
       ) : (
         <>
           {filteredData.length > 0 ? (
             <FlatList
               showsVerticalScrollIndicator={false}
-            //contentContainerStyle={{ paddingBottom: 0 }}
-              contentContainerStyle={{ paddingBottom:width * 0.01}}
+              //contentContainerStyle={{ paddingBottom: 0 }}
+              contentContainerStyle={{ paddingBottom: width * 0.01 }}
               data={filteredData}
               initialNumToRender={data.length}
               renderItem={({ item }) => (
@@ -235,9 +233,7 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
               extraData={selectedId}
             />
           ) : (
-            <Text style={{ paddingLeft: 24 }}>
-              No Announcements found
-            </Text>
+            <Text style={{ paddingLeft: 24 }}>No Announcements found</Text>
           )}
         </>
       )}
