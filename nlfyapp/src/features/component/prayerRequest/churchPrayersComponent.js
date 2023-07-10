@@ -10,6 +10,7 @@ import {
   Text,
   View,
   Alert,
+  Platform,
 } from "react-native";
 import { BackButton } from "../../../components/backButton";
 import { TabButtonUnselected } from "../../../components/TabButtonUnselected";
@@ -31,12 +32,12 @@ const wrapperMargin = width * 0.03;
 const ChurchPrayersCard = styled(Card)`
   width: ${cardWidth}px;
   height: ${cardHeight}px;
-  border-radius: ${width *0.03}px;
+  border-radius: ${width * 0.03}px;
   justify-content: center;
   align-items: center;
 `;
 const StyledLinearGradient = styled(LinearGradient)`
-  border-radius: ${width *0.03}px;
+  border-radius: ${width * 0.03}px;
   width: ${cardWidth}px;
   height: ${cardHeight}px;
   padding: ${StatusBar.currentHeight * 0.35}px;
@@ -47,9 +48,13 @@ const PrayerContent = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
-  width: ${cardContentWidth + 32}px;
+  width: ${cardContentWidth}px;
   text-align: center;
-  padding: ${StatusBar.currentHeight * 0.2}px;
+  padding: ${StatusBar.currentHeight * 0.4}px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: auto;
+  margin-bottom: auto;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -61,7 +66,7 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
 
 const Container = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight* 0.9|| 0}px;
+  margin-top: ${StatusBar.currentHeight * 0.9 || 0}px;
 `;
 
 const ButtonsWrapper = styled(View)`
@@ -70,7 +75,7 @@ const ButtonsWrapper = styled(View)`
 `;
 
 const ChurchPrayerCard = ({ title }) => (
-  <View style={{ paddingVertical: width *0.03, top: width *0.001 }}>
+  <View style={{ paddingVertical: width * 0.03, top: width * 0.001 }}>
     <ChurchPrayersCard>
       <StyledLinearGradient
         start={{ x: 180, y: 0.1 }}
@@ -122,12 +127,13 @@ export const ChurchPrayers = () => {
   const { user } = useContext(AuthenticationContext);
 
   const WrapperView = styled(View)`
-    width:${wrapperWidth * 0.9}px;
-    margin-left: ${wrapperMargin }px;
-    padding-top:${wrapperPadding }px;
+    width: ${wrapperWidth * 0.9}px;
+    margin-left: ${wrapperMargin}px;
+    padding-top: ${wrapperPadding}px;
+    margin-bottom: ${Platform.OS === "ios" ? `${width * 0.15}px` : "0px"};
   `;
   const navigation = useNavigation();
-  
+
   const navigateToCommunityPrayers = () => {
     navigation.navigate("PrayerRequest");
   };
@@ -169,7 +175,8 @@ export const ChurchPrayers = () => {
                 )}
                 keyExtractor={(item) => item._id}
                 contentContainerStyle={{
-                  paddingBottom:width *0.01,
+                  paddingBottom: width * 0.01,
+                  paddingTop: width * 0.01,
                   justifyContent: "center",
                   alignItems: "center",
                 }}

@@ -9,6 +9,8 @@ import {
   StyleSheet,
   TouchableOpacity,
   Modal,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 
 import styled from "styled-components";
@@ -17,7 +19,7 @@ import { BackButton } from "../components/backButton";
 import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 import { ExpandCollapseListAnnouncements } from "../components/expandCollapse.Announcements.component";
-import {RaiseAnnouncementForm }from "./component/announcement/raiseAnnouncementForm.component";
+import { RaiseAnnouncementForm } from "./component/announcement/raiseAnnouncementForm.component";
 import { adminPhones } from "../../APIKey";
 import { Button } from "../components/button";
 
@@ -29,9 +31,16 @@ const marginLeft = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
+<<<<<<< HEAD
   padding-bottom: ${padding * 0.5}px; 
   top: ${top}px; 
   margin-left:  ${marginLeft}px;
+=======
+  border-radius: ${width * 0.9}px; //10px;
+  padding-bottom: ${padding}px;
+  top: ${top}px;
+  margin-left: ${marginLeft}px; // margin-left: 18px;
+>>>>>>> 33ea4c0f61e470dd40f7a3b40da886517fc4fad7
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -45,56 +54,56 @@ const ButtonView = styled(View)`
 `;
 
 export const Announcements = () => {
-    const [modalVisible, setModalVisible] = useState(false);
-    const [success, setSuccess] = useState(false);
-    const { user } = useContext(AuthenticationContext);
-    
-    useEffect(() => {
+  const [modalVisible, setModalVisible] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const { user } = useContext(AuthenticationContext);
+
+  useEffect(() => {
     if (user) {
       console.log("User phoneNumber", user.phoneNumber);
     }
     console.log("Admin Phones", adminPhones);
   }, [user]);
-  
-    const handleSuccessChange = (successValue) => {
-      setSuccess(successValue);
-      if (successValue) {
-        setTimeout(() => {
-          //setSuccess(false);
-          handleCloseModal();
-        }, 2000);
-      }
-    };
-    const slideAnimation = useRef(new Animated.Value(0)).current;
-  
-    const handleOpenModal = () => {
-      setModalVisible(true);
-      Animated.timing(slideAnimation, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    };
-  
-    const handleCloseModal = () => {
-      Animated.timing(slideAnimation, {
-        toValue: 0,
-        duration: 300,
-        useNativeDriver: true,
-      }).start(() => {
-        setModalVisible(false);
-        setSuccess(false); // reset the success state
-      });
-    };
-  
-    const modalTranslateY = slideAnimation.interpolate({
-      inputRange: [0, 1],
-      outputRange: [600, 0],
+
+  const handleSuccessChange = (successValue) => {
+    setSuccess(successValue);
+    if (successValue) {
+      setTimeout(() => {
+        //setSuccess(false);
+        handleCloseModal();
+      }, 2000);
+    }
+  };
+  const slideAnimation = useRef(new Animated.Value(0)).current;
+
+  const handleOpenModal = () => {
+    setModalVisible(true);
+    Animated.timing(slideAnimation, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handleCloseModal = () => {
+    Animated.timing(slideAnimation, {
+      toValue: 0,
+      duration: 300,
+      useNativeDriver: true,
+    }).start(() => {
+      setModalVisible(false);
+      setSuccess(false); // reset the success state
     });
-    const handleClick = () => {
-      setModalVisible(true);
-      handleOpenModal();
-    };
+  };
+
+  const modalTranslateY = slideAnimation.interpolate({
+    inputRange: [0, 1],
+    outputRange: [600, 0],
+  });
+  const handleClick = () => {
+    setModalVisible(true);
+    handleOpenModal();
+  };
 
   return (
     <>
@@ -102,17 +111,21 @@ export const Announcements = () => {
         <WrapperView>
           <BackButton text="Announcement " />
         </WrapperView>
-        <ExpandCollapseListAnnouncements/>
-        </SafeAreaViewWrapper>
+        <ExpandCollapseListAnnouncements />
+      </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
-        {user === null || user?.isAnonymous ? null : adminPhones.includes(
-            user.phoneNumber
-          ) ? (
-          <ButtonView>
-            <Button label="Announce Now" handleClick={handleClick} />
-          </ButtonView>
-        ) : null}
-        <Modal visible={modalVisible} transparent={true}>
+      {user === null || user?.isAnonymous ? null : adminPhones.includes(
+          user.phoneNumber
+        ) ? (
+        <ButtonView>
+          <Button label="Announce Now" handleClick={handleClick} />
+        </ButtonView>
+      ) : null}
+      <Modal visible={modalVisible} transparent={true}>
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.modalOverlay}
+        >
           <TouchableOpacity
             activeOpacity={1}
             onPress={handleCloseModal}
@@ -126,10 +139,13 @@ export const Announcements = () => {
                 },
               ]}
             >
-              <RaiseAnnouncementForm  handleSuccessChange={handleSuccessChange} />
+              <RaiseAnnouncementForm
+                handleSuccessChange={handleSuccessChange}
+              />
             </Animated.View>
           </TouchableOpacity>
-        </Modal>
+        </KeyboardAvoidingView>
+      </Modal>
     </>
   );
 };

@@ -11,6 +11,8 @@ import {
   TouchableOpacity,
   StyleSheet,
   Modal,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { ExpandCollapseList } from "../components/expandCollapse.component";
 import { RaiseStoryForm } from "./component/stories/raiseStoryForm.component";
@@ -100,25 +102,30 @@ export const Stories = () => {
         </ButtonView>
       )}
       <Modal visible={modalVisible} transparent={true}>
-        <TouchableOpacity
-          activeOpacity={1}
-          onPress={handleCloseModal}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={styles.modalOverlay}
         >
-          <Animated.View
-            style={[
-              styles.modalContainer,
-              {
-                transform: [{ translateY: modalTranslateY }],
-              },
-            ]}
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleCloseModal}
+            style={styles.modalOverlay}
           >
-            <RaiseStoryForm
-              handleSuccessChange={handleSuccessChange}
-              user={user}
-            />
-          </Animated.View>
-        </TouchableOpacity>
+            <Animated.View
+              style={[
+                styles.modalContainer,
+                {
+                  transform: [{ translateY: modalTranslateY }],
+                },
+              ]}
+            >
+              <RaiseStoryForm
+                handleSuccessChange={handleSuccessChange}
+                user={user}
+              />
+            </Animated.View>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
       </Modal>
     </>
   );
