@@ -21,26 +21,27 @@ import { adminPhones } from "../../APIKey";
 import { Button } from "../components/button";
 import { RaiseDevotionalForm } from "./component/devotionals/raiseDevotionalForm.component";
 
+
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
-const wrapperPadding = width * 0.05;
-const wrapperMargin = width * 0.03;
+const padding = width * 0.1;
+const top = width * 0.05;
+const marginLeft = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
-  border-radius: ${width * 0.9}px; //10px;
-  margin-left: ${wrapperMargin}px;
-  padding-top: ${wrapperPadding}px;
+  padding-bottom: ${padding * 0.2}px; 
+  top: ${top}px; 
+  margin-left:  ${marginLeft}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  padding-top: ${StatusBar.currentHeight}px;
-  justify-content: flex-start;
+  margin-top: ${StatusBar.currentHeight}px;
 `;
 
 const ButtonView = styled(View)`
-  padding-bottom: ${wrapperPadding * 1.5}px;
+  padding-bottom: ${padding * 0.9}px;
   align-items: center;
 `;
 
@@ -143,8 +144,8 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     backgroundColor: "#ffffff",
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
+    borderTopLeftRadius: width * 0.07,
+    borderTopRightRadius: width * 0.07,
     padding: width * 0.08,
     minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
     paddingBottom: width * 0.001, // adding some bottom padding for the submit button

@@ -1,20 +1,18 @@
 import React, { useEffect, useState, useRef } from "react";
-import { View, Dimensions, StyleSheet } from "react-native";
+import { View, Dimensions, StyleSheet,Animated} from "react-native";
 import axios from "axios";
 import { youtubeAPIKey } from "../../../../APIKey";
 import { youtubeChannelID } from "../../../../APIKey";
-import { HomeScreenHeading } from "../homeScreenHeading.component";
-
 import YoutubePlayer from "react-native-youtube-iframe";
 
 const API_KEY = youtubeAPIKey;
 const CHANNEL_ID = youtubeChannelID;
-const pollingInterval = 60000; // Interval in milliseconds (e.g., 1 minute)
 
 const { width } = Dimensions.get("window");
 const containerWidth = width * 0.9;
 const containerheight = width * 0.5;
 const containerTop = width * 0.1 + 5;
+const textTop = width * 0.01;
 
 const styles = StyleSheet.create({
   videoContainer: {
@@ -44,6 +42,24 @@ const styles = StyleSheet.create({
 
 export const LiveStream = () => {
   const [videoresult, setVideoresult] = useState(null);
+  const blinkOpacity = useRef(new Animated.Value(1)).current;
+
+  useEffect(() => {
+    const blinkAnimation = Animated.sequence([
+      Animated.timing(blinkOpacity, {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+      Animated.timing(blinkOpacity, {
+        toValue: 1,
+        duration: 500,
+        useNativeDriver: true,
+      }),
+    ]);
+
+    Animated.loop(blinkAnimation).start();
+  }, []);
 
   useEffect(() => {
       const now = new Date();
@@ -82,19 +98,35 @@ export const LiveStream = () => {
   }, []);
 
   const playerRef = useRef(null);
-
+ 
   return (
-    videoresult && (
-      <View style={styles.videoContainer}>
-        <View style={styles.videoWrapper}>
-          <YoutubePlayer
-            ref={playerRef}
-            height={240}
-            width={Dimensions.get("window").width - 20}
-            videoId={videoresult.id.videoId}
-          />
-        </View>
-      </View>
-    )
+    <>
+      {videoresult && (
+        <>
+          <Animated.Text
+            style={{
+              top: textTop,
+              color: '#000000',
+              fontSize: 16,
+              fontWeight: 'bold',
+              fontFamily: 'Lato_400Regular',
+              opacity: blinkOpacity,
+            }}
+          >
+            Live Streaming
+          </Animated.Text>
+          <View style={styles.videoContainer}>
+            <View style={styles.videoWrapper}>
+              <YoutubePlayer
+                ref={playerRef}
+                height={240}
+                width={Dimensions.get('window').width - 20}
+                videoId={videoresult.id.videoId}
+              />
+            </View>
+          </View>
+        </>
+      )}
+    </>
   );
 };

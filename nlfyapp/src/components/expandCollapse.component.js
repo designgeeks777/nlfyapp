@@ -15,7 +15,7 @@ const SearchBar = styled(Searchbar)`
   margin-horizontal:${marginHorizontal }px;
   margin-vertical:${marginVertical }px;
   elevation: 0;
-  border-radius: 10px;
+  border-radius: ${width * 0.03}px;
 
   ${({ isFocused }) =>
     isFocused &&
@@ -37,7 +37,7 @@ const CardView = styled(View)`
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
-  border-radius: 10px;
+  border-radius: ${width * 0.03}px;
   justify-content: center;
 `;
 
@@ -79,7 +79,7 @@ const CardContent = styled(Text)`
 
 const CardButton = styled(Button).attrs({
   textColor: "#FFFFFF",
-  labelStyle: { fontSize: 12, lineHeight: 12 },
+  labelStyle: { fontSize: 12, lineHeight: width * 0.04 },
 })``;
 
 const Item = (props) => {
@@ -128,7 +128,7 @@ const Item = (props) => {
                 >
                   <Ionicons
                     name={props.selected ? "chevron-up" : "chevron-down"}
-                    size={12}
+                    size={width * 0.04}
                   />
                   {props.selected ? "Collapse" : "Expand"}
                 </CardButton>
@@ -221,7 +221,7 @@ export const ExpandCollapseList = ({ screenName }) => {
         />
       </ViewSearchbar>
       {isLoading ? (
-        <Text style={{ paddingLeft: 24 }}>
+        <Text style={{ paddingLeft: padding * 0.04 }}>
           Loading {screenName === "devotionals" ? "devotionals" : "stories"}...
         </Text>
       ) : (
@@ -245,7 +245,7 @@ export const ExpandCollapseList = ({ screenName }) => {
               extraData={selectedId}
             />
           ) : (
-            <Text style={{ paddingLeft: 24 }}>
+            <Text style={{ paddingLeft: padding * 0.04 }}>
               No {screenName === "devotionals" ? "devotionals" : "stories"}{" "}
               found
             </Text>

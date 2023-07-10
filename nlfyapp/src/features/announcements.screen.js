@@ -29,10 +29,9 @@ const marginLeft = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
-  border-radius: ${width * 0.9}px; //10px;
-  padding-bottom: ${padding}px; 
+  padding-bottom: ${padding * 0.5}px; 
   top: ${top}px; 
-  margin-left:  ${marginLeft}px;// margin-left: 18px;
+  margin-left:  ${marginLeft}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -142,23 +141,11 @@ const styles = StyleSheet.create({
     },
     modalContainer: {
       backgroundColor: "#ffffff",
-      borderTopLeftRadius: 24,
-      borderTopRightRadius: 24,
+      borderTopLeftRadius: width * 0.07,
+      borderTopRightRadius: width * 0.07,
       padding: width * 0.08,
       minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
       paddingBottom: width * 0.001, // adding some bottom padding for the submit button
     },
-    container: {
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      },
-      message: {
-        fontSize: 16,
-        textAlign: "center",
-        marginHorizontal: 20,
-        marginTop: 20,
-        fontWeight: "bold",
-      },
   });
 
