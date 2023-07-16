@@ -31,16 +31,10 @@ const marginLeft = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
-<<<<<<< HEAD
-  padding-bottom: ${padding * 0.5}px; 
-  top: ${top}px; 
-  margin-left:  ${marginLeft}px;
-=======
   border-radius: ${width * 0.9}px; //10px;
   padding-bottom: ${padding}px;
   top: ${top}px;
   margin-left: ${marginLeft}px; // margin-left: 18px;
->>>>>>> 33ea4c0f61e470dd40f7a3b40da886517fc4fad7
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -150,18 +144,17 @@ export const Announcements = () => {
   );
 };
 const styles = StyleSheet.create({
-    modalOverlay: {
-      flex: 1,
-      backgroundColor: "rgba(0, 0, 0, 0.5)",
-      justifyContent: "flex-end",
-    },
-    modalContainer: {
-      backgroundColor: "#ffffff",
-      borderTopLeftRadius: width * 0.07,
-      borderTopRightRadius: width * 0.07,
-      padding: width * 0.08,
-      minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
-      paddingBottom: width * 0.001, // adding some bottom padding for the submit button
-    },
-  });
-
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    justifyContent: "flex-end",
+  },
+  modalContainer: {
+    backgroundColor: "#ffffff",
+    borderTopLeftRadius: width * 0.07,
+    borderTopRightRadius: width * 0.07,
+    padding: width * 0.08,
+    minHeight: Dimensions.get("window").height * 0.58, // set the minimum height to 60% of the screen height
+    paddingBottom: width * 0.001, // adding some bottom padding for the submit button
+  },
+});
