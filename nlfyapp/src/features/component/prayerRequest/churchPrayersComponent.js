@@ -50,7 +50,8 @@ const PrayerContent = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   width: ${cardContentWidth}px;
   text-align: center;
-  padding: ${StatusBar.currentHeight * 0.4}px;
+  
+  padding: ${StatusBar.currentHeight * 0.1}px;
   margin-left: auto;
   margin-right: auto;
   margin-top: auto;

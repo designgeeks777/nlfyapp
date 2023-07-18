@@ -20,7 +20,7 @@ const TextInputHidden = styled(TextInput)`
 `;
 
 const SplitOTPBoxesContainer = styled(Pressable)`
-  margin: 28px 0px 28px 0px;
+  margin: 28px 20px 0px 0px;
   padding: 0px 20px 0px 20px;
   width: 100%;
   flex-direction: row;
@@ -33,7 +33,7 @@ const SplitBoxes = styled(View)`
   border-radius: 10px;
   padding: 12px;
   margin: 2px;
-  min-width: 50px;
+  min-width: 46px;
   ${({ isValid, value, maxLength, resetError }) =>
     value.length < maxLength ||
     (value.length === maxLength && isValid === null) ||
