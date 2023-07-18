@@ -29,6 +29,7 @@ import { AuthenticationContextProvider } from "./src/services/authentication/aut
 import { HomeStackNavigation } from "./HomeNavigation";
 
 import { PrayerRequestNavigation } from "./PrayerRequestNavigation";
+import { DeafultNavigationLaunched } from "./defaultNavigationLaunched";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -113,77 +114,7 @@ const App = () => {
     <>
       <ThemeProvider theme={theme}>
         <AuthenticationContextProvider>
-          {hasLaunched ? (
-            <NavigationContainer>
-              <Tab.Navigator
-                screenOptions={createScreenOptions}
-                id="MainBottomTab"
-              >
-                <Tab.Screen
-                  name="Home"
-                  component={HomeStackNavigation}
-                  options={{ headerShown: false }}
-                />
-                <Tab.Screen
-                  name="Prayer Request"
-                  component={PrayerRequestNavigation}
-                  options={{ headerShown: false }}
-                />
-                <Tab.Screen
-                  name="Give"
-                  component={Give}
-                  options={{ headerShown: false }}
-                />
-                <Tab.Screen
-                  name="Sermons"
-                  component={Sermons}
-                  options={{ headerShown: false }}
-                />
-                <Tab.Screen
-                  name="Life Groups"
-                  component={LifeGroups}
-                  options={{ headerShown: false }}
-                />
-                 <Tab.Screen
-                  name="Announcements"
-                  component={Announcements}
-                  options={{  
-                    tabBarButton: () => null,
-                    tabBarVisible: false,
-                    headerShown: false }}
-                />
-                <Tab.Screen
-                  name="Events"
-                  component={Events}
-                  options={{
-                    tabBarButton: () => null,
-                    tabBarVisible: false,
-                    headerShown: false
-                  }}
-                />
-                <Tab.Screen
-                  name="Stories"
-                  component={Stories}
-                  options={{
-                    tabBarButton: () => null,
-                    tabBarVisible: false,
-                    headerShown: false,
-                  }}
-                />
-                <Tab.Screen
-                  name="Devotionals"
-                  component={Devotionals}
-                  options={{
-                    tabBarButton: () => null,
-                    tabBarVisible: false,
-                    headerShown: false,
-                  }}
-                />
-              </Tab.Navigator>
-            </NavigationContainer>
-          ) : (
-            <Navigation />
-          )}
+          {hasLaunched ? <DeafultNavigationLaunched /> : <Navigation />}
         </AuthenticationContextProvider>
       </ThemeProvider>
       <ExpoStatusBar style="auto" />
