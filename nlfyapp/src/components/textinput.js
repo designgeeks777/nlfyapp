@@ -27,7 +27,7 @@ const MobileNumberText = styled(Text)`
 
 const Mandatory = styled(Text)`
   top: ${width * 0.01}px;
-  left: ${width * 0.03}px;
+  left: ${width * 0.02}px;
   color: ${(props) => props.theme.colors.text.secondary};
 `;
 

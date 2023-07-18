@@ -507,8 +507,8 @@ const { height, width } = Dimensions.get("window");
 const progressStepViewHeight = height * 0.5;
 
 const MessageText = styled(Text)`
-  // padding-bottom: 35px;
-  padding-bottom: ${width * 0.3}px;
+  padding-bottom: ${(props) =>
+    props.isDetails ? `${width * 0.03}px` : `${width * 0.3}px`};
   padding-left: ${width * 0.2}px;
   align-self: flex-start;
   font-size: ${(props) => props.theme.fontSizes.title};
@@ -519,20 +519,18 @@ const MessageText = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-const LoadingText = styled(Text)`
-  flex: 1;
+  const LoadingText = styled(Text)`
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) => props.theme.colors.border.success};
   font-family: ${(props) => props.theme.fonts.body};
-  padding-bottom: ${width * 0.3}px;
-  //padding-bottom: 35px;
-  `;
+`;
 
 const ActivityIndicatorView = styled(View)`
   flex-direction: row;
   justify-content: center; /* Add this line */
   align-items: center; /* Add this line */
+  padding-bottom: ${width * 0.3}px;
 `;
 export const Stepper = () => {
   const navigation = useNavigation();
@@ -742,8 +740,8 @@ export const Stepper = () => {
     },
 
     RadioButtonRow: {
-      left: width * 0.03,
-      top: width * 0.02,
+      left: width * 0.04,
+      top: width * 0.01,
       flexDirection: "row",
       alignItems: "center",
       alignSelf: "stretch",
@@ -890,7 +888,7 @@ export const Stepper = () => {
                     <ActivityIndicator color="#27AE60" />
                   </ActivityIndicatorView>
                 ) : (
-                  <MessageText>
+                  <MessageText isDetails={false}>
                     {isOtpCodeReady && !isValidOTPCode && !resetError
                       ? errorOTP
                       : ""}
@@ -910,7 +908,7 @@ export const Stepper = () => {
             onSubmit={() => onSubmitUser()}
           >
             <View style={[styles.progressStepViewStyle, { marginBottom: width * 0.10 }]}>
-              <View>
+              
                 <CustomTextInput
                   label="Enter name"
                   placeholder="Sam"
@@ -919,9 +917,9 @@ export const Stepper = () => {
                   onChange={handleNameChange}
                   isUserNameTextInput={true}
                 />
-              </View>
+              
 
-              <MessageText isValid={isValidName}>
+              <MessageText isDetails={true} isValid={isValidName}>
                 {isValidName || !showNameErrorMsg
                   ? ""
                   : "Let's us know what you like us to call you!"}
