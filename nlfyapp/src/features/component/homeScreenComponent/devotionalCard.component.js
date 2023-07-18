@@ -7,9 +7,9 @@ import { useNavigation } from "@react-navigation/native";
 import { BASEURL } from "../../../../APIKey";
 import axios from "axios";
 
-const { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 const cardWidth = width * 0.9;
-const cardTop = width * 0.09;
+const cardTop = height * 0.06;
 const cardHeight = width * 0.5;
 const padding = width * 0.02;
 
@@ -40,7 +40,7 @@ const CardContent = styled(Text)`
 const CardReadmore = styled(Text)`
   align-self: flex-end;
   text-align: right;
-  top: ${cardTop * 0.3}px;
+  top: ${cardTop * 0.7}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};

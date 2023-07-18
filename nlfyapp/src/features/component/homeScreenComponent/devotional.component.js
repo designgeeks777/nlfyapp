@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { HomePageDevotionalCard } from "./devotionalCard.component";
 import { Dimensions } from "react-native";
 
-const { width } = Dimensions.get("window");
-const textTop = width * 0.04;
+const { height } = Dimensions.get("window");
+const textTop = height * 0.04;
 
 const MessageText = styled(Text)`
   top: ${textTop}px;

@@ -50,18 +50,6 @@ border-color: #DE1621;
 `};
 `;
 
-// ${({ isValid, value }) =>
-//   isValid
-//     ? `
-// border-color: #27AE60;
-// `
-//     : value === null || value === undefined || value === ""
-//     ? `
-//     border-color: #D9D9D9;
-//     `
-//     : `
-// border-color: #DE1621;
-// `}
 const SplitBoxText = styled(Text)`
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.button};
@@ -86,21 +74,6 @@ border-color: #000000;
 border-color: #DE1621;
 `};
 `;
-
-// border-color: ${(props) =>
-//   props.isValid
-//     ? // ? props.code === null || props.code === undefined || props.code === ""
-//       props.theme.colors.border.success
-//     : // : props.theme.colors.border.error
-//       props.theme.colors.border.error};
-// const MessageText = styled(Text)`
-//   top: 8px;
-//   color: ${(props) => props.theme.colors.text.primary};
-//   font-family: ${(props) => props.theme.fonts.body};
-//   font-size: ${(props) => props.theme.fontSizes.caption};
-//   font-weight: ${(props) => props.theme.fontWeights.regular};
-// `;
-
 export const OTPInput = ({
   code,
   setCode,
@@ -138,8 +111,6 @@ export const OTPInput = ({
   };
 
   const [isInputBoxFocused, setIsInputBoxFocused] = useState(false);
-  // const [isValid, setIsValid] = useState(false);
-  // const [isOtpCodeReady, setIsOtpCodeReady] = useState(false);
 
   const handleOnPress = () => {
     setIsInputBoxFocused(true);
@@ -150,21 +121,6 @@ export const OTPInput = ({
     setIsInputBoxFocused(false);
   };
 
-  // useEffect(() => {
-  //   // update pin ready status
-  //   if (code.length === maximumLength) {
-  //     setIsOtpCodeReady(true);
-  //   } else {
-  //     setIsOtpCodeReady(false);
-  //   }
-  //   // console.log("isOtpCodeReady", isOtpCodeReady);
-  //   // clean up function
-  //   // return () => {
-  //   //   setIsOtpCodeReady(false);
-  //   //   console.log("isOtpCodeReady clean up", isOtpCodeReady);
-  //   // };
-  // }, [code, maximumLength, isOtpCodeReady, setIsOtpCodeReady]);
-
   return (
     <View style={{ height: 120 }}>
       <ScrollView
@@ -172,9 +128,6 @@ export const OTPInput = ({
         keyboardShouldPersistTaps="handled"
       >
         <OTPInputContainer>
-          {/* <MessageText>
-        Enter 6 digit verification code sent to the number
-      </MessageText> */}
           <SplitOTPBoxesContainer>
             {boxArray.map(boxDigit)}
           </SplitOTPBoxesContainer>
@@ -188,7 +141,6 @@ export const OTPInput = ({
             onBlur={handleOnBlur}
             keyboardType="number-pad"
             caretHidden={true}
-            // setIsOtpCodeReady={setIsOtpCodeReady}
           />
         </OTPInputContainer>
       </ScrollView>
