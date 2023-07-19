@@ -77,6 +77,7 @@ const WelcomeText = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
+  width: 80%;
 `;
 const Profile = styled(View)`
   margin-left: ${width * 0.02}px;
@@ -547,6 +548,7 @@ export const Welcome = (props) => {
         </Modal>
       ) : null}
       <>
+      <View>
         <WelcomeText>Welcome {user?.displayName}</WelcomeText>
         <RowView>
           {/* {user?.isAnonymous ? ( */}
@@ -582,6 +584,7 @@ export const Welcome = (props) => {
             </>
           )}
         </RowView>
+        </View>
       </>
     </>
   );

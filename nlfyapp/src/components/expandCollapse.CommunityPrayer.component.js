@@ -85,24 +85,21 @@ const Item = (props) => {
   const cardStyle = {
     width: width * 0.74,
     backgroundColor: "rgba(242, 105, 36, 0.3)",
-    marginLeft: props.position === "left" ? width * 0.01 : 0,
     shadowColor: "transparent",
-    borderRadius: 30,
+    borderRadius: width * 0.07,
     marginBottom: height * 0.05,
   };
 
   const containerStyle = {
-    flexDirection: props.position === "left" ? "row" : "row-reverse",
+    flex: 1,
     alignItems: "center",
-    marginBottom: Platform.OS === "ios" ? 0 : height * 0.05,
-    marginLeft: width * 0.04,
-    marginRight: width * 0.01, 
+    justifyContent: "center",
+    bottom: height * 0.01,
   };
 
   const nameStyle = {
-    marginRight: props.position === "left" ? 0 : -40,
-    marginLeft: props.position === "left" ? -40 : 0,
-    top: width * 0.1, 
+    textAlign: "center",
+    width:100,
   };
   const textStyle = {
     lineHeight: 16,
@@ -112,11 +109,14 @@ const Item = (props) => {
   };
 
   const setFlex = {
+    padding: 20,
+    paddingBottom: 0,
+    flex: 1,
     flexDirection: props.position === "left" ? "row" : "row-reverse",
   };
 
   const writeprayer = {
-    marginLeft: position === "left" ? width * 0.04 : width * 0.06,
+    marginLeft: position === "left" ? width * 0.1 : width * 0.1,
     flexDirection: position === "left" ? "row-reverse" : "row",
   };
 
@@ -125,11 +125,6 @@ const Item = (props) => {
       width: width * 0.1,
       height: height * 0.06,
       borderRadius: 20,
-    },
-    flatlistWrapper: {
-      flex: 1,
-      position: "absolute",
-      bottom: 0,
     },
   });
 
@@ -159,7 +154,7 @@ const Item = (props) => {
                 mode="text"
                 icon={props.selected ? "chevron-up" : "chevron-down"}
                 onPress={toggleRequestNumberOfLines}
-                labelStyle={{ color: "#46458C" , fontWeight: "normal" }}
+                labelStyle={{ color: "#46458C", fontWeight: "normal" }}
               >
                 {requestTextShown && props.selected ? "collapse" : "expand"}
               </Button>
@@ -201,30 +196,18 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
     setSelectedId(id);
   };
 
-  const styles = StyleSheet.create({
-    profilePicture: {
-      width: width * 0.1,
-      height: height * 0.06,
-      borderRadius: 20,
-    },
-    flatlistWrapper: {
-      flex: 1,
-      position: "absolute",
-      height: height * 0.63,
-    },
-  });
+  
 
   return (
-    <View style={styles.flatlistWrapper}>
-      <FlatList
-        data={props.data}
-        initialNumToRender={props.data.length}
-        renderItem={renderItem}
-        keyExtractor={(item) => item._id}
-        contentContainerStyle={{ paddingBottom:width * 0.01}}
-        extraData={selectedId}
-        showsVerticalScrollIndicator={false}
-      />
-    </View>
+    <FlatList
+      data={props.data}
+      initialNumToRender={props.data.length}
+      renderItem={renderItem}
+      keyExtractor={(item) => item._id}
+      contentContainerStyle={{ paddingBottom: width * 0.01 }}
+      extraData={selectedId}
+      showsVerticalScrollIndicator={false}
+    />
   );
 };
+

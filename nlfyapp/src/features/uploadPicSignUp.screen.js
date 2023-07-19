@@ -60,6 +60,7 @@ const ProfilePic = styled(Image)`
 
 const OptionsContainer = styled(View)`
   align-items: center;
+  bottom:  ${width * 0.1}px;
 `;
 
 const ModalHeading = styled(Text)`

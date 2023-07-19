@@ -122,13 +122,10 @@ export const LoginSecondScreen = ({ route }) => {
       console.log("is not Registered login");
       setErrorMsg("Enter your registered mobile number");
     }
-    //resetConfirmResult();
   };
   const onClickContinue = () => {
     setResetErrors(false);
 
-    //console.log("On CLick Confirm code otpCode", otpCode);
-    //confirmCode(otpCode);
     const HomeStackModalNavigator = navigation.getId();
 
     console.log("Home Stack Modal Navigator", HomeStackModalNavigator);
@@ -195,11 +192,6 @@ export const LoginSecondScreen = ({ route }) => {
     font-family: ${(props) => props.theme.fonts.body};
   `;
 
-  const LoginButtonView = styled(View)`
-    flex: 1;
-    justify-content: center;
-    margin-bottom: ${width * 0.8}px;
-  `;
   const styles = StyleSheet.create({
     containerView: {
       flex: 1,
@@ -207,6 +199,19 @@ export const LoginSecondScreen = ({ route }) => {
       alignItems: "center",
       backgroundColor: "#ffffff",
     },
+
+    otpInputContainer: {
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    otpInputBox: {
+      // width: 40, // Adjust the width as needed
+      // marginRight: 20, // Adjust the margin as needed
+      width: width * 0.04,
+      marginRight: width * 0.02,
+    },
+
   });
 
   //Reset confirmResult on load of login screen if there is any previous step.
@@ -242,7 +247,7 @@ export const LoginSecondScreen = ({ route }) => {
       {!confirmResult ? (
         <>
           <Heading>We are glad to have you back.</Heading>
-
+          
           <CustomTextInput
             label="Mobile Number"
             maxLength={15}
@@ -266,21 +271,20 @@ export const LoginSecondScreen = ({ route }) => {
           ) : (
             <></>
           )}
-          <LoginButtonView>
             <Button
               label="Continue"
               handleClick={onSignIn}
               disabled={!isValid || isLoading}
-            />
-          </LoginButtonView>
+            /> 
         </>
       ) : (
         <>
           <Heading>Please verfiy, its you {username}</Heading>
-          {/* <Heading>Please verfiy, its you David</Heading> */}
+  
           <OTPMessageText>
             Enter 6 digit verification code sent to the number
           </OTPMessageText>
+          <View style={styles.otpInputContainer}>
           <OTPInput
             code={otpCode}
             setCode={setOtpCode}
@@ -288,7 +292,9 @@ export const LoginSecondScreen = ({ route }) => {
             // setIsOtpCodeReady={setIsOtpCodeReady}
             isValidOTPCode={isValidOTPCode}
             resetError={resetError}
+            inputStyle={styles.otpInputBox}
           />
+          </View>
           {isLoadingOTP ? (
             <ActivityIndicatorView>
               <LoadingText>Validating OTP</LoadingText>
@@ -300,16 +306,16 @@ export const LoginSecondScreen = ({ route }) => {
             </MessageText>
           )}
 
-          <LoginButtonView>
             <Button
               label="Continue"
               handleClick={() => onClickContinue()}
               //disabled={!isOtpCodeReady}
               disabled={!isValidOTPCode || isLoading || !isOtpCodeReady}
             />
-          </LoginButtonView>
         </>
       )}
     </SafeAreaView>
   );
 };
+
+

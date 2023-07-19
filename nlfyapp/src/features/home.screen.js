@@ -28,7 +28,7 @@ const top = width * 0.02;
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
-  padding-bottom: ${paddingBottom}px; // padding-bottom: 100px;
+  padding-bottom: ${paddingBottom}px; 
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -39,7 +39,6 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
 `;
 
 export const Home = (props) => {
-  // console.log("HOME", props.route.param.userName);
   return (
     <>
       <SafeAreaViewWrapper>

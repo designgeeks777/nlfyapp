@@ -32,8 +32,9 @@ const { height, width } = Dimensions.get("window");
 const progressStepViewHeight = height * 0.5;
 
 const MessageText = styled(Text)`
-  //padding-left: 20px;
-  padding-left: ${width * 0.1}px;
+  padding-bottom: ${(props) =>
+    props.isDetails ? `${width * 0.03}px` : `${width * 0.3}px`};
+  padding-left: ${width * 0.2}px;
   align-self: flex-start;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) =>
@@ -43,8 +44,7 @@ const MessageText = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-const LoadingText = styled(Text)`
-  flex: 1; /* Add this line */
+  const LoadingText = styled(Text)`
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) => props.theme.colors.border.success};
@@ -55,6 +55,7 @@ const ActivityIndicatorView = styled(View)`
   flex-direction: row;
   justify-content: center; /* Add this line */
   align-items: center; /* Add this line */
+  padding-bottom: ${width * 0.3}px;
 `;
 export const Stepper = () => {
   const navigation = useNavigation();
@@ -156,10 +157,7 @@ export const Stepper = () => {
       onSignInWithPhoneNumber(user.mobileNumber, recaptchaVerifier.current);
     }
   };
-  /*const onClickConfirmCode = () => {
-    setResetErrors(false);
-    confirmCode(otpCode);
-  };*/
+ 
   useEffect(() => {
     console.log("isOtpCodeReady", otpCode.length);
     setIsOtpCodeReady(otpCode.length === maximumOtpCodeLength);
@@ -207,10 +205,10 @@ export const Stepper = () => {
 
   const styles = StyleSheet.create({
     progressStepViewStyle: {
-      height: progressStepViewHeight * 0.6,
+      height: progressStepViewHeight * 0.5,
       alignItems: "center",
       backgroundColor: "#ffffff",
-      paddingTop: width * 0.02,
+      paddingTop: width * 0.001,  
     },
 
     containerView: {
@@ -237,7 +235,7 @@ export const Stepper = () => {
       alignSelf: "center",
       alignItems: "center",
       backgroundColor: "#E94A27",
-      justifyContent: "center",
+      justifyContent: "center",  
     },
 
     progressStepNextButtonTextStyle: {
@@ -260,15 +258,15 @@ export const Stepper = () => {
     },
 
     SelectGenderText: {
-      left: width * 0.05,
-      top: width * 0.04,
+      left: width * 0.07,
+      top: width * 0.001, 
       color: "#666666",
       alignSelf: "flex-start",
     },
 
     RadioButtonRow: {
-      left: width * 0.03,
-      top: width * 0.05,
+      left: width * 0.04,
+      top: width * 0.01,
       flexDirection: "row",
       alignItems: "center",
       alignSelf: "stretch",
@@ -293,6 +291,14 @@ export const Stepper = () => {
     underlineStyleHighLighted: {
       borderColor: "#03DAC6",
     },
+
+    centeredContent: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      paddingLeft:width * 0.05,
+      top:width * 0.1,
+    },
   });
 
   return (
@@ -306,7 +312,7 @@ export const Stepper = () => {
       <View style={styles.containerProgressSteps}>
         <Text style={styles.heading}>Sign Up with Mobile Number</Text>
         <ProgressSteps
-          topOffset={width * 0.04}
+          topOffset={width * 0.06}
           marginBottom={width * 0.1}
           activeLabelColor="#000000"
           activeLabelFontSize={width * 0.03}
@@ -391,7 +397,7 @@ export const Stepper = () => {
                 Enter 6 digit verification code sent to the number
               </Text>
 
-              <View style={{ flex: 1 }}>
+              <View style={styles.centeredContent}>
                 <OTPInput
                   code={otpCode}
                   setCode={setOtpCode}
@@ -407,7 +413,7 @@ export const Stepper = () => {
                     <ActivityIndicator color="#27AE60" />
                   </ActivityIndicatorView>
                 ) : (
-                  <MessageText>
+                  <MessageText isDetails={false}>
                     {isOtpCodeReady && !isValidOTPCode && !resetError
                       ? errorOTP
                       : ""}
@@ -426,8 +432,8 @@ export const Stepper = () => {
             scrollable={false}
             onSubmit={() => onSubmitUser()}
           >
-            <View style={styles.progressStepViewStyle}>
-              <View>
+            <View style={[styles.progressStepViewStyle, { marginBottom: width * 0.10 }]}>
+              
                 <CustomTextInput
                   label="Enter name"
                   placeholder="Sam"
@@ -436,14 +442,16 @@ export const Stepper = () => {
                   onChange={handleNameChange}
                   isUserNameTextInput={true}
                 />
-              </View>
+              
 
-              <MessageText isValid={isValidName}>
+              <MessageText isDetails={true} isValid={isValidName}>
                 {isValidName || !showNameErrorMsg
                   ? ""
                   : "Let's us know what you like us to call you!"}
               </MessageText>
+              
               <Text style={styles.SelectGenderText}>Select Gender</Text>
+              
               <View style={styles.RadioButtonRow}>
                 <RadioButton
                   value="male"
