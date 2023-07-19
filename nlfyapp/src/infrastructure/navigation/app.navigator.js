@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
 import { ThemeProvider } from "styled-components/native";
 import { View } from "react-native";
@@ -18,6 +18,7 @@ import { Stories } from "../../features/stories.screen";
 import { Devotionals } from "../../features/devotionals.screen";
 import { PrayerRequestNavigation } from "../../../PrayerRequestNavigation";
 import { Announcements } from "../../features/announcements.screen";
+import { AuthenticationContext } from "../../services/authentication/authentication.context";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -74,6 +75,7 @@ const createScreenOptions = ({ route }) => {
 
 export const AppNavigator = () => {
   const Tab = createBottomTabNavigator();
+  const { user } = useContext(AuthenticationContext);
 
   return (
     <>
@@ -100,12 +102,14 @@ export const AppNavigator = () => {
               component={Sermons}
               options={{ headerShown: false }}
             />
+            {user ? (
+              <Tab.Screen
+                name="Life Groups"
+                component={LifeGroups}
+                options={{ headerShown: false }}
+              />
+            ) : null}
             <Tab.Screen
-              name="Life Groups"
-              component={LifeGroups}
-              options={{ headerShown: false }}
-            />
-             <Tab.Screen
               name="Announcements"
               component={Announcements}
               options={{

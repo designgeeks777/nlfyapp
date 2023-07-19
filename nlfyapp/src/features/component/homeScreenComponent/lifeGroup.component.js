@@ -13,11 +13,10 @@ const ButtonView = styled(View)`
 `;
 
 export const LifeGroup = () => {
-
   const { width } = Dimensions.get("window");
-  const lefttop = width * (20 / 375);  // Assuming a reference width of 375
-  const righttop = width * (20 / 375);  
-  const marginleft = width * (105 / 375);  
+  const lefttop = width * (20 / 375); // Assuming a reference width of 375
+  const righttop = width * (20 / 375);
+  const marginleft = width * (105 / 375);
 
   const { user } = useContext(AuthenticationContext);
   console.log("User in LG", user);
@@ -34,7 +33,6 @@ export const LifeGroup = () => {
     }
   };
 
-  
   return (
     <>
       <HomeScreenHeading

@@ -49,7 +49,7 @@ export const MyStack = () => {
         component={LoginSecondScreen}
         options={{ headerShown: false }}
       />
-         <Stack.Screen
+      <Stack.Screen
         name="Announcements"
         component={Announcements}
         options={{ headerShown: false }}
