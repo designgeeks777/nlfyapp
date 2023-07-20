@@ -387,7 +387,7 @@ export const Welcome = (props) => {
           if (response.data) {
             setShowUpdateOptions(false);
             setUserData(response.data);
-            console.log("NAME CHANGED", response.data.name);
+            console.log("NAME CHANGED", response.data.name, response.data);
           }
         })
         .catch((error) => {
@@ -404,10 +404,7 @@ export const Welcome = (props) => {
     console.log("Gallery open", status);
     if (status !== "granted") {
       console.log(status);
-      Alert.alert(
-        "Gallery Sorry, we need camera roll permissions to make this work!" +
-          status
-      );
+      Alert.alert("Sorry, we need camera permissions to make this work!");
     }
 
     if (status === "granted") {
@@ -495,7 +492,7 @@ export const Welcome = (props) => {
                         <ProfilePic source={{ uri: userData?.profilePic }} />
                       )}
                     </ModalProfilePicContainer>
-                    <TouchableOpacityIcon onPress={openProfilePicModal}>
+                    <TouchableOpacityIcon onPress={onOpenGallery}>
                       <FontAwesome5Icon name="camera" size={width * 0.06} />
                     </TouchableOpacityIcon>
                   </View>
