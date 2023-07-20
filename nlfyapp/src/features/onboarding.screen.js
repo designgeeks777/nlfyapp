@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Text,
   Image,
@@ -26,6 +26,8 @@ import { HomeStackNavigation } from "../../HomeNavigation";
 import { useNavigation } from "@react-navigation/native";
 import { Devotionals } from "./devotionals.screen";
 import { PrayerRequestNavigation } from "../../PrayerRequestNavigation";
+import { AuthenticationContext } from "../services/authentication/authentication.context";
+import { Announcements } from "./announcements.screen";
 
 const { width } = Dimensions.get("window");
 const SafeArea = styled(SafeAreaView)`
@@ -197,6 +199,8 @@ export function HomeWrapper() {
 export const Onboarding = () => {
   const [showPagination, setShowPagination] = useState(true);
   const [scrollEnabled, setScrollEnabled] = useState(true);
+
+  const { user } = useContext(AuthenticationContext);
   const setPaginationState = (index) => {
     if (index === 3) {
       setShowPagination(false);
@@ -283,18 +287,21 @@ export const Onboarding = () => {
               component={Sermons}
               options={{ headerShown: false }}
             />
+            {user ? (
+              <Tab.Screen
+                name="Life Groups"
+                component={LifeGroups}
+                options={{ headerShown: false }}
+              />
+            ) : null}
             <Tab.Screen
-              name="Life Groups"
-              component={LifeGroups}
-              options={{ headerShown: false }}
-            />
-            <Tab.Screen
-                  name="Announcements"
-                  component={Announcements}
-                  options={{  
-                    tabBarButton: () => null,
-                    tabBarVisible: false,
-                    headerShown: false }}
+              name="Announcements"
+              component={Announcements}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
             />
             <Tab.Screen
               name="Events"
