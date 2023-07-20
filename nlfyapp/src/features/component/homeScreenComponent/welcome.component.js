@@ -269,21 +269,21 @@ export const Welcome = (props) => {
       hideModal();
     }, 1000);
   };
- const handleLogout = () => {
+  const handleLogout = () => {
     Alert.alert(
-      'Confirmation',
-      'Are you sure you want to log out?',
+      "Confirmation",
+      "Are you sure you want to log out?",
       [
         {
-          text: 'Cancel',
-          style: 'cancel',
+          text: "Cancel",
+          style: "cancel",
         },
         {
-          text: 'LogOut',
+          text: "LogOut",
 
           onPress: () => {
             isDataPostInLocalAPICompleted(false);
-            setUserData('');
+            setUserData("");
             onLogout();
             hideModal();
           },
@@ -363,7 +363,7 @@ export const Welcome = (props) => {
           if (response.data) {
             setShowUpdateOptions(false);
             setUserData(response.data);
-            console.log("NAME CHANGED", response.data.name);
+            console.log("NAME CHANGED", response.data.name, response.data);
           }
         })
         .catch((error) => {
@@ -380,10 +380,7 @@ export const Welcome = (props) => {
     console.log("Gallery open", status);
     if (status !== "granted") {
       console.log(status);
-      Alert.alert(
-        "Gallery Sorry, we need camera roll permissions to make this work!" +
-          status
-      );
+      Alert.alert("Sorry, we need camera permissions to make this work!");
     }
 
     if (status === "granted") {
@@ -471,7 +468,7 @@ export const Welcome = (props) => {
                         <ProfilePic source={{ uri: userData?.profilePic }} />
                       )}
                     </ModalProfilePicContainer>
-                    <TouchableOpacityIcon onPress={openProfilePicModal}>
+                    <TouchableOpacityIcon onPress={onOpenGallery}>
                       <FontAwesome5Icon name="camera" size={width * 0.06} />
                     </TouchableOpacityIcon>
                   </View>
@@ -548,42 +545,43 @@ export const Welcome = (props) => {
         </Modal>
       ) : null}
       <>
-      <View>
-        <WelcomeText>Welcome {user?.displayName}</WelcomeText>
-        <RowView>
-          {/* {user?.isAnonymous ? ( */}
-          {user === null || user?.isAnonymous ? (
-            <TouchableOpacity onPress={showModal}>
-              <Ionicons
-                name="person-circle-sharp"
-                size={40}
-                color="rgba(242, 105, 36, 0.6)"
-              />
-            </TouchableOpacity>
-          ) : (
-            <>
-              <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Announcements'); 
-              }}>
+        <View>
+          <WelcomeText>Welcome {user?.displayName}</WelcomeText>
+          <RowView>
+            {/* {user?.isAnonymous ? ( */}
+            {user === null || user?.isAnonymous ? (
+              <TouchableOpacity onPress={showModal}>
                 <Ionicons
-                  name="notifications"
-                  size={32}
+                  name="person-circle-sharp"
+                  size={40}
                   color="rgba(242, 105, 36, 0.6)"
                 />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setVisible(true); 
-                }}
-              >
-                <Profile>
-                  <ProfilePic source={{ uri: userData?.profilePic }} />
-                </Profile>
-              </TouchableOpacity>
-            </>
-          )}
-        </RowView>
+            ) : (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Announcements");
+                  }}
+                >
+                  <Ionicons
+                    name="notifications"
+                    size={32}
+                    color="rgba(242, 105, 36, 0.6)"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setVisible(true);
+                  }}
+                >
+                  <Profile>
+                    <ProfilePic source={{ uri: userData?.profilePic }} />
+                  </Profile>
+                </TouchableOpacity>
+              </>
+            )}
+          </RowView>
         </View>
       </>
     </>

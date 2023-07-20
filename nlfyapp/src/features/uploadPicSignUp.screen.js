@@ -60,7 +60,7 @@ const ProfilePic = styled(Image)`
 
 const OptionsContainer = styled(View)`
   align-items: center;
-  bottom:  ${width * 0.1}px;
+  bottom: ${width * 0.1}px;
 `;
 
 const ModalHeading = styled(Text)`
@@ -219,10 +219,7 @@ export const UploadPicSignUp = (props) => {
     console.log("Gallery open", status);
     if (status !== "granted") {
       console.log(status);
-      Alert.alert(
-        "Gallery Sorry, we need camera roll permissions to make this work!" +
-          status
-      );
+      Alert.alert("Sorry, we need camera permissions to make this work!");
     }
 
     if (status === "granted") {
@@ -326,7 +323,7 @@ export const UploadPicSignUp = (props) => {
               <ProfilePic source={icon} />
             )}
           </ProfilePicContainer>
-          <TouchableOpacityIcon onPress={showModal}>
+          <TouchableOpacityIcon onPress={onOpenGallery}>
             <FontAwesome5Icon name="camera" size={width * 0.06} />
           </TouchableOpacityIcon>
         </View>
