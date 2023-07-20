@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useContext,
-  useRef,
-  useEffect,
-  ScrollView,
-} from "react";
+import React, { useState, useContext, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -34,7 +28,7 @@ const progressStepViewHeight = height * 0.5;
 const MessageText = styled(Text)`
   padding-bottom: ${(props) =>
     props.isDetails ? `${width * 0.03}px` : `${width * 0.3}px`};
-  padding-left: ${width * 0.2}px;
+  padding-left: ${width * 0.06}px;
   align-self: flex-start;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) =>
@@ -44,7 +38,7 @@ const MessageText = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
-  const LoadingText = styled(Text)`
+const LoadingText = styled(Text)`
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) => props.theme.colors.border.success};
@@ -157,7 +151,7 @@ export const Stepper = () => {
       onSignInWithPhoneNumber(user.mobileNumber, recaptchaVerifier.current);
     }
   };
- 
+
   useEffect(() => {
     console.log("isOtpCodeReady", otpCode.length);
     setIsOtpCodeReady(otpCode.length === maximumOtpCodeLength);
@@ -178,10 +172,12 @@ export const Stepper = () => {
   const handleNameChange = (name) => {
     setUser({ ...user, name: name });
     console.log("handleNameChange", name, name.length);
-    if (name.length > 0 && /^[A-Za-z]+$/.test(name)) {
+    if (name.length > 0 && name.length <= 15 && /^[A-Za-z\s]*$/.test(name)) {
       setIsValidName(true);
+      setShowNameErrorMsg(false);
     } else {
       setIsValidName(false);
+      setShowNameErrorMsg(true);
     }
   };
 
@@ -194,7 +190,7 @@ export const Stepper = () => {
       setAllStepsDone(true);
       setIsValidName(true);
       setShowNameErrorMsg(false);
-      updateProfile(user.name);
+      updateProfile(user.name.trim());
       navigation.navigate("UploadPicSignUp", {
         userName: user.name,
         gender: user.gender,
@@ -208,7 +204,7 @@ export const Stepper = () => {
       height: progressStepViewHeight * 0.5,
       alignItems: "center",
       backgroundColor: "#ffffff",
-      paddingTop: width * 0.001,  
+      paddingTop: width * 0.001,
     },
 
     containerView: {
@@ -235,7 +231,7 @@ export const Stepper = () => {
       alignSelf: "center",
       alignItems: "center",
       backgroundColor: "#E94A27",
-      justifyContent: "center",  
+      justifyContent: "center",
     },
 
     progressStepNextButtonTextStyle: {
@@ -259,7 +255,7 @@ export const Stepper = () => {
 
     SelectGenderText: {
       left: width * 0.07,
-      top: width * 0.001, 
+      top: width * 0.001,
       color: "#666666",
       alignSelf: "flex-start",
     },
@@ -294,10 +290,10 @@ export const Stepper = () => {
 
     centeredContent: {
       flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      paddingLeft:width * 0.05,
-      top:width * 0.1,
+      justifyContent: "center",
+      alignItems: "center",
+      paddingLeft: width * 0.05,
+      top: width * 0.1,
     },
   });
 
@@ -381,14 +377,12 @@ export const Stepper = () => {
           </ProgressStep>
           <ProgressStep
             label="Verify"
-            //onNext={() => onClickConfirmCode()}
             nextBtnText="Confirm"
             previousBtnDisabled
             scrollable={false}
             previousBtnText=""
             nextBtnStyle={styles.progressStepNextButtonStyle}
             nextBtnTextStyle={styles.progressStepNextButtonTextStyle}
-            //nextBtnDisabled={!isOtpCodeReady}
             nextBtnDisabled={!isValidOTPCode || isLoading}
             errors={!isValidOTPCode}
           >
@@ -402,7 +396,6 @@ export const Stepper = () => {
                   code={otpCode}
                   setCode={setOtpCode}
                   maximumLength={maximumOtpCodeLength}
-                  // setIsOtpCodeReady={setIsOtpCodeReady}
                   isValidOTPCode={isValidOTPCode}
                   resetError={resetError}
                 />
@@ -430,28 +423,36 @@ export const Stepper = () => {
             previousBtnText=""
             previousBtnDisabled
             scrollable={false}
+            nextBtnDisabled={user.name.length > 15}
             onSubmit={() => onSubmitUser()}
           >
-            <View style={[styles.progressStepViewStyle, { marginBottom: width * 0.10 }]}>
-              
-                <CustomTextInput
-                  label="Enter name"
-                  placeholder="Sam"
-                  keyboardType="default"
-                  value={user.name}
-                  onChange={handleNameChange}
-                  isUserNameTextInput={true}
-                />
-              
+            <View
+              style={[
+                styles.progressStepViewStyle,
+                { marginBottom: width * 0.1 },
+              ]}
+            >
+              <CustomTextInput
+                label="Enter name (maximum 15 letters)"
+                placeholder="Sam"
+                keyboardType="default"
+                value={user.name}
+                onChange={handleNameChange}
+                isUserNameTextInput={true}
+              />
 
               <MessageText isDetails={true} isValid={isValidName}>
                 {isValidName || !showNameErrorMsg
                   ? ""
+                  : user.name.length > 0
+                  ? /^[A-Za-z\s]*$/.test(user.name)
+                    ? ""
+                    : "Username can only contain letters"
                   : "Let's us know what you like us to call you!"}
               </MessageText>
-              
+
               <Text style={styles.SelectGenderText}>Select Gender</Text>
-              
+
               <View style={styles.RadioButtonRow}>
                 <RadioButton
                   value="male"
