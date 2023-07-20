@@ -423,7 +423,6 @@ export const Stepper = () => {
             previousBtnText=""
             previousBtnDisabled
             scrollable={false}
-            nextBtnDisabled={user.name.length > 15}
             onSubmit={() => onSubmitUser()}
           >
             <View
@@ -439,6 +438,7 @@ export const Stepper = () => {
                 value={user.name}
                 onChange={handleNameChange}
                 isUserNameTextInput={true}
+                maxLength={15}
               />
 
               <MessageText isDetails={true} isValid={isValidName}>

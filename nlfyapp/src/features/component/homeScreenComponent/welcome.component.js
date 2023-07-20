@@ -505,6 +505,7 @@ export const Welcome = (props) => {
                     placeholder="Name"
                     value={username}
                     onChangeText={(newVal) => handleNameChange(newVal)}
+                    maxLength={15}
                   />
                   <MessageText isDetails={true} isValid={isValidName}>
                     {isValidName || !showNameErrorMsg
@@ -521,11 +522,7 @@ export const Welcome = (props) => {
                         mode="contained"
                         buttonColor="#EF6C00"
                         onPress={updateChange}
-                        disabled={
-                          profilePicVisible ||
-                          username.length > 15 ||
-                          username.length === 0
-                        }
+                        disabled={profilePicVisible}
                       >
                         Update
                       </Button>
