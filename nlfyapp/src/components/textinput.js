@@ -145,6 +145,7 @@ export const CustomTextInput = ({
           value={value}
           placeholder={placeholder}
           keyboardType={keyboardType}
+          maxLength={maxLength}
         />
       )}
       {isUserNameTextInput === false ? (

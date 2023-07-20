@@ -165,12 +165,24 @@ const StyledTextInput = styled(TextInput).attrs({
   activeOutlineColor: "transparent",
   placeHolderTextColor: "#676767",
 })`
-  margin-bottom: ${width * 0.04}px;
+  margin-bottom: ${width * 0.02}px;
   font-size: ${(props) => props.theme.fontSizes.body};
   color: ${(props) => props.theme.colors.text.primary};
   font-family: ${(props) => props.theme.fonts.body};
   border-bottom-width: ${width * 0.001}px;
   background-color: "transparent";
+`;
+
+const MessageText = styled(Text)`
+  padding-bottom: ${width * 0.06}px;
+  padding-left: ${width * 0.04}px;
+  align-self: flex-start;
+  font-size: ${(props) => props.theme.fontSizes.title};
+  color: ${(props) =>
+    props.isValid
+      ? props.theme.colors.text.infoMessage
+      : props.theme.colors.text.errorMessage};
+  font-family: ${(props) => props.theme.fonts.body};
 `;
 
 export const Welcome = (props) => {
@@ -186,6 +198,8 @@ export const Welcome = (props) => {
   const [visible, setVisible] = useState(false);
   const [profilePicVisible, setProfilePicVisible] = useState(false);
   const [showUpdateOptions, setShowUpdateOptions] = useState(false);
+  const [isValidName, setIsValidName] = useState(false);
+  const [showNameErrorMsg, setShowNameErrorMsg] = useState(false);
   const navigation = useNavigation();
   const [image, setImage] = useState(null);
   const [username, setUsername] = useState(null);
@@ -269,21 +283,21 @@ export const Welcome = (props) => {
       hideModal();
     }, 1000);
   };
- const handleLogout = () => {
+  const handleLogout = () => {
     Alert.alert(
-      'Confirmation',
-      'Are you sure you want to log out?',
+      "Confirmation",
+      "Are you sure you want to log out?",
       [
         {
-          text: 'Cancel',
-          style: 'cancel',
+          text: "Cancel",
+          style: "cancel",
         },
         {
-          text: 'LogOut',
+          text: "LogOut",
 
           onPress: () => {
             isDataPostInLocalAPICompleted(false);
-            setUserData('');
+            setUserData("");
             onLogout();
             hideModal();
           },
@@ -298,13 +312,23 @@ export const Welcome = (props) => {
   };
   const hideModal = () => setVisible(false);
   const openProfilePicModal = () => {
-    console.log("Heere");
     setShowUpdateOptions(true);
     setProfilePicVisible(true);
   };
-  const handleNameChange = (newValue) => {
-    setUsername(newValue);
+  const handleNameChange = (newUsername) => {
+    setUsername(newUsername);
     setShowUpdateOptions(true);
+    if (
+      newUsername.length > 0 &&
+      newUsername.length <= 15 &&
+      /^[A-Za-z\s]*$/.test(newUsername)
+    ) {
+      setIsValidName(true);
+      setShowNameErrorMsg(false);
+    } else {
+      setIsValidName(false);
+      setShowNameErrorMsg(true);
+    }
   };
   const onCancel = () => {
     setUsername(userData.name);
@@ -319,7 +343,7 @@ export const Welcome = (props) => {
   };
   const updateChange = async () => {
     setShowUpdateOptions(false);
-    setUserData({ ...userData, name: username });
+    setUserData({ ...userData, name: username.trim() });
     console.log("updateChange called");
     const imageData = new FormData();
     imageData.append("name", username);
@@ -475,13 +499,23 @@ export const Welcome = (props) => {
                       <FontAwesome5Icon name="camera" size={width * 0.06} />
                     </TouchableOpacityIcon>
                   </View>
-                  <Caption>Name</Caption>
+                  <Caption>Name (maximum 15 letters)</Caption>
                   <StyledTextInput
                     editable={!profilePicVisible}
                     placeholder="Name"
                     value={username}
                     onChangeText={(newVal) => handleNameChange(newVal)}
+                    maxLength={15}
                   />
+                  <MessageText isDetails={true} isValid={isValidName}>
+                    {isValidName || !showNameErrorMsg
+                      ? ""
+                      : username.length > 0
+                      ? /^[A-Za-z\s]*$/.test(username)
+                        ? ""
+                        : "Username can only contain letters"
+                      : "Let's us know what you like us to call you!"}
+                  </MessageText>
                   {showUpdateOptions ? (
                     <ButtonView>
                       <Button
@@ -548,42 +582,43 @@ export const Welcome = (props) => {
         </Modal>
       ) : null}
       <>
-      <View>
-        <WelcomeText>Welcome {user?.displayName}</WelcomeText>
-        <RowView>
-          {/* {user?.isAnonymous ? ( */}
-          {user === null || user?.isAnonymous ? (
-            <TouchableOpacity onPress={showModal}>
-              <Ionicons
-                name="person-circle-sharp"
-                size={40}
-                color="rgba(242, 105, 36, 0.6)"
-              />
-            </TouchableOpacity>
-          ) : (
-            <>
-              <TouchableOpacity
-              onPress={() => {
-                navigation.navigate('Announcements'); 
-              }}>
+        <View>
+          <WelcomeText>Welcome {user?.displayName}</WelcomeText>
+          <RowView>
+            {/* {user?.isAnonymous ? ( */}
+            {user === null || user?.isAnonymous ? (
+              <TouchableOpacity onPress={showModal}>
                 <Ionicons
-                  name="notifications"
-                  size={32}
+                  name="person-circle-sharp"
+                  size={40}
                   color="rgba(242, 105, 36, 0.6)"
                 />
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setVisible(true); 
-                }}
-              >
-                <Profile>
-                  <ProfilePic source={{ uri: userData?.profilePic }} />
-                </Profile>
-              </TouchableOpacity>
-            </>
-          )}
-        </RowView>
+            ) : (
+              <>
+                <TouchableOpacity
+                  onPress={() => {
+                    navigation.navigate("Announcements");
+                  }}
+                >
+                  <Ionicons
+                    name="notifications"
+                    size={32}
+                    color="rgba(242, 105, 36, 0.6)"
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    setVisible(true);
+                  }}
+                >
+                  <Profile>
+                    <ProfilePic source={{ uri: userData?.profilePic }} />
+                  </Profile>
+                </TouchableOpacity>
+              </>
+            )}
+          </RowView>
         </View>
       </>
     </>
