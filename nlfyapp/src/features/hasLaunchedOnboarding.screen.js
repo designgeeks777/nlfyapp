@@ -91,11 +91,11 @@ export const HasLaunchedOnboarding = ({ route }) => {
 
   const navigateToSignUp = () => {
     console.log("NavigateToSignUp");
-    navigation.navigate("SignUp");
+    navigation.navigate("Stepper");
   };
   const navigateToLogin = () => {
     console.log("NavigateToLogin");
-    navigation.navigate("Login");
+    navigation.navigate("LoginSecondScreen");
   };
   return (
     <SafeArea>
