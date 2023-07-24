@@ -220,6 +220,7 @@ export const Welcome = (props) => {
             console.log("Welcome response", response.data);
             setUserData(response.data);
             setUsername(response.data.name);
+            setImage(response.data.profilePic);
           }
         })
         .catch((err) => {
@@ -344,11 +345,13 @@ export const Welcome = (props) => {
   const updateChange = async () => {
     setShowUpdateOptions(false);
     setUserData({ ...userData, name: username.trim() });
-    console.log("updateChange called");
+    console.log("updateChange called", image);
     const imageData = new FormData();
     imageData.append("name", username);
     if (image !== null) {
-      const newImageUri = "file:///" + image.uri.split("file:/").join("");
+      const newImageUri = image.startsWith("file:///")
+        ? "file:///" + image.split("file:/").join("")
+        : image;
       imageData.append("profilePic", {
         uri: newImageUri,
         type: mime.getType(newImageUri),
@@ -418,7 +421,7 @@ export const Welcome = (props) => {
 
       if (!response.canceled) {
         setProfilePicVisible(false);
-        setImage(response.assets[0]);
+        setImage(response.assets[0].uri);
         setShowUpdateOptions(true);
         console.log("RESPONSE GALLERY");
       }
@@ -487,7 +490,7 @@ export const Welcome = (props) => {
                   <View>
                     <ModalProfilePicContainer>
                       {image !== null ? (
-                        <ProfilePic source={{ uri: image.uri }} />
+                        <ProfilePic source={{ uri: image }} />
                       ) : (
                         <ProfilePic source={{ uri: userData?.profilePic }} />
                       )}
