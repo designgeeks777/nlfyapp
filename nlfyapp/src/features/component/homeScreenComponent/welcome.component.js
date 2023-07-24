@@ -193,7 +193,7 @@ export const Welcome = (props) => {
     isAuthenticated,
     dataInLocalAPICompleted,
     isDataPostInLocalAPICompleted,
-    updateProfile,
+    updateProfileName,
   } = useContext(AuthenticationContext);
   const [visible, setVisible] = useState(false);
   const [profilePicVisible, setProfilePicVisible] = useState(false);
@@ -347,7 +347,7 @@ export const Welcome = (props) => {
     setUserData({ ...userData, name: username.trim() });
     console.log("updateChange called", image);
     const imageData = new FormData();
-    imageData.append("name", username);
+    imageData.append("name", username.trim());
     if (image !== null) {
       const newImageUri = image.startsWith("file:///")
         ? "file:///" + image.split("file:/").join("")
@@ -386,7 +386,7 @@ export const Welcome = (props) => {
         })
         .then((response) => {
           console.log("USERS", response.data);
-          updateProfile(username);
+          updateProfileName(username.trim());
           if (response.data) {
             setShowUpdateOptions(false);
             setUserData(response.data);
@@ -495,7 +495,7 @@ export const Welcome = (props) => {
                         <ProfilePic source={{ uri: userData?.profilePic }} />
                       )}
                     </ModalProfilePicContainer>
-                    <TouchableOpacityIcon onPress={onOpenGallery}>
+                    <TouchableOpacityIcon onPress={openProfilePicModal}>
                       <FontAwesome5Icon name="camera" size={width * 0.06} />
                     </TouchableOpacityIcon>
                   </View>
