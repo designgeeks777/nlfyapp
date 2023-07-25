@@ -19,6 +19,7 @@ import { Devotionals } from "../../features/devotionals.screen";
 import { PrayerRequestNavigation } from "../../../PrayerRequestNavigation";
 import { Announcements } from "../../features/announcements.screen";
 import { AuthenticationContext } from "../../services/authentication/authentication.context";
+import { MyPrayersScreen } from "../../features/component/prayerRequest/myPrayersComponent";
 
 const HomeView = styled(View)`
   flex: 1;
@@ -112,6 +113,15 @@ export const AppNavigator = () => {
             <Tab.Screen
               name="Announcements"
               component={Announcements}
+              options={{
+                tabBarButton: () => null,
+                tabBarVisible: false,
+                headerShown: false,
+              }}
+            />
+            <Tab.Screen
+              name="MyPrayers"
+              component={MyPrayersScreen}
               options={{
                 tabBarButton: () => null,
                 tabBarVisible: false,

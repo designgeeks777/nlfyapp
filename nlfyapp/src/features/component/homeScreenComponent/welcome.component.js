@@ -251,7 +251,19 @@ export const Welcome = (props) => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
+        console.log(response.notification.request.content);
+
+        if (
+          response.notification.request.content.body.includes("Announcement:")
+        )
+          //navigation.navigate("Announcements");
+          navigation.navigate("MyPrayers");
+        else if (
+          response.notification.request.content.body.includes(
+            "New Prayer Response Received for Prayer"
+          )
+        )
+          navigation.navigate("MyPrayers");
       });
 
     return () => {

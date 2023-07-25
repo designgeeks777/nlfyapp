@@ -19,6 +19,8 @@ import { HomeStackNavigation } from "./HomeNavigation";
 
 import { PrayerRequestNavigation } from "./PrayerRequestNavigation";
 
+import { MyPrayersScreen } from "./src/features/component/prayerRequest/myPrayersComponent";
+
 const TAB_ICON = {
   Home: "md-home",
   "Prayer Request": "pray",
@@ -102,6 +104,16 @@ export const DeafultNavigationLaunched = () => {
             headerShown: false,
           }}
         />
+        <Tab.Screen
+          name="MyPrayers"
+          component={MyPrayersScreen}
+          options={{
+            tabBarButton: () => null,
+            tabBarVisible: false,
+            headerShown: false,
+          }}
+        />
+
         <Tab.Screen
           name="Events"
           component={Events}
