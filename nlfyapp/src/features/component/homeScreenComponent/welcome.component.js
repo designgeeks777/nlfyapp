@@ -259,7 +259,7 @@ export const Welcome = (props) => {
           navigation.navigate("Announcements");
         else if (
           response.notification.request.content.body.includes(
-            "New Prayer Response Received for Prayer"
+            "Someone just prayed for your prayer:"
           )
         )
           navigation.navigate("MyPrayers");
