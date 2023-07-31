@@ -60,7 +60,7 @@ export const Stepper = () => {
     isValidOTPCode,
     onSignInWithPhoneNumber,
     confirmCode,
-    updateProfile,
+    updateProfileName,
     isLoading,
     isLoadingOTP,
     errorOTP,
@@ -190,9 +190,9 @@ export const Stepper = () => {
       setAllStepsDone(true);
       setIsValidName(true);
       setShowNameErrorMsg(false);
-      updateProfile(user.name.trim());
+      updateProfileName(user.name.trim());
       navigation.navigate("UploadPicSignUp", {
-        userName: user.name,
+        userName: user.name.trim(),
         gender: user.gender,
       });
     }
