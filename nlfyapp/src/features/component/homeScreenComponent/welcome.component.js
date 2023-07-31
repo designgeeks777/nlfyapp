@@ -266,18 +266,7 @@ export const Welcome = (props) => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response.notification.request.content);
-
-        if (
-          response.notification.request.content.body.includes("Announcement:")
-        )
-          navigation.navigate("Announcements");
-        else if (
-          response.notification.request.content.body.includes(
-            "Someone just prayed for your prayer:"
-          )
-        )
-          navigation.navigate("MyPrayers");
+        console.log(response);
       });
 
     return () => {
@@ -611,17 +600,33 @@ export const Welcome = (props) => {
                   onPress={() => {
                     navigation.navigate("Announcements");
                   }}
+                  style={{ alignItems: "center" }}
                 >
-                  <Ionicons
-                    name="notifications"
-                    size={32}
-                    color="rgba(242, 105, 36, 0.6)"
-                  />
+                  <View
+                    style={{ flexDirection: "column", alignItems: "center" }}
+                  >
+                    <Ionicons
+                      name="megaphone-outline"
+                      size={32}
+                      color="rgba(242, 105, 36, 0.6)"
+                      style={{ marginLeft: width * 0.03 }}
+                    />
+                    <Text
+                      style={{
+                        color: "#F26924",
+                        fontSize: 8,
+                      }}
+                    >
+                      Announcements
+                    </Text>
+                  </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={() => {
                     setVisible(true);
                   }}
+                  style={{ alignItems: "center" }}
                 >
                   <Profile>
                     <ProfilePic source={{ uri: userData?.profilePic }} />
