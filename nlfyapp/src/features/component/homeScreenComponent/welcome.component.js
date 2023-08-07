@@ -585,7 +585,6 @@ export const Welcome = (props) => {
         <View>
           <WelcomeText>Welcome {user?.displayName}</WelcomeText>
           <RowView>
-            {/* {user?.isAnonymous ? ( */}
             {user === null || user?.isAnonymous ? (
               <TouchableOpacity onPress={showModal}>
                 <Ionicons
