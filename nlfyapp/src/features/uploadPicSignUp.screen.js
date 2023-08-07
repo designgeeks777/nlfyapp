@@ -170,7 +170,7 @@ export const UploadPicSignUp = (props) => {
           console.log("POST error", error);
         });
     } else {
-      const newImageUri = "file:///" + image.uri.split("file:/").join("");
+      const newImageUri = "file:///" + image.split("file:/").join("");
       imageData.append("profilePic", {
         uri: newImageUri,
         type: mime.getType(newImageUri),
@@ -233,7 +233,7 @@ export const UploadPicSignUp = (props) => {
 
       if (!response.canceled) {
         hideModal();
-        setImage(response.assets[0]);
+        setImage(response.assets[0].uri);
         console.log("RESPONSE GALLERY");
       }
     }
@@ -318,12 +318,12 @@ export const UploadPicSignUp = (props) => {
         <View>
           <ProfilePicContainer>
             {image !== null ? (
-              <ProfilePic source={{ uri: image.uri }} />
+              <ProfilePic source={{ uri: image }} />
             ) : (
               <ProfilePic source={icon} />
             )}
           </ProfilePicContainer>
-          <TouchableOpacityIcon onPress={onOpenGallery}>
+          <TouchableOpacityIcon onPress={showModal}>
             <FontAwesome5Icon name="camera" size={width * 0.06} />
           </TouchableOpacityIcon>
         </View>

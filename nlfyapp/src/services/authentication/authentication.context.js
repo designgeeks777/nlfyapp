@@ -1,5 +1,5 @@
 import React, { useState, createContext, useEffect, useCallback } from "react";
-import { signOut, onAuthStateChanged } from "firebase/auth";
+import { signOut, onAuthStateChanged, updateProfile } from "firebase/auth";
 import * as firebase from "firebase/compat";
 import axios from "axios";
 import { BASEURL } from "../../../APIKey";
@@ -158,11 +158,10 @@ export const AuthenticationContextProvider = ({ children }) => {
     }
   };
 
-  const updateProfile = async (name) => {
-    await user
-      .updateProfile({
-        displayName: name,
-      })
+  const updateProfileName = async (name) => {
+    await updateProfile(user, {
+      displayName: name,
+    })
       .then((s) => {
         console.log(
           "user name in auth context update profile",
@@ -210,7 +209,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         setUser,
         onSignInWithPhoneNumber,
         confirmCode,
-        updateProfile,
+        updateProfileName,
         onLogout,
         setError,
       }}

@@ -193,7 +193,7 @@ export const Welcome = (props) => {
     isAuthenticated,
     dataInLocalAPICompleted,
     isDataPostInLocalAPICompleted,
-    updateProfile,
+    updateProfileName,
   } = useContext(AuthenticationContext);
   const [visible, setVisible] = useState(false);
   const [profilePicVisible, setProfilePicVisible] = useState(false);
@@ -220,6 +220,7 @@ export const Welcome = (props) => {
             console.log("Welcome response", response.data);
             setUserData(response.data);
             setUsername(response.data.name);
+            setImage(response.data.profilePic);
           }
         })
         .catch((err) => {
@@ -355,11 +356,13 @@ export const Welcome = (props) => {
   const updateChange = async () => {
     setShowUpdateOptions(false);
     setUserData({ ...userData, name: username.trim() });
-    console.log("updateChange called");
+    console.log("updateChange called", image);
     const imageData = new FormData();
-    imageData.append("name", username);
+    imageData.append("name", username.trim());
     if (image !== null) {
-      const newImageUri = "file:///" + image.uri.split("file:/").join("");
+      const newImageUri = image.startsWith("file:///")
+        ? "file:///" + image.split("file:/").join("")
+        : image;
       imageData.append("profilePic", {
         uri: newImageUri,
         type: mime.getType(newImageUri),
@@ -394,7 +397,7 @@ export const Welcome = (props) => {
         })
         .then((response) => {
           console.log("USERS", response.data);
-          updateProfile(username);
+          updateProfileName(username.trim());
           if (response.data) {
             setShowUpdateOptions(false);
             setUserData(response.data);
@@ -429,7 +432,7 @@ export const Welcome = (props) => {
 
       if (!response.canceled) {
         setProfilePicVisible(false);
-        setImage(response.assets[0]);
+        setImage(response.assets[0].uri);
         setShowUpdateOptions(true);
         console.log("RESPONSE GALLERY");
       }
@@ -498,12 +501,12 @@ export const Welcome = (props) => {
                   <View>
                     <ModalProfilePicContainer>
                       {image !== null ? (
-                        <ProfilePic source={{ uri: image.uri }} />
+                        <ProfilePic source={{ uri: image }} />
                       ) : (
                         <ProfilePic source={{ uri: userData?.profilePic }} />
                       )}
                     </ModalProfilePicContainer>
-                    <TouchableOpacityIcon onPress={onOpenGallery}>
+                    <TouchableOpacityIcon onPress={openProfilePicModal}>
                       <FontAwesome5Icon name="camera" size={width * 0.06} />
                     </TouchableOpacityIcon>
                   </View>
