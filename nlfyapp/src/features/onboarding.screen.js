@@ -210,11 +210,11 @@ export const Onboarding = () => {
   const navigation = useNavigation();
   const navigateToSignUp = () => {
     console.log("NavigateToSignUp");
-    navigation.navigate("SignUp");
+    navigation.navigate("Stepper");
   };
   const navigateToLogin = () => {
     console.log("NavigateToLogin");
-    navigation.navigate("Login");
+    navigation.navigate("LoginSecondScreen");
   };
   return (
     <SafeArea>
@@ -251,6 +251,7 @@ export const Onboarding = () => {
           <MemberText>
             Already a member?
             <TextScreen2Orange onPress={navigateToLogin}>
+              {" "}
               Log in
             </TextScreen2Orange>
           </MemberText>
