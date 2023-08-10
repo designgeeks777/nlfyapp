@@ -612,11 +612,24 @@ export const Welcome = (props) => {
                     navigation.navigate("Announcements");
                   }}
                 >
-                  <Ionicons
-                    name="notifications"
-                    size={32}
-                    color="rgba(242, 105, 36, 0.6)"
-                  />
+                  <View
+                    style={{ flexDirection: "column", alignItems: "center" }}
+                  >
+                    <Ionicons
+                      name="megaphone-outline"
+                      size={24}
+                      color="rgba(242, 105, 36, 0.6)"
+                      style={{ marginLeft: width * 0.03 }}
+                    />
+                    <Text
+                      style={{
+                        color: "#F26924",
+                        fontSize: 10,
+                      }}
+                    >
+                      Announcements
+                    </Text>
+                  </View>
                 </TouchableOpacity>
                 <TouchableOpacity
                   onPress={() => {
