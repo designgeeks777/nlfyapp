@@ -606,14 +606,14 @@ export const Welcome = (props) => {
                   >
                     <Ionicons
                       name="megaphone-outline"
-                      size={32}
+                      size={24}
                       color="rgba(242, 105, 36, 0.6)"
                       style={{ marginLeft: width * 0.03 }}
                     />
                     <Text
                       style={{
                         color: "#F26924",
-                        fontSize: 8,
+                        fontSize: 10,
                       }}
                     >
                       Announcements

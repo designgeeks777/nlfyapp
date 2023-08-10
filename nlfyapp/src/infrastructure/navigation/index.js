@@ -47,11 +47,7 @@ export const Navigation = () => {
   }
   return (
     <NavigationContainer>
-      {!isAuthenticated && !registered && !isFirstLaunch ? (
-        <AppNavigator />
-      ) : (
-        <MyStack />
-      )}
+      {isAuthenticated && registered ? <AppNavigator /> : <MyStack />}
     </NavigationContainer>
   );
 };
