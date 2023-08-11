@@ -125,7 +125,8 @@ const MemberText = styled(Text)`
 
 const TextScreen2Orange = styled(Text)`
   top: ${width * 0.01}px;
-  padding-top: ${width * 0.1}px;
+  padding-top: ${width * 0.06}px;
+  padding-bottom: ${width * 0.03}px;
   color: ${(props) => props.theme.colors.text.secondary};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.medium};

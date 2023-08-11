@@ -56,7 +56,7 @@ const LoadingScreen = () => {
   return (
     // Render your loading screen component here
     // e.g., a spinner or a custom loading animation
-    <View>
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <Text>Loading...</Text>
     </View>
   );

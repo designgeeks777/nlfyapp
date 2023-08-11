@@ -25,7 +25,10 @@ const ButtonText = styled(Text)`
   line-height: ${(props) => props.theme.lineHeights.button};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   letter-spacing: ${(props) => props.theme.space[1]};
-  color: ${(props) => props.theme.colors.text.inverse};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.colors.text.disabled
+      : props.theme.colors.text.inverse};
   font-family: ${(props) => props.theme.fonts.body};
   top: 18px;
 `;
@@ -50,7 +53,7 @@ export const Button = ({ label, handleClick, disabled }) => {
         end={{ x: 180, y: 1.0 }}
         colors={["#E94A27", "#F26924"]}
       >
-        <ButtonText>{label}</ButtonText>
+        <ButtonText disabled={disabled}>{label}</ButtonText>
       </StyledLinearGradient>
     </PressableButton>
   );

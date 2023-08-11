@@ -7,8 +7,11 @@ import {
   Dimensions,
   Modal,
   Alert,
+  ToastAndroid,
+  Platform,
+  AlertIOS,
 } from "react-native";
-import { Button, TextInput } from "react-native-paper";
+import { ActivityIndicator, Button, TextInput } from "react-native-paper";
 import styled from "styled-components";
 import { AuthenticationContext } from "../../../services/authentication/authentication.context";
 import axios from "axios";
@@ -25,8 +28,7 @@ import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.jpg
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
-
-import { Platform } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const { width, height } = Dimensions.get("window");
 
@@ -185,6 +187,14 @@ const MessageText = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
 `;
 
+const LoadingText = styled(Text)`
+  padding-right: 2px;
+  align-self: flex-start;
+  font-size: ${(props) => props.theme.fontSizes.title};
+  color: ${(props) => props.theme.colors.border.success};
+  font-family: ${(props) => props.theme.fonts.body};
+`;
+
 export const Welcome = (props) => {
   const [userData, setUserData] = useState(null);
   const {
@@ -194,6 +204,8 @@ export const Welcome = (props) => {
     dataInLocalAPICompleted,
     isDataPostInLocalAPICompleted,
     updateProfileName,
+    isLoading,
+    setIsLoading,
   } = useContext(AuthenticationContext);
   const [visible, setVisible] = useState(false);
   const [profilePicVisible, setProfilePicVisible] = useState(false);
@@ -355,6 +367,7 @@ export const Welcome = (props) => {
   };
   const updateChange = async () => {
     setShowUpdateOptions(false);
+    setIsLoading(true);
     setUserData({ ...userData, name: username.trim() });
     console.log("updateChange called", image);
     const imageData = new FormData();
@@ -401,15 +414,21 @@ export const Welcome = (props) => {
           if (response.data) {
             setShowUpdateOptions(false);
             setUserData(response.data);
+            setIsLoading(false);
+            notifyMessage("Updated successfully");
             console.log("NAME CHANGED", response.data.name, response.data);
           }
         })
         .catch((error) => {
           setShowUpdateOptions(false);
+          setIsLoading(false);
+          // notifyMessage("Sorry, failed to update please try again later");
           console.log("patch error", error);
         });
     } catch (error) {
       setShowUpdateOptions(false);
+      setIsLoading(false);
+      // notifyMessage("Sorry, failed to update please try again later");
       console.log(error);
     }
   };
@@ -462,6 +481,13 @@ export const Welcome = (props) => {
         console.log("RESPONSE CAMERA", response.assets[0].uri);
       }
       console.log("Camera open", image);
+    }
+  };
+  const notifyMessage = (msg) => {
+    if (Platform.OS === "android") {
+      ToastAndroid.show(msg, ToastAndroid.SHORT);
+    } else {
+      AlertIOS.alert(msg);
     }
   };
   return (
@@ -546,6 +572,18 @@ export const Welcome = (props) => {
                         Cancel
                       </Button>
                     </ButtonView>
+                  ) : isLoading ? (
+                    // Render a loading state while navigating to Home
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "row",
+                      }}
+                    >
+                      <LoadingText>Updating</LoadingText>
+                      <ActivityIndicator color="#27AE60" />
+                    </View>
                   ) : null}
                   <Text
                     style={{

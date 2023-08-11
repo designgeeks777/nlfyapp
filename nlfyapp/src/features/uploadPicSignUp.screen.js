@@ -1,7 +1,13 @@
 import { useNavigation } from "@react-navigation/native";
 import React, { useContext, useState } from "react";
 import { Alert, Dimensions, Image, TouchableOpacity, View } from "react-native";
-import { Modal, Portal, Text, Provider } from "react-native-paper";
+import {
+  Modal,
+  Portal,
+  Text,
+  Provider,
+  ActivityIndicator,
+} from "react-native-paper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components";
 import { Button } from "../components/button";
@@ -114,9 +120,13 @@ const SkipForNow = styled(Text)`
 `;
 
 export const UploadPicSignUp = (props) => {
-  const { user, setRegistered, isDataPostInLocalAPICompleted } = useContext(
-    AuthenticationContext
-  );
+  const {
+    user,
+    setRegistered,
+    isDataPostInLocalAPICompleted,
+    isLoading,
+    setIsLoading,
+  } = useContext(AuthenticationContext);
   const navigation = useNavigation();
   console.log("In UPLOAD PIC");
   const userName = props?.route?.params?.userName
@@ -132,6 +142,7 @@ export const UploadPicSignUp = (props) => {
   const [image, setImage] = useState(null);
 
   const onRegisterUser = async (def) => {
+    setIsLoading(true);
     const imageData = new FormData();
     imageData.append("uid", user.uid);
     imageData.append("name", userName);
@@ -159,14 +170,17 @@ export const UploadPicSignUp = (props) => {
             if (HomeStackModalNavigator === "HomeStackModal") {
               isDataPostInLocalAPICompleted(true);
               setRegistered(true);
+              setIsLoading(false);
               navigation.navigate("HomeStack");
             } else {
               setRegistered(true);
+              setIsLoading(false);
               navigation.navigate("Home");
             }
           }
         })
         .catch((error) => {
+          setIsLoading(false);
           console.log("POST error", error);
         });
     } else {
@@ -196,10 +210,12 @@ export const UploadPicSignUp = (props) => {
               //onSetUserData();
               isDataPostInLocalAPICompleted(true);
               setRegistered(true);
+              setIsLoading(false);
               navigation.navigate("HomeStack");
             } else {
               //onSetUserData();
               setRegistered(true);
+              setIsLoading(false);
               navigation.navigate("Home");
             }
 
@@ -207,6 +223,7 @@ export const UploadPicSignUp = (props) => {
           }
         })
         .catch((error) => {
+          setIsLoading(false);
           console.log("POST error", error);
         });
     }
@@ -265,7 +282,6 @@ export const UploadPicSignUp = (props) => {
   };
   const onPressSkipForNow = () => {
     onRegisterUser("Def");
-    // console.log("SKIP", image);
   };
   const showModal = () => setVisible(true);
   const hideModal = () => setVisible(false);
@@ -278,6 +294,16 @@ export const UploadPicSignUp = (props) => {
     bottom: 0,
     width: width,
   };
+  if (isLoading) {
+    // Render a loading state while navigating to Home
+    return (
+      <SafeAreaView
+        style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+      >
+        <ActivityIndicator color="#F26924" />
+      </SafeAreaView>
+    );
+  }
   return (
     <Provider>
       <Portal>
