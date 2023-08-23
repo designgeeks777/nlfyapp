@@ -33,7 +33,7 @@ const TextScreen2 = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   margin-left: ${(props) => props.theme.space[3]};
   margin-right: ${(props) => props.theme.space[3]};
-  margin-top: 24px;
+  top: ${width * -0.01}px;
 `;
 
 const TextScreen2Orange = styled(Text)`
@@ -63,6 +63,16 @@ const Slide2ImageConatinerView = styled(View)`
 const Slide2Image = styled(Image)`
   height: 100%;
   width: 100%;
+`;
+
+const MemberText = styled(Text)`
+  color: ${(props) => props.theme.colors.text.primary};
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+  margin-left: ${(props) => props.theme.space[3]};
+  margin-right: ${(props) => props.theme.space[3]};
+  top: ${width * 0.11}px;
 `;
 
 export const HasLaunchedOnboarding = ({ route }) => {
@@ -112,13 +122,13 @@ export const HasLaunchedOnboarding = ({ route }) => {
           Sign Up to have a customized experience or swipe
         </TextScreen2Orange>
         <Button label="Sign Up" handleClick={navigateToSignUp} />
-        <TextScreen2>
+        <MemberText>
           Already a member?
           <TextScreen1Orange onPress={navigateToLogin}>
             {" "}
             Log in
           </TextScreen1Orange>
-        </TextScreen2>
+        </MemberText>
       </Slide2>
     </SafeArea>
   );

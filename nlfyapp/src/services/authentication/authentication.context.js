@@ -175,7 +175,7 @@ export const AuthenticationContextProvider = ({ children }) => {
   const onLogout = () => {
     signOut(auth).then(() => {
       setUser(null);
-      setRegistered(false);
+      // setRegistered(false);
       setError(null);
       setIsLoading(false);
     });
@@ -212,6 +212,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         updateProfileName,
         onLogout,
         setError,
+        setIsLoading,
       }}
     >
       {children}
