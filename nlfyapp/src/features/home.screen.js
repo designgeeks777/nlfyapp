@@ -28,7 +28,7 @@ const top = width * 0.02;
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
-  padding-bottom: ${paddingBottom}px; 
+  padding-bottom: ${paddingBottom}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -42,7 +42,7 @@ export const Home = (props) => {
   return (
     <>
       <SafeAreaViewWrapper>
-        <ScrollView showsVerticalScrollIndicator={false}>
+        <ScrollView showsVerticalScrollIndicator={false} overScrollMode="never">
           <WrapperView>
             <Welcome />
             <LiveStream />
