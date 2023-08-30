@@ -29,7 +29,10 @@ const progressStepViewHeight = height * 0.5;
 const MessageText = styled(Text)`
   padding-bottom: ${(props) =>
     props.isDetails ? `${width * 0.03}px` : `${width * 0.3}px`};
-  padding-left: ${width * 0.06}px;
+  padding-left: ${(props) =>
+    props.isDetails ? `${width * 0.06}px` : `${width * 0.02}px`};
+  padding-top: ${(props) => (props.isDetails ? "0px" : `${width * 0.03}px`)};
+  padding-right: ${(props) => (props.isDetails ? "0px" : `${width * 0.02}px`)};
   align-self: flex-start;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) =>
@@ -51,6 +54,7 @@ const ActivityIndicatorView = styled(View)`
   justify-content: center; /* Add this line */
   align-items: center; /* Add this line */
   padding-bottom: ${width * 0.3}px;
+  padding-top: ${width * 0.03}px;
 `;
 
 const ResendCodeText = styled(Text)`
@@ -243,7 +247,7 @@ export const Stepper = () => {
 
   const styles = StyleSheet.create({
     progressStepViewStyle: {
-      height: progressStepViewHeight * 0.5,
+      height: progressStepViewHeight * 0.55,
       alignItems: "center",
       backgroundColor: "#ffffff",
       paddingTop: width * 0.001,
@@ -441,24 +445,13 @@ export const Stepper = () => {
                   isValidOTPCode={isValidOTPCode}
                   resetError={resetError}
                 />
-                {isLoadingOTP ? (
-                  <ActivityIndicatorView>
-                    <LoadingText>Validating OTP</LoadingText>
-                    <ActivityIndicator color="#27AE60" />
-                  </ActivityIndicatorView>
-                ) : (
-                  <MessageText isDetails={false}>
-                    {isOtpCodeReady && !isValidOTPCode && !resetError
-                      ? errorOTP
-                      : ""}
-                  </MessageText>
-                )}
-                {seconds > 0 && !error ? (
+                {seconds > 0 && !error && (
                   <CounterText>
                     Time Remaining: 00:
                     {seconds < 10 ? `0${seconds}` : seconds}
                   </CounterText>
-                ) : (
+                )}
+                {seconds > 0 && error && (
                   <Text style={{ fontSize: 12, color: "#DE1621" }}>
                     {error}
                   </Text>
@@ -470,6 +463,18 @@ export const Stepper = () => {
                       <ResendCodeText>Resend</ResendCodeText>
                     </TouchableOpacity>
                   </CounterText>
+                )}
+                {isLoadingOTP ? (
+                  <ActivityIndicatorView>
+                    <LoadingText>Validating OTP</LoadingText>
+                    <ActivityIndicator color="#27AE60" />
+                  </ActivityIndicatorView>
+                ) : (
+                  <MessageText isDetails={false}>
+                    {isOtpCodeReady && !isValidOTPCode && !resetError
+                      ? errorOTP
+                      : ""}
+                  </MessageText>
                 )}
               </View>
             </View>

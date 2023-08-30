@@ -174,13 +174,13 @@ export const LoginSecondScreen = ({ route }) => {
     font-family: ${(props) => props.theme.fonts.body};
     display: flex;
     align-self: center;
-    padding-top: ${height * 0.05}px;
   `;
 
   const MessageText = styled(Text)`
     align-self: flex-start;
-    top: ${width * 0.01}px;
-    left: ${width * 0.02}px;
+    padding-top: ${height * 0.02}px;
+    padding-bottom: ${height * 0.01}px;
+    padding-left: ${width * 0.02}px;
     font-size: ${(props) => props.theme.fontSizes.title};
     color: ${(props) =>
       props.isValid
@@ -199,7 +199,8 @@ export const LoginSecondScreen = ({ route }) => {
 
   const ActivityIndicatorView = styled(View)`
     flex-direction: row;
-    padding-bottom: 20px;
+    padding-top: ${height * 0.02}px;
+    padding-bottom: ${height * 0.02}px;
   `;
 
   const OTPMessageText = styled(Text)`
@@ -287,7 +288,6 @@ export const LoginSecondScreen = ({ route }) => {
       {!confirmResult ? (
         <>
           <Heading>We are glad to have you back.</Heading>
-
           <CustomTextInput
             label="Mobile Number"
             maxLength={15}
@@ -302,7 +302,6 @@ export const LoginSecondScreen = ({ route }) => {
             isValid={isValid}
             isUserNameTextInput={false}
           />
-
           {isLoading ? (
             <ActivityIndicatorView>
               <LoadingText>Checking number</LoadingText>
@@ -335,7 +334,23 @@ export const LoginSecondScreen = ({ route }) => {
               inputStyle={styles.otpInputBox}
             />
           </View>
-
+          {seconds > 0 && !error && (
+            <CounterText>
+              Time Remaining: 00:
+              {seconds < 10 ? `0${seconds}` : seconds}
+            </CounterText>
+          )}
+          {seconds > 0 && error && (
+            <Text style={{ fontSize: 12, color: "#DE1621" }}>{error}</Text>
+          )}
+          {seconds === 0 && (
+            <CounterText>
+              Didn't recieve code?{" "}
+              <TouchableOpacity onPress={() => resendCode()}>
+                <ResendCodeText>Resend</ResendCodeText>
+              </TouchableOpacity>
+            </CounterText>
+          )}
           {isLoadingOTP ? (
             <ActivityIndicatorView>
               <LoadingText>Validating OTP</LoadingText>
@@ -352,22 +367,6 @@ export const LoginSecondScreen = ({ route }) => {
             //disabled={!isOtpCodeReady}
             disabled={!isValidOTPCode || isLoading || !isOtpCodeReady}
           />
-          {seconds > 0 && !error ? (
-            <CounterText>
-              Time Remaining: 00:
-              {seconds < 10 ? `0${seconds}` : seconds}
-            </CounterText>
-          ) : (
-            <Text style={{ fontSize: 12, color: "#DE1621" }}>{error}</Text>
-          )}
-          {seconds === 0 && (
-            <CounterText>
-              Didn't recieve code?{" "}
-              <TouchableOpacity onPress={() => resendCode()}>
-                <ResendCodeText>Resend</ResendCodeText>
-              </TouchableOpacity>
-            </CounterText>
-          )}
         </>
       )}
     </SafeAreaView>
