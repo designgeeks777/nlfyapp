@@ -60,7 +60,10 @@ const ActivityIndicatorView = styled(View)`
 const ResendCodeText = styled(Text)`
   text-align: center;
   font-size: ${(props) => props.theme.fontSizes.title};
-  color: ${(props) => props.theme.colors.border.error};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.colors.text.disabled
+      : props.theme.colors.text.errorMessage};
   font-family: ${(props) => props.theme.fonts.body};
   text-decoration: underline;
 `;
@@ -445,24 +448,29 @@ export const Stepper = () => {
                   isValidOTPCode={isValidOTPCode}
                   resetError={resetError}
                 />
-                {seconds > 0 && !error && (
+                {/* {seconds > 0 && !error && (
                   <CounterText>
                     Time Remaining: 00:
                     {seconds < 10 ? `0${seconds}` : seconds}
+                  </CounterText>
+                )} */}
+                {!error && (
+                  <CounterText>
+                    Didn't recieve code?{" "}
+                    <TouchableOpacity
+                      disabled={seconds > 0}
+                      onPress={() => resendCode()}
+                    >
+                      <ResendCodeText disabled={seconds > 0}>
+                        Resend
+                      </ResendCodeText>
+                    </TouchableOpacity>
                   </CounterText>
                 )}
                 {seconds > 0 && error && (
                   <Text style={{ fontSize: 12, color: "#DE1621" }}>
                     {error}
                   </Text>
-                )}
-                {seconds === 0 && (
-                  <CounterText>
-                    Didn't recieve code?{" "}
-                    <TouchableOpacity onPress={() => resendCode()}>
-                      <ResendCodeText>Resend</ResendCodeText>
-                    </TouchableOpacity>
-                  </CounterText>
                 )}
                 {isLoadingOTP ? (
                   <ActivityIndicatorView>
