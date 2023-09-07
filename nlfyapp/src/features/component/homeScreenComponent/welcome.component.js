@@ -278,18 +278,7 @@ export const Welcome = (props) => {
 
     responseListener.current =
       Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response.notification.request.content);
-
-        if (
-          response.notification.request.content.body.includes("Announcement:")
-        )
-          navigation.navigate("Announcements");
-        else if (
-          response.notification.request.content.body.includes(
-            "Someone just prayed for your prayer:"
-          )
-        )
-          navigation.navigate("MyPrayers");
+        console.log(response);
       });
 
     return () => {
@@ -634,7 +623,6 @@ export const Welcome = (props) => {
         <View>
           <WelcomeText>Welcome {user?.displayName}</WelcomeText>
           <RowView>
-            {/* {user?.isAnonymous ? ( */}
             {user === null || user?.isAnonymous ? (
               <TouchableOpacity onPress={showModal}>
                 <Ionicons
@@ -649,6 +637,7 @@ export const Welcome = (props) => {
                   onPress={() => {
                     navigation.navigate("Announcements");
                   }}
+                  style={{ alignItems: "center" }}
                 >
                   <View
                     style={{ flexDirection: "column", alignItems: "center" }}
@@ -669,10 +658,12 @@ export const Welcome = (props) => {
                     </Text>
                   </View>
                 </TouchableOpacity>
+
                 <TouchableOpacity
                   onPress={() => {
                     setVisible(true);
                   }}
+                  style={{ alignItems: "center" }}
                 >
                   <Profile>
                     <ProfilePic source={{ uri: userData?.profilePic }} />
