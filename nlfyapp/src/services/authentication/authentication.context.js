@@ -30,12 +30,17 @@ export const AuthenticationContextProvider = ({ children }) => {
       async (usr) => {
         console.log("AUTH CONTEXT", usr);
         if (usr) {
-          setUser(usr);
           await getUserId(usr.phoneNumber);
           console.log("onAuthStateChanged", usr.uid, userId);
           if (usr.uid === userId) {
+            // moved set user inside for bug - navigating to home page with unregistered phone number,
+            // as the phoneNumber is getting registered with firebase
+            setUser(usr);
             setRegistered(true);
           } else {
+            // set user null for bug - navigating to home page with unregistered phone number,
+            // as the phoneNumber is getting registered with firebase
+            setUser(null);
             setRegistered(false);
           }
           setIsLoading(false);
@@ -71,7 +76,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     [userId]
   );
   const testPhoneNumber = "+1 650-555-4567";
-  const testOtpCode = "328476"; // correct otp
+  const testOtpCode = "777771"; // correct otp
   //const testOtpCode = "328477"; // Incorrect otp
 
   const resetConfirmResult = () => {
@@ -79,7 +84,7 @@ export const AuthenticationContextProvider = ({ children }) => {
     setConfirm(null);
   };
   const onSignInWithPhoneNumber = async (phoneNumber, appVerifier) => {
-    //phoneNumber = testPhoneNumber;
+    // phoneNumber = testPhoneNumber;
     console.log("SIGN IN AUTH CONTEXT", phoneNumber);
     setIsLoading(true);
     //This is set to avoid pre-stored value
@@ -97,6 +102,10 @@ export const AuthenticationContextProvider = ({ children }) => {
         })
         .catch((e) => {
           setIsLoading(false);
+          // set user null for bug - navigating to home page with unregistered phone number,
+          // as the phoneNumber is getting registered with firebase
+          setConfirm(null);
+          setUser(null);
           // setError(e.message);
           switch (e.code) {
             case "auth/too-many-requests":
@@ -111,11 +120,12 @@ export const AuthenticationContextProvider = ({ children }) => {
           console.log("SIGN IN ERROR", e);
         });
     } catch (err) {
+      setIsLoading(false);
       console.log("In try catch block sign in auth context", err);
     }
   };
   const confirmCode = async (otpCode) => {
-    //otpCode = testOtpCode;
+    // otpCode = testOtpCode;
     console.log("CONFIRM OTP AUTH CONTEXT", otpCode);
     setIsLoadingOTP(true);
     try {
@@ -137,11 +147,14 @@ export const AuthenticationContextProvider = ({ children }) => {
         .catch((e) => {
           setIsLoadingOTP(false);
           setIsValidOTPCode(false);
+          // set user null for bug - navigating to home page with unregistered phone number,
+          // as the phoneNumber is getting registered with firebase
+          setUser(null);
           switch (e.code) {
             case "auth/invalid-verification-code":
               setErrorOTP("Invalid verification code");
               break;
-            case "(auth/code-expired)":
+            case "auth/code-expired":
               setErrorOTP(
                 "The SMS code has expired. Please re-send the verification code to try again."
               );
@@ -154,6 +167,7 @@ export const AuthenticationContextProvider = ({ children }) => {
         });
     } catch (err) {
       setIsValidOTPCode(false);
+      setIsLoadingOTP(false);
       console.log("In try catch block confirm code", err);
     }
   };

@@ -21,6 +21,7 @@ import { AuthenticationContext } from "../services/authentication/authentication
 import * as fb from "firebase/compat";
 import axios from "axios";
 import { BASEURL } from "../../APIKey";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { height, width } = Dimensions.get("window");
 const progressStepViewHeight = height * 0.5;
@@ -28,7 +29,10 @@ const progressStepViewHeight = height * 0.5;
 const MessageText = styled(Text)`
   padding-bottom: ${(props) =>
     props.isDetails ? `${width * 0.03}px` : `${width * 0.3}px`};
-  padding-left: ${width * 0.06}px;
+  padding-left: ${(props) =>
+    props.isDetails ? `${width * 0.06}px` : `${width * 0.02}px`};
+  padding-top: ${(props) => (props.isDetails ? "0px" : `${width * 0.03}px`)};
+  padding-right: ${(props) => (props.isDetails ? "0px" : `${width * 0.02}px`)};
   align-self: flex-start;
   font-size: ${(props) => props.theme.fontSizes.title};
   color: ${(props) =>
@@ -50,7 +54,27 @@ const ActivityIndicatorView = styled(View)`
   justify-content: center; /* Add this line */
   align-items: center; /* Add this line */
   padding-bottom: ${width * 0.3}px;
+  padding-top: ${width * 0.03}px;
 `;
+
+const ResendCodeText = styled(Text)`
+  text-align: center;
+  font-size: ${(props) => props.theme.fontSizes.title};
+  color: ${(props) =>
+    props.disabled
+      ? props.theme.colors.text.disabled
+      : props.theme.colors.text.errorMessage};
+  font-family: ${(props) => props.theme.fonts.body};
+  text-decoration: underline;
+`;
+
+const CounterText = styled(Text)`
+  font-size: ${(props) => props.theme.fontSizes.caption};
+  font-family: ${(props) => props.theme.fonts.body};
+  display: flex;
+  align-self: center;
+`;
+
 export const Stepper = () => {
   const navigation = useNavigation();
   const recaptchaVerifier = useRef(null);
@@ -65,6 +89,7 @@ export const Stepper = () => {
     isLoadingOTP,
     errorOTP,
     resetConfirmResult,
+    confirmResult,
   } = useContext(AuthenticationContext);
   const [errors, setErrors] = useState(false);
   const [isValidPhoneNumber, setIsValidPhoneNumber] = useState(false);
@@ -85,6 +110,7 @@ export const Stepper = () => {
   const [userRegistered, setUserRegistered] = useState(false);
   const [allStepsDone, setAllStepsDone] = useState(false);
   const [resetError, setResetErrors] = useState(false);
+  const [seconds, setSeconds] = useState(30);
 
   const handlePhoneNumberChange = (value) => {
     setUser({ ...user, mobileNumber: value });
@@ -169,6 +195,21 @@ export const Stepper = () => {
     }
   }, [otpCode]);
 
+  useEffect(() => {
+    if (confirmResult && recaptchaVerifier.current && !error) {
+      const interval = setInterval(() => {
+        if (seconds > 0) {
+          setSeconds(seconds - 1);
+        }
+      }, 1000);
+      console.log("SECONDS ?>>>>>>", seconds);
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [confirmResult, seconds, error]);
+
   const handleNameChange = (name) => {
     setUser({ ...user, name: name });
     console.log("handleNameChange", name, name.length);
@@ -199,9 +240,17 @@ export const Stepper = () => {
     resetConfirmResult();
   };
 
+  const resendCode = () => {
+    console.log("call signinwithphone number again");
+    onSignInWithPhoneNumber(user.mobileNumber, recaptchaVerifier.current);
+    setResetErrors(true);
+    setSeconds(30);
+    setOtpCode("");
+  };
+
   const styles = StyleSheet.create({
     progressStepViewStyle: {
-      height: progressStepViewHeight * 0.5,
+      height: progressStepViewHeight * 0.55,
       alignItems: "center",
       backgroundColor: "#ffffff",
       paddingTop: width * 0.001,
@@ -250,7 +299,7 @@ export const Stepper = () => {
       marginTop: width * 0.1,
     },
     OTPText: {
-      top: width * 0.1,
+      top: height * 0.02,
     },
 
     SelectGenderText: {
@@ -399,7 +448,30 @@ export const Stepper = () => {
                   isValidOTPCode={isValidOTPCode}
                   resetError={resetError}
                 />
-
+                {/* {seconds > 0 && !error && (
+                  <CounterText>
+                    Time Remaining: 00:
+                    {seconds < 10 ? `0${seconds}` : seconds}
+                  </CounterText>
+                )} */}
+                {!error && (
+                  <CounterText>
+                    Didn't recieve code?{" "}
+                    <TouchableOpacity
+                      disabled={seconds > 0}
+                      onPress={() => resendCode()}
+                    >
+                      <ResendCodeText disabled={seconds > 0}>
+                        Resend
+                      </ResendCodeText>
+                    </TouchableOpacity>
+                  </CounterText>
+                )}
+                {seconds > 0 && error && (
+                  <Text style={{ fontSize: 12, color: "#DE1621" }}>
+                    {error}
+                  </Text>
+                )}
                 {isLoadingOTP ? (
                   <ActivityIndicatorView>
                     <LoadingText>Validating OTP</LoadingText>
