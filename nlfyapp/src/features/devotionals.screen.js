@@ -21,7 +21,6 @@ import { adminPhones } from "../../APIKey";
 import { Button } from "../components/button";
 import { RaiseDevotionalForm } from "./component/devotionals/raiseDevotionalForm.component";
 
-
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
 const padding = width * 0.1;
@@ -30,9 +29,9 @@ const marginLeft = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
-  padding-bottom: ${padding * 0.2}px; 
-  top: ${top}px; 
-  margin-left:  ${marginLeft}px;
+  padding-bottom: ${padding * 0.2}px;
+  top: ${top}px;
+  margin-left: ${marginLeft}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -52,7 +51,6 @@ export const Devotionals = () => {
     if (user) {
       console.log("User phoneNumber", user.phoneNumber);
     }
-    console.log("Admin Phones", adminPhones);
   }, [user]);
 
   const [modalVisible, setModalVisible] = useState(false);
@@ -151,4 +149,3 @@ const styles = StyleSheet.create({
     paddingBottom: width * 0.001, // adding some bottom padding for the submit button
   },
 });
-

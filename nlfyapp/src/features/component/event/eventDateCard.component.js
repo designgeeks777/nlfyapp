@@ -19,7 +19,7 @@ const { width, height } = Dimensions.get("window");
 const padding = width;
 
 const ViewEventCard = styled(SafeAreaView)`
-  padding-top:${padding * 0.01}px;
+  padding-top: ${padding * 0.01}px;
   padding-right: ${padding * 0.04}px;
   padding-bottom: ${padding * 0.01}px;
   padding-left: ${padding * 0.04}px;
@@ -46,7 +46,7 @@ const EventCard = styled(Card)`
   border-color: transparent;
   background-color: "transparent";
   height: ${height * 0.15}px;
-  border-radius:15px;
+  border-radius: 15px;
   top: ${height * 0.02}px;
   width: ${width * 0.2}px;
 `;
@@ -81,7 +81,7 @@ const EventHeading = styled(Text)`
 `;
 
 const EventTiming = styled(Text)`
-  padding-top:${padding * 0.01}px;
+  padding-top: ${padding * 0.01}px;
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.medium};
   font-family: ${(props) => props.theme.fonts.body};
@@ -95,7 +95,7 @@ const EventLocation = styled(Text)`
 `;
 
 const SearchBar = styled(Searchbar)`
-  margin-horizontal:  ${padding * 0.01}px;
+  margin-horizontal: ${padding * 0.01}px;
   margin-vertical: ${padding * 0.01}px;
   elevation: 0;
   border-radius: ${width * 0.04}px;
@@ -150,7 +150,7 @@ const EventItem = ({ event }) => {
         <Content>
           <EventHeading>{event.nameOfEvent}</EventHeading>
           <EventTiming>{event.timeOfEvent}</EventTiming>
-          <EventLocation>{`In ${event.placeOfEvent}`}</EventLocation>
+          <EventLocation>{`${event.placeOfEvent}`}</EventLocation>
         </Content>
       </CardWrapperView>
       <Divider />
@@ -179,12 +179,32 @@ export const EventDateCard = () => {
         const response = await axios.get(url, {
           cancelToken: source.token,
         });
+        // Get the current date
         const currentDate = new Date();
-        //Filter the events which are more than current date, dont show old events
+
+        // Calculate the date two weeks from now
+        const twoWeeksLater = new Date(currentDate);
+        twoWeeksLater.setDate(currentDate.getDate() + 14);
+
+        // Filter the events which are more than or equal to the current date
+        // and less than or equal to two weeks later
         const filteredDatas = response.data.filter((dat) => {
           const [day, month, year] = dat.dateOfEvent.split("/");
           const eventDate = new Date(year, month - 1, day);
-          return eventDate.getTime() > currentDate.getTime();
+
+          // Check if the event date is greater than or equal to the current date
+          // and less than or equal to two weeks later
+          return eventDate >= currentDate && eventDate <= twoWeeksLater;
+        });
+
+        // Sort the filtered data by dateOfEvent in ascending order
+        filteredDatas.sort((a, b) => {
+          const [dayA, monthA, yearA] = a.dateOfEvent.split("/");
+          const [dayB, monthB, yearB] = b.dateOfEvent.split("/");
+          const dateA = new Date(yearA, monthA - 1, dayA);
+          const dateB = new Date(yearB, monthB - 1, dayB);
+
+          return dateA - dateB;
         });
 
         setData(filteredDatas);
