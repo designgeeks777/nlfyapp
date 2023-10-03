@@ -56,7 +56,6 @@ export const Announcements = () => {
     if (user) {
       console.log("User phoneNumber", user.phoneNumber);
     }
-    console.log("Admin Phones", adminPhones);
   }, [user]);
 
   const handleSuccessChange = (successValue) => {
