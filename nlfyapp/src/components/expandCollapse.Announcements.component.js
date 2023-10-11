@@ -156,14 +156,43 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
         });
         //Sort Announcements in ascending order based on date
         //Converting string date object to date to for sorting
-        let filteredDatas = response.data.map((obj) => {
+        /*let filteredDatas = response.data.map((obj) => {
           const [day, month, year] = obj.datePosted.split("/");
           let announcementDate = new Date(year, month - 1, day);
           obj.datePosted = obj.datePosted.split("/").join("-");
           return { ...obj, date: announcementDate };
+        });*/
+        let filteredDatas = response.data.map((obj) => {
+          const [datePart, timePart] = obj.datePosted.split("-");
+          const [day, month, year] = datePart.split("/");
+          const [time, amPm] = timePart.split(" ");
+
+          // Parse the date component
+          const announcementDate = new Date(year, month - 1, day);
+
+          // Parse the time component
+          let [hour, minute] = time.split(":");
+          const isPM = amPm === "PM";
+          if (isPM && hour !== "12") {
+            // Convert to 24-hour format
+            hour = String(Number(hour) + 12);
+          }
+
+          announcementDate.setHours(hour);
+          announcementDate.setMinutes(minute);
+
+          obj.datePosted = datePart.split("/").join("-") + "-" + timePart;
+          return { ...obj, date: announcementDate };
         });
+
         filteredDatas = filteredDatas.sort((a, b) => {
-          return b.date.getTime() > a.date.getTime();
+          if (a.date.getTime() === b.date.getTime()) {
+            // If the dates are the same, compare the times
+            return b.date.getTime() - a.date.getTime();
+          } else {
+            // Otherwise, compare the dates
+            return b.date.getTime() - a.date.getTime();
+          }
         });
         setData(filteredDatas);
         setIsLoading(false);
@@ -210,9 +239,7 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
         />
       </ViewSearchbar>
       {isLoading ? (
-        <Text style={{ paddingLeft: padding * 0.04 }}>
-          Loading...
-        </Text>
+        <Text style={{ paddingLeft: padding * 0.04 }}>Loading...</Text>
       ) : (
         <>
           {filteredData.length > 0 ? (
