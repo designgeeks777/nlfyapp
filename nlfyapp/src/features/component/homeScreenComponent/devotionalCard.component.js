@@ -14,14 +14,14 @@ const cardHeight = width * 0.5;
 const padding = width * 0.02;
 
 const DevotionalCard = styled(Card)`
-  top:  ${cardTop}px;
+  top: ${cardTop}px;
   width: ${cardWidth}px;
   height: ${cardHeight * 1.16}px;
   border-radius: ${width * 0.03}px;
 `;
 
 const CardTitle = styled(Text)`
-  padding-top: ${cardTop * 0.1}px; 
+  padding-top: ${cardTop * 0.1}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -82,8 +82,8 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
         start={{ x: 180, y: 0.4 }}
         end={{ x: 180, y: 0.6 }}
         colors={
-          (["#F22424", "rgba(242, 36, 36, 1)"],
-          ["#F26924", "rgba(242, 105, 36, 0.80)"])
+          (["#D03925", "rgba(242, 36, 36, 1)"],
+          ["#D03925", "rgba(242, 90, 36, 1)"])
         }
       >
         <Card.Content>
@@ -96,10 +96,10 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
             </>
           )}
         </Card.Content>
-       {/* <Card.Actions> */}
-          <CardReadmore variant="bodyMedium" onPress={goToDevotionalsScreen}>
-            Read More...
-          </CardReadmore>
+        {/* <Card.Actions> */}
+        <CardReadmore variant="bodyMedium" onPress={goToDevotionalsScreen}>
+          Read More...
+        </CardReadmore>
         {/* </Card.Actions> */}
       </StyledLinearGradient>
     </DevotionalCard>

@@ -21,14 +21,14 @@ const LifeGroupCard = styled(Card)`
   shadow-color: transparent;
   border-color: transparent;
   background-color: "transparent";
-  height: ${cardHeight}px; 
+  height: ${cardHeight}px;
   border-radius: ${borderRadius}px;
   margin: ${Margin}px;
-  top:${padding}px;
+  top: ${padding}px;
 `;
 
 const StyledLinearGradient = styled(LinearGradient)`
-  height:${cardHeight}px;
+  height: ${cardHeight}px;
   border-radius: ${borderRadius * 0.05}px;
   justify-content: center;
   margin: ${Margin}px;
@@ -49,7 +49,7 @@ export const LifeGroupCardList = () => {
         <StyledLinearGradient
           start={{ x: 180, y: 0.25 }}
           end={{ x: 180, y: 1.0 }}
-          colors={["#E94A27", "#F26924"]}
+          colors={["#E94A27", "#D03925"]}
         >
           <LifeGroupCardContent adjustsFontSizeToFit numberOfLines={1}>
             Amruthahalli
@@ -60,7 +60,7 @@ export const LifeGroupCardList = () => {
         <StyledLinearGradient
           start={{ x: 180, y: 0.25 }}
           end={{ x: 180, y: 1.0 }}
-          colors={["#E94A27", "#F26924"]}
+          colors={["#E94A27", "#D03925"]}
         >
           <LifeGroupCardContent adjustsFontSizeToFit numberOfLines={1}>
             Vidyaranyapura
@@ -71,7 +71,7 @@ export const LifeGroupCardList = () => {
         <StyledLinearGradient
           start={{ x: 180, y: 0.25 }}
           end={{ x: 180, y: 1.0 }}
-          colors={["#E94A27", "#F26924"]}
+          colors={["#E94A27", "#D03925"]}
         >
           <LifeGroupCardContent adjustsFontSizeToFit numberOfLines={1}>
             Yelahanka
