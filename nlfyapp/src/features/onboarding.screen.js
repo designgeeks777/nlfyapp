@@ -155,8 +155,8 @@ const createScreenOptions = ({ route }) => {
       tabBarIcon: ({ size, color }) => (
         <Ionicons name={iconName} size={size} color={color} />
       ),
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "gray",
+      tabBarActiveTintColor: "#D03925",
+      tabBarInactiveTintColor: "#767676",
       tabBarStyle: {
         display: "flex",
       },
@@ -171,8 +171,8 @@ const createScreenOptions = ({ route }) => {
       tabBarIcon: ({ size, color }) => (
         <FontAwesome5 name={iconName} size={size} color={color} />
       ),
-      tabBarActiveTintColor: "tomato",
-      tabBarInactiveTintColor: "gray",
+      tabBarActiveTintColor: "#D03925",
+      tabBarInactiveTintColor: "#767676",
       tabBarStyle: {
         display: "flex",
       },

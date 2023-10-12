@@ -17,6 +17,7 @@ import { FailureModalContent } from "./failureModalContent.component";
 import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 const { width } = Dimensions.get("window");
+const scalingFactor = Dimensions.get("screen").scale;
 
 const styles = StyleSheet.create({
   buttonView: {
@@ -28,7 +29,7 @@ const styles = StyleSheet.create({
   },
   buttonText: {
     color: "#008BE2",
-    fontSize: 12,
+    fontSize: 7 * scalingFactor, // Set the font size in pixels, adjusted for the device's density
     fontWeight: "bold",
     textAlign: "right",
   },

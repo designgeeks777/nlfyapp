@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Button, Card, Paragraph } from "react-native-paper";
 
 const { height, width } = Dimensions.get("window");
+const scalingFactor = Dimensions.get("screen").scale;
 
 const Item = (props) => {
   const { item, numberOfResponse } = props;
@@ -51,7 +52,7 @@ const Item = (props) => {
 
   const prayerResponse = {
     marginRight: width * 0.08,
-    marginTop: width * 0.04,
+    marginTop: width * 0.05,
   };
 
   const spacing = {
@@ -61,7 +62,7 @@ const Item = (props) => {
 
   const buttonText = {
     color: "#008BE2",
-    fontSize: 12,
+    fontSize: 7 * scalingFactor, // Set the font size in pixels, adjusted for the device's density
     fontWeight: "bold",
     textAlign: "right",
   };

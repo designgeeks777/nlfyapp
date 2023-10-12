@@ -12,7 +12,7 @@ const PressableButton = styled(Pressable)`
   border-radius: 50px;
   width: ${buttonWidth}px;
   height: 50px;
-  border-color: orange;
+  border-color: #D03925;
   border-style: solid;
   border-width: 1px;
 `;

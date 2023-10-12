@@ -81,7 +81,8 @@ const CardContent = styled(Text)`
 
 const CardButton = styled(Button).attrs({
   textColor: "#FFFFFF",
-  labelStyle: { fontSize: 12, lineHeight: width * 0.04 },
+  labelStyle: { fontSize: 14, lineHeight: width * 0.04 },
+  contentStyle: { height: 48 }, // Setting the height to 48dp
 })``;
 
 const Item = (props) => {
@@ -105,8 +106,8 @@ const Item = (props) => {
             start={{ x: 180, y: 0.25 }}
             end={{ x: 180, y: 1.0 }}
             colors={
-              (["#E94A27", "rgba(242, 110, 36, 1)"],
-              ["#F26924", "rgba(242, 73, 36, 0.76)"])
+              (["#D03925", "rgba(242, 36, 36, 1)"],
+              ["#D03925", "rgba(242, 90, 36, 1)"])
             }
           >
             {props.screenName === "devotionals" ? (

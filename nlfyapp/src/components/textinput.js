@@ -119,7 +119,7 @@ export const CustomTextInput = ({
   onChange,
   isValid,
   maxLength,
-  isUserNameTextInput,
+  isUserNameTextInput, 
 }) => {
   return (
     <Container>

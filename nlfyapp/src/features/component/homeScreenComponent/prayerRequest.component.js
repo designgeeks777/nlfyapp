@@ -7,7 +7,7 @@ export const PrayerRequest = () => {
   const { width } = Dimensions.get("window");
   const lefttop = width * (2/ 375);  // Assuming a reference width of 375
   const righttop = width * (2 / 375);  
-  const marginleft = width * (80 / 375);  
+  const marginleft = width * (60 / 375);  
   
   return (
     <>

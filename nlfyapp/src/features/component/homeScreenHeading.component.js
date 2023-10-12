@@ -26,12 +26,13 @@ export const HomeScreenHeading = ({
     font-family: ${(props) => props.theme.fonts.body};
     margin-bottom: ${margin * 0.01}px;
   `;
+
   const RightSideText = styled(Text)`
-    color: ${(props) => props.theme.colors.text.seeall};
-    font-size: ${(props) => props.theme.fontSizes.caption};
-    font-weight: ${(props) => props.theme.fontWeights.bold};
-    font-family: ${(props) => props.theme.fonts.body};
-  `;
+  color: ${(props) => props.theme.colors.text.seeall};
+  font-size: ${(props) => props.theme.fontSizes.body};
+  font-weight: ${(props) => props.theme.fontWeights.bold};
+  font-family: ${(props) => props.theme.fonts.body};
+`;
 
   const Touchable = styled(TouchableOpacity)`
     margin-top: ${righttop};

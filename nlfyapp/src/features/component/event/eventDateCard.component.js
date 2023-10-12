@@ -137,7 +137,11 @@ const EventItem = ({ event }) => {
           <StyledLinearGradient
             start={{ x: 180, y: 0.25 }}
             end={{ x: 180, y: 1.0 }}
-            colors={["#E94A27", "#F26924"]}
+            //colors={["#E94A27", "#F26924"]}
+            colors={
+              (["#D03925", "rgba(242, 36, 36, 1)"],
+              ["#D03925", "rgba(242, 90, 36, 1)"])
+            }
           >
             <EventCardContent adjustsFontSizeToFit numberOfLines={2}>
               {monthName}
