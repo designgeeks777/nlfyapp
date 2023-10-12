@@ -131,11 +131,13 @@ export const Sermons = () => {
             placeholderTextColor="gray"
           />
         </ViewSearchbar>
+
         <FlatList
           data={filteredVideos}
           keyExtractor={(item) => item.id.videoId}
           renderItem={renderVideoItem}
           style={{ marginTop: 10 }}
+          accessibilityLabel="List of Sermon Videos"
         />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
