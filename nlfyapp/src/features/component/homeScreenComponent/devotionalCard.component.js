@@ -40,7 +40,7 @@ const CardContent = styled(Text)`
 const CardReadmore = styled(Text)`
   align-self: flex-end;
   text-align: right;
-  top: ${cardTop * 0.7}px;
+  top: ${cardTop * 0.2}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
@@ -96,11 +96,11 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
             </>
           )}
         </Card.Content>
-        <Card.Actions>
+       {/* <Card.Actions> */}
           <CardReadmore variant="bodyMedium" onPress={goToDevotionalsScreen}>
             Read More...
           </CardReadmore>
-        </Card.Actions>
+        {/* </Card.Actions> */}
       </StyledLinearGradient>
     </DevotionalCard>
   );
