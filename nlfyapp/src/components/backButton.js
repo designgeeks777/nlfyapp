@@ -7,7 +7,7 @@ import { useNavigation } from "@react-navigation/native";
 const BackText = styled.Text`
   font-family: ${(props) => props.theme.fonts.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
-  font-size: ${(props) => props.theme.fontSizes.button};
+  font-size: ${(props) => props.theme.fontSizes.header};
   color: ${(props) => props.theme.colors.text.title};
   margin-left: 12px;
 `;
@@ -22,7 +22,7 @@ export const BackButton = ({ text }) => {
   return (
     <TouchableOpacity onPress={handlePress}>
       <View style={{ flexDirection: "row", alignItems: "center" }}>
-        <Icon name="angle-left" size={30} color="#F26924" />
+        <Icon name="angle-left" size={30} color="#D03925" />
         <BackText>{text}</BackText>
       </View>
     </TouchableOpacity>

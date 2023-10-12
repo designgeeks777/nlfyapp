@@ -50,8 +50,8 @@ export const Button = ({ label, handleClick, disabled }) => {
     >
       <StyledLinearGradient
         start={{ x: 180, y: 0.25 }}
-        end={{ x: 180, y: 1.0 }}
-        colors={["#E94A27", "#F26924"]}
+        end={{ x: 100, y: 1.0 }}
+        colors={["#D03925", "#D03925"]}
       >
         <ButtonText disabled={disabled}>{label}</ButtonText>
       </StyledLinearGradient>
