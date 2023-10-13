@@ -517,7 +517,7 @@ export const Welcome = (props) => {
                 <>
                   <Caption
                     onPress={navigateToSignUp}
-                    style={{ color: "#EF6C00", marginTop: width * 0.02 }}
+                    style={{ color: "#D03925", marginTop: width * 0.02 }}
                   >
                     Login
                   </Caption>

@@ -7,6 +7,7 @@ import {
   StatusBar,
   FlatList,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Button } from "../components/button";
 import YoutubePlayer from "react-native-youtube-iframe";
@@ -29,17 +30,20 @@ const videosUrl = `https://www.googleapis.com/youtube/v3/search?order=date&part=
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
+const padding = width * 0.1;
+const top = width * 0.05;
+const marginLeft = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
-  top: 20px;
-  margin-left: 10px;
+  padding-bottom: ${padding}px; 
+  top: ${top}px; 
+  margin-left:${marginLeft}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  margin-top: ${StatusBar.currentHeight}px;
   justify-content: flex-start;
 `;
 
@@ -51,18 +55,14 @@ const TitleText = styled(Text)`
   bottom: 8px;
 `;
 
-const ViewSearchbar = styled(View)`
-  padding: 10px;
-`;
-
 const VideoItem = ({ video, onPress }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={{ padding: 10 }}>
+    <View style={{ padding: 15 }}>
       <TitleText>{video.snippet.title}</TitleText>
       <View style={{ flex: 1 }}>
         <YoutubePlayer
-          height={240}
-          width={Dimensions.get("window").width - 20}
+          height={210}
+          width={Dimensions.get("window").width - 30}
           videoId={video.id.videoId}
         />
       </View>
@@ -75,7 +75,7 @@ const SearchBar = styled(Searchbar)`
   margin-vertical: 10px;
   elevation: 0;
   border-radius: 10px;
-  top: 10px;
+  // top: -20px;
 
   ${({ isFocused }) =>
     isFocused &&
@@ -84,6 +84,7 @@ const SearchBar = styled(Searchbar)`
     border-color: orange;
   `}
 `;
+
 
 export const Sermons = () => {
   const [videos, setVideos] = useState([]);
@@ -119,9 +120,8 @@ export const Sermons = () => {
         <WrapperView>
           <BackButton text="Sermons" />
         </WrapperView>
-
-        <ViewSearchbar>
-          <SearchBar
+       
+         <SearchBar
             placeholder="Search"
             onChangeText={onChangeSearch}
             value={searchQuery}
@@ -130,13 +130,12 @@ export const Sermons = () => {
             onBlur={() => setIsSearchBarFocused(false)}
             placeholderTextColor="gray"
           />
-        </ViewSearchbar>
 
         <FlatList
           data={filteredVideos}
           keyExtractor={(item) => item.id.videoId}
           renderItem={renderVideoItem}
-          style={{ marginTop: 10 }}
+          style={{ marginTop: 5 }}
           accessibilityLabel="List of Sermon Videos"
         />
       </SafeAreaViewWrapper>
