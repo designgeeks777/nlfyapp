@@ -22,21 +22,21 @@ import { LiveStream } from "./component/homeScreenComponent/liveStream.component
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
-const padding = width * 0.3;
-const top = width * 0.05;
-const marginLeft = width * 0.05;
+const paddingBottom = width * 0.3;
+const top = width * 0.02;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
-  padding-bottom: ${padding}px; 
-  top: ${top}px; 
-  margin-left:  ${marginLeft}px;// margin-left: 18px;
+  padding-bottom: ${paddingBottom}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  justify-content: flex-start;
+  margin-top: ${StatusBar.currentHeight}px;
+  top: ${top}px; //top: 10px;
+  align-items: center;
+  // justify-content: flex-start;
 `;
 export const Home = (props) => {
   return (

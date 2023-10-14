@@ -44,6 +44,7 @@ const WrapperView = styled(View)`
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
+  margin-top: ${StatusBar.currentHeight}px;
   justify-content: flex-start;
 `;
 
@@ -55,14 +56,18 @@ const TitleText = styled(Text)`
   bottom: 8px;
 `;
 
+const ViewSearchbar = styled(View)`
+  padding: 10px;
+`;
+
 const VideoItem = ({ video, onPress }) => (
   <TouchableOpacity onPress={onPress}>
-    <View style={{ padding: 15 }}>
+    <View style={{ padding: 10 }}>
       <TitleText>{video.snippet.title}</TitleText>
       <View style={{ flex: 1 }}>
         <YoutubePlayer
-          height={210}
-          width={Dimensions.get("window").width - 30}
+          height={240}
+          width={Dimensions.get("window").width - 20}
           videoId={video.id.videoId}
         />
       </View>
@@ -75,7 +80,7 @@ const SearchBar = styled(Searchbar)`
   margin-vertical: 10px;
   elevation: 0;
   border-radius: 10px;
-  // top: -20px;
+  top: 10px;
 
   ${({ isFocused }) =>
     isFocused &&
@@ -120,22 +125,22 @@ export const Sermons = () => {
         <WrapperView>
           <BackButton text="Sermons" />
         </WrapperView>
-       
-         <SearchBar
-            placeholder="Search"
-            onChangeText={onChangeSearch}
-            value={searchQuery}
-            isFocused={isSearchBarFocused}
-            onFocus={() => setIsSearchBarFocused(true)}
-            onBlur={() => setIsSearchBarFocused(false)}
-            placeholderTextColor="gray"
-          />
-
+         <ViewSearchbar>
+           <SearchBar
+              placeholder="Search"
+              onChangeText={onChangeSearch}
+              value={searchQuery}
+              isFocused={isSearchBarFocused}
+              onFocus={() => setIsSearchBarFocused(true)}
+              onBlur={() => setIsSearchBarFocused(false)}
+              placeholderTextColor="gray"
+            />
+         </ViewSearchbar>
         <FlatList
           data={filteredVideos}
           keyExtractor={(item) => item.id.videoId}
           renderItem={renderVideoItem}
-          style={{ marginTop: 5 }}
+          style={{ marginTop: 10 }}
           accessibilityLabel="List of Sermon Videos"
         />
       </SafeAreaViewWrapper>

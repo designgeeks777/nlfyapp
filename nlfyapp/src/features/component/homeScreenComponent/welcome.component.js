@@ -589,7 +589,7 @@ export const Welcome = (props) => {
                     style={{
                       alignSelf: "flex-start",
                       padding: width * 0.01,
-                      color: "#EF6C00",
+                      color: "#D03925",
                     }}
                     onPress={handleLogout}
                     disabled={profilePicVisible}

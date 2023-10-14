@@ -19,7 +19,7 @@ const { width } = Dimensions.get("window");
 const padding = width;
 
 const ViewLifeGroupCard = styled(SafeAreaView)`
-padding: ${padding * 0.05}px; 
+padding: ${padding * 0.04}px; 
 `;
 
 const LifeGroupName = styled(Text)`
@@ -48,8 +48,7 @@ const LifeGroupMeetingTime = styled(Text)`
 `;
 
 const FlexView = styled(View)`
-  flex-direction: row;
-  //margin-top: 5px; 
+  flex-direction: row; 
 `;
 const LeftContent = styled(View)`
   width: ${width * 0.58}px;

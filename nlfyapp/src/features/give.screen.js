@@ -29,6 +29,7 @@ const WrapperView = styled(View)`
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
+  margin-top: ${StatusBar.currentHeight}px;
   justify-content: flex-start;
 `;
 export const Give = () => {

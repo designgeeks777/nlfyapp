@@ -18,21 +18,24 @@ import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
-const padding = width * 0.1;
-const top = width * 0.05;
-const marginLeft = width * 0.05;
+const wrapperPadding = width * 0.13;
+const wrapperMargin = width * 0.05;
+
 
 const WrapperView = styled(View)`
-  width: ${wrapperWidth}px;
-  border-radius: 10px;
-  padding-bottom: ${padding}px; 
-  top: ${top}px; 
-  margin-left:${marginLeft}px;
+width: ${wrapperWidth * 0.9}px;
+margin-left: ${wrapperMargin}px;
+padding-top: ${wrapperPadding}px;
+margin-bottom: ${Platform.OS === "ios" ? `${width * 0.05}px` : "0px"};
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
   flex: 1;
-  justify-content: flex-start;
+  padding-top: ${StatusBar.currentHeight * 0.9}px;
+  margin-top: ${Platform.OS === "android"
+    ? `${StatusBar.currentHeight - 35}px`
+    : "0px"};
+  padding-bottom: ${StatusBar.currentHeight * 0.9}px;
 `;
 
 const ButtonsWrapper = styled(View)`
@@ -55,12 +58,12 @@ export const PrayerRequest = ({ route }) => {
   };
   return (
     <>
-     <SafeAreaViewWrapper>
       <WrapperView>
         <BackButton text="Prayer Requests" />
       </WrapperView>
-     
-        <View style={{ flexDirection: "column", flex: 1, paddingTop: StatusBar.currentHeight * 0.1, paddingBottom: StatusBar.currentHeight * 0.9 }}>
+
+      <SafeAreaViewWrapper>
+        <View style={{ flexDirection: "column", flex: 1 }}>
           <ButtonsWrapper>
             <TabButtonUnselected
               label="Church"
