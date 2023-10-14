@@ -21,12 +21,11 @@ const wrapperWidth = width * 0.9;
 const wrapperPadding = width * 0.13;
 const wrapperMargin = width * 0.05;
 
-
 const WrapperView = styled(View)`
-width: ${wrapperWidth * 0.9}px;
-margin-left: ${wrapperMargin}px;
-padding-top: ${wrapperPadding}px;
-margin-bottom: ${Platform.OS === "ios" ? `${width * 0.05}px` : "0px"};
+  width: ${wrapperWidth * 0.9}px;
+  margin-left: ${wrapperMargin}px;
+  padding-top: ${wrapperPadding}px;
+  margin-bottom: ${Platform.OS === "ios" ? `${width * 0.05}px` : "0px"};
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`

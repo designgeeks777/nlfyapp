@@ -7,9 +7,8 @@ import {
   StatusBar,
   FlatList,
   TouchableOpacity,
-  ScrollView,
 } from "react-native";
-import { Button } from "../components/button";
+
 import YoutubePlayer from "react-native-youtube-iframe";
 import styled from "styled-components/native";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
@@ -37,9 +36,9 @@ const marginLeft = width * 0.05;
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
-  padding-bottom: ${padding}px; 
-  top: ${top}px; 
-  margin-left:${marginLeft}px;
+  padding-bottom: ${padding}px;
+  top: ${top}px;
+  margin-left: ${marginLeft}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -90,7 +89,6 @@ const SearchBar = styled(Searchbar)`
   `}
 `;
 
-
 export const Sermons = () => {
   const [videos, setVideos] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -125,17 +123,17 @@ export const Sermons = () => {
         <WrapperView>
           <BackButton text="Sermons" />
         </WrapperView>
-         <ViewSearchbar>
-           <SearchBar
-              placeholder="Search"
-              onChangeText={onChangeSearch}
-              value={searchQuery}
-              isFocused={isSearchBarFocused}
-              onFocus={() => setIsSearchBarFocused(true)}
-              onBlur={() => setIsSearchBarFocused(false)}
-              placeholderTextColor="gray"
-            />
-         </ViewSearchbar>
+        <ViewSearchbar>
+          <SearchBar
+            placeholder="Search"
+            onChangeText={onChangeSearch}
+            value={searchQuery}
+            isFocused={isSearchBarFocused}
+            onFocus={() => setIsSearchBarFocused(true)}
+            onBlur={() => setIsSearchBarFocused(false)}
+            placeholderTextColor="gray"
+          />
+        </ViewSearchbar>
         <FlatList
           data={filteredVideos}
           keyExtractor={(item) => item.id.videoId}

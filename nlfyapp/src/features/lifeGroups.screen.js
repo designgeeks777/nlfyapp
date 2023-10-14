@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  View,
-  Dimensions,
-  StatusBar,
-  SafeAreaView,
-  ScrollView
-} from "react-native";
+import { View, Dimensions, StatusBar, SafeAreaView } from "react-native";
 
 import styled from "styled-components";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
@@ -21,9 +15,9 @@ const marginLeft = width * 0.05;
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
-  padding-bottom: ${padding}px; 
-  top: ${top}px; 
-  margin-left:  ${marginLeft}px;// margin-left: 18px;
+  padding-bottom: ${padding}px;
+  top: ${top}px;
+  margin-left: ${marginLeft}px; // margin-left: 18px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -38,7 +32,7 @@ export const LifeGroups = () => {
         <WrapperView>
           <BackButton text="Life Groups" />
         </WrapperView>
-        <LifeGroupCard /> 
+        <LifeGroupCard />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
     </>
