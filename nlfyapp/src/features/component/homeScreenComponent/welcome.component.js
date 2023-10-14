@@ -640,7 +640,7 @@ export const Welcome = (props) => {
                 <Ionicons
                   name="person-circle-sharp"
                   size={40}
-                   color = "#D03925"
+                  color="#D03925"
                 />
               </TouchableOpacity>
             ) : (
@@ -656,8 +656,11 @@ export const Welcome = (props) => {
                     <Ionicons
                       name="megaphone-outline"
                       size={24}
-                      color = "#D03925"
-                      style={{ marginLeft: width * 0.03, marginTop:width * 0.01}}
+                      color="#D03925"
+                      style={{
+                        marginLeft: width * 0.03,
+                        marginTop: width * 0.01,
+                      }}
                     />
                     <Text
                       style={{

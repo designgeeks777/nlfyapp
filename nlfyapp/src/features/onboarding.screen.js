@@ -218,124 +218,122 @@ export const Onboarding = () => {
     navigation.navigate("LoginSecondScreen");
   };
   return (
-    <SafeArea>
-      <Swiper
-        style={styles.wrapper}
-        showsButtons={false}
-        activeDotColor="red"
-        loop={false}
-        onIndexChanged={(index) => setPaginationState(index)}
-        showsPagination={showPagination}
-        scrollEnabled={scrollEnabled}
-      >
-        <Slide1>
-          <Slide1Image source={require("nlfyapp/assets/onboarding1.jpg")} />
-          <TextSlide1>You Matter to God</TextSlide1>
-          <TextSlide1>You Matter to Us</TextSlide1>
-          <JoinText>
-            Join this beautiful family to experience spiritual richness,
-            healing, fellowship, community and much more
-          </JoinText>
-          <TextScreen1Orange>Swipe</TextScreen1Orange>
-        </Slide1>
-        <Slide2>
-          <SlideImage source={require("nlfyapp/assets/onboarding2.png")} />
-          <TextScreen2>
-            Easily join this spiritual family which is not just a Sunday church
-            but cares about you..
-          </TextScreen2>
+    <Swiper
+      style={styles.wrapper}
+      showsButtons={false}
+      activeDotColor="red"
+      loop={false}
+      onIndexChanged={(index) => setPaginationState(index)}
+      showsPagination={showPagination}
+      scrollEnabled={scrollEnabled}
+    >
+      <Slide1>
+        <Slide1Image source={require("nlfyapp/assets/onboarding1.jpg")} />
+        <TextSlide1>You Matter to God</TextSlide1>
+        <TextSlide1>You Matter to Us</TextSlide1>
+        <JoinText>
+          Join this beautiful family to experience spiritual richness, healing,
+          fellowship, community and much more
+        </JoinText>
+        <TextScreen1Orange>Swipe</TextScreen1Orange>
+      </Slide1>
+      <Slide2>
+        <SlideImage source={require("nlfyapp/assets/onboarding2.png")} />
+        <TextScreen2>
+          Easily join this spiritual family which is not just a Sunday church
+          but cares about you..
+        </TextScreen2>
 
-          <TextScreen2Orange>
-            Sign Up to have a customized experience or swipe
+        <TextScreen2Orange>
+          Sign Up to have a customized experience or swipe
+        </TextScreen2Orange>
+        <Button label="Sign Up" handleClick={navigateToSignUp} />
+        <MemberText>
+          Already a member?
+          <TextScreen2Orange onPress={navigateToLogin}>
+            {" "}
+            Log in
           </TextScreen2Orange>
-          <Button label="Sign Up" handleClick={navigateToSignUp} />
-          <MemberText>
-            Already a member?
-            <TextScreen2Orange onPress={navigateToLogin}>
-              {" "}
-              Log in
-            </TextScreen2Orange>
-          </MemberText>
-        </Slide2>
-        <Slide3>
-          <SlideImage source={require("nlfyapp/assets/onboarding3.png")} />
-          <TextScreen3>
-            Have fellowship, listen sermons, be part of life groups, give easily
-            as God leads you
-          </TextScreen3>
-          <TextScreen3Orange>Swipe to get started</TextScreen3Orange>
-        </Slide3>
+        </MemberText>
+      </Slide2>
+      <Slide3>
+        <SlideImage source={require("nlfyapp/assets/onboarding3.png")} />
+        <TextScreen3>
+          Have fellowship, listen sermons, be part of life groups, give easily
+          as God leads you
+        </TextScreen3>
+        <TextScreen3Orange>Swipe to get started</TextScreen3Orange>
+      </Slide3>
 
-        <NavigationContainer independent={true}>
-          <Tab.Navigator screenOptions={createScreenOptions} id="MainBottomTab">
+      <NavigationContainer independent={true} style={{ top: 50 }}>
+        <Tab.Navigator screenOptions={createScreenOptions} id="MainBottomTab">
+          <Tab.Screen
+            name="Home"
+            component={HomeStackNavigation}
+            // component={HomeWrapper}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Prayer Request"
+            component={PrayerRequestNavigation}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Give"
+            component={Give}
+            options={{ headerShown: false }}
+          />
+          <Tab.Screen
+            name="Sermons"
+            component={Sermons}
+            options={{ headerShown: false }}
+          />
+          {user ? (
             <Tab.Screen
-              name="Home"
-              component={HomeStackNavigation}
-              // component={HomeWrapper}
+              name="Life Groups"
+              component={LifeGroups}
               options={{ headerShown: false }}
             />
-            <Tab.Screen
-              name="Prayer Request"
-              component={PrayerRequestNavigation}
-              options={{ headerShown: false }}
-            />
-            <Tab.Screen
-              name="Give"
-              component={Give}
-              options={{ headerShown: false }}
-            />
-            <Tab.Screen
-              name="Sermons"
-              component={Sermons}
-              options={{ headerShown: false }}
-            />
-            {user ? (
-              <Tab.Screen
-                name="Life Groups"
-                component={LifeGroups}
-                options={{ headerShown: false }}
-              />
-            ) : null}
-            <Tab.Screen
-              name="Announcements"
-              component={Announcements}
-              options={{
-                tabBarButton: () => null,
-                tabBarVisible: false,
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name="Events"
-              component={Events}
-              options={{
-                tabBarButton: () => null,
-                tabBarVisible: false,
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name="Stories"
-              component={Stories}
-              options={{
-                tabBarButton: () => null,
-                tabBarVisible: false,
-                headerShown: false,
-              }}
-            />
-            <Tab.Screen
-              name="Devotionals"
-              component={Devotionals}
-              options={{
-                tabBarButton: () => null,
-                tabBarVisible: false,
-                headerShown: false,
-              }}
-            />
-          </Tab.Navigator>
-        </NavigationContainer>
-      </Swiper>
-    </SafeArea>
+          ) : null}
+          <Tab.Screen
+            name="Announcements"
+            component={Announcements}
+            options={{
+              tabBarButton: () => null,
+              tabBarVisible: false,
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Events"
+            component={Events}
+            options={{
+              tabBarButton: () => null,
+              tabBarVisible: false,
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Stories"
+            component={Stories}
+            options={{
+              tabBarButton: () => null,
+              tabBarVisible: false,
+              headerShown: false,
+            }}
+          />
+          <Tab.Screen
+            name="Devotionals"
+            component={Devotionals}
+            options={{
+              tabBarButton: () => null,
+              tabBarVisible: false,
+              headerShown: false,
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </Swiper>
   );
 };
 
