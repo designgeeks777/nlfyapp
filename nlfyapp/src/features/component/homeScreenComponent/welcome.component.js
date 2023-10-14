@@ -656,7 +656,6 @@ export const Welcome = (props) => {
                     <Ionicons
                       name="megaphone-outline"
                       size={24}
-                      //color="rgba(242, 105, 36, 0.6)"
                       color = "#D03925"
                       style={{ marginLeft: width * 0.03, marginTop:width * 0.01}}
                     />

@@ -279,7 +279,7 @@ export const Stepper = () => {
       left: width * 0.09,
       alignSelf: "center",
       alignItems: "center",
-      backgroundColor: "#E94A27",
+      backgroundColor: "#D03925",
       justifyContent: "center",
     },
 
@@ -292,7 +292,7 @@ export const Stepper = () => {
     },
 
     heading: {
-      color: "#F26924",
+      color: "#D03925",
       fontWeight: "bold",
       fontSize: 20,
       textAlign: "center",
@@ -528,7 +528,7 @@ export const Stepper = () => {
               <View style={styles.RadioButtonRow}>
                 <RadioButton
                   value="male"
-                  color={user.gender ? "#F26924" : "#666666"}
+                  color={user.gender ? "#D03925" : "#666666"}
                   status={user.gender === "male" ? "checked" : "unchecked"}
                   onPress={() => {
                     setUser({ ...user, gender: "male" });
@@ -538,7 +538,7 @@ export const Stepper = () => {
                 <RadioButton
                   value="female"
                   status={user.gender === "female" ? "checked" : "unchecked"}
-                  color={user.gender ? "#F26924" : "#666666"}
+                  color={user.gender ? "#D03925" : "#666666"}
                   onPress={() => {
                     setUser({ ...user, gender: "female" });
                   }}

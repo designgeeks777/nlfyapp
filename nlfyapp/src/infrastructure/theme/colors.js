@@ -13,7 +13,7 @@ export const colors = {
   },
   bg: {
     primary: "#FFFFFF",
-    secondary: "#EF6C00",
+    secondary: "#D03925",
   },
   border: {
     primary: "#D9D9D9",
