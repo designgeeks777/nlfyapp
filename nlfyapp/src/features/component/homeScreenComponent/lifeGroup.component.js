@@ -1,4 +1,4 @@
-import { React, useState, useContext } from "react";
+import { React, useContext } from "react";
 import { View, Alert } from "react-native";
 import styled from "styled-components";
 import { SecondaryButton } from "../../../components/secondaryButton.component";
