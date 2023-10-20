@@ -87,14 +87,6 @@ const EventTiming = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   padding-bottom: ${padding * 0.01}px;
 `;
-const EventEndTiming = styled(Text)`
-  //padding-top: ${padding * 0.01}px;
-
-  font-size: ${(props) => props.theme.fontSizes.caption};
-  font-weight: ${(props) => props.theme.fontWeights.medium};
-  font-family: ${(props) => props.theme.fonts.body};
-  //padding-bottom: ${padding * 0.01}px;
-`;
 
 const EventLocation = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.caption};
