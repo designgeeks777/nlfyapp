@@ -24,7 +24,7 @@ import FormData from "form-data";
 import mime from "mime";
 
 import defaultImageMale from "../../../../assets/upload-pic-sign-up-male.png";
-import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.jpg";
+import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.png";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -394,7 +394,7 @@ export const Welcome = (props) => {
       let defaultImageName =
         userData.gender === "male"
           ? "upload-pic-sign-up-male.png"
-          : "upload-pic-sign-up-female.jpg";
+          : "upload-pic-sign-up-female.png";
       imageData.append("profilePic", {
         uri: newImageUri,
         type: userData.gender === "male" ? "image/png" : "image/jpg",

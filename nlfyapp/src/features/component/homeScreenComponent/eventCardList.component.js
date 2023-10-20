@@ -64,13 +64,20 @@ export const EventCardList = () => {
     <EventCard>
       <Card.Content>
         <EventCardTitle variant="titleLarge">
-          <EventCardContent>{item.nameOfEvent}</EventCardContent>
+          <EventCardContent>{item.nameOfEvent}</EventCardContent>{" "}
         </EventCardTitle>
         <EventCardContent variant="bodyMedium">
           <Text>{item.dateOfEvent}</Text>
         </EventCardContent>
         <EventCardContent variant="bodyMedium">
-          <Text>{item.timeOfEvent}</Text>
+          <Text>
+            {item.startTimeOfEvent.split(":")[0] % 12 || 12}:
+            {item.startTimeOfEvent.split(":")[1]}
+            {item.startTimeOfEvent.split(":")[0] >= 12 ? " PM" : " AM"} -{" "}
+            {item.endTimeOfEvent.split(":")[0] % 12 || 12}:
+            {item.endTimeOfEvent.split(":")[1]}
+            {item.endTimeOfEvent.split(":")[0] >= 12 ? " PM" : " AM"}
+          </Text>
         </EventCardContent>
       </Card.Content>
     </EventCard>

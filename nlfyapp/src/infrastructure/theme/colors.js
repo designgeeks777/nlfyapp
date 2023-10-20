@@ -3,7 +3,6 @@ export const colors = {
     primary: "#000000",
     secondary: "#D03925",
     inverse: "#FFFFFF",
-    //title: "#F26924",
     title: "#D03925",
     seeall: "#008BE2",
     caption: "#666666",

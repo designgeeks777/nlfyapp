@@ -65,7 +65,7 @@ const Slide1Image = styled(Image)`
   width: ${width}px;
   align-self: center;
   position: absolute;
-  top: ${width * 0.05}px;
+  top: ${width * 0.08}px;
 `;
 
 const SlideImage = styled(Image)`

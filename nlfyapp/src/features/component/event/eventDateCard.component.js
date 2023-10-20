@@ -87,6 +87,14 @@ const EventTiming = styled(Text)`
   font-family: ${(props) => props.theme.fonts.body};
   padding-bottom: ${padding * 0.01}px;
 `;
+const EventEndTiming = styled(Text)`
+  //padding-top: ${padding * 0.01}px;
+
+  font-size: ${(props) => props.theme.fontSizes.caption};
+  font-weight: ${(props) => props.theme.fontWeights.medium};
+  font-family: ${(props) => props.theme.fonts.body};
+  //padding-bottom: ${padding * 0.01}px;
+`;
 
 const EventLocation = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.caption};
@@ -152,7 +160,14 @@ const EventItem = ({ event }) => {
         </EventCard>
         <Content>
           <EventHeading>{event.nameOfEvent}</EventHeading>
-          <EventTiming>{event.timeOfEvent}</EventTiming>
+          <EventTiming>
+            {event.startTimeOfEvent.split(":")[0] % 12 || 12}:
+            {event.startTimeOfEvent.split(":")[1]}
+            {event.startTimeOfEvent.split(":")[0] >= 12 ? " PM" : " AM"}{"   "}
+             -  {event.endTimeOfEvent.split(":")[0] % 12 || 12}:
+            {event.endTimeOfEvent.split(":")[1]}
+            {event.endTimeOfEvent.split(":")[0] >= 12 ? " PM" : " AM"}{" "}
+          </EventTiming>
           <EventLocation>{`${event.placeOfEvent}`}</EventLocation>
         </Content>
       </CardWrapperView>
