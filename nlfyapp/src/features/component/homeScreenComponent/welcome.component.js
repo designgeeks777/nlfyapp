@@ -365,6 +365,27 @@ export const Welcome = (props) => {
     console.log("cancel", userData.name);
     setShowUpdateOptions(false);
   };
+  //Update the raisedBy name field in Prayer request as well
+  const updateraisedByFieldInPrayerRequests = (uid, newUsername) => {
+    console.log("User id..:", uid);
+    console.log("New user name:", newUsername);
+    axios
+      .patch(
+        `${BASEURL}/prayerRequests/byRaisedByUid/${uid}`,
+        { raisedBy: newUsername },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      )
+      .then((response) => {
+        console.log("API Response:", response.data);
+      })
+      .catch((error) => {
+        console.error("API Error:", error);
+      });
+  };
   const updateChange = async () => {
     setShowUpdateOptions(false);
     setIsLoading(true);
@@ -417,6 +438,7 @@ export const Welcome = (props) => {
             setIsLoading(false);
             notifyMessage("Updated successfully");
             console.log("NAME CHANGED", response.data.name, response.data);
+            updateraisedByFieldInPrayerRequests(userData.uid, username.trim());
           }
         })
         .catch((error) => {
