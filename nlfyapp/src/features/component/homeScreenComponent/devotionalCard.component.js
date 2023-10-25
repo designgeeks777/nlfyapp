@@ -6,7 +6,6 @@ import { LinearGradient } from "expo-linear-gradient";
 import { useNavigation } from "@react-navigation/native";
 import { BASEURL } from "../../../../APIKey";
 import axios from "axios";
-
 const { width, height } = Dimensions.get("window");
 const cardWidth = width * 0.9;
 const cardTop = height * 0.06;
@@ -79,13 +78,13 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
   return (
     <DevotionalCard>
       <StyledLinearGradient
-        start={{ x: 180, y: 0.4 }}
-        end={{ x: 180, y: 0.6 }}
-        colors={
-          (["#D03925", "rgba(242, 36, 36, 1)"],
-          ["#D03925", "rgba(242, 90, 36, 1)"])
-        }
-      >
+            start={{ x: 180, y: 0.25 }}
+            end={{ x: 180, y: 1.0 }}
+            colors={
+              (["#D03925", "rgba(242, 36, 36, 1)"],
+              ["#D03925", "rgba(242, 90, 36, 1)"])
+            }
+          >
         <Card.Content>
           {data && (
             <>
@@ -96,11 +95,9 @@ export const HomePageDevotionalCard = ({ devotional = {} }) => {
             </>
           )}
         </Card.Content>
-        {/* <Card.Actions> */}
         <CardReadmore variant="bodyMedium" onPress={goToDevotionalsScreen}>
           Read More...
         </CardReadmore>
-        {/* </Card.Actions> */}
       </StyledLinearGradient>
     </DevotionalCard>
   );
