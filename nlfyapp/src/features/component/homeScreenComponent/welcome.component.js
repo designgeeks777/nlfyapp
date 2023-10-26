@@ -79,7 +79,7 @@ const WelcomeText = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
-  width: 80%;
+  width: ${width * 0.60}px;
 `;
 const Profile = styled(View)`
   margin-left: ${width * 0.02}px;
