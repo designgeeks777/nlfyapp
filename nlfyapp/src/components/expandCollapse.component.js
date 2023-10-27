@@ -165,15 +165,7 @@ export const ExpandCollapseList = ({ screenName }) => {
         });
         //Sort devotionals/stories in ascending order based on date
         //Converting string date object to date to for sorting
-        let filteredDatas = response.data.map((obj) => {
-          const [day, month, year] = obj.datePosted.split("/");
-          let devotionalDate = new Date(year, month - 1, day);
-          obj.datePosted = obj.datePosted.split("/").join("-");
-          return { ...obj, date: devotionalDate };
-        });
-        filteredDatas = filteredDatas.sort((a, b) => {
-          return b.date.getTime() > a.date.getTime();
-        });
+        let filteredDatas = response.data.reverse();
         setData(filteredDatas);
         setIsLoading(false);
       } catch (error) {

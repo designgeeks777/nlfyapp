@@ -100,8 +100,8 @@ const Item = (props) => {
             start={{ x: 180, y: 0.25 }}
             end={{ x: 180, y: 1.0 }}
             colors={
-              (["#D03925", "rgba(242, 36, 36, 1)"],
-              ["#D03925", "rgba(242, 90, 36, 1)"])
+              (["#E94A27", "rgba(242, 110, 36, 1)"],
+              ["#F26924", "rgba(242, 73, 36, 0.76)"])
             }
           >
             <CardTitle adjustsFontSizeToFit numberOfLines={1}>
@@ -154,46 +154,8 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
         const response = await axios.get(url, {
           cancelToken: source.token,
         });
-        //Sort Announcements in ascending order based on date
-        //Converting string date object to date to for sorting
-        /*let filteredDatas = response.data.map((obj) => {
-          const [day, month, year] = obj.datePosted.split("/");
-          let announcementDate = new Date(year, month - 1, day);
-          obj.datePosted = obj.datePosted.split("/").join("-");
-          return { ...obj, date: announcementDate };
-        });*/
-        let filteredDatas = response.data.map((obj) => {
-          const [datePart, timePart] = obj.datePosted.split("-");
-          const [day, month, year] = datePart.split("/");
-          const [time, amPm] = timePart.split(" ");
-
-          // Parse the date component
-          const announcementDate = new Date(year, month - 1, day);
-
-          // Parse the time component
-          let [hour, minute] = time.split(":");
-          const isPM = amPm === "PM";
-          if (isPM && hour !== "12") {
-            // Convert to 24-hour format
-            hour = String(Number(hour) + 12);
-          }
-
-          announcementDate.setHours(hour);
-          announcementDate.setMinutes(minute);
-
-          obj.datePosted = datePart.split("/").join("-") + "-" + timePart;
-          return { ...obj, date: announcementDate };
-        });
-
-        filteredDatas = filteredDatas.sort((a, b) => {
-          if (a.date.getTime() === b.date.getTime()) {
-            // If the dates are the same, compare the times
-            return b.date.getTime() - a.date.getTime();
-          } else {
-            // Otherwise, compare the dates
-            return b.date.getTime() - a.date.getTime();
-          }
-        });
+        //reverse the data to show the latest announcement on top
+        let filteredDatas = response.data.reverse();
         setData(filteredDatas);
         setIsLoading(false);
       } catch (error) {
@@ -216,7 +178,9 @@ export const ExpandCollapseListAnnouncements = ({ screenName }) => {
   }, [screenName]);
 
   const onSelectItem = (id) => {
-    if (id === selectedId) return setSelectedId(null);
+    if (id === selectedId) {
+      return setSelectedId(null);
+    }
     setSelectedId(id);
   };
 
