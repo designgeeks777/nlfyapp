@@ -113,6 +113,7 @@ export const Stepper = () => {
   const [seconds, setSeconds] = useState(30);
 
   const handlePhoneNumberChange = (value) => {
+    console.log("User.phoneNumber");
     setUser({ ...user, mobileNumber: value });
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
     if (user.mobileNumber.length !== 0 && user.mobileNumber.match(regexp)) {
@@ -121,7 +122,9 @@ export const Stepper = () => {
       console.log("in verify step match", user.mobileNumber);
     } else {
       setIsValidPhoneNumber(false);
-      setErrorMsg("Enter a valid phone number");
+      setErrorMsg(
+        "Enter a valid phone number with country code.Ex- +919433456789"
+      );
       console.log("mismatch");
     }
   };
@@ -388,14 +391,14 @@ export const Stepper = () => {
               >
                 <View style={styles.progressStepViewStyle}>
                   <CustomTextInput
-                    label="Mobile Number"
+                    label="Mobile Number with country code(+919433474532)"
                     placeholder="+91999989080"
                     keyboardType="phone-pad"
                     autoFocus
                     autoCompleteType="tel"
                     textContentType="telephoneNumber"
                     msgToDisplay={error || errorMsg}
-                    value={user.mobileNumber}
+                    value={user.phnnumber}
                     onChange={handlePhoneNumberChange}
                     isValid={isValidPhoneNumber}
                     maxLength={15}
@@ -407,8 +410,9 @@ export const Stepper = () => {
 
             {Platform.OS === "android" && (
               <View style={styles.progressStepViewStyle}>
+
                 <CustomTextInput
-                  label="Mobile Number"
+                  label="Mobile Number with country code(+919433474532)"
                   placeholder="+91999989080"
                   keyboardType="phone-pad"
                   autoFocus
