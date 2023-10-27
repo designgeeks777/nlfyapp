@@ -65,7 +65,9 @@ export const LoginSecondScreen = ({ route }) => {
       console.log("in verify step match", phoneNumber);
     } else {
       setIsValid(false);
-      setErrorMsg("Enter a valid phone number");
+      setErrorMsg(
+        " Enter a valid phone number with country code.Ex- +919433456789"
+      );
       console.log("mismatch");
     }
   };
@@ -122,7 +124,9 @@ export const LoginSecondScreen = ({ route }) => {
     } else {
       setIsValid(false);
       console.log("is not Registered login");
-      setErrorMsg("Enter your registered mobile number");
+      setErrorMsg(
+        "Enter your registered mobile number with country code.Ex: +919433456789"
+      );
     }
   };
   const onClickContinue = () => {
@@ -292,7 +296,7 @@ export const LoginSecondScreen = ({ route }) => {
         <>
           <Heading>We are glad to have you back.</Heading>
           <CustomTextInput
-            label="Mobile Number"
+            label="Mobile Number with country code - Ex: +919433474345"
             maxLength={15}
             placeholder="+919999890802"
             autoFocus
