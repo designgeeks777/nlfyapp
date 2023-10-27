@@ -81,7 +81,10 @@ const ChurchPrayerCard = ({ title }) => (
       <StyledLinearGradient
         start={{ x: 180, y: 0.1 }}
         end={{ x: 180, y: 0.9 }}
-        colors={["#F22424", "rgba(242, 105, 36, 0.80)"]}
+        colors={
+          (["#D03925", "rgba(242, 36, 36, 1)"],
+          ["#D03925", "rgba(242, 90, 36, 1)"])
+        }
       >
         <PrayerContent numberOfLines={2} variant="bodyMedium">
           {title}

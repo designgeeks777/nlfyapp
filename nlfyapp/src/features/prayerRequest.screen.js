@@ -19,7 +19,7 @@ import ExpoStatusBar from "expo-status-bar/build/ExpoStatusBar";
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
 const wrapperPadding = width * 0.13;
-const wrapperMargin = width * 0.03;
+const wrapperMargin = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth * 0.9}px;
@@ -34,13 +34,11 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
   margin-top: ${Platform.OS === "android"
     ? `${StatusBar.currentHeight - 35}px`
     : "0px"};
-
   padding-bottom: ${StatusBar.currentHeight * 0.9}px;
 `;
 
 const ButtonsWrapper = styled(View)`
   flex-direction: row;
-
   margin-bottom: ${Platform.OS === "ios" ? `${width * 0.1}px` : "0px"};
 `;
 
@@ -62,6 +60,7 @@ export const PrayerRequest = ({ route }) => {
       <WrapperView>
         <BackButton text="Prayer Requests" />
       </WrapperView>
+
       <SafeAreaViewWrapper>
         <View style={{ flexDirection: "column", flex: 1 }}>
           <ButtonsWrapper>

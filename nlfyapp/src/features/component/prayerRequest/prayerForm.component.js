@@ -160,7 +160,6 @@ export const PrayerForm = (props) => {
         />
         {valid !== "" && <Text style={styles.errorMessage}>{valid}</Text>}
       </View>
-      {!inputFocused && (
         <ButtonWrapper
           style={{ opacity: disableSubmit ? 0.5 : 1 }} // Setting the opacity of the button based on the disableSubmit state
         >
@@ -170,18 +169,18 @@ export const PrayerForm = (props) => {
             disabled={disableSubmit}
           />
         </ButtonWrapper>
-      )}
     </>
   );
 };
 
 const styles = StyleSheet.create({
   inp: {
-    height: 200,
-    width: "100%",
-    borderRadius: 10,
-    borderWidth: 1,
-    padding: 10,
+    height: width * 0.6,
+    width: width * 0.9,
+    borderRadius: width * 0.02,
+    borderColor: "gray",
+    borderWidth: width * 0.003,
+    padding: width * 0.03,
   },
   errorMessage: {
     color: "red",

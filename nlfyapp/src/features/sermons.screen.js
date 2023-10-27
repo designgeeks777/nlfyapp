@@ -8,7 +8,7 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { Button } from "../components/button";
+
 import YoutubePlayer from "react-native-youtube-iframe";
 import styled from "styled-components/native";
 import { StatusBar as ExpoStatusBar } from "expo-status-bar";
@@ -29,12 +29,16 @@ const videosUrl = `https://www.googleapis.com/youtube/v3/search?order=date&part=
 
 const { width } = Dimensions.get("window");
 const wrapperWidth = width * 0.9;
+const padding = width * 0.1;
+const top = width * 0.05;
+const marginLeft = width * 0.05;
 
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   border-radius: 10px;
-  top: 20px;
-  margin-left: 10px;
+  padding-bottom: ${padding}px;
+  top: ${top}px;
+  margin-left: ${marginLeft}px;
 `;
 
 const SafeAreaViewWrapper = styled(SafeAreaView)`
@@ -119,7 +123,6 @@ export const Sermons = () => {
         <WrapperView>
           <BackButton text="Sermons" />
         </WrapperView>
-
         <ViewSearchbar>
           <SearchBar
             placeholder="Search"
@@ -136,6 +139,7 @@ export const Sermons = () => {
           keyExtractor={(item) => item.id.videoId}
           renderItem={renderVideoItem}
           style={{ marginTop: 10 }}
+          accessibilityLabel="List of Sermon Videos"
         />
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />

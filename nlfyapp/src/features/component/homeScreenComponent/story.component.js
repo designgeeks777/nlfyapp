@@ -7,7 +7,7 @@ export const Story = () => {
   const { width } = Dimensions.get("window");
   const lefttop = width * (40 / 375);  // Assuming a reference width of 375
   const righttop = width * (40 / 375);  
-  const marginleft = width * (135 / 375);  
+  const marginleft = width * (120 / 375);  
 
   return (
     <>

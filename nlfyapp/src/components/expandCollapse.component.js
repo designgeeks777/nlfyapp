@@ -12,8 +12,8 @@ const marginHorizontal = width * 0.01;
 const marginVertical = width * 0.04;
 const padding = width;
 const SearchBar = styled(Searchbar)`
-  margin-horizontal:${marginHorizontal }px;
-  margin-vertical:${marginVertical }px;
+  margin-horizontal: ${marginHorizontal}px;
+  margin-vertical: ${marginVertical}px;
   elevation: 0;
   border-radius: ${width * 0.03}px;
 
@@ -26,13 +26,13 @@ const SearchBar = styled(Searchbar)`
 `;
 
 const ViewSearchbar = styled(View)`
-  padding: ${padding * 0.04 }px;
+  padding: ${padding * 0.04}px;
 `;
 
 const CardView = styled(View)`
-  padding-top:${padding * 0.01}px;
+  padding-top: ${padding * 0.01}px;
   padding-right: ${padding * 0.06}px;
-  padding-bottom:${padding * 0.06}px;
+  padding-bottom: ${padding * 0.06}px;
   padding-left: ${padding * 0.06}px;
 `;
 
@@ -47,27 +47,29 @@ const CardDate = styled(Text)`
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
   line-height: ${(props) => props.theme.lineHeights.primary};
-  margin-bottom:${padding * 0.03 }px; 
+  margin-bottom: ${padding * 0.03}px;
 `;
 
 const CardTitle = styled(Text)`
-  padding-top: ${(props) => (props.numberOfLines > 2 ? padding * 0.1 : padding * 0.05)}px;
+  padding-top: ${(props) =>
+    props.numberOfLines > 2 ? padding * 0.1 : padding * 0.05}px;
   padding-right: ${padding * 0.05}px;
-  padding-bottom: ${(props) => (props.numberOfLines > 2 ? padding * 0.05 : padding * 0.02)}px;
-  padding-left: ${padding * 0.06}px;
+  padding-bottom: ${(props) =>
+    props.numberOfLines > 2 ? padding * 0.05 : padding * 0.02}px;
+  padding-left: ${padding * 0.05}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
   line-height: ${(props) => props.theme.lineHeights.primary};
   text-align-vertical: center;
-  text-align: center;
-  `;
+  text-align: left;
+`;
 
 const CardContent = styled(Text)`
-  padding-top:${padding * 0.03}px;
+  padding-top: ${padding * 0.03}px;
   padding-right: ${padding * 0.04}px;
-  padding-bottom: ${padding * 0.01}px;
+  padding-bottom: ${padding * 0.03}px;
   padding-left: ${padding * 0.05}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
@@ -79,7 +81,8 @@ const CardContent = styled(Text)`
 
 const CardButton = styled(Button).attrs({
   textColor: "#FFFFFF",
-  labelStyle: { fontSize: 12, lineHeight: width * 0.04 },
+  labelStyle: { fontSize: 14, lineHeight: width * 0.04 },
+  contentStyle: { height: 48 }, // Setting the height to 48dp
 })``;
 
 const Item = (props) => {
@@ -97,18 +100,18 @@ const Item = (props) => {
             ? ` - by ${props.item.submittedBy}`
             : null}
         </CardDate>
-      
+
         <Card>
           <StyledLinearGradient
             start={{ x: 180, y: 0.25 }}
             end={{ x: 180, y: 1.0 }}
             colors={
-              (["#E94A27", "rgba(242, 110, 36, 1)"],
-              ["#F26924", "rgba(242, 73, 36, 0.76)"])
+              (["#D03925", "rgba(242, 36, 36, 1)"],
+              ["#D03925", "rgba(242, 90, 36, 1)"])
             }
           >
             {props.screenName === "devotionals" ? (
-              <CardTitle adjustsFontSizeToFit numberOfLines={1}>
+              <CardTitle adjustsFontSizeToFit numberOfLines={2}>
                 {props.item.subject}
               </CardTitle>
             ) : null}
@@ -162,15 +165,7 @@ export const ExpandCollapseList = ({ screenName }) => {
         });
         //Sort devotionals/stories in ascending order based on date
         //Converting string date object to date to for sorting
-        let filteredDatas = response.data.map((obj) => {
-          const [day, month, year] = obj.datePosted.split("/");
-          let devotionalDate = new Date(year, month - 1, day);
-          obj.datePosted = obj.datePosted.split("/").join("-");
-          return { ...obj, date: devotionalDate };
-        });
-        filteredDatas = filteredDatas.sort((a, b) => {
-          return b.date.getTime() > a.date.getTime();
-        });
+        let filteredDatas = response.data.reverse();
         setData(filteredDatas);
         setIsLoading(false);
       } catch (error) {

@@ -113,6 +113,7 @@ export const Stepper = () => {
   const [seconds, setSeconds] = useState(30);
 
   const handlePhoneNumberChange = (value) => {
+    console.log("User.phoneNumber");
     setUser({ ...user, mobileNumber: value });
     var regexp = /^\+[0-9]?()[0-9](\s|\S)(\d[0-9]{8,16})$/;
     if (user.mobileNumber.length !== 0 && user.mobileNumber.match(regexp)) {
@@ -121,7 +122,9 @@ export const Stepper = () => {
       console.log("in verify step match", user.mobileNumber);
     } else {
       setIsValidPhoneNumber(false);
-      setErrorMsg("Enter a valid phone number");
+      setErrorMsg(
+        "Enter a valid phone number with country code.Ex- +919433456789"
+      );
       console.log("mismatch");
     }
   };
@@ -279,7 +282,7 @@ export const Stepper = () => {
       left: width * 0.09,
       alignSelf: "center",
       alignItems: "center",
-      backgroundColor: "#E94A27",
+      backgroundColor: "#D03925",
       justifyContent: "center",
     },
 
@@ -292,7 +295,7 @@ export const Stepper = () => {
     },
 
     heading: {
-      color: "#F26924",
+      color: "#D03925",
       fontWeight: "bold",
       fontSize: 20,
       textAlign: "center",
@@ -388,14 +391,14 @@ export const Stepper = () => {
               >
                 <View style={styles.progressStepViewStyle}>
                   <CustomTextInput
-                    label="Mobile Number"
+                    label="Mobile Number with country code(+919433474532)"
                     placeholder="+91999989080"
                     keyboardType="phone-pad"
                     autoFocus
                     autoCompleteType="tel"
                     textContentType="telephoneNumber"
                     msgToDisplay={error || errorMsg}
-                    value={user.mobileNumber}
+                    value={user.phnnumber}
                     onChange={handlePhoneNumberChange}
                     isValid={isValidPhoneNumber}
                     maxLength={15}
@@ -407,8 +410,9 @@ export const Stepper = () => {
 
             {Platform.OS === "android" && (
               <View style={styles.progressStepViewStyle}>
+
                 <CustomTextInput
-                  label="Mobile Number"
+                  label="Mobile Number with country code(+919433474532)"
                   placeholder="+91999989080"
                   keyboardType="phone-pad"
                   autoFocus
@@ -528,7 +532,7 @@ export const Stepper = () => {
               <View style={styles.RadioButtonRow}>
                 <RadioButton
                   value="male"
-                  color={user.gender ? "#F26924" : "#666666"}
+                  color={user.gender ? "#D03925" : "#666666"}
                   status={user.gender === "male" ? "checked" : "unchecked"}
                   onPress={() => {
                     setUser({ ...user, gender: "male" });
@@ -538,7 +542,7 @@ export const Stepper = () => {
                 <RadioButton
                   value="female"
                   status={user.gender === "female" ? "checked" : "unchecked"}
-                  color={user.gender ? "#F26924" : "#666666"}
+                  color={user.gender ? "#D03925" : "#666666"}
                   onPress={() => {
                     setUser({ ...user, gender: "female" });
                   }}

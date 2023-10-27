@@ -24,7 +24,7 @@ import FormData from "form-data";
 import mime from "mime";
 
 import defaultImageMale from "../../../../assets/upload-pic-sign-up-male.png";
-import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.jpg";
+import defaultImageFemale from "../../../../assets/upload-pic-sign-up-female.png";
 
 import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
@@ -79,7 +79,7 @@ const WelcomeText = styled(Text)`
   font-size: ${(props) => props.theme.fontSizes.header};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
-  width: 80%;
+  width: ${width * 0.60}px;
 `;
 const Profile = styled(View)`
   margin-left: ${width * 0.02}px;
@@ -365,6 +365,27 @@ export const Welcome = (props) => {
     console.log("cancel", userData.name);
     setShowUpdateOptions(false);
   };
+  //Update the raisedBy name field in Prayer request as well
+  const updateraisedByFieldInPrayerRequests = (uid, newUsername) => {
+    console.log("User id..:", uid);
+    console.log("New user name:", newUsername);
+    axios
+      .patch(
+        `${BASEURL}/prayerRequests/byRaisedByUid/${uid}`,
+        { raisedBy: newUsername },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      )
+      .then((response) => {
+        console.log("API Response:", response.data);
+      })
+      .catch((error) => {
+        console.error("API Error:", error);
+      });
+  };
   const updateChange = async () => {
     setShowUpdateOptions(false);
     setIsLoading(true);
@@ -394,7 +415,7 @@ export const Welcome = (props) => {
       let defaultImageName =
         userData.gender === "male"
           ? "upload-pic-sign-up-male.png"
-          : "upload-pic-sign-up-female.jpg";
+          : "upload-pic-sign-up-female.png";
       imageData.append("profilePic", {
         uri: newImageUri,
         type: userData.gender === "male" ? "image/png" : "image/jpg",
@@ -417,6 +438,7 @@ export const Welcome = (props) => {
             setIsLoading(false);
             notifyMessage("Updated successfully");
             console.log("NAME CHANGED", response.data.name, response.data);
+            updateraisedByFieldInPrayerRequests(userData.uid, username.trim());
           }
         })
         .catch((error) => {
@@ -517,7 +539,7 @@ export const Welcome = (props) => {
                 <>
                   <Caption
                     onPress={navigateToSignUp}
-                    style={{ color: "#EF6C00", marginTop: width * 0.02 }}
+                    style={{ color: "#D03925", marginTop: width * 0.02 }}
                   >
                     Login
                   </Caption>
@@ -589,7 +611,7 @@ export const Welcome = (props) => {
                     style={{
                       alignSelf: "flex-start",
                       padding: width * 0.01,
-                      color: "#EF6C00",
+                      color: "#D03925",
                     }}
                     onPress={handleLogout}
                     disabled={profilePicVisible}
@@ -640,7 +662,7 @@ export const Welcome = (props) => {
                 <Ionicons
                   name="person-circle-sharp"
                   size={40}
-                  color="rgba(242, 105, 36, 0.6)"
+                  color="#D03925"
                 />
               </TouchableOpacity>
             ) : (
@@ -656,12 +678,15 @@ export const Welcome = (props) => {
                     <Ionicons
                       name="megaphone-outline"
                       size={24}
-                      color="rgba(242, 105, 36, 0.6)"
-                      style={{ marginLeft: width * 0.03 }}
+                      color="#D03925"
+                      style={{
+                        marginLeft: width * 0.03,
+                        marginTop: width * 0.01,
+                      }}
                     />
                     <Text
                       style={{
-                        color: "#F26924",
+                        color: "#D03925",
                         fontSize: 10,
                       }}
                     >

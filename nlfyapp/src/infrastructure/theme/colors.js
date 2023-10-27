@@ -1,9 +1,9 @@
 export const colors = {
   text: {
     primary: "#000000",
-    secondary: "#EF6C00",
+    secondary: "#D03925",
     inverse: "#FFFFFF",
-    title: "#F26924",
+    title: "#D03925",
     seeall: "#008BE2",
     caption: "#666666",
     infoMessage: "#999999",
@@ -12,7 +12,7 @@ export const colors = {
   },
   bg: {
     primary: "#FFFFFF",
-    secondary: "#EF6C00",
+    secondary: "#D03925",
   },
   border: {
     primary: "#D9D9D9",

@@ -136,7 +136,7 @@ export const UploadPicSignUp = (props) => {
     ? props.route.params.gender
     : "male";
   const maleDefaultProfilePic = require("nlfyapp/assets/upload-pic-sign-up-male.png");
-  const femaleDefaultProfilePic = require("nlfyapp/assets/upload-pic-sign-up-female.jpg");
+  const femaleDefaultProfilePic = require("nlfyapp/assets/upload-pic-sign-up-female.png");
   let icon =
     gender === "male" ? maleDefaultProfilePic : femaleDefaultProfilePic;
   const [image, setImage] = useState(null);

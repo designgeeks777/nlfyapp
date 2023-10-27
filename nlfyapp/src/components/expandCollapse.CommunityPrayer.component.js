@@ -60,7 +60,7 @@ const Item = (props) => {
           if (userList[i].gender === "male") {
             return require("nlfyapp/assets/upload-pic-sign-up-male.png"); //  Set default male profile pic
           } else {
-            return require("nlfyapp/assets/upload-pic-sign-up-female.jpg"); //  Set default female profile pic
+            return require("nlfyapp/assets/upload-pic-sign-up-female.png"); //  Set default female profile pic
           }
         }
       }
@@ -99,7 +99,7 @@ const Item = (props) => {
 
   const nameStyle = {
     textAlign: "center",
-    width:100,
+    width: 100,
   };
   const textStyle = {
     lineHeight: 16,
@@ -133,7 +133,9 @@ const Item = (props) => {
       <View style={setFlex}>
         <View style={containerStyle}>
           <Image style={styles.profilePicture} source={getUserProfilePic()} />
-          <Text style={nameStyle}>{props.item.raisedBy}</Text>
+          <Text style={nameStyle} accessibilityLabel={props.item.raisedBy}>
+            {props.item.raisedBy}
+          </Text>
         </View>
 
         <Card style={cardStyle}>
@@ -142,6 +144,7 @@ const Item = (props) => {
               onTextLayout={onTextLayout}
               numberOfLines={requestTextShown && props.selected ? undefined : 3}
               style={textStyle}
+              accessibilityLabel={props.item.requestMessage}
             >
               {props.item.requestMessage}
             </Paragraph>
@@ -163,7 +166,7 @@ const Item = (props) => {
         </Card>
       </View>
 
-      <View style={writeprayer}>
+      <View style={writeprayer} accessibilityLabel="Tap me to Write a Prayer">
         <NLFModal request={props.item} />
       </View>
     </>
@@ -196,8 +199,6 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
     setSelectedId(id);
   };
 
-  
-
   return (
     <FlatList
       data={props.data}
@@ -207,7 +208,7 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
       contentContainerStyle={{ paddingBottom: width * 0.01 }}
       extraData={selectedId}
       showsVerticalScrollIndicator={false}
+      accessibilityLabel="All Community Prayers"
     />
   );
 };
-

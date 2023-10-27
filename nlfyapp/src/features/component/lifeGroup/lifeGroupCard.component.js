@@ -48,9 +48,8 @@ const LifeGroupMeetingTime = styled(Text)`
 `;
 
 const FlexView = styled(View)`
-  flex-direction: row;
+  flex-direction: row; 
 `;
-
 const LeftContent = styled(View)`
   width: ${width * 0.58}px;
 `;

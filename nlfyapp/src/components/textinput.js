@@ -54,7 +54,7 @@ const StyledTextInputWithIcon = styled(TextInput).attrs({
     paddingLeft: 0,
     paddingHorizontal: 0,
     paddingTop: 0,
-    paddingBottom: width * 0.03,
+    paddingBottom: width * 0.001,
     paddingRight: 0,
   },
 })`
@@ -91,7 +91,7 @@ const StyledTextInput = styled(TextInput).attrs({
     paddingLeft: width * 0.03,
     paddingHorizontal: 0,
     paddingTop: 0,
-    paddingBottom: width * 0.03,
+    paddingBottom: width * 0.001,
     paddingRight: 0,
   },
 })`
@@ -119,7 +119,7 @@ export const CustomTextInput = ({
   onChange,
   isValid,
   maxLength,
-  isUserNameTextInput,
+  isUserNameTextInput, 
 }) => {
   return (
     <Container>
@@ -158,3 +158,5 @@ export const CustomTextInput = ({
     </Container>
   );
 };
+
+

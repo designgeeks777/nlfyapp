@@ -11,7 +11,7 @@ const { width } = Dimensions.get("window");
 const cardWidth = width * 0.4;
 
 const EventCard = styled(Card)`
-  top: ${width * 0.030}px;
+  top: ${width * 0.03}px;
   width: ${cardWidth}px;
   margin: ${width * 0.01}px;
   height: ${width * 0.36}px;
@@ -25,7 +25,6 @@ const EventCard = styled(Card)`
 `;
 
 const EventCardTitle = styled(Text)`
-
   color: ${(props) => props.theme.colors.text.title};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
@@ -33,8 +32,7 @@ const EventCardTitle = styled(Text)`
 `;
 
 const EventCardContent = styled(Text)`
-  
-  padding-top:${width * 0.001}px;
+  padding-top: ${width * 0.001}px;
   color: ${(props) => props.theme.colors.text.title};
   font-size: ${(props) => props.theme.fontSizes.caption};
   font-weight: ${(props) => props.theme.fontWeights.regular};
@@ -66,13 +64,20 @@ export const EventCardList = () => {
     <EventCard>
       <Card.Content>
         <EventCardTitle variant="titleLarge">
-          <EventCardContent>{item.nameOfEvent}</EventCardContent>
+          <EventCardContent>{item.nameOfEvent}</EventCardContent>{" "}
         </EventCardTitle>
         <EventCardContent variant="bodyMedium">
           <Text>{item.dateOfEvent}</Text>
         </EventCardContent>
         <EventCardContent variant="bodyMedium">
-          <Text>{item.timeOfEvent}</Text>
+          <Text>
+            {item.startTimeOfEvent.split(":")[0] % 12 || 12}:
+            {item.startTimeOfEvent.split(":")[1]}
+            {item.startTimeOfEvent.split(":")[0] >= 12 ? " PM" : " AM"} -{" "}
+            {item.endTimeOfEvent.split(":")[0] % 12 || 12}:
+            {item.endTimeOfEvent.split(":")[1]}
+            {item.endTimeOfEvent.split(":")[0] >= 12 ? " PM" : " AM"}
+          </Text>
         </EventCardContent>
       </Card.Content>
     </EventCard>

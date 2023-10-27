@@ -24,7 +24,6 @@ const wrapperWidth = width * 0.9;
 const padding = width * 0.1;
 const top = width * 0.05;
 const marginLeft = width * 0.05;
-
 const WrapperView = styled(View)`
   width: ${wrapperWidth}px;
   padding-bottom: ${padding * 0.2}px; 

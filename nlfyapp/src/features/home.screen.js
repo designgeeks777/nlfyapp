@@ -36,8 +36,8 @@ const SafeAreaViewWrapper = styled(SafeAreaView)`
   margin-top: ${StatusBar.currentHeight}px;
   top: ${top}px; //top: 10px;
   align-items: center;
+  // justify-content: flex-start;
 `;
-
 export const Home = (props) => {
   return (
     <>
