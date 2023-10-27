@@ -100,8 +100,8 @@ const Item = (props) => {
             start={{ x: 180, y: 0.25 }}
             end={{ x: 180, y: 1.0 }}
             colors={
-              (["#E94A27", "rgba(242, 110, 36, 1)"],
-              ["#F26924", "rgba(242, 73, 36, 0.76)"])
+              (["#D03925", "rgba(242, 110, 36, 1)"],
+                ["#D03925", "rgba(242, 73, 36, 0.8)"])
             }
           >
             <CardTitle adjustsFontSizeToFit numberOfLines={1}>
