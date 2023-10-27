@@ -56,20 +56,20 @@ const CardTitle = styled(Text)`
   padding-right: ${padding * 0.05}px;
   padding-bottom: ${(props) =>
     props.numberOfLines > 2 ? padding * 0.05 : padding * 0.02}px;
-  padding-left: ${padding * 0.06}px;
+  padding-left: ${padding * 0.05}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.body};
   font-weight: ${(props) => props.theme.fontWeights.bold};
   font-family: ${(props) => props.theme.fonts.body};
   line-height: ${(props) => props.theme.lineHeights.primary};
   text-align-vertical: center;
-  text-align: center;
+  text-align: left;
 `;
 
 const CardContent = styled(Text)`
   padding-top: ${padding * 0.03}px;
   padding-right: ${padding * 0.04}px;
-  padding-bottom: ${padding * 0.01}px;
+  padding-bottom: ${padding * 0.03}px;
   padding-left: ${padding * 0.05}px;
   color: ${(props) => props.theme.colors.text.inverse};
   font-size: ${(props) => props.theme.fontSizes.caption};
@@ -111,7 +111,7 @@ const Item = (props) => {
             }
           >
             {props.screenName === "devotionals" ? (
-              <CardTitle adjustsFontSizeToFit numberOfLines={1}>
+              <CardTitle adjustsFontSizeToFit numberOfLines={2}>
                 {props.item.subject}
               </CardTitle>
             ) : null}
