@@ -201,6 +201,7 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
 
   return (
     <FlatList
+      removeClippedSubviews={false}
       data={props.data}
       initialNumToRender={props.data.length}
       renderItem={renderItem}

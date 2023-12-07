@@ -10,6 +10,8 @@ import {
   StyleSheet,
   Modal,
   TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform,
   Text,
 } from "react-native";
 import styled from "styled-components/native";
@@ -111,22 +113,29 @@ export const Devotionals = () => {
           </ButtonView>
         ) : null}
         <Modal visible={modalVisible} transparent={true}>
-          <TouchableOpacity
-            activeOpacity={1}
-            onPress={handleCloseModal}
+          <KeyboardAvoidingView
+            behavior={Platform.OS === "ios" ? "padding" : "height"}
             style={styles.modalOverlay}
           >
-            <Animated.View
-              style={[
-                styles.modalContainer,
-                {
-                  transform: [{ translateY: modalTranslateY }],
-                },
-              ]}
+            <TouchableOpacity
+              activeOpacity={1}
+              onPress={handleCloseModal}
+              style={styles.modalOverlay}
             >
-              <RaiseDevotionalForm handleSuccessChange={handleSuccessChange} />
-            </Animated.View>
-          </TouchableOpacity>
+              <Animated.View
+                style={[
+                  styles.modalContainer,
+                  {
+                    transform: [{ translateY: modalTranslateY }],
+                  },
+                ]}
+              >
+                <RaiseDevotionalForm
+                  handleSuccessChange={handleSuccessChange}
+                />
+              </Animated.View>
+            </TouchableOpacity>
+          </KeyboardAvoidingView>
         </Modal>
       </SafeAreaViewWrapper>
       <ExpoStatusBar style="auto" />
