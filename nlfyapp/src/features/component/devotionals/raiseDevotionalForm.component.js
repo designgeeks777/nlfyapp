@@ -116,7 +116,14 @@ const styles = StyleSheet.create({
     marginTop: -(width * 0.1),
   },
   titleinp: {
-    height: width * 0.1,
+    ...Platform.select({
+      ios: {
+        height: width * 0.1,
+      },
+      android: {
+        height: width * 0.2,
+      },
+    }),
     width: width * 0.9,
     borderRadius: width * 0.02,
     borderColor: "gray",
