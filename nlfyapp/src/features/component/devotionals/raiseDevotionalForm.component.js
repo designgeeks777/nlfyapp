@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, TextInput, Dimensions, Text } from "react-native";
+import {
+  View,
+  StyleSheet,
+  TextInput,
+  Dimensions,
+  Text,
+  Platform,
+} from "react-native";
 import { Button } from "../../../components/button";
 import axios from "axios";
 import { BASEURL } from "../../../../APIKey";
@@ -93,7 +100,14 @@ export const RaiseDevotionalForm = (props) => {
 
 const styles = StyleSheet.create({
   inp: {
-    height: width * 0.45,
+    ...Platform.select({
+      ios: {
+        height: width * 0.3,
+      },
+      android: {
+        height: width * 0.4,
+      },
+    }),
     width: width * 0.9,
     borderRadius: width * 0.02,
     borderColor: "gray",
@@ -102,12 +116,27 @@ const styles = StyleSheet.create({
     marginTop: -(width * 0.1),
   },
   titleinp: {
-    height: width * 0.2,
+    ...Platform.select({
+      ios: {
+        height: width * 0.1,
+      },
+      android: {
+        height: width * 0.2,
+      },
+    }),
     width: width * 0.9,
     borderRadius: width * 0.02,
     borderColor: "gray",
     borderWidth: width * 0.001,
     padding: width * 0.03,
+    ...Platform.select({
+      ios: {
+        marginBottom: width * 0.05,
+      },
+      android: {
+        // No marginBottom for Android
+      },
+    }),
   },
   buttonwrapper: {
     paddingBottom: width * 0.1,

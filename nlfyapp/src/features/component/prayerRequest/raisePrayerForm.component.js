@@ -6,6 +6,7 @@ import {
   Dimensions,
   Text,
   Alert,
+  Platform,
 } from "react-native";
 import { Button } from "../../../components/button";
 import styled from "styled-components";
@@ -178,7 +179,15 @@ export const RaisePrayerForm = (props) => {
 
 const styles = StyleSheet.create({
   inp: {
-    height: width * 0.6,
+    ...Platform.select({
+      ios: {
+        height: width * 0.5,
+      },
+      android: {
+        height: width * 0.6,
+      },
+    }),
+
     width: width * 0.9,
     borderRadius: width * 0.02,
     borderColor: "gray",

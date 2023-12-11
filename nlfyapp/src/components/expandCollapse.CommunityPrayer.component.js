@@ -201,8 +201,10 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
 
   return (
     <FlatList
+      removeClippedSubviews={false}
       data={props.data}
-      initialNumToRender={props.data.length}
+      //initialNumToRender={props.data.length}
+      initialNumToRender={10}
       renderItem={renderItem}
       keyExtractor={(item) => item._id}
       contentContainerStyle={{ paddingBottom: width * 0.01 }}
