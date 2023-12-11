@@ -1,20 +1,11 @@
-import React, {
-  useCallback,
-  useState,
-  useRef,
-  useEffect,
-  useContext,
-} from "react";
+
+import React, { useCallback, useState, useEffect, useContext } from "react";
 import {
   Text,
   FlatList,
   View,
   Image,
   StyleSheet,
-  Platform,
-  TouchableOpacity,
-  Animated,
-  Modal,
   Dimensions,
 } from "react-native";
 import { BASEURL } from "../../APIKey";
@@ -24,54 +15,26 @@ import styled from "styled-components";
 import { AuthenticationContext } from "../services/authentication/authentication.context";
 
 const { height, width } = Dimensions.get("window");
-
-const FlexRow = styled(View)`
-  flex-direction: ;
-`;
-
-const Item = (props) => {
-  const { position, item, user } = props;
-
-  const [userList, setUserList] = useState([]);
-
-  useEffect(() => {
-    fetchUsers(); // Call the fetchUsers function on component mount
-  }, []);
-
-  const fetchUsers = async () => {
-    try {
-      const url = `${BASEURL}users`;
-      const response = await fetch(url);
-      const userdata = await response.json();
-      setUserList(userdata); // Set the fetched user data in the state
-    } catch (error) {
-      console.log(error);
-    }
-  };
+ 
+const Item = React.memo((props) => {
+  const { position, item, user, userList } = props;
 
   const getUserProfilePic = () => {
-    // Loop through the userList to find the user with matching uid
-
-    for (let i = 0; i < userList.length; i++) {
-      if (userList[i].uid === item.raisedByUid) {
-        if (userList[i].profilePic) {
-          return { uri: userList[i].profilePic }; // Set the profile pic URI
-        } else {
-          if (userList[i].gender === "male") {
-            return require("nlfyapp/assets/upload-pic-sign-up-male.png"); //  Set default male profile pic
-          } else {
-            return require("nlfyapp/assets/upload-pic-sign-up-female.png"); //  Set default female profile pic
-          }
-        }
-      }
+    const foundUser = userList.find((u) => u.uid === item.raisedByUid);
+    
+    if (foundUser) {
+      return foundUser.profilePic
+        ? { uri: foundUser.profilePic }
+        : foundUser.gender === "male"
+        ? require("nlfyapp/assets/upload-pic-sign-up-male.png")
+        : require("nlfyapp/assets/upload-pic-sign-up-female.png");
     }
-    return require("nlfyapp/assets/upload-pic-sign-up-male.png"); // Set the default profile pic if no user is found
+
+    return require("nlfyapp/assets/upload-pic-sign-up-male.png");
   };
 
   const [requestTextShown, setRequestTextShown] = useState(false);
   const [requestLengthMore, setRequestLengthMore] = useState(false);
-
-  const slideAnimation = useRef(new Animated.Value(0)).current;
 
   const toggleRequestNumberOfLines = () => {
     props.onSelect(props.id);
@@ -112,7 +75,7 @@ const Item = (props) => {
     padding: 20,
     paddingBottom: 0,
     flex: 1,
-    flexDirection: props.position === "left" ? "row" : "row-reverse",
+    flexDirection: position === "left" ? "row" : "row-reverse",
   };
 
   const writeprayer = {
@@ -171,11 +134,27 @@ const Item = (props) => {
       </View>
     </>
   );
-};
+});
 
 export const ExpandCollapseListCommunityPrayer = (props) => {
   const { user } = useContext(AuthenticationContext);
   const [selectedId, setSelectedId] = useState(null);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    fetchUsers(); // Call the fetchUsers function on component mount
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const url = `${BASEURL}users`;
+      const response = await fetch(url);
+      const userdata = await response.json();
+      setUserList(userdata); // Set the fetched user data in the state
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
   const renderItem = ({ item, index }) => {
     const position = index % 2 === 0 ? "left" : "right";
@@ -188,6 +167,7 @@ export const ExpandCollapseListCommunityPrayer = (props) => {
         selected={selectedId === item._id}
         onSelect={onSelectItem}
         user={user}
+        userList={userList}
       />
     );
   };
